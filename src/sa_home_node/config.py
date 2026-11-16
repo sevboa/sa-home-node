@@ -1,0 +1,67 @@
+import tomllib
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Any, TypeVar
+
+from pydantic import BaseModel, ValidationError
+
+DEFAULT_CONFIG = Path("~/.config/sa-home-node/config.toml")
+
+T = TypeVar("T", bound=BaseModel)
+
+
+class ConfigError(ValueError):
+    pass
+
+
+class NodeSection(BaseModel):
+    id: str
+    data_dir: Path = Path("data")
+    content_dir: Path | None = None
+    plugins: list[str] = []
+
+
+@dataclass
+class NodeConfig:
+    path: Path
+    node: NodeSection
+    sections: dict[str, dict]
+
+    @property
+    def _base(self) -> Path:
+        return self.path.parent
+
+    @property
+    def data_dir(self) -> Path:
+        d = self.node.data_dir
+        return d if d.is_absolute() else self._base / d
+
+    @property
+    def content_dir(self) -> Path:
+        d = self.node.content_dir
+        if d is None:
+            return self._base / "content"
+        return d if d.is_absolute() else self._base / d
+
+    def section(self, name: str, model: type[T]) -> T:
+        raw = self.sections.get(name, {})
+        try:
+            return model.model_validate(raw)
+        except ValidationError as e:
+            raise ConfigError(f"Секция [{name}] не прошла проверку: {e}") from e
+
+
+def load_config(path: Path | None = None) -> NodeConfig:
+    path = Path(path or DEFAULT_CONFIG).expanduser()
+    if not path.is_file():
+        raise ConfigError(f"Файл конфига не найден: {path}")
+    with path.open("rb") as f:
+        data: dict[str, Any] = tomllib.load(f)
+    node = data.pop("node", None)
+    if not isinstance(node, dict) or not str(node.get("id", "")).strip():
+        raise ConfigError(f"В конфиге нет секции [node] с полем id: {path}")
+    try:
+        section = NodeSection.model_validate(node)
+    except ValidationError as e:
+        raise ConfigError(f"Секция [node] не прошла проверку: {e}") from e
+    return NodeConfig(path=path, node=section, sections=data)
