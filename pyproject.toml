@@ -13,6 +13,12 @@ dependencies = [
     "pydantic-settings>=2.2",
 ]
 
+[project.scripts]
+sa-home-node = "sa_home_node.cli:main"
+
+[project.entry-points."sa_home_node.plugins"]
+example = "sa_home_node.example:PLUGIN"
+
 [project.optional-dependencies]
 dev = [
     "pytest>=8.0",
