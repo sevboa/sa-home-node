@@ -55,3 +55,21 @@ example = "my_pkg.plugin:PLUGIN"
 `PLUGIN` — объект `Plugin` в модуле `my_pkg.plugin`. При загрузке
 проверяются: наличие имени среди точек входа, отсутствие повторов,
 тип результата `load()` и совпадение `plugin.name` с именем точки входа.
+
+## Пример (`sa_home_node.example`)
+
+Минимальный плагин, он же документация API (`src/sa_home_node/example/`,
+точка входа `example = "sa_home_node.example:PLUGIN"` в `pyproject.toml`
+ядра):
+
+- `ExampleConfig` — pydantic-модель секции `[example]`: `interval_s`
+  (по умолчанию 60.0);
+- служба `hello` — бесконечный цикл: пишет в журнал приветствие из
+  контента (`ctx.content.get("example.greeting")`) и спит `interval_s`;
+- `PLUGIN = Plugin(name="example", config_model=ExampleConfig,
+  services=(ServiceSpec("hello", hello),),
+  content_keys=("example.greeting",))` — требует ключ контента
+  `example.greeting` из `content/example.toml`.
+
+Запуск: `sa-home-node run --config config.toml` (см.
+[architecture](architecture.md)).

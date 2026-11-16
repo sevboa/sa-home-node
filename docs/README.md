@@ -5,3 +5,5 @@
 - [config](config.md) — чтение конфига ноды из TOML.
 - [content](content.md) — хранилище контента плагинов по ключам.
 - [plugins](plugins.md) — модель плагина, загрузка точек входа, контекст службы.
+- [architecture](architecture.md) — модули ядра, порядок старта и остановки ноды.
+- [cli](cli.md) — команда `sa-home-node`.

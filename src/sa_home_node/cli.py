@@ -1,0 +1,37 @@
+import argparse
+import asyncio
+import logging
+import sys
+from pathlib import Path
+
+from sa_home_node.config import ConfigError
+from sa_home_node.content import ContentError
+from sa_home_node.node import run_node
+from sa_home_node.plugins import PluginError, available
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(prog="sa-home-node", description="Управление нодой sa-home-node")
+    subparsers = parser.add_subparsers(dest="command")
+    run_parser = subparsers.add_parser("run", help="запуск ноды")
+    run_parser.add_argument("--config", type=Path, default=None, help="путь к config.toml")
+    subparsers.add_parser("plugins", help="список установленных плагинов")
+    args = parser.parse_args(argv)
+    if args.command is None:
+        parser.print_help()
+        return 2
+    if args.command == "plugins":
+        names = sorted(available())
+        if not names:
+            print("плагины не установлены")
+        else:
+            for name in names:
+                print(name)
+        return 0
+    logging.basicConfig(level=logging.INFO)
+    try:
+        asyncio.run(run_node(args.config))
+    except (ConfigError, ContentError, PluginError) as e:
+        print(f"ошибка: {e}", file=sys.stderr)
+        return 2
+    return 0
