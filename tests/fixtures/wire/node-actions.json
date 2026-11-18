@@ -1,0 +1,50 @@
+[
+  {
+    "id": "trigger_peers",
+    "title": "📡 Разослать команду службе на всех нодах",
+    "params": [
+      {
+        "name": "service",
+        "type": "string",
+        "required": true,
+        "title": "Служба"
+      },
+      {
+        "name": "action",
+        "type": "string",
+        "required": true,
+        "title": "Действие"
+      }
+    ]
+  },
+  {
+    "id": "swarm_join",
+    "title": "🤝 Присоединить ноду",
+    "params": [
+      {
+        "name": "node_id",
+        "type": "string",
+        "required": true,
+        "title": "Id ноды"
+      },
+      {
+        "name": "endpoint",
+        "type": "string",
+        "required": true,
+        "title": "Endpoint"
+      }
+    ]
+  },
+  {
+    "id": "join",
+    "title": "🔗 Присоединиться к рою",
+    "params": [
+      {
+        "name": "endpoint",
+        "type": "string",
+        "required": true,
+        "title": "Endpoint соседа"
+      }
+    ]
+  }
+]

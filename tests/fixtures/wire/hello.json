@@ -1,0 +1,41 @@
+[
+  {
+    "node": "node-a",
+    "service": "node",
+    "version": "1.0.0",
+    "node_kind": "server",
+    "wake": {
+      "mac": "02:00:00:00:00:01",
+      "ip": "192.0.2.10",
+      "broadcast": "192.0.2.255"
+    },
+    "endpoints": [
+      "tcp://192.0.2.10:8710",
+      "tcp://192.0.2.11:8710"
+    ],
+    "proto": 0,
+    "links": {
+      "node-b": {
+        "rtt_ms": 12.5,
+        "loss": 0.083,
+        "alive": true
+      },
+      "node-c": {
+        "rtt_ms": null,
+        "loss": 0.0,
+        "alive": false
+      }
+    },
+    "busy": true,
+    "working": false
+  },
+  {
+    "node": "node-b",
+    "service": "svc",
+    "version": "0.1.0",
+    "node_kind": "",
+    "wake": null,
+    "endpoints": [],
+    "proto": 0
+  }
+]

@@ -1,0 +1,19 @@
+[
+  {
+    "id": "node-b",
+    "endpoint": "tcp://192.0.2.20:8710",
+    "endpoints": [
+      "tcp://192.0.2.20:8710",
+      "tcp://192.0.2.21:8710"
+    ],
+    "alive": false,
+    "kind": "",
+    "down_s": null,
+    "left": false,
+    "wake": null,
+    "rtt_ms": null,
+    "loss": 0.0,
+    "via": null,
+    "via_rtt_ms": null
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "assignments": [
+    "svc",
+    "svc@second"
+  ],
+  "peers": [
+    {
+      "id": "node-b",
+      "endpoint": "tcp://192.0.2.20:8710",
+      "endpoints": [
+        "tcp://192.0.2.21:8710"
+      ],
+      "kind": "server"
+    },
+    {
+      "id": "node-c",
+      "endpoint": "tcp://192.0.2.30:8710",
+      "endpoints": [],
+      "kind": ""
+    }
+  ],
+  "last_known_version": "0.9.0"
+}

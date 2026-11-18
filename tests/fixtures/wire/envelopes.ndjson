@@ -1,0 +1,9 @@
+{"v":0,"id":"00000000000000000000000000000001","type":"hello"}
+{"v":0,"id":"00000000000000000000000000000002","type":"auth","src":{"node":"node-a","service":null},"payload":{"token":"test-token","node":"node-a","incarnation":"00000000000000000000000000000063"}}
+{"v":0,"id":"00000000000000000000000000000003","type":"command","src":{"node":"node-a","service":"node"},"dst":{"node":"node-b","service":"svc"},"payload":{"action":"ping","args":{"n":1,"text":"проверка"}},"timeout_s":2.5}
+{"v":0,"id":"00000000000000000000000000000004","type":"get_state","dst":{"node":null,"service":"svc"},"timeout_s":10.0}
+{"v":0,"id":"00000000000000000000000000000003","type":"response","ok":true,"payload":{"text":"Привет, рой","n":2,"items":[1,2.5,null,true]}}
+{"v":0,"id":"00000000000000000000000000000001","type":"response","ok":true}
+{"v":0,"id":"00000000000000000000000000000005","type":"response","ok":false,"error":{"code":"unknown_dst","message":"нет такой службы: svc"}}
+{"v":0,"id":"00000000000000000000000000000006","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"node_joined","data":{"node_id":"node-c","endpoint":"tcp://192.0.2.30:8710","endpoints":["tcp://192.0.2.30:8710"]}},"hops":3}
+{"v":0,"id":"00000000000000000000000000000007","type":"event","payload":{"event":"node_up","data":{}}}

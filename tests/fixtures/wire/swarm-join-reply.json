@@ -1,0 +1,46 @@
+{
+  "peers": [
+    {
+      "id": "node-a",
+      "endpoint": "tcp://192.0.2.10:8710",
+      "endpoints": [
+        "tcp://192.0.2.10:8710",
+        "tcp://192.0.2.11:8710"
+      ],
+      "alive": true
+    },
+    {
+      "id": "node-b",
+      "endpoint": "tcp://192.0.2.20:8710",
+      "endpoints": [
+        "tcp://192.0.2.20:8710"
+      ],
+      "alive": false,
+      "kind": "",
+      "down_s": null,
+      "left": false,
+      "wake": null,
+      "rtt_ms": null,
+      "loss": 0.0,
+      "via": null,
+      "via_rtt_ms": null
+    },
+    {
+      "id": "node-c",
+      "endpoint": "tcp://192.0.2.30:8710",
+      "endpoints": [
+        "tcp://192.0.2.30:8710",
+        "tcp://192.0.2.31:8710"
+      ],
+      "alive": false,
+      "kind": "",
+      "down_s": null,
+      "left": false,
+      "wake": null,
+      "rtt_ms": null,
+      "loss": 0.0,
+      "via": null,
+      "via_rtt_ms": null
+    }
+  ]
+}

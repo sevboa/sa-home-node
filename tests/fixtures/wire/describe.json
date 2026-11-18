@@ -1,0 +1,49 @@
+[
+  {
+    "node": "node-b",
+    "service": "svc",
+    "version": "0.1.0",
+    "node_kind": "workstation",
+    "wake": null,
+    "endpoints": [
+      "tcp://192.0.2.20:8710"
+    ],
+    "proto": 0,
+    "working": true,
+    "capabilities": [
+      "status"
+    ],
+    "actions": [
+      {
+        "id": "ping",
+        "title": "Пинг",
+        "params": []
+      },
+      {
+        "id": "set_mode",
+        "title": "Режим",
+        "params": [
+          {
+            "name": "mode",
+            "type": "string",
+            "required": true,
+            "title": "Режим",
+            "choices": [
+              "day",
+              "night"
+            ]
+          },
+          {
+            "name": "force",
+            "type": "bool",
+            "required": false
+          }
+        ]
+      }
+    ],
+    "model_profile": {
+      "name": "test-profile",
+      "context": 4096
+    }
+  }
+]
