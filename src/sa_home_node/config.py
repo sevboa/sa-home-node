@@ -5,7 +5,7 @@ from typing import Any, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
-DEFAULT_CONFIG = Path("~/.config/sa-home-node/config.toml")
+DEFAULT_CONFIG = Path("~/.config/sa-home-bot/config.toml")
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -34,7 +34,7 @@ class NodeConfig:
     @property
     def data_dir(self) -> Path:
         d = self.node.data_dir
-        return d if d.is_absolute() else self._base / d
+        return d if d.is_absolute() else Path.cwd() / d
 
     @property
     def content_dir(self) -> Path:

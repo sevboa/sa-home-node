@@ -37,6 +37,7 @@ def make_service(name, started, cancelled, ev):
 
 
 async def test_start_and_cancel_order(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
     cfg = write_config(tmp_path, ["p1", "p2"])
     started, cancelled = [], []
     started_evs = []
@@ -59,6 +60,7 @@ async def test_start_and_cancel_order(tmp_path, monkeypatch):
 
 
 async def test_restarts_failed_service(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
     cfg = write_config(tmp_path, ["p1"])
     runs = []
     stop = asyncio.Event()

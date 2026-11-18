@@ -13,7 +13,7 @@ def write(tmp_path: Path, text: str) -> Path:
 
 
 def test_default_path() -> None:
-    assert DEFAULT_CONFIG == Path("~/.config/sa-home-node/config.toml")
+    assert DEFAULT_CONFIG == Path("~/.config/sa-home-bot/config.toml")
 
 
 def test_read(tmp_path: Path) -> None:
@@ -42,10 +42,13 @@ def test_missing_file(tmp_path: Path) -> None:
         load_config(tmp_path / "config.toml")
 
 
-def test_relative_paths(tmp_path: Path) -> None:
+def test_relative_paths(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    work = tmp_path / "work"
+    work.mkdir()
+    monkeypatch.chdir(work)
     p = write(tmp_path, '[node]\nid = "n"\ndata_dir = "d"\n')
     cfg = load_config(p)
-    assert cfg.data_dir == tmp_path / "d"
+    assert cfg.data_dir == work / "d"
     assert cfg.content_dir == tmp_path / "content"
 
 
