@@ -4,6 +4,7 @@ import pytest
 from pydantic import BaseModel
 
 from sa_home_node.config import DEFAULT_CONFIG, ConfigError, NodeConfig, NodeSection, load_config
+from sa_home_node.swarm.config import DiscoverySection, SwarmSection, swarm_section
 
 
 def write(tmp_path: Path, text: str) -> Path:
@@ -81,3 +82,68 @@ def test_section_error(tmp_path: Path) -> None:
         cfg.section("svc", SvcM)
     with pytest.raises(ConfigError, match="svc"):
         load_config(p).section("svc", SvcM)
+
+
+def test_extra_keys(tmp_path: Path) -> None:
+    p = write(
+        tmp_path,
+        '[node]\nid = "n"\nassignments = ["svc"]\npower_rule = "x"\nidle_poweroff = true\n'
+        "\n[monitor]\nport = 1\n",
+    )
+    cfg = load_config(p)
+    assert cfg.node == NodeSection(id="n")
+    assert cfg.sections == {"monitor": {"port": 1}}
+
+
+@pytest.mark.parametrize(
+    ("listen", "expected"),
+    [
+        ('"tcp://192.0.2.10:8710"', ["tcp://192.0.2.10:8710"]),
+        ('["tcp://192.0.2.10:8710"]', ["tcp://192.0.2.10:8710"]),
+        ('""', []),
+    ],
+)
+def test_listen(tmp_path: Path, listen: str, expected: list[str]) -> None:
+    p = write(tmp_path, f'[node]\nid = "n"\nlisten = {listen}\n')
+    assert load_config(p).node.listen == expected
+
+
+def test_socket_state_paths(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    work = tmp_path / "work"
+    work.mkdir()
+    monkeypatch.chdir(work)
+    p = write(
+        tmp_path,
+        '[node]\nid = "n"\nsocket = "./data/node.sock"\nstate_path = "./data/node-state.json"\n',
+    )
+    cfg = load_config(p)
+    assert cfg.socket_path == work / "data" / "node.sock"
+    assert cfg.state_file == work / "data" / "node-state.json"
+
+
+def test_socket_state_absolute(tmp_path: Path) -> None:
+    p = write(tmp_path, '[node]\nid = "n"\nsocket = "/s"\nstate_path = "/st"\n')
+    cfg = load_config(p)
+    assert cfg.socket_path == Path("/s")
+    assert cfg.state_file == Path("/st")
+
+
+def test_swarm_section(tmp_path: Path) -> None:
+    p = write(
+        tmp_path,
+        '[node]\nid = "n"\n\n[swarm]\ntoken = "test-token"\nfailover_grace_s = 7.0\n'
+        "\n[swarm.discovery]\nport = 4001\n",
+    )
+    cfg = load_config(p)
+    s = swarm_section(cfg)
+    assert s == SwarmSection(
+        token="test-token",
+        discovery=DiscoverySection(port=4001),
+    )
+    assert s.node_down_alert_after_s == 300.0
+
+
+def test_bad_kind(tmp_path: Path) -> None:
+    p = write(tmp_path, '[node]\nid = "n"\nkind = "alien"\n')
+    with pytest.raises(ConfigError, match="node"):
+        load_config(p)
