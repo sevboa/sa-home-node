@@ -5,12 +5,13 @@ import contextlib
 import logging
 import time
 import uuid
+from collections import deque
 from collections.abc import Callable, Sequence
 from pathlib import Path
 
 from sa_home_node.proto.client import EventCallback, ProtoClient
 from sa_home_node.proto.describe import ServiceInfo
-from sa_home_node.proto.endpoints import Endpoint, endpoint_rank, parse_endpoint
+from sa_home_node.proto.endpoints import Endpoint, endpoint_rank, is_loopback, parse_endpoint
 from sa_home_node.proto.wire import ERR_TIMEOUT, ERR_UNAVAILABLE, Address, Envelope, ProtoError
 
 log = logging.getLogger(__name__)
@@ -18,6 +19,14 @@ log = logging.getLogger(__name__)
 RECONNECT_DELAY_S = 5.0
 CONNECT_TIMEOUT_S = 5.0
 NODE_INCARNATION = uuid.uuid4().hex
+
+MAX_ENDPOINTS = 8
+HEARTBEAT_INTERVAL_S = 5.0
+HEARTBEAT_TIMEOUT_S = 4.0
+HEARTBEAT_MISSES = 2
+QUALITY_WINDOW = 12
+RTT_SMOOTHING = 0.3
+LOSS_PENALTY_MS = 1000.0
 
 
 def _parse_all(values: Sequence[str | Path | Endpoint]) -> list[Endpoint]:
@@ -61,6 +70,7 @@ class PeerLink:
         on_endpoints: Callable[[str, list[str]], None] | None = None,
         reconnect_delay: float = RECONNECT_DELAY_S,
         self_node: str = "",
+        heartbeat_timeout: float = HEARTBEAT_TIMEOUT_S,
     ) -> None:
         self.name = name
         raw = [endpoint] if isinstance(endpoint, (str, Path, Endpoint)) else list(endpoint)
@@ -75,6 +85,7 @@ class PeerLink:
         self._delay = reconnect_delay
         self._src = Address(node=self_node) if self_node else None
         self._self_node = self_node.lower() if self_node else ""
+        self._heartbeat_timeout = heartbeat_timeout
         self._client: ProtoClient | None = None
         self._task: asyncio.Task | None = None
         self._last_error: Exception | None = None
@@ -84,6 +95,11 @@ class PeerLink:
         self.wake_info: dict[str, str] | None = None
         self.down_since: float | None = None
         self.left = False
+        self.rtt_ms: float | None = None
+        self.peer_links: dict[str, dict] = {}
+        self.busy: bool = False
+        self.working: bool | None = None
+        self._probes: deque[bool] = deque(maxlen=QUALITY_WINDOW)
 
     @property
     def alive(self) -> bool:
@@ -92,6 +108,76 @@ class PeerLink:
     @property
     def endpoints(self) -> list[str]:
         return [str(ep) for ep in self._candidates]
+
+    @property
+    def loss(self) -> float:
+        if not self._probes:
+            return 0.0
+        return sum(1 for missed in self._probes if missed) / len(self._probes)
+
+    def cost_ms(self) -> float | None:
+        if not self.alive or self.rtt_ms is None:
+            return None
+        return self.rtt_ms + self.loss * LOSS_PENALTY_MS
+
+    def quality(self) -> dict[str, object]:
+        return {
+            "rtt_ms": round(self.rtt_ms, 1) if self.rtt_ms is not None else None,
+            "loss": round(self.loss, 3),
+            "alive": self.alive,
+        }
+
+    def note_probe(self, rtt_ms: float | None) -> None:
+        self._probes.append(rtt_ms is None)
+        if rtt_ms is None:
+            return
+        if self.rtt_ms is None:
+            self.rtt_ms = rtt_ms
+        else:
+            self.rtt_ms += RTT_SMOOTHING * (rtt_ms - self.rtt_ms)
+
+    def _learn_links(self, info: ServiceInfo) -> None:
+        self.peer_links = dict(info.links) if info.links else {}
+
+    def learn_endpoints(self, advertised: Sequence[str]) -> None:
+        fresh: list[Endpoint] = [self.endpoint]
+        seen: set[Endpoint] = {self.endpoint}
+        for ep in _parse_all(list(advertised)):
+            if ep in seen or is_loopback(ep) or len(fresh) >= MAX_ENDPOINTS:
+                continue
+            seen.add(ep)
+            fresh.append(ep)
+        if seen == set(self._candidates):
+            return
+        self._candidates = _order_endpoints(fresh, first=self.endpoint)
+        log.info("PeerLink %s: адреса соседа (по последнему hello) — %s",
+                 self.name, ", ".join(str(ep) for ep in self._candidates))
+        if self._on_endpoints is not None:
+            self._on_endpoints(self.name, self.endpoints)
+
+    async def _heartbeat(self, client: ProtoClient) -> None:
+        misses = 0
+        while True:
+            await asyncio.sleep(HEARTBEAT_INTERVAL_S)
+            started = time.monotonic()
+            try:
+                info = await asyncio.wait_for(client.hello(), timeout=self._heartbeat_timeout)
+                self.note_probe((time.monotonic() - started) * 1000)
+                if info.endpoints:
+                    self.learn_endpoints(info.endpoints)
+                self._learn_links(info)
+                self.busy = info.busy
+                self.working = info.working
+                misses = 0
+            except (ConnectionError, OSError, TimeoutError, ProtoError) as exc:
+                self.note_probe(None)
+                misses += 1
+                if misses >= HEARTBEAT_MISSES:
+                    log.warning("PeerLink %s: не отвечает на %d пробы подряд (%s) — рву соединение",
+                                self.name, misses, exc)
+                    self._dropping = True
+                    client.abort()
+                    return
 
     async def start(self) -> None:
         self._task = asyncio.create_task(self._run(), name=f"peer-link-{self.name}")
@@ -133,6 +219,8 @@ class PeerLink:
     def _mark_down(self) -> None:
         if self.down_since is None:
             self.down_since = time.monotonic()
+        self.busy = False
+        self.working = None
 
     def downtime_s(self) -> float | None:
         if self.alive or self.down_since is None:
@@ -204,6 +292,11 @@ class PeerLink:
             self._candidates = _order_endpoints(self._candidates, first=endpoint)
             if switched and self._on_endpoints is not None:
                 self._on_endpoints(self.name, self.endpoints)
+            if info.endpoints:
+                self.learn_endpoints(info.endpoints)
+            self._learn_links(info)
+            self.busy = info.busy
+            self.working = info.working
         log.info("PeerLink %s: связь установлена (%s/%s)", self.name, info.node, info.service)
         if confirmed:
             if info.node_kind:
@@ -213,12 +306,16 @@ class PeerLink:
         self.down_since = None
         self.left = False
         self._client = client
+        heartbeat = asyncio.create_task(self._heartbeat(client), name=f"peer-link-hb-{self.name}")
         try:
             await client.join()
         except asyncio.CancelledError:
             if not self._dropping or self._stopping:
                 raise
         finally:
+            heartbeat.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await heartbeat
             self._dropping = False
             self._client = None
             self._mark_down()
