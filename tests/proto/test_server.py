@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import asyncio
+import errno
 import os
 
 import pytest
+from support import wait_for
 
+from sa_home_node.proto import server as server_mod
 from sa_home_node.proto.describe import ActionParam, ActionSpec, ServiceDescription, ServiceInfo
 from sa_home_node.proto.endpoints import TcpEndpoint
 from sa_home_node.proto.server import ProtoServer
@@ -81,8 +84,8 @@ class Kit:
 
     async def start(self, endpoints: list, handler=None, **kw) -> ProtoServer:
         srv = ProtoServer(endpoints, handler or Handler(), **kw)
-        await srv.start()
         self.servers.append(srv)
+        await srv.start()
         return srv
 
     async def stop(self) -> None:
@@ -260,3 +263,96 @@ async def test_broadcast(kit, unix_ep) -> None:
         await unauth.read(timeout=0.3)
     await unix.send(make_request(MSG_HELLO))
     assert (await unix.read()).ok
+
+
+def patch_start_server(
+    monkeypatch, *, fail_first: int = 0, always_fail: bool = False, use_errno: bool = False
+) -> None:
+    real = asyncio.start_server
+    state = {"n": 0}
+
+    async def fake(*args, **kw):
+        if always_fail or state["n"] < fail_first:
+            state["n"] += 1
+            if use_errno:
+                raise OSError(errno.EADDRINUSE, "could not bind")
+            raise OSError("could not bind")
+        state["n"] += 1
+        return await real(*args, **kw)
+
+    monkeypatch.setattr(asyncio, "start_server", fake)
+
+
+@pytest.mark.parametrize(("fail_first", "count"), [(0, 2), (2, 1)])
+async def test_bind_retry(monkeypatch, kit, unix_ep, fail_first, count) -> None:
+    monkeypatch.setattr(server_mod, "BIND_RETRY_INTERVAL_S", 0.05)
+    patch_start_server(monkeypatch, fail_first=fail_first)
+    srv = await kit.start([unix_ep, TcpEndpoint("127.0.0.2", 0)], token=TOKEN)
+    assert len(srv.bound_endpoints) == count
+    if count == 1:
+        assert await wait_for(lambda: len(srv.bound_endpoints) == 2, 2)
+
+
+async def test_bind_eaddrinuse(monkeypatch, kit, unix_ep) -> None:
+    patch_start_server(monkeypatch, always_fail=True, use_errno=True)
+    with pytest.raises(OSError) as exc_info:
+        await kit.start([unix_ep, TcpEndpoint("127.0.0.2", 0)], token=TOKEN)
+    assert exc_info.value.errno == errno.EADDRINUSE
+
+
+@pytest.mark.parametrize(("mode", "expect_raise"), [("always", True), ("twice", False)])
+async def test_bind_no_address(monkeypatch, kit, mode, expect_raise) -> None:
+    monkeypatch.setattr(server_mod, "BIND_RETRY_TIMEOUT_S", 0.2)
+    monkeypatch.setattr(server_mod, "BIND_RETRY_INTERVAL_S", 0.05)
+    patch_start_server(monkeypatch, always_fail=mode == "always", fail_first=2)
+    if expect_raise:
+        with pytest.raises(OSError):
+            await kit.start([TcpEndpoint("127.0.0.2", 0)], token=TOKEN)
+    else:
+        srv = await kit.start([TcpEndpoint("127.0.0.2", 0)], token=TOKEN)
+        assert len(srv.bound_endpoints) == 1
+
+
+async def test_half_dead_client(kit, unix_ep, monkeypatch) -> None:
+    monkeypatch.setattr(server_mod, "SEND_TIMEOUT_S", 0.1)
+    srv = await kit.start([unix_ep])
+    keepalive: list[Conn] = []
+    keepalive.append(await unix_conn(unix_ep))
+    assert await wait_for(lambda: srv.connection_count == 1, 1)
+    live = next(iter(srv._connections))
+    keepalive.append(await unix_conn(unix_ep))
+    assert await wait_for(lambda: srv.connection_count == 2, 1)
+    dead = next(c for c in srv._connections if c is not live)
+
+    async def hang(env: Envelope) -> None:
+        await asyncio.sleep(3600)
+
+    dead.send = hang
+    delivered = await asyncio.wait_for(srv.broadcast_event("node_up", {"x": 1}), 2)
+    assert delivered == 1
+    assert dead not in srv._connections
+
+
+async def test_tcp_silent_timeout(kit, monkeypatch) -> None:
+    monkeypatch.setattr(server_mod, "AUTH_TIMEOUT_S", 0.1)
+    srv = await kit.start([TcpEndpoint("127.0.0.1", 0)], token=TOKEN)
+    conn = await tcp_conn(srv.endpoints[0].port)
+    assert await asyncio.wait_for(conn.reader.read(1), 2) == b""
+
+
+async def test_tcp_auth_keeps_alive(kit, monkeypatch) -> None:
+    monkeypatch.setattr(server_mod, "AUTH_TIMEOUT_S", 0.1)
+    srv = await kit.start([TcpEndpoint("127.0.0.1", 0)], token=TOKEN)
+    conn = await tcp_conn(srv.endpoints[0].port)
+    assert (await auth(conn)).ok
+    await asyncio.sleep(0.3)
+    await conn.send(make_request(MSG_HELLO))
+    assert (await conn.read()).ok
+
+
+async def test_stop_with_pending_bind(kit, unix_ep, monkeypatch) -> None:
+    patch_start_server(monkeypatch, always_fail=True)
+    srv = await kit.start([unix_ep, TcpEndpoint("127.0.0.2", 0)], token=TOKEN)
+    assert srv._bind_task is not None
+    await asyncio.wait_for(srv.stop(), 2)
+    assert srv._bind_task is None

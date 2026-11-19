@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import errno
 import functools
 import hmac
 import logging
@@ -101,6 +102,7 @@ class ProtoServer:
         self._on_peer_connect = on_peer_connect
         self._peer_incarnations: dict[str, str] = {}
         self._bound: dict[int, asyncio.Server] = {}
+        self._bind_task: asyncio.Task | None = None
         self._stopping = False
         self._connections: set[_Connection] = set()
         self._request_tasks: set[asyncio.Task] = set()
@@ -149,11 +151,55 @@ class ProtoServer:
         log.info("ProtoServer слушает %s", self._endpoints[index])
 
     async def start(self) -> None:
+        pending: list[int] = []
         for index in range(len(self._endpoints)):
-            await self._bind_one(index)
+            try:
+                await self._bind_one(index)
+            except OSError as exc:
+                if exc.errno == errno.EADDRINUSE:
+                    raise
+                log.warning("ProtoServer: адреса %s ещё нет (%s)", self._endpoints[index], exc)
+                pending.append(index)
+        if pending and not self._bound:
+            pending = await self._bind_pending(pending, until_first=True)
+        if pending:
+            self._bind_task = asyncio.create_task(
+                self._bind_pending(pending, until_first=False), name="proto-bind"
+            )
+
+    async def _bind_pending(self, pending: list[int], *, until_first: bool) -> list[int]:
+        loop = asyncio.get_running_loop()
+        deadline = loop.time() + BIND_RETRY_TIMEOUT_S
+        last_exc: OSError | None = None
+        while True:
+            interval = (
+                BIND_RETRY_INTERVAL_S if loop.time() < deadline else BIND_RETRY_SLOW_INTERVAL_S
+            )
+            await asyncio.sleep(interval)
+            for index in list(pending):
+                try:
+                    await self._bind_one(index)
+                    pending.remove(index)
+                except OSError as exc:
+                    if exc.errno == errno.EADDRINUSE and until_first:
+                        raise
+                    last_exc = exc
+            if not pending:
+                return pending
+            if until_first and self._bound:
+                return pending
+            if until_first and loop.time() >= deadline:
+                if last_exc is None:
+                    last_exc = OSError("нет доступных адресов")
+                raise last_exc
 
     async def stop(self) -> None:
         self._stopping = True
+        if self._bind_task is not None:
+            self._bind_task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await self._bind_task
+            self._bind_task = None
         for server in self._bound.values():
             server.close()
         for task in list(self._request_tasks):
@@ -190,17 +236,27 @@ class ProtoServer:
         conns = [conn for conn in self._connections if conn.authenticated]
         if not conns:
             return 0
-        results = await asyncio.gather(*(self._send_one(conn, env) for conn in conns))
+        results = await asyncio.gather(*(self._send_bounded(conn, env) for conn in conns))
         return sum(results)
 
-    async def _send_one(self, conn: _Connection, env: Envelope) -> bool:
+    async def _send_bounded(self, conn: _Connection, env: Envelope) -> bool:
         try:
-            await conn.send(env)
+            await asyncio.wait_for(conn.send(env), timeout=SEND_TIMEOUT_S)
+            return True
+        except TimeoutError:
+            log.warning(
+                "ProtoServer: запись клиенту %s не прошла за %.0f с — закрываю соединение",
+                conn.node or conn.writer.get_extra_info("peername"),
+                SEND_TIMEOUT_S,
+            )
+            self._connections.discard(conn)
+            with contextlib.suppress(Exception):
+                conn.writer.close()
+            return False
         except (ConnectionError, OSError):
             self._connections.discard(conn)
             conn.writer.close()
             return False
-        return True
 
     async def _handle_client(
         self,
@@ -221,7 +277,17 @@ class ProtoServer:
         try:
             while True:
                 try:
-                    line = await reader.readline()
+                    if conn.authenticated:
+                        line = await reader.readline()
+                    else:
+                        line = await asyncio.wait_for(reader.readline(), AUTH_TIMEOUT_S)
+                except TimeoutError:
+                    log.warning(
+                        "ProtoServer: клиент %s не прислал auth за %.0f с — закрываю",
+                        writer.get_extra_info("peername"),
+                        AUTH_TIMEOUT_S,
+                    )
+                    break
                 except (asyncio.LimitOverrunError, ValueError):
                     log.warning("ProtoServer: сообщение длиннее лимита, закрываю соединение")
                     break
@@ -234,6 +300,8 @@ class ProtoServer:
                 task = asyncio.create_task(self._handle_line(conn, line))
                 self._request_tasks.add(task)
                 task.add_done_callback(self._request_tasks.discard)
+                if not conn.authenticated:
+                    await task
         except (ConnectionError, OSError):
             pass
         finally:
@@ -243,38 +311,30 @@ class ProtoServer:
                 await asyncio.wait_for(writer.wait_closed(), timeout=CLOSE_TIMEOUT_S)
 
     async def _handle_line(self, conn: _Connection, line: bytes) -> None:
+        request = None
+        close_after = False
         try:
-            request = None
-            close_after = False
-            try:
-                request = decode_request(line)
-                if request.type == MSG_AUTH:
-                    response = self._authenticate(conn, request)
-                elif not conn.authenticated:
-                    raise ProtoError(ERR_UNAUTHORIZED, "сначала auth с токеном")
-                else:
-                    response = None
-                    if self._router is not None:
-                        response = await self._router(request)
-                    if response is None:
-                        response = await self._dispatch(request)
-            except ProtoError as exc:
-                close_after = exc.code == ERR_UNAUTHORIZED
-                request_id = request.id if request is not None else "?"
-                response = make_error_response(request_id, exc.code, exc.message)
-            except Exception:
-                log.exception("ProtoServer: обработчик запроса упал")
-                request_id = request.id if request is not None else "?"
-                response = make_error_response(request_id, ERR_INTERNAL, "внутренняя ошибка")
-            await asyncio.wait_for(conn.send(response), timeout=SEND_TIMEOUT_S)
-            if close_after:
-                conn.writer.close()
-        except TimeoutError:
-            self._connections.discard(conn)
-            with contextlib.suppress(Exception):
-                conn.writer.close()
-        except (ConnectionError, OSError):
-            self._connections.discard(conn)
+            request = decode_request(line)
+            if request.type == MSG_AUTH:
+                response = self._authenticate(conn, request)
+            elif not conn.authenticated:
+                raise ProtoError(ERR_UNAUTHORIZED, "сначала auth с токеном")
+            else:
+                response = None
+                if self._router is not None:
+                    response = await self._router(request)
+                if response is None:
+                    response = await self._dispatch(request)
+        except ProtoError as exc:
+            close_after = exc.code == ERR_UNAUTHORIZED
+            request_id = request.id if request is not None else "?"
+            response = make_error_response(request_id, exc.code, exc.message)
+        except Exception:
+            log.exception("ProtoServer: обработчик запроса упал")
+            request_id = request.id if request is not None else "?"
+            response = make_error_response(request_id, ERR_INTERNAL, "внутренняя ошибка")
+        if await self._send_bounded(conn, response) and close_after:
+            conn.writer.close()
 
     def _authenticate(self, conn: _Connection, request: Envelope) -> Envelope:
         if conn.authenticated:
