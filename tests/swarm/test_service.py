@@ -9,7 +9,8 @@ from sa_home_node.proto.client import ProtoClient
 from sa_home_node.proto.describe import ActionParam, ActionSpec
 from sa_home_node.proto.server import ProtoServer
 from sa_home_node.proto.wire import ERR_UNKNOWN_ACTION, ProtoError
-from sa_home_node.swarm.service import NodeService
+from sa_home_node.swarm.events import ACTION_SWARM_JOIN
+from sa_home_node.swarm.service import ACTION_JOIN, NodeService
 
 
 class FakeHost:
@@ -56,7 +57,7 @@ async def test_describe_without_router() -> None:
     assert info.endpoints == tuple(svc.advertised())
     desc = svc.describe()
     assert desc.capabilities == ("supervisor", "power")
-    assert desc.actions == ()
+    assert [a.id for a in desc.actions] == [ACTION_SWARM_JOIN, ACTION_JOIN]
 
 
 async def test_live_advertise_wins() -> None:
