@@ -50,7 +50,10 @@ async def test_swarm_builds_peer_links_and_skips_self(sock_dir: str, tmp_path) -
         sock_dir,
         tmp_path,
         free_port(),
-        nodes=[{"id": "node-b", "endpoint": "tcp://127.0.0.1:1", "kind": "server"}],
+        nodes=[
+            {"id": "node-b", "endpoint": "tcp://127.0.0.1:1", "kind": "server"},
+            {"id": "node-x", "endpoint": ""},
+        ],
     )
     state = NodeState(peers=[SwarmPeer(id="node-c", endpoint="tcp://127.0.0.1:2")])
     swarm = Swarm(cfg, state)
@@ -69,8 +72,18 @@ async def test_swarm_builds_peer_links_and_skips_self(sock_dir: str, tmp_path) -
 async def test_stop_without_start_and_twice(sock_dir: str, tmp_path) -> None:
     cfg = make_cfg("node-a", sock_dir, tmp_path, free_port())
     swarm = Swarm(cfg, NodeState())
+    names: list[str] = []
+
+    async def handler(env: Envelope) -> None:
+        names.append(env.payload.get("event"))
+
+    swarm.subscribe(handler)
+    await swarm.stop()
+    assert not names
+    await swarm.start()
     await swarm.stop()
     await swarm.stop()
+    assert names.count("node_leaving") == 1
 
 
 async def test_two_nodes_find_each_other_and_greet(sock_dir: str, tmp_path) -> None:

@@ -152,9 +152,10 @@ LAN, оверлей, прочие. Сортировка устойчивая, п
 
 ## Сборка роя (`Swarm`)
 
+- Сосед из `[swarm].nodes` без единого адреса пропускается с предупреждением (линк к нему не создаётся).
 - `start()` по порядку: сервер (`ProtoServer`), задача `announce_version`, старты линков пиров,
   `PresenceWatcher`, `SwarmDiscovery` и `NodeService.attach_discovery`, затем `[swarm].join`.
-- `stop()` по порядку: событие `node_leaving` о себе, отмена задачи объявления версии, остановка
+- `stop()` без `start()` и повторный `stop()` ничего не делают; иначе по порядку: событие `node_leaving` о себе, отмена задачи объявления версии, остановка
   присутствия, остановка discovery, остановка линков пиров, остановка сервера.
 - `SwarmApi` для плагинов: `node_id`, `emit`, `subscribe`, `command(dst, action, args, service=…,
   timeout_s=…)`, `get_state(dst)`, `describe(dst)` — таймаут запроса `COMMAND_TIMEOUT_S` = 10.0.

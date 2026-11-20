@@ -138,6 +138,7 @@ class Swarm:
         self.presence: PresenceWatcher | None = None
         self.discovery: SwarmDiscovery | None = None
         self._announce_task: asyncio.Task | None = None
+        self._started = False
 
         async def on_peer_event(env: Envelope) -> None:
             await self.relay.on_event(env)
@@ -164,6 +165,9 @@ class Swarm:
         kinds = peer_kinds(self.swarm.nodes, self.state.peers)
         for peer_id, endpoints in peer_candidates(self.swarm.nodes, self.state.peers).items():
             if peer_id == self.node_id:
+                continue
+            if not endpoints:
+                log.warning("swarm: у соседа %s нет ни одного адреса — пропускаю", peer_id)
                 continue
             link = make_peer_link(peer_id, endpoints)
             kind = kinds.get(peer_id)
@@ -203,6 +207,7 @@ class Swarm:
 
     async def start(self) -> None:
         await self.server.start()
+        self._started = True
         self._announce_task = asyncio.create_task(
             announce_version(
                 self.state, self.state_path, self.server.broadcast_event, version=self.version
@@ -245,6 +250,9 @@ class Swarm:
                 )
 
     async def stop(self) -> None:
+        if not self._started:
+            return
+        self._started = False
         await self.emit(EVENT_NODE_LEAVING, {"node": self.node_id, "kind": self.kind})
         if self._announce_task is not None:
             self._announce_task.cancel()
