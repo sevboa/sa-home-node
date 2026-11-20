@@ -1,35 +1,16 @@
 from __future__ import annotations
 
 import asyncio
-import contextlib
-import os
 
-import pytest
 from netlab import NetLabProxy
-from support import StubService, wait_for
+from support import TOKEN, StubService, wait_for
 
 from sa_home_node.proto.endpoints import TcpEndpoint
 from sa_home_node.proto.server import ProtoServer
-from sa_home_node.proto.wire import (
-    ERR_TIMEOUT,
-    ERR_UNAVAILABLE,
-    ERR_UNKNOWN_DST,
-    MSG_GET_STATE,
-    Address,
-    ProtoError,
-    make_request,
-)
+from sa_home_node.proto.wire import MSG_GET_STATE, Address, make_request
 from sa_home_node.swarm import link as link_mod
 from sa_home_node.swarm.link import PeerLink
 from sa_home_node.swarm.router import NodeRouter
-
-TOKEN = "test-token"
-
-
-async def _start_server(endpoint: str, service: StubService) -> ProtoServer:
-    server = ProtoServer(endpoint, service, token=TOKEN)
-    await server.start()
-    return server
 
 
 async def test_freeze_drops_link_then_unfreeze_recovers(monkeypatch) -> None:
@@ -184,71 +165,6 @@ async def test_stale_address_moved_to_end(monkeypatch) -> None:
         await server2.stop()
 
 
-async def test_forward_without_connection_raises_unavailable() -> None:
-    link = PeerLink("node-b", "tcp://127.0.0.1:1", token=TOKEN, reconnect_delay=0.05)
-    env = make_request(MSG_GET_STATE, dst=Address(node="node-b", service="node"))
-    try:
-        with pytest.raises(ProtoError) as exc_info:
-            await link.forward(env)
-        assert exc_info.value.code == ERR_UNAVAILABLE
-    finally:
-        await link.stop()
-
-
-async def test_forward_timeout_keeps_link_alive(sock_dir: str) -> None:
-    class SlowService(StubService):
-        async def get_state(self) -> dict:
-            await asyncio.sleep(1.0)
-            return await super().get_state()
-
-    sock = os.path.join(sock_dir, "slow.sock")
-    with contextlib.suppress(OSError):
-        os.unlink(sock)
-
-    service = SlowService(node="node-b")
-    server = await _start_server(f"unix:{sock}", service)
-
-    link = PeerLink(
-        "node-b",
-        f"unix:{sock}",
-        token=TOKEN,
-        reconnect_delay=0.05,
-    )
-    try:
-        await link.start()
-        assert await wait_for(lambda: link.alive)
-
-        env = make_request(MSG_GET_STATE, dst=Address(node="node-b", service="node"), timeout_s=0.1)
-        with pytest.raises(ProtoError) as exc_info:
-            await link.forward(env)
-        assert exc_info.value.code == ERR_TIMEOUT
-        assert link.alive
-    finally:
-        await link.stop()
-        await server.stop()
-        with contextlib.suppress(OSError):
-            os.unlink(sock)
-
-
-async def test_kind_wake_addresses_only_on_confirmed_response(monkeypatch) -> None:
-    monkeypatch.setattr(link_mod, "HEARTBEAT_INTERVAL_S", 0.05)
-
-    service = StubService(node="node-b", node_kind="server")
-    server = ProtoServer(TcpEndpoint("127.0.0.1", 0), service, token=TOKEN)
-    await server.start()
-    port = server.endpoint.port
-
-    link = PeerLink("node-b", f"tcp://127.0.0.1:{port}", token=TOKEN, reconnect_delay=0.05)
-    try:
-        await link.start()
-        assert await wait_for(lambda: link.alive)
-        assert link.node_kind == "server"
-        assert len(link.endpoints) >= 1
-    finally:
-        await link.stop()
-        await server.stop()
-
-
 async def test_loss_window_12(monkeypatch) -> None:
     monkeypatch.setattr(link_mod, "HEARTBEAT_INTERVAL_S", 0.05)
     monkeypatch.setattr(link_mod, "HEARTBEAT_MISSES", 30)
@@ -285,35 +201,3 @@ async def test_loss_window_12(monkeypatch) -> None:
         await link.stop()
         await proxy.stop()
         await server.stop()
-
-
-async def test_unknown_dst_raises() -> None:
-    router = NodeRouter("node-a", peers={})
-    req = make_request(MSG_GET_STATE, dst=Address(node="node-z", service="node"))
-    with pytest.raises(ProtoError) as exc_info:
-        await router.route(req)
-    assert exc_info.value.code == ERR_UNKNOWN_DST
-
-
-async def test_dead_peer_returns_unavailable() -> None:
-    service = StubService(node="node-b")
-    server = ProtoServer(TcpEndpoint("127.0.0.1", 0), service, token=TOKEN)
-    await server.start()
-    port = server.endpoint.port
-
-    link = PeerLink("node-b", f"tcp://127.0.0.1:{port}", token=TOKEN, reconnect_delay=60.0)
-    router = NodeRouter("node-a", peers={"node-b": link})
-
-    await link.start()
-    try:
-        assert await wait_for(lambda: link.alive)
-
-        await server.stop()
-        assert await wait_for(lambda: not link.alive)
-
-        req = make_request(MSG_GET_STATE, dst=Address(node="node-b", service="node"))
-        with pytest.raises(ProtoError) as exc_info:
-            await router.route(req)
-        assert exc_info.value.code == ERR_UNAVAILABLE
-    finally:
-        await link.stop()

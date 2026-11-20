@@ -7,6 +7,15 @@ from collections.abc import Callable
 
 from sa_home_node.config import NodeConfig, NodeSection
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription, ServiceInfo
+from sa_home_node.proto.server import ProtoServer
+
+TOKEN = "test-token"
+
+
+async def start_server(endpoint: str, service: StubService) -> ProtoServer:
+    server = ProtoServer(endpoint, service, token=TOKEN)
+    await server.start()
+    return server
 
 
 def free_port() -> int:
