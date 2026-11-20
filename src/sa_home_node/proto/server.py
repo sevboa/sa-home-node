@@ -324,7 +324,7 @@ class ProtoServer:
                 if self._router is not None:
                     response = await self._router(request)
                 if response is None:
-                    response = await self._dispatch(request)
+                    response = await self.dispatch(request)
         except ProtoError as exc:
             close_after = exc.code == ERR_UNAUTHORIZED
             request_id = request.id if request is not None else "?"
@@ -367,7 +367,7 @@ class ProtoServer:
         if self._on_peer_connect is not None:
             self._on_peer_connect(node)
 
-    async def _dispatch(self, request: Envelope) -> Envelope:
+    async def dispatch(self, request: Envelope) -> Envelope:
         if request.type == MSG_HELLO:
             return make_response(request, self._handler.describe().info.to_payload())
         if request.type == MSG_DESCRIBE:
