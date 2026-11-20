@@ -6,6 +6,8 @@ from pathlib import Path
 from sa_home_node.config import load_config
 from sa_home_node.content import ContentStore
 from sa_home_node.plugins import ServiceContext, ServiceSpec, load_plugins, make_context
+from sa_home_node.swarm.node import Swarm, SwarmApi
+from sa_home_node.swarm.state import NodeState
 
 RESTART_DELAY_S = 5.0
 
@@ -32,7 +34,12 @@ async def run_node(
     cfg = load_config(config_path)
     plugins = load_plugins(cfg.node.plugins)
     content = ContentStore(cfg.content_dir)
-    contexts = [(p, make_context(p, cfg, content)) for p in plugins]
+    swarm = Swarm(cfg, NodeState.load(cfg.node.state_path))
+    for plugin in plugins:
+        for action in plugin.node_actions:
+            swarm.node_service.actions.add(action.spec, action.handler)
+    api = SwarmApi(swarm)
+    contexts = [(p, make_context(p, cfg, content, api)) for p in plugins]
     for _, ctx in contexts:
         ctx.data_dir.mkdir(parents=True, exist_ok=True)
     own_stop = stop is None
@@ -41,12 +48,14 @@ async def run_node(
         loop = asyncio.get_running_loop()
         for sig in (signal.SIGTERM, signal.SIGINT):
             loop.add_signal_handler(sig, stop.set)
-    tasks = [
-        asyncio.create_task(supervise(f"{p.name}.{s.name}", s, ctx, restart_delay_s))
-        for p, ctx in contexts
-        for s in p.services
-    ]
+    tasks: list[asyncio.Task] = []
     try:
+        await swarm.start()
+        tasks = [
+            asyncio.create_task(supervise(f"{p.name}.{s.name}", s, ctx, restart_delay_s))
+            for p, ctx in contexts
+            for s in p.services
+        ]
         await stop.wait()
     finally:
         if own_stop:
@@ -55,3 +64,4 @@ async def run_node(
         for task in reversed(tasks):
             task.cancel()
             await asyncio.gather(task, return_exceptions=True)
+        await swarm.stop()

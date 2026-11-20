@@ -7,6 +7,8 @@ from pydantic import BaseModel
 
 from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
+from sa_home_node.proto.actions import NodeAction
+from sa_home_node.swarm.node import SwarmApi
 
 ENTRY_POINT_GROUP = "sa_home_node.plugins"
 
@@ -21,6 +23,7 @@ class ServiceContext:
     data_dir: Path
     config: BaseModel | None
     content: ContentStore
+    swarm: SwarmApi | None = None
 
 
 @dataclass(frozen=True)
@@ -35,6 +38,7 @@ class Plugin:
     config_model: type[BaseModel] | None = None
     services: tuple[ServiceSpec, ...] = ()
     content_keys: tuple[str, ...] = ()
+    node_actions: tuple[NodeAction, ...] = ()
 
 
 def available() -> dict[str, EntryPoint]:
@@ -67,7 +71,9 @@ def load_plugins(names: Iterable[str]) -> list[Plugin]:
     return result
 
 
-def make_context(plugin: Plugin, config: NodeConfig, content: ContentStore) -> ServiceContext:
+def make_context(
+    plugin: Plugin, config: NodeConfig, content: ContentStore, swarm: SwarmApi | None = None
+) -> ServiceContext:
     section = None
     if plugin.config_model is not None:
         section = config.section(plugin.name, plugin.config_model)
@@ -77,4 +83,5 @@ def make_context(plugin: Plugin, config: NodeConfig, content: ContentStore) -> S
         data_dir=config.data_dir / plugin.name,
         config=section,
         content=content,
+        swarm=swarm,
     )

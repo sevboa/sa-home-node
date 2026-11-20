@@ -4,12 +4,21 @@ import asyncio
 import os
 import socket
 
+import pytest
 from support import wait_for
 
 from sa_home_node.config import NodeConfig, NodeSection
-from sa_home_node.proto.wire import MSG_GET_STATE, Address, Envelope, make_request
+from sa_home_node.proto.describe import ActionSpec
+from sa_home_node.proto.wire import (
+    ERR_UNKNOWN_ACTION,
+    MSG_GET_STATE,
+    Address,
+    Envelope,
+    ProtoError,
+    make_request,
+)
 from sa_home_node.swarm.config import SwarmPeer
-from sa_home_node.swarm.node import Swarm, peer_candidates, peer_kinds
+from sa_home_node.swarm.node import Swarm, SwarmApi, peer_candidates, peer_kinds
 from sa_home_node.swarm.state import NodeState
 
 
@@ -158,4 +167,40 @@ async def test_two_nodes_find_each_other_and_greet(sock_dir: str, tmp_path) -> N
     finally:
         if restarted is not None:
             await restarted.stop()
+        await swarm_a.stop()
+
+
+async def test_swarm_api_commands_between_nodes(sock_dir: str, tmp_path) -> None:
+    port_a = free_port()
+    port_b = free_port()
+    cfg_a = make_cfg(
+        "node-a",
+        sock_dir,
+        tmp_path,
+        port_a,
+        nodes=[{"id": "node-b", "endpoint": f"tcp://127.0.0.1:{port_b}"}],
+    )
+    cfg_b = make_cfg("node-b", sock_dir, tmp_path, port_b, join=f"tcp://127.0.0.1:{port_a}")
+    async def ping(args: dict) -> dict:
+        return {"pong": args.get("text", "")}
+
+    swarm_a = Swarm(cfg_a, NodeState())
+    swarm_b = Swarm(cfg_b, NodeState())
+    swarm_b.node_service.actions.add(ActionSpec(id="p1_ping", title="Пинг p1"), ping)
+    api = SwarmApi(swarm_a)
+    try:
+        await swarm_a.start()
+        await swarm_b.start()
+        assert await wait_for(lambda: swarm_a.router.peers["node-b"].alive, timeout=10.0)
+        assert api.node_id == "node-a"
+        result = await api.command("node-b", "p1_ping", {"text": "hi"})
+        assert result == {"pong": "hi"}
+        assert (await api.get_state("node-b"))["node"] == "node-b"
+        desc = await api.describe("node-b")
+        assert any(a["id"] == "p1_ping" for a in desc["actions"])
+        with pytest.raises(ProtoError) as exc:
+            await api.command("node-b", "нет_такого", {})
+        assert exc.value.code == ERR_UNKNOWN_ACTION
+    finally:
+        await swarm_b.stop()
         await swarm_a.stop()

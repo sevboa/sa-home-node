@@ -1,12 +1,19 @@
 from __future__ import annotations
 
 from collections.abc import Awaitable, Callable
+from dataclasses import dataclass
 from typing import Any
 
 from sa_home_node.proto.describe import ActionSpec
 from sa_home_node.proto.wire import ERR_UNKNOWN_ACTION, ProtoError
 
 ActionHandler = Callable[[dict[str, Any]], Awaitable[dict[str, Any]]]
+
+
+@dataclass(frozen=True)
+class NodeAction:
+    spec: ActionSpec
+    handler: ActionHandler
 
 
 class ActionTable:

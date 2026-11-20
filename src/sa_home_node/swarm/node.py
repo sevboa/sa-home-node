@@ -8,18 +8,22 @@ from sa_home_node import __version__
 from sa_home_node.config import NodeConfig
 from sa_home_node.proto.server import ProtoServer
 from sa_home_node.proto.wire import (
+    MSG_COMMAND,
+    MSG_DESCRIBE,
+    MSG_GET_STATE,
     NODE_SERVICE,
     Address,
     Envelope,
     ProtoError,
     make_event,
+    make_request,
 )
 from sa_home_node.swarm.config import SwarmSection, swarm_section
 from sa_home_node.swarm.discovery import SwarmDiscovery
 from sa_home_node.swarm.events import EVENT_NODE_LEAVING
 from sa_home_node.swarm.link import PeerLink
 from sa_home_node.swarm.presence import PresenceWatcher
-from sa_home_node.swarm.relay import EventRelay, announce_version
+from sa_home_node.swarm.relay import EventHandler, EventRelay, announce_version
 from sa_home_node.swarm.router import NodeRouter
 from sa_home_node.swarm.service import NodeService
 from sa_home_node.swarm.state import NodeState
@@ -27,6 +31,52 @@ from sa_home_node.swarm.state import NodeState
 log = logging.getLogger(__name__)
 
 LOCAL_HEARTBEAT_TIMEOUT_S = 20.0
+COMMAND_TIMEOUT_S = 10.0
+
+
+class SwarmApi:
+    def __init__(self, swarm: Swarm) -> None:
+        self._swarm = swarm
+
+    @property
+    def node_id(self) -> str:
+        return self._swarm.node_id
+
+    async def emit(self, event: str, data: dict, *, service: str = NODE_SERVICE) -> None:
+        await self._swarm.emit(event, data, service=service)
+
+    def subscribe(self, handler: EventHandler) -> None:
+        self._swarm.subscribe(handler)
+
+    async def _call(
+        self, type_: str, payload: dict, dst: str, service: str, timeout_s: float
+    ) -> dict:
+        env = make_request(
+            type_, payload, dst=Address(node=dst, service=service), timeout_s=timeout_s
+        )
+        response = await self._swarm.request(env)
+        if response.ok is not True:
+            raise ProtoError(response.error_code() or "unknown", response.error_message())
+        return response.payload
+
+    async def command(
+        self,
+        dst: str,
+        action: str,
+        args: dict | None = None,
+        *,
+        service: str = NODE_SERVICE,
+        timeout_s: float = COMMAND_TIMEOUT_S,
+    ) -> dict:
+        return await self._call(
+            MSG_COMMAND, {"action": action, "args": args or {}}, dst, service, timeout_s
+        )
+
+    async def get_state(self, dst: str, *, service: str = NODE_SERVICE) -> dict:
+        return await self._call(MSG_GET_STATE, {}, dst, service, COMMAND_TIMEOUT_S)
+
+    async def describe(self, dst: str, *, service: str = NODE_SERVICE) -> dict:
+        return await self._call(MSG_DESCRIBE, {}, dst, service, COMMAND_TIMEOUT_S)
 
 
 def make_link_factories(
@@ -213,7 +263,7 @@ class Swarm:
         env = make_event(event, data, src=Address(node=self.node_id, service=service))
         await self.relay.on_event(env, local=True)
 
-    def subscribe(self, handler) -> None:
+    def subscribe(self, handler: EventHandler) -> None:
         self.relay.handlers.append(handler)
 
     async def request(self, env: Envelope) -> Envelope:
