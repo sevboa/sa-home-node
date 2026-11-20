@@ -1,9 +1,31 @@
 from __future__ import annotations
 
 import asyncio
+import os
+import socket
 from collections.abc import Callable
 
+from sa_home_node.config import NodeConfig, NodeSection
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription, ServiceInfo
+
+
+def free_port() -> int:
+    with socket.socket() as sock:
+        sock.bind(("127.0.0.1", 0))
+        return int(sock.getsockname()[1])
+
+
+def make_cfg(node_id: str, sock_dir: str, tmp_path, port: int, **swarm) -> NodeConfig:
+    return NodeConfig(
+        path=tmp_path / "config.toml",
+        node=NodeSection(
+            id=node_id,
+            socket=os.path.join(sock_dir, f"{node_id}.sock"),
+            listen=[f"tcp://127.0.0.1:{port}"],
+            state_path=str(tmp_path / f"{node_id}.json"),
+        ),
+        sections={"swarm": {"token": "test-token", "discovery": {"enabled": False}, **swarm}},
+    )
 
 
 class StubService:
