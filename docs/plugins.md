@@ -11,7 +11,10 @@
   - `config_model` — pydantic-модель секции конфига или `None`;
   - `services` — кортеж `ServiceSpec`;
   - `content_keys` — ключи контента вида `"<плагин>.<имя>"`, которые
-    плагин требует.
+    плагин требует;
+  - `node_actions` — кортеж `NodeAction(spec, handler)` действий службы
+    `node`: регистрируются в ней при старте ноды, видны в `describe` и
+    вызываются с других нод через `command` на службу `node`.
 - `ServiceSpec` — одна служба: `name` и `run` — асинхронная функция
   `Callable[[ServiceContext], Awaitable[None]]`.
 - `ServiceContext` — контекст службы:
@@ -19,7 +22,10 @@
   - `data_dir` — `config.data_dir / <имя плагина>`: плагин держит свои
     данные в `data_dir / <имя плагина>`;
   - `config` — валидированная секция конфига или `None`;
-  - `content` — `ContentStore` ноды.
+  - `content` — `ContentStore` ноды;
+  - `swarm` — `SwarmApi` ноды или `None`: `node_id`, `emit` (событие в рой),
+    `subscribe`, `command(dst, action, args, service=…, timeout_s=…)`,
+    `get_state(dst)`, `describe(dst)`.
 
 ## Загрузка
 
@@ -38,12 +44,13 @@
 
 ## Контекст
 
-`make_context(plugin, config, content)`:
+`make_context(plugin, config, content, swarm=None)`:
 
 - если у плагина есть `config_model` — `config.section(plugin.name, model)`,
   иначе `config = None`;
 - `content.require(plugin.content_keys)`;
-- `ConfigError` и `ContentError` пробрасываются как есть.
+- `ConfigError` и `ContentError` пробрасываются как есть;
+- `swarm` — передаётся в `ServiceContext.swarm` как есть.
 
 ## Объявление точки входа в pyproject.toml плагина
 
@@ -65,11 +72,29 @@ example = "my_pkg.plugin:PLUGIN"
 - `ExampleConfig` — pydantic-модель секции `[example]`: `interval_s`
   (по умолчанию 60.0);
 - служба `hello` — бесконечный цикл: пишет в журнал приветствие из
-  контента (`ctx.content.get("example.greeting")`) и спит `interval_s`;
+  контента (`ctx.content.get("example.greeting")`) и, если рой запущен
+  (`ctx.swarm is not None`), шлёт в рой событие `example_greeting` с
+  этим текстом (`ctx.swarm.emit`); затем спит `interval_s`;
+- действие `example_ping` — handler для `NodeAction`: возвращает словарь
+  с ключом `pong` и текстом из `text`;
 - `PLUGIN = Plugin(name="example", config_model=ExampleConfig,
   services=(ServiceSpec("hello", hello),),
-  content_keys=("example.greeting",))` — требует ключ контента
-  `example.greeting` из `content/example.toml`.
+  content_keys=("example.greeting",),
+  node_actions=(NodeAction(ActionSpec(...), example_ping),))` — требует ключ
+  контента `example.greeting` из `content/example.toml`, объявляет действие
+  `example_ping` (необязательный параметр `text`) в службе `node`.
+
+Фрагмент кода плагина с роем:
+
+```python
+async def hello(ctx: ServiceContext) -> None:
+    while True:
+        text = ctx.content.get("example.greeting")
+        log.info(text)
+        if ctx.swarm is not None:
+            await ctx.swarm.emit("example_greeting", {"text": text})
+        await asyncio.sleep(ctx.config.interval_s)
+```
 
 Запуск: `sa-home-node run --config config.toml` (см.
 [architecture](architecture.md)).
