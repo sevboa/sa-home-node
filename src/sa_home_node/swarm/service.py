@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 import logging
 import time
 from collections.abc import Callable
@@ -11,7 +12,16 @@ from sa_home_node.proto.actions import ActionTable
 from sa_home_node.proto.client import ProtoClient
 from sa_home_node.proto.describe import ActionParam, ActionSpec, ServiceDescription, ServiceInfo
 from sa_home_node.proto.endpoints import merge_endpoints
-from sa_home_node.proto.wire import ERR_BAD_REQUEST, ERR_UNAVAILABLE, NODE_SERVICE, ProtoError
+from sa_home_node.proto.wire import (
+    ERR_BAD_REQUEST,
+    ERR_UNAVAILABLE,
+    ERR_UNKNOWN_DST,
+    MSG_COMMAND,
+    NODE_SERVICE,
+    Address,
+    ProtoError,
+    make_request,
+)
 from sa_home_node.swarm.events import ACTION_SWARM_JOIN, EVENT_NODE_JOINED
 from sa_home_node.swarm.link import PeerLink
 from sa_home_node.swarm.relay import LinkFactory
@@ -23,6 +33,10 @@ log = logging.getLogger(__name__)
 StatePart = Callable[[], Any]
 
 CAPABILITIES = ("supervisor", "power")
+
+ACTION_TRIGGER_PEERS = "trigger_peers"
+TRIGGER_PEERS_TITLE = "📡 Разослать команду службе на всех нодах"
+TRIGGER_TIMEOUT_S = 5.0
 
 ACTION_JOIN = "join"
 SWARM_JOIN_TITLE = "🤝 Присоединить ноду"
@@ -62,6 +76,18 @@ class NodeService:
         self._make_peer_link = make_peer_link or (lambda name, eps: PeerLink(name, eps, token=swarm_token))
         self._emit = emit
         self._swarm_token = swarm_token
+
+        self.actions.add(
+            ActionSpec(
+                id=ACTION_TRIGGER_PEERS,
+                title=TRIGGER_PEERS_TITLE,
+                params=(
+                    ActionParam(name="service", required=True, title="Служба"),
+                    ActionParam(name="action", required=True, title="Действие"),
+                ),
+            ),
+            self.trigger_peers,
+        )
 
         if own_endpoint:
             self.actions.add(
@@ -136,6 +162,45 @@ class NodeService:
     def _save_state(self) -> None:
         if self._state_path is not None:
             self.state.save(self._state_path)
+
+    async def trigger_peers(self, args: dict[str, Any]) -> dict[str, Any]:
+        service = str(args.get("service", ""))
+        if not service:
+            raise ProtoError(ERR_BAD_REQUEST, "не передан service")
+        action = str(args.get("action", ""))
+        if not action:
+            raise ProtoError(ERR_BAD_REQUEST, "не передан action")
+        call_args = args.get("args") or {}
+        if not isinstance(call_args, dict):
+            raise ProtoError(ERR_BAD_REQUEST, "args должен быть объектом")
+        timeout_s = float(args.get("timeout_s") or TRIGGER_TIMEOUT_S)
+        node_ids = [self.node_id]
+        if self.router is not None:
+            node_ids += [p["id"] for p in self.router.peers_state() if p["alive"]]
+
+        async def dispatch_one(node_id: str) -> tuple[str, str]:
+            if self.router is None:
+                return node_id, "unreachable"
+            env = make_request(
+                MSG_COMMAND,
+                {"action": action, "args": call_args},
+                dst=Address(node=node_id, service=service),
+                timeout_s=timeout_s,
+            )
+            try:
+                response = await self.router.route(env)
+            except (ConnectionError, OSError, TimeoutError, ProtoError) as exc:
+                code = exc.code if isinstance(exc, ProtoError) else None
+                return node_id, "skipped" if code == ERR_UNKNOWN_DST else "unreachable"
+            if response is None or response.ok is False:
+                code = response.error_code() if response is not None else None
+                return node_id, "skipped" if code == ERR_UNKNOWN_DST else "unreachable"
+            return node_id, "dispatched"
+
+        outcome: dict[str, list[str]] = {"dispatched": [], "skipped": [], "unreachable": []}
+        for node_id, status in await asyncio.gather(*(dispatch_one(n) for n in node_ids)):
+            outcome[status].append(node_id)
+        return outcome
 
     async def swarm_join(self, args: dict[str, Any]) -> dict[str, Any]:
         caller_id = str(args.get("node_id", ""))

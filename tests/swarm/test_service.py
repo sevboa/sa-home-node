@@ -10,7 +10,7 @@ from sa_home_node.proto.describe import ActionParam, ActionSpec
 from sa_home_node.proto.server import ProtoServer
 from sa_home_node.proto.wire import ERR_UNKNOWN_ACTION, ProtoError
 from sa_home_node.swarm.events import ACTION_SWARM_JOIN
-from sa_home_node.swarm.service import ACTION_JOIN, NodeService
+from sa_home_node.swarm.service import ACTION_JOIN, ACTION_TRIGGER_PEERS, NodeService
 
 
 class FakeHost:
@@ -57,7 +57,11 @@ async def test_describe_without_router() -> None:
     assert info.endpoints == tuple(svc.advertised())
     desc = svc.describe()
     assert desc.capabilities == ("supervisor", "power")
-    assert [a.id for a in desc.actions] == [ACTION_SWARM_JOIN, ACTION_JOIN]
+    assert [a.id for a in desc.actions] == [
+        ACTION_TRIGGER_PEERS,
+        ACTION_SWARM_JOIN,
+        ACTION_JOIN,
+    ]
 
 
 async def test_live_advertise_wins() -> None:
@@ -85,7 +89,7 @@ async def test_describe_actions_in_order() -> None:
     svc = make_service()
     svc.actions.add(ActionSpec(id="b", title="B"), noop)
     svc.actions.add(ActionSpec(id="a", title="A"), noop)
-    assert [s.id for s in svc.describe().actions] == ["b", "a"]
+    assert [s.id for s in svc.describe().actions] == [ACTION_TRIGGER_PEERS, "b", "a"]
 
 
 async def test_get_state_keys_order(monkeypatch: pytest.MonkeyPatch) -> None:
@@ -204,7 +208,7 @@ async def test_hello_over_socket(node_pair) -> None:
 async def test_describe_over_socket(node_pair) -> None:
     _srv, client = node_pair
     desc = await client.describe()
-    assert [s.id for s in desc.actions] == ["ping"]
+    assert [s.id for s in desc.actions] == [ACTION_TRIGGER_PEERS, "ping"]
     assert desc.capabilities == ("supervisor", "power")
 
 
