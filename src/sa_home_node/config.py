@@ -3,7 +3,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, TypeVar
 
-from pydantic import BaseModel, ValidationError, field_validator
+from pydantic import BaseModel, Field, ValidationError, field_validator
 
 from sa_home_node.swarm.kind import NodeKind
 
@@ -25,6 +25,10 @@ class NodeSection(BaseModel):
     socket: str = "./data/node.sock"
     listen: list[str] = []
     state_path: str = "./data/node-state.json"
+    assignments: list[str] = []
+    restart_delay_s: float = Field(default=5.0, gt=0)
+    stop_timeout_s: float = Field(default=90.0, gt=0)
+    power_controllable: bool | None = None
 
     @field_validator("listen", mode="before")
     @classmethod

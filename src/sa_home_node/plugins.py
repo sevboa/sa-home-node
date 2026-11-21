@@ -8,6 +8,7 @@ from pydantic import BaseModel
 from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
 from sa_home_node.proto.actions import NodeAction
+from sa_home_node.proto.server import ServiceHandler
 from sa_home_node.swarm.node import SwarmApi
 
 ENTRY_POINT_GROUP = "sa_home_node.plugins"
@@ -24,12 +25,22 @@ class ServiceContext:
     config: BaseModel | None
     content: ContentStore
     swarm: SwarmApi | None = None
+    instance: str = ""
+    package_path: Path | None = None
 
 
 @dataclass(frozen=True)
 class ServiceSpec:
     name: str
     run: Callable[[ServiceContext], Awaitable[None]]
+    handler: Callable[[ServiceContext], ServiceHandler] | None = None
+    process: bool = False
+    endpoint: Callable[[BaseModel | None], str] | None = None
+    assignable: bool = True
+    external: bool = False
+    singleton: bool = False
+    instanced: bool = False
+    satellites: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -39,6 +50,7 @@ class Plugin:
     services: tuple[ServiceSpec, ...] = ()
     content_keys: tuple[str, ...] = ()
     node_actions: tuple[NodeAction, ...] = ()
+    power_blockers: tuple[Callable[[], Awaitable[list[str]]], ...] = ()
 
 
 def available() -> dict[str, EntryPoint]:

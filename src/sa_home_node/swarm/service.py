@@ -34,6 +34,28 @@ StatePart = Callable[[], Any]
 
 CAPABILITIES = ("supervisor", "power")
 
+NODE_ACTION_ORDER = (
+    "start",
+    "stop",
+    "restart",
+    "assign",
+    "unassign",
+    "send_wol",
+    "report_ready",
+    "trigger_peers",
+    "swarm_join",
+    "join",
+    "restart_node",
+    "check_update",
+    "update",
+    "poweroff",
+    "reboot",
+    "suspend",
+    "close_ssh_sessions",
+    "list_instances",
+    "get_instance_config",
+)
+
 ACTION_TRIGGER_PEERS = "trigger_peers"
 TRIGGER_PEERS_TITLE = "📡 Разослать команду службе на всех нодах"
 TRIGGER_TIMEOUT_S = 5.0
@@ -64,7 +86,7 @@ class NodeService:
         self.kind = kind
         self.version = version
         self.router = router
-        self.actions = ActionTable()
+        self.actions = ActionTable(NODE_ACTION_ORDER)
         self.state_parts: dict[str, StatePart] = {}
         self._started = time.monotonic()
         self._advertise = advertise

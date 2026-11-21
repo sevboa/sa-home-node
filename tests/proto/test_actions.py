@@ -15,11 +15,21 @@ def spec(action_id: str = "ping", params: tuple[ActionParam, ...] = ()) -> Actio
     return ActionSpec(id=action_id, title=f"Действие {action_id}", params=params)
 
 
-async def test_specs_in_registration_order() -> None:
+@pytest.mark.parametrize(
+    "adds, expected",
+    [(["x", "c", "a"], ["a", "c", "x"]), (["b", "y", "x"], ["b", "y", "x"])],
+)
+async def test_specs_order(adds: list, expected: list) -> None:
+    table = ActionTable(order=("a", "b", "c"))
+    for action_id in adds:
+        table.add(spec(action_id), noop)
+    assert [s.id for s in table.specs()] == expected
+
+
+async def test_specs_order_empty() -> None:
     table = ActionTable()
-    table.add(spec("b"), noop)
-    table.add(spec("a"), noop)
-    table.add(spec("c"), noop)
+    for action_id in ["b", "a", "c"]:
+        table.add(spec(action_id), noop)
     assert [s.id for s in table.specs()] == ["b", "a", "c"]
 
 

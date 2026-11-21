@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
+from collections.abc import Awaitable, Callable, Sequence
 from dataclasses import dataclass
 from typing import Any
 
@@ -17,7 +17,8 @@ class NodeAction:
 
 
 class ActionTable:
-    def __init__(self) -> None:
+    def __init__(self, order: Sequence[str] = ()) -> None:
+        self._order = order
         self._specs: list[ActionSpec] = []
         self._handlers: dict[str, ActionHandler] = {}
 
@@ -28,7 +29,10 @@ class ActionTable:
         self._handlers[spec.id] = handler
 
     def specs(self) -> tuple[ActionSpec, ...]:
-        return tuple(self._specs)
+        by_id = {s.id: s for s in self._specs}
+        ordered = tuple(by_id[i] for i in self._order if i in by_id)
+        ordered += tuple(s for s in self._specs if s.id not in set(self._order))
+        return ordered
 
     def __contains__(self, action_id: object) -> bool:
         return isinstance(action_id, str) and action_id in self._handlers

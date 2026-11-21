@@ -87,7 +87,7 @@ def test_section_error(tmp_path: Path) -> None:
 def test_extra_keys(tmp_path: Path) -> None:
     p = write(
         tmp_path,
-        '[node]\nid = "n"\nassignments = ["svc"]\npower_rule = "x"\nidle_poweroff = true\n'
+        '[node]\nid = "n"\nunknown_key = ["svc"]\npower_rule = "x"\nidle_poweroff = true\n'
         "\n[monitor]\nport = 1\n",
     )
     cfg = load_config(p)
@@ -131,7 +131,7 @@ def test_socket_state_absolute(tmp_path: Path) -> None:
 def test_swarm_section(tmp_path: Path) -> None:
     p = write(
         tmp_path,
-        '[node]\nid = "n"\n\n[swarm]\ntoken = "test-token"\nfailover_grace_s = 7.0\n'
+        '[node]\nid = "n"\n\n[swarm]\ntoken = "test-token"\nunknown_key = 7.0\n'
         "\n[swarm.discovery]\nport = 4001\n",
     )
     cfg = load_config(p)
@@ -141,6 +141,56 @@ def test_swarm_section(tmp_path: Path) -> None:
         discovery=DiscoverySection(port=4001),
     )
     assert s.node_down_alert_after_s == 300.0
+
+
+def test_supervisor_keys_defaults(tmp_path: Path) -> None:
+    p = write(tmp_path, '[node]\nid = "n1"\n')
+    cfg = load_config(p)
+    assert cfg.node.assignments == []
+    assert cfg.node.restart_delay_s == 5.0
+    assert cfg.node.stop_timeout_s == 90.0
+    assert cfg.node.power_controllable is None
+    s = swarm_section(cfg)
+    assert s.failover_grace_s == 120.0
+    assert s.superior_ready_timeout_s == 45.0
+
+
+def test_supervisor_keys_read(tmp_path: Path) -> None:
+    p = write(
+        tmp_path,
+        '[node]\nid = "n"\nassignments = ["svc", "svc-i@one:standby"]\nrestart_delay_s = 3.0\n'
+        'stop_timeout_s = 30.0\npower_controllable = false\nidle_poweroff = true\n'
+        '\n[node.power_rule]\nsvc_service = "x"\n\n[swarm]\nfailover_grace_s = 60.0\n'
+        'superior_ready_timeout_s = 25.0\n',
+    )
+    cfg = load_config(p)
+    assert cfg.node.assignments == ["svc", "svc-i@one:standby"]
+    assert cfg.node.restart_delay_s == 3.0
+    assert cfg.node.stop_timeout_s == 30.0
+    assert cfg.node.power_controllable is False
+    s = swarm_section(cfg)
+    assert s.failover_grace_s == 60.0
+    assert s.superior_ready_timeout_s == 25.0
+
+
+@pytest.mark.parametrize(
+    "field",
+    ["restart_delay_s", "stop_timeout_s"],
+)
+def test_supervisor_keys_positive(tmp_path: Path, field: str) -> None:
+    p = write(tmp_path, f'[node]\nid = "n"\n{field} = 0\n')
+    with pytest.raises(ConfigError):
+        load_config(p)
+
+
+@pytest.mark.parametrize(
+    "field",
+    ["node_down_alert_after_s", "failover_grace_s", "superior_ready_timeout_s"],
+)
+def test_supervisor_keys_positive_swarm(tmp_path: Path, field: str) -> None:
+    p = write(tmp_path, f'[node]\nid = "n"\n\n[swarm]\n{field} = 0\n')
+    with pytest.raises(ConfigError):
+        swarm_section(load_config(p))
 
 
 def test_bad_kind(tmp_path: Path) -> None:
