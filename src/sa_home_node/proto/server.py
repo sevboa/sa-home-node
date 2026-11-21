@@ -54,6 +54,31 @@ class ServiceHandler(Protocol):
 
 Router = Callable[[Envelope], Awaitable[Envelope | None]]
 
+
+async def dispatch_request(handler: ServiceHandler, request: Envelope) -> Envelope:
+    if request.type == MSG_HELLO:
+        return make_response(request, handler.describe().info.to_payload())
+    if request.type == MSG_DESCRIBE:
+        return make_response(request, handler.describe().to_payload())
+    if request.type == MSG_GET_STATE:
+        return make_response(request, await handler.get_state())
+    if request.type == MSG_COMMAND:
+        action_id = request.payload.get("action")
+        if not isinstance(action_id, str) or not action_id:
+            raise ProtoError(ERR_BAD_REQUEST, "command без action")
+        args = request.payload.get("args", {})
+        if not isinstance(args, dict):
+            raise ProtoError(ERR_BAD_REQUEST, "args должен быть объектом")
+        spec = handler.describe().find_action(action_id)
+        if spec is None:
+            raise ProtoError(ERR_UNKNOWN_ACTION, f"нет такого действия: {action_id}")
+        for param in spec.params:
+            if param.required and param.name not in args:
+                raise ProtoError(ERR_BAD_REQUEST, f"нет обязательного параметра: {param.name}")
+        result = await handler.run_command(action_id, args)
+        return make_response(request, result)
+    raise ProtoError(ERR_UNKNOWN_TYPE, f"неизвестный тип запроса: {request.type}")
+
 BIND_RETRY_TIMEOUT_S = 180.0
 BIND_RETRY_INTERVAL_S = 3.0
 BIND_RETRY_SLOW_INTERVAL_S = 30.0
@@ -368,30 +393,4 @@ class ProtoServer:
             self._on_peer_connect(node)
 
     async def dispatch(self, request: Envelope) -> Envelope:
-        if request.type == MSG_HELLO:
-            return make_response(request, self._handler.describe().info.to_payload())
-        if request.type == MSG_DESCRIBE:
-            return make_response(request, self._handler.describe().to_payload())
-        if request.type == MSG_GET_STATE:
-            return make_response(request, await self._handler.get_state())
-        if request.type == MSG_COMMAND:
-            return await self._run_command(request)
-        raise ProtoError(ERR_UNKNOWN_TYPE, f"неизвестный тип запроса: {request.type}")
-
-    async def _run_command(self, request: Envelope) -> Envelope:
-        action_id = request.payload.get("action")
-        if not isinstance(action_id, str) or not action_id:
-            raise ProtoError(ERR_BAD_REQUEST, "command без action")
-        args = request.payload.get("args", {})
-        if not isinstance(args, dict):
-            raise ProtoError(ERR_BAD_REQUEST, "args должен быть объектом")
-
-        spec = self._handler.describe().find_action(action_id)
-        if spec is None:
-            raise ProtoError(ERR_UNKNOWN_ACTION, f"нет такого действия: {action_id}")
-        for param in spec.params:
-            if param.required and param.name not in args:
-                raise ProtoError(ERR_BAD_REQUEST, f"нет обязательного параметра: {param.name}")
-
-        result = await self._handler.run_command(action_id, args)
-        return make_response(request, result)
+        return await dispatch_request(self._handler, request)

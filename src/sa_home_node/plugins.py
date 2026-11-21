@@ -18,6 +18,10 @@ class PluginError(RuntimeError):
     pass
 
 
+class ServiceFenced(RuntimeError):
+    pass
+
+
 @dataclass(frozen=True)
 class ServiceContext:
     node_id: str

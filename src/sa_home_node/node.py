@@ -5,7 +5,8 @@ from pathlib import Path
 
 from sa_home_node.config import load_config
 from sa_home_node.content import ContentStore
-from sa_home_node.plugins import ServiceContext, ServiceSpec, load_plugins, make_context
+from sa_home_node.plugins import load_plugins, make_context
+from sa_home_node.services.inproc import InProcessService
 from sa_home_node.swarm.node import Swarm, SwarmApi
 from sa_home_node.swarm.state import NodeState
 
@@ -14,16 +15,8 @@ RESTART_DELAY_S = 5.0
 log = logging.getLogger(__name__)
 
 
-async def supervise(name: str, spec: ServiceSpec, ctx: ServiceContext, restart_delay_s: float) -> None:
-    while True:
-        try:
-            await spec.run(ctx)
-        except Exception:
-            log.exception("Служба %s упала, перезапуск через %s с", name, restart_delay_s)
-            await asyncio.sleep(restart_delay_s)
-        else:
-            log.info("Служба %s завершилась", name)
-            return
+async def _noop(event_type: str, data: dict) -> None:
+    return None
 
 
 async def run_node(
@@ -48,20 +41,20 @@ async def run_node(
         loop = asyncio.get_running_loop()
         for sig in (signal.SIGTERM, signal.SIGINT):
             loop.add_signal_handler(sig, stop.set)
-    tasks: list[asyncio.Task] = []
+    services = [
+        InProcessService(s, ctx, emit=_noop, restart_delay_s=restart_delay_s)
+        for p, ctx in contexts
+        for s in p.services
+    ]
     try:
         await swarm.start()
-        tasks = [
-            asyncio.create_task(supervise(f"{p.name}.{s.name}", s, ctx, restart_delay_s))
-            for p, ctx in contexts
-            for s in p.services
-        ]
+        for svc in services:
+            await svc.start()
         await stop.wait()
     finally:
         if own_stop:
             for sig in (signal.SIGTERM, signal.SIGINT):
                 loop.remove_signal_handler(sig)
-        for task in reversed(tasks):
-            task.cancel()
-            await asyncio.gather(task, return_exceptions=True)
+        for svc in reversed(services):
+            await svc.stop()
         await swarm.stop()
