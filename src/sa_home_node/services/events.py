@@ -13,6 +13,7 @@ EVENT_SERVICE_FENCED = "service_fenced"
 EVENT_SINGLETON_ACTIVATED = "singleton_activated"
 EVENT_SINGLETON_YIELDED = "singleton_yielded"
 EVENT_INSTANCE_CONFIG_CHANGED = "instance_config_changed"
+EVENT_UPDATE_FINISHED = "update_finished"
 
 FENCED_EXIT_CODE = 11
 

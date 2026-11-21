@@ -8,6 +8,7 @@ from sa_home_node.proto.describe import ActionSpec
 from sa_home_node.proto.wire import ERR_UNKNOWN_ACTION, ProtoError
 
 ActionHandler = Callable[[dict[str, Any]], Awaitable[dict[str, Any]]]
+SpecSource = ActionSpec | Callable[[], ActionSpec]
 
 
 @dataclass(frozen=True)
@@ -16,22 +17,30 @@ class NodeAction:
     handler: ActionHandler
 
 
+def resolve(source: SpecSource) -> ActionSpec:
+    return source if isinstance(source, ActionSpec) else source()
+
+
 class ActionTable:
     def __init__(self, order: Sequence[str] = ()) -> None:
         self._order = order
-        self._specs: list[ActionSpec] = []
+        self._sources: list[SpecSource] = []
         self._handlers: dict[str, ActionHandler] = {}
 
-    def add(self, spec: ActionSpec, handler: ActionHandler) -> None:
-        if spec.id in self._handlers:
-            raise ValueError(f"дубликат действия: {spec.id}")
-        self._specs.append(spec)
-        self._handlers[spec.id] = handler
+    def add(self, spec: SpecSource, handler: ActionHandler) -> None:
+        self.add_hidden(resolve(spec).id, handler)
+        self._sources.append(spec)
+
+    def add_hidden(self, action_id: str, handler: ActionHandler) -> None:
+        if action_id in self._handlers:
+            raise ValueError(f"дубликат действия: {action_id}")
+        self._handlers[action_id] = handler
 
     def specs(self) -> tuple[ActionSpec, ...]:
-        by_id = {s.id: s for s in self._specs}
+        resolved = [resolve(source) for source in self._sources]
+        by_id = {s.id: s for s in resolved}
         ordered = tuple(by_id[i] for i in self._order if i in by_id)
-        ordered += tuple(s for s in self._specs if s.id not in set(self._order))
+        ordered += tuple(s for s in resolved if s.id not in set(self._order))
         return ordered
 
     def __contains__(self, action_id: object) -> bool:

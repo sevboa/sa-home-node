@@ -62,6 +62,10 @@ class InProcessService:
         return self._status
 
     @property
+    def ctx(self) -> ServiceContext:
+        return self._ctx
+
+    @property
     def pid(self) -> int | None:
         return None
 

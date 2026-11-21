@@ -5,7 +5,7 @@ import logging
 import os
 
 import pytest
-from support import StubService, wait_for
+from support import FakeLocalService, StubService, wait_for
 
 from sa_home_node.proto.client import ProtoClient
 from sa_home_node.proto.describe import ActionSpec, ServiceInfo
@@ -65,34 +65,6 @@ def router_for(*links: PeerLink) -> NodeRouter:
 
 def request_to(node: str, type_: str = MSG_GET_STATE) -> Envelope:
     return make_request(type_, dst=Address(node=node, service="node"))
-
-
-class FakeLocalService:
-    def __init__(
-        self,
-        name: str,
-        *,
-        alive: bool = True,
-        busy: bool = False,
-        working: bool | None = None,
-    ) -> None:
-        self.name = name
-        self.alive = alive
-        self.busy = busy
-        self.working = working
-        self.started = False
-        self.stopped = False
-        self.seen: list[Envelope] = []
-
-    async def start(self) -> None:
-        self.started = True
-
-    async def stop(self) -> None:
-        self.stopped = True
-
-    async def forward(self, env: Envelope) -> Envelope:
-        self.seen.append(env)
-        return make_response(env, {"service": self.name})
 
 
 async def test_direct_healthy_path_used() -> None:

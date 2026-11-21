@@ -8,8 +8,9 @@ from collections.abc import Callable
 from sa_home_node.config import NodeConfig, NodeSection
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription, ServiceInfo
 from sa_home_node.proto.server import ProtoServer
+from sa_home_node.proto.wire import Envelope, make_response
 from sa_home_node.services.assignments import Assignment, parse
-from sa_home_node.services.events import RUNNING, STOPPED
+from sa_home_node.services.events import RUNNING, STOPPED, slot_dict
 
 TOKEN = "test-token"
 
@@ -111,6 +112,13 @@ class FakeSlot:
         self.status = RUNNING if running else STOPPED
         self.process_alive = alive
         self.trace: list[str] = []
+        self.pid: int | None = None
+        self.restarts = 0
+        self.last_exit_code: int | None = None
+        self.started_at: str | None = None
+
+    def to_dict(self) -> dict:
+        return slot_dict(self)
 
     async def start(self) -> None:
         self.status = RUNNING
@@ -122,6 +130,34 @@ class FakeSlot:
 
     async def restart(self) -> None:
         self.trace.append("restart")
+
+
+class FakeLocalService:
+    def __init__(
+        self,
+        name: str,
+        *,
+        alive: bool = True,
+        busy: bool = False,
+        working: bool | None = None,
+    ) -> None:
+        self.name = name
+        self.alive = alive
+        self.busy = busy
+        self.working = working
+        self.started = False
+        self.stopped = False
+        self.seen: list[Envelope] = []
+
+    async def start(self) -> None:
+        self.started = True
+
+    async def stop(self) -> None:
+        self.stopped = True
+
+    async def forward(self, env: Envelope) -> Envelope:
+        self.seen.append(env)
+        return make_response(env, {"service": self.name})
 
 
 async def wait_for(predicate: Callable[[], bool], timeout: float = 5.0) -> bool:

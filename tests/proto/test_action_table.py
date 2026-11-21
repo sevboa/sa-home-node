@@ -62,6 +62,37 @@ async def test_run_unknown_action_raises_proto_error() -> None:
     assert "ghost" in exc.value.message
 
 
+async def test_callable_spec_resolved_on_each_describe() -> None:
+    table = ActionTable()
+    choices = ["a"]
+
+    def provider() -> ActionSpec:
+        return spec("pick", (ActionParam(name="name", choices=tuple(choices)),))
+
+    table.add(provider, noop)
+    assert table.specs()[0].params[0].choices == ("a",)
+    choices.append("b")
+    assert table.specs()[0].params[0].choices == ("a", "b")
+    assert "pick" in table
+
+
+async def test_callable_spec_duplicate_raises() -> None:
+    table = ActionTable()
+    table.add(spec("ping"), noop)
+    with pytest.raises(ValueError):
+        table.add(lambda: spec("ping"), noop)
+
+
+async def test_hidden_action_runs_but_is_not_described() -> None:
+    table = ActionTable()
+    table.add_hidden("secret", noop)
+    assert table.specs() == ()
+    assert "secret" in table
+    assert await table.run("secret", {"n": 1}) == {"seen": {"n": 1}}
+    with pytest.raises(ValueError):
+        table.add(spec("secret"), noop)
+
+
 async def test_contains() -> None:
     table = ActionTable()
     table.add(spec("ping"), noop)
