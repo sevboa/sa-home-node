@@ -1,3 +1,4 @@
+import asyncio
 import sys
 from typing import Any
 
@@ -93,6 +94,29 @@ class BrokenSlot(FakeSlot):
         raise RuntimeError("boom")
 
 
+async def test_stop_all_is_concurrent_and_survives_cancel() -> None:
+    trace: list = []
+    sup = make(trace)
+    sup.assign("svc-i@one")
+    hung = HangSlot(trace, sup.services["svc-i@one"].spec, sup.services["svc-i@one"].assignment)
+    sup.services["svc-i@one"] = hung
+    with pytest.raises(TimeoutError):
+        await asyncio.wait_for(sup.stop_all(), 0.05)
+    assert ("stop", "svc") in trace
+    assert hung.cancelled
+
+
+class HangSlot(FakeSlot):
+    cancelled = False
+
+    async def stop(self) -> None:
+        try:
+            await asyncio.sleep(3600)
+        except asyncio.CancelledError:
+            self.cancelled = True
+            raise
+
+
 def test_assign_idempotent() -> None:
     trace: list = []
     sup = make(trace)
@@ -125,7 +149,7 @@ async def test_unassign() -> None:
 
 @pytest.mark.parametrize(
     ("instance", "config_path", "tail"),
-    [("", None, []), ("one", None, ["--instance", "one"]), ("", "/tmp/c.toml", ["--config", "/tmp/c.toml"])],
+    [("", None, []), ("one", None, ["--instance=one"]), ("-x", None, ["--instance=-x"]), ("", "/tmp/c.toml", ["--config", "/tmp/c.toml"])],
 )
 def test_process_argv(instance: str, config_path: str | None, tail: list) -> None:
     argv = process_argv("svc", instance, config_path)

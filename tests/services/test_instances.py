@@ -93,6 +93,50 @@ def test_refresh_all_skips_badly_named(store: InstanceStore, caplog: pytest.LogC
     assert "plain.toml" in caplog.text
 
 
+@pytest.mark.parametrize(
+    ("service", "instance"),
+    [("..", "one"), ("svc", "../x"), ("svc", "a/b"), ("svc", ""), ("a/b", "one"), ("svc", "-x"), ("svc", "a..b")],
+)
+def test_unsafe_names_rejected(store: InstanceStore, service: str, instance: str) -> None:
+    with pytest.raises(ValueError):
+        store.package_path(service, instance)
+    with pytest.raises(ValueError):
+        store.meta_path(service, instance)
+    with pytest.raises(ValueError):
+        InstanceMeta(service, instance, 1, "h", "", "")
+
+
+@pytest.mark.parametrize(
+    "data",
+    [
+        {"service": "svc", "instance": "one", "rev": "x"},
+        {"service": "svc", "instance": "one", "rev": None},
+        {"service": "svc", "instance": "../one"},
+        [],
+        None,
+    ],
+)
+def test_from_dict_rejects_broken_records(data: object) -> None:
+    with pytest.raises(ValueError):
+        InstanceMeta.from_dict(data)
+
+
+def test_satellite_instance_names_allowed() -> None:
+    meta = InstanceMeta("svc", "bot.node-1.extra", 1, "h", "", "")
+    assert meta.instance == "bot.node-1.extra"
+
+
+def test_unsafe_file_names_skipped(store: InstanceStore, caplog: pytest.LogCaptureFixture) -> None:
+    store.dir.mkdir()
+    store.package_path("svc-i", "one").write_bytes(PACKAGE)
+    (store.dir / "svc.-x.toml").write_bytes(b"a = 1\n")
+    (store.dir / "a b.one.toml").write_bytes(b"a = 1\n")
+    with caplog.at_level(logging.WARNING):
+        assert [m.instance for m in store.refresh_all()] == ["one"]
+        assert [m.instance for m in store.known()] == ["one"]
+    assert "svc.-x.toml" in caplog.text
+
+
 def test_corrupt_meta_is_absent(tmp_path: Path) -> None:
     store = seeded(tmp_path)
     store.meta_path("svc-i", "one").write_bytes(b"{")

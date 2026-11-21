@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import logging
 from collections.abc import Awaitable, Callable
+
+log = logging.getLogger(__name__)
 
 RUNNING = "running"
 RESTARTING = "restarting"
@@ -18,6 +21,22 @@ EVENT_UPDATE_FINISHED = "update_finished"
 FENCED_EXIT_CODE = 11
 
 EventEmitter = Callable[[str, dict], Awaitable[None]]
+
+
+async def emit_quietly(emit: EventEmitter, event: str, payload: dict) -> None:
+    try:
+        await emit(event, payload)
+    except Exception:
+        log.warning("Событие %s не доставлено", event, exc_info=True)
+
+
+def call_quietly(callback: Callable[[str], None] | None, name: str) -> None:
+    if callback is None:
+        return
+    try:
+        callback(name)
+    except Exception:
+        log.exception("Служба %s: ошибка обратного вызова", name)
 
 
 def slot_dict(service) -> dict:

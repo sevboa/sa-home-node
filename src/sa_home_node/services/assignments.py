@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 ROLE_ACTIVE = "active"
@@ -7,6 +8,8 @@ ROLE_STANDBY = "standby"
 ROLES = (ROLE_ACTIVE, ROLE_STANDBY)
 
 _PRIO_PREFIX = "prio="
+_SERVICE_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_-]*")
+_INSTANCE_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9._-]*")
 
 
 class AssignmentError(ValueError):
@@ -27,6 +30,14 @@ class Assignment:
     @property
     def standby(self) -> bool:
         return self.role == ROLE_STANDBY
+
+
+def valid_service(name: str) -> bool:
+    return _SERVICE_NAME.fullmatch(name) is not None
+
+
+def valid_instance(name: str) -> bool:
+    return _INSTANCE_NAME.fullmatch(name) is not None and ".." not in name
 
 
 def slot_key(service: str, instance: str) -> str:
@@ -52,6 +63,10 @@ def parse(text: str) -> Assignment:
     service, _, instance = head.partition("@")
     if not service:
         raise AssignmentError(f"нет имени службы: {text!r}")
+    if not valid_service(service.strip()):
+        raise AssignmentError(f"недопустимое имя службы: {service!r}")
+    if instance.strip() and not valid_instance(instance.strip()):
+        raise AssignmentError(f"недопустимое имя инстанса: {instance!r}")
     role = ROLE_ACTIVE
     priority: int | None = None
     for mod in modifiers:

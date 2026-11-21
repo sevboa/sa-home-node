@@ -18,6 +18,8 @@ from sa_home_node.services.events import (
     RUNNING,
     STOPPED,
     EventEmitter,
+    call_quietly,
+    emit_quietly,
     slot_dict,
 )
 
@@ -83,6 +85,8 @@ class ProcessService:
     async def start(self) -> None:
         if self._desired_running:
             return
+        if self._task is not None and not self._task.done():
+            await self.stop()
         self._desired_running = True
         self._spawned.clear()
         self._task = asyncio.create_task(self._run(), name=f"supervise-{self.name}")
@@ -103,36 +107,56 @@ class ProcessService:
             )
 
     async def stop(self) -> None:
-        if not self._desired_running:
+        task = self._task
+        if not self._desired_running and (task is None or task.done()):
             return
         self._desired_running = False
-        proc = self._proc
-        if proc is not None and proc.returncode is None:
-            self._host.terminate(proc)
-            try:
-                await asyncio.wait_for(proc.wait(), timeout=self._stop_timeout)
-            except TimeoutError:
-                log.warning(
-                    "Служба %s не остановилась за %.0f с — kill",
-                    self.name,
-                    self._stop_timeout,
-                )
-                proc.kill()
-                await proc.wait()
-        if self._task is not None:
-            task, self._task = self._task, None
-            done, _ = await asyncio.wait({task}, timeout=SUPERVISE_EXIT_TIMEOUT_S)
-            if not done:
-                log.warning(
-                    "Служба %s: наблюдающая задача не завершилась за %.0f с — снимаю",
-                    self.name,
-                    SUPERVISE_EXIT_TIMEOUT_S,
-                )
-                task.cancel()
-                with contextlib.suppress(asyncio.CancelledError):
-                    await task
+        try:
+            await self._halt_process()
+            await self._reap_task()
+        except BaseException:
+            self._status = STOPPED
+            self._kill(self._proc)
+            raise
         self._status = STOPPED
-        await self._emit(EVENT_SERVICE_STOPPED, {"name": self.name})
+        await emit_quietly(self._emit, EVENT_SERVICE_STOPPED, {"name": self.name})
+
+    async def _halt_process(self) -> None:
+        proc = self._proc
+        if proc is None or proc.returncode is not None:
+            return
+        try:
+            self._host.terminate(proc)
+            await asyncio.wait_for(proc.wait(), timeout=self._stop_timeout)
+            return
+        except TimeoutError:
+            log.warning("Служба %s не остановилась за %.0f с — kill", self.name, self._stop_timeout)
+        except Exception:
+            log.warning("Служба %s: мягкий останов не удался — kill", self.name, exc_info=True)
+        self._kill(proc)
+        await proc.wait()
+
+    async def _reap_task(self) -> None:
+        task = self._task
+        if task is None:
+            return
+        done, _ = await asyncio.wait({task}, timeout=SUPERVISE_EXIT_TIMEOUT_S)
+        if not done:
+            log.warning(
+                "Служба %s: наблюдающая задача не завершилась за %.0f с — снимаю",
+                self.name,
+                SUPERVISE_EXIT_TIMEOUT_S,
+            )
+            task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await task
+        self._task = None
+
+    @staticmethod
+    def _kill(proc: asyncio.subprocess.Process | None) -> None:
+        if proc is not None and proc.returncode is None:
+            with contextlib.suppress(OSError):
+                proc.kill()
 
     async def restart(self) -> None:
         await self.stop()
@@ -147,7 +171,7 @@ class ProcessService:
             except OSError as exc:
                 log.error("Не удалось запустить службу %s: %s", self.name, exc)
                 self._spawned.set()
-                await self._emit(EVENT_SERVICE_FAILED, {"name": self.name, "error": str(exc)})
+                await emit_quietly(self._emit, EVENT_SERVICE_FAILED, {"name": self.name, "error": str(exc)})
                 self._status = RESTARTING
                 await asyncio.sleep(self._restart_delay)
                 continue
@@ -158,9 +182,8 @@ class ProcessService:
                 self._spawned.set()
                 self.started_at = utc_now().isoformat()
                 log.info("Служба %s запущена (pid=%s)", self.name, proc.pid)
-                if self._on_spawned is not None:
-                    self._on_spawned(self.name)
-                await self._emit(EVENT_SERVICE_STARTED, {"name": self.name, "pid": proc.pid})
+                call_quietly(self._on_spawned, self.name)
+                await emit_quietly(self._emit, EVENT_SERVICE_STARTED, {"name": self.name, "pid": proc.pid})
 
                 rc = await proc.wait()
                 self._proc = None
@@ -180,9 +203,8 @@ class ProcessService:
                     )
                     self._desired_running = False
                     self._status = STOPPED
-                    await self._emit(EVENT_SERVICE_FENCED, {"name": self.name})
-                    if self._on_fenced is not None:
-                        self._on_fenced(self.name)
+                    await emit_quietly(self._emit, EVENT_SERVICE_FENCED, {"name": self.name})
+                    call_quietly(self._on_fenced, self.name)
                     break
                 log.warning(
                     "Служба %s завершилась (код %s) — перезапуск через %.0f с",
@@ -192,7 +214,7 @@ class ProcessService:
                 )
                 self._status = RESTARTING
                 self.restarts += 1
-                await self._emit(EVENT_SERVICE_FAILED, {"name": self.name, "exit_code": rc})
+                await emit_quietly(self._emit, EVENT_SERVICE_FAILED, {"name": self.name, "exit_code": rc})
             except Exception:
                 log.exception(
                     "Служба %s: необработанная ошибка в цикле наблюдения — "
@@ -205,10 +227,10 @@ class ProcessService:
                     break
                 self._status = RESTARTING
                 self.restarts += 1
-                with contextlib.suppress(Exception):
-                    await self._emit(
-                        EVENT_SERVICE_FAILED,
-                        {"name": self.name, "error": "supervisor_internal_error"},
-                    )
+                await emit_quietly(
+                    self._emit,
+                    EVENT_SERVICE_FAILED,
+                    {"name": self.name, "error": "supervisor_internal_error"},
+                )
 
             await asyncio.sleep(self._restart_delay)

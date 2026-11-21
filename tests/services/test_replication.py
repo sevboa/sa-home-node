@@ -194,7 +194,7 @@ async def test_event_filters(tmp_path) -> None:
     rep, store, _, _, _ = build(tmp_path, "svc@one", "plain", peers={"node-b": peer})
     other = make_event("other_event", meta.to_dict(), src=Address(node="node-b", service="node"))
     foreign = changed(meta_of(PACKAGE, instance="two"))
-    empty = changed(InstanceMeta("", "", 0, "", "", ""))
+    empty = make_event(EVENT_INSTANCE_CONFIG_CHANGED, {}, src=Address(node="node-b", service="node"))
     own = changed(meta_of(PACKAGE, node="node-a"))
     for env in (other, foreign, empty, own):
         await rep.on_event(env)
@@ -366,6 +366,62 @@ async def test_serving_replies(tmp_path) -> None:
         rep.get_instance_config({"service": "svc", "instance": "zzz"})
     assert exc.value.code == ERR_BAD_REQUEST
     assert "node-a" in str(exc.value)
+
+
+@pytest.mark.parametrize(
+    "instance", ["../x", "a/b", "..", "", "-x", ".hidden"]
+)
+async def test_get_instance_config_rejects_unsafe_names(tmp_path, instance: str) -> None:
+    rep, _, _, _, _ = build(tmp_path, "svc@one")
+    with pytest.raises(ProtoError) as exc:
+        rep.get_instance_config({"service": "svc", "instance": instance})
+    assert exc.value.code == ERR_BAD_REQUEST
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        {"service": "svc", "instance": "one", "rev": "много"},
+        {"service": "svc", "instance": "one", "rev": None},
+        {"service": "svc", "instance": "../one", "rev": 9},
+        "строка",
+        None,
+    ],
+)
+async def test_broken_peer_record_is_skipped(tmp_path, bad, caplog) -> None:
+    good = meta_of(NEWER, rev=7)
+
+    class Mixed(FakePeer):
+        async def forward(self, env: Envelope) -> Envelope:
+            if env.type == MSG_GET_STATE:
+                return make_response(env, {INSTANCES_KEY: [bad, good.to_dict()]})
+            return await super().forward(env)
+
+    rep, store, _, _, _ = build(
+        tmp_path, "svc@one", peers={"node-b": Mixed({"one": (good, NEWER)})}
+    )
+    with caplog.at_level(logging.WARNING):
+        await rep.sync_from_peers()
+    assert store.read_meta("svc", "one") == good
+    assert "битую запись" in caplog.text
+
+
+async def test_non_list_peer_instances_skipped(tmp_path) -> None:
+    class Odd(FakePeer):
+        async def forward(self, env: Envelope) -> Envelope:
+            return make_response(env, {INSTANCES_KEY: 5})
+
+    rep, store, _, _, _ = build(tmp_path, "svc@one", peers={"node-b": Odd()})
+    await rep.sync_from_peers()
+    assert store.known() == []
+
+
+async def test_broken_event_record_is_skipped(tmp_path) -> None:
+    peer = FakePeer({"one": (meta_of(PACKAGE), PACKAGE)})
+    rep, _, _, _, _ = build(tmp_path, "svc@one", peers={"node-b": peer})
+    bad = {"service": "svc", "instance": "one", "rev": "x"}
+    await rep.on_event(make_event(EVENT_INSTANCE_CONFIG_CHANGED, bad, src=Address(node="node-b", service="node")))
+    assert peer.asked == []
 
 
 async def test_start_subscribes_ticks_and_stops(tmp_path) -> None:

@@ -8,7 +8,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 from sa_home_node.files import atomic_write_bytes, atomic_write_text
-from sa_home_node.services.assignments import slot_key
+from sa_home_node.services.assignments import slot_key, valid_instance, valid_service
 
 log = logging.getLogger(__name__)
 
@@ -26,19 +26,25 @@ class InstanceMeta:
     updated_at: str
     origin_node: str
 
+    def __post_init__(self) -> None:
+        _stem(self.service, self.instance)
+
     def to_dict(self) -> dict:
         return asdict(self)
 
     @classmethod
     def from_dict(cls, data: dict) -> InstanceMeta:
-        return cls(
-            service=str(data.get("service", "")),
-            instance=str(data.get("instance", "")),
-            rev=int(data.get("rev", 0)),
-            hash=str(data.get("hash", "")),
-            updated_at=str(data.get("updated_at", "")),
-            origin_node=str(data.get("origin_node", "")),
-        )
+        try:
+            return cls(
+                service=str(data.get("service", "")),
+                instance=str(data.get("instance", "")),
+                rev=int(data.get("rev", 0)),
+                hash=str(data.get("hash", "")),
+                updated_at=str(data.get("updated_at", "")),
+                origin_node=str(data.get("origin_node", "")),
+            )
+        except (AttributeError, TypeError, OverflowError) as exc:
+            raise ValueError(f"битая запись пакета: {exc}") from exc
 
     def wins_over(self, other: InstanceMeta | None) -> bool:
         if other is None:
@@ -59,16 +65,29 @@ def _split(path: Path) -> tuple[str, str]:
     return service, instance
 
 
+def _stem(service: str, instance: str) -> str:
+    if not valid_service(service) or not valid_instance(instance):
+        raise ValueError(f"недопустимое имя пакета: {slot_key(service, instance)!r}")
+    return f"{service}.{instance}"
+
+
+def _named_ok(path: Path, service: str, instance: str) -> bool:
+    if valid_service(service) and valid_instance(instance):
+        return True
+    log.warning("Пакет %s: недопустимое имя — пропускаю", path.name)
+    return False
+
+
 class InstanceStore:
     def __init__(self, directory: str | Path, node_id: str) -> None:
         self.dir = Path(directory)
         self._node_id = node_id
 
     def package_path(self, service: str, instance: str) -> Path:
-        return self.dir / f"{service}.{instance}{PACKAGE_SUFFIX}"
+        return self.dir / f"{_stem(service, instance)}{PACKAGE_SUFFIX}"
 
     def meta_path(self, service: str, instance: str) -> Path:
-        return self.dir / f"{service}.{instance}{META_SUFFIX}"
+        return self.dir / f"{_stem(service, instance)}{META_SUFFIX}"
 
     def read_package(self, service: str, instance: str) -> bytes | None:
         path = self.package_path(service, instance)
@@ -94,6 +113,8 @@ class InstanceStore:
             service, instance = _split(path)
             if not instance:
                 log.warning("Пакет %s: имя не вида '<служба>.<инстанс>.toml' — пропускаю", path.name)
+                continue
+            if not _named_ok(path, service, instance):
                 continue
             meta = self.read_meta(service, instance)
             if meta is not None:
@@ -124,7 +145,7 @@ class InstanceStore:
         changed = []
         for path in self._packages():
             service, instance = _split(path)
-            if not instance:
+            if not instance or not _named_ok(path, service, instance):
                 continue
             meta = self.refresh(service, instance)
             if meta is not None:

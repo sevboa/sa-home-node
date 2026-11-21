@@ -171,6 +171,75 @@ async def test_emit_failure_does_not_break_restart(tmp_path):
     await svc.stop()
 
 
+async def test_on_spawned_called_before_every_run(tmp_path):
+    spawned = []
+    calls = []
+
+    async def run_fail_once(ctx):
+        calls.append(len(spawned))
+        if len(calls) == 1:
+            raise RuntimeError("boom")
+        await asyncio.sleep(3600)
+
+    svc = InProcessService(
+        ServiceSpec(name="svc", run=run_fail_once),
+        make_ctx(tmp_path),
+        emit=Recorder(),
+        restart_delay_s=0.01,
+        on_spawned=spawned.append,
+    )
+    await svc.start()
+    assert await wait_for(lambda: len(calls) == 2, 2.0)
+    assert spawned == ["svc", "svc"]
+    assert calls == [1, 2]
+    await svc.stop()
+
+
+async def test_broken_on_spawned_does_not_block_run(tmp_path):
+    calls = []
+
+    async def run_ok(ctx):
+        calls.append(1)
+        await asyncio.sleep(3600)
+
+    def broken(name):
+        raise RuntimeError("boom")
+
+    svc = InProcessService(
+        ServiceSpec(name="svc", run=run_ok), make_ctx(tmp_path), emit=Recorder(), on_spawned=broken
+    )
+    await svc.start()
+    assert await wait_for(lambda: calls == [1], 2.0)
+    await svc.stop()
+
+
+async def test_cancelled_stop_cancels_stubborn_task(tmp_path):
+    async def run_stubborn(ctx):
+        try:
+            await asyncio.sleep(3600)
+        except asyncio.CancelledError:
+            await asyncio.sleep(3600)
+
+    rec = Recorder()
+    svc = InProcessService(
+        ServiceSpec(name="svc", run=run_stubborn),
+        make_ctx(tmp_path),
+        emit=rec,
+        stop_timeout_s=30.0,
+    )
+    await svc.start()
+    assert await wait_event(rec, EVENT_SERVICE_STARTED)
+    task = svc._task
+    stopping = asyncio.create_task(svc.stop())
+    await asyncio.sleep(0.05)
+    assert not task.done()
+    stopping.cancel()
+    await asyncio.gather(stopping, return_exceptions=True)
+    assert await wait_for(task.done, 2.0)
+    assert svc.status == STOPPED
+    await asyncio.wait_for(svc.stop(), 2.0)
+
+
 async def test_target_routes_get_state(tmp_path):
     rec = Recorder()
     svc = InProcessService(

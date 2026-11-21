@@ -1,5 +1,6 @@
 import asyncio
 import json
+import logging
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any
@@ -274,6 +275,33 @@ async def test_peer_state_collected_and_used() -> None:
     await lease.tick()
     assert slots["svc-s"].trace == ["stop"]
     assert events[0][0] == EVENT_SINGLETON_YIELDED
+
+
+@pytest.mark.parametrize(
+    "bad",
+    [
+        {"rank": ["x", 1, "node-b"]},
+        {"rank": 5},
+        {"rank": [1]},
+        {"rank": [None, None, None]},
+        "не словарь",
+        None,
+    ],
+)
+async def test_broken_peer_record_is_skipped(bad: Any, caplog: pytest.LogCaptureFixture) -> None:
+    good = {"role": "active", "running": True, "claiming": False, "ready": True, "rank": [1, 100, "node-c"]}
+    reply = {"svc-s": bad, "svc-i@one": good}
+    lease, _, _, _ = build("svc-s", peers={"node-b": FakeLink(reply=reply)})
+    with caplog.at_level(logging.WARNING):
+        got = await lease._peer_singletons()
+    assert got == {"svc-i@one": [{**good, "node": "node-b"}]}
+    assert "svc-s" in caplog.text
+    await lease.tick()
+
+
+async def test_non_dict_singletons_skipped() -> None:
+    lease, _, _, _ = build("svc-s", peers={"node-b": FakeLink(reply=[1, 2])})
+    assert await lease._peer_singletons() == {}
 
 
 async def test_tick_without_router_or_slots() -> None:

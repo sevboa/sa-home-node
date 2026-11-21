@@ -43,6 +43,20 @@ def test_parse_invalid_entries() -> None:
         assert key_or_raw(case["text"]) == case["key_or_raw"]
 
 
+@pytest.mark.parametrize(
+    "text",
+    ["../x", "a/b", "-svc", "svc@../x", "svc@a/b", "svc@..", "svc@a..b", "svc@-x", "svc@.x", "svc@a b", "s.v@one", "svc@one\n2"],
+)
+def test_parse_rejects_unsafe_names(text: str) -> None:
+    with pytest.raises(AssignmentError):
+        parse(text)
+    assert key_or_raw(text) == text
+
+
+def test_parse_keeps_dots_in_instance() -> None:
+    assert parse("svc-i@bot.node-1.extra").instance == "bot.node-1.extra"
+
+
 def test_effective() -> None:
     case = REFERENCE["effective"]
     assert effective(case["config"], case["state"]) == case["result"]

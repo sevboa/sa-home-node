@@ -17,7 +17,14 @@ from sa_home_node.proto.wire import (
     ProtoError,
     make_request,
 )
-from sa_home_node.services.assignments import Assignment, base_instance, is_satellite, slot_key
+from sa_home_node.services.assignments import (
+    Assignment,
+    base_instance,
+    is_satellite,
+    slot_key,
+    valid_instance,
+    valid_service,
+)
 from sa_home_node.services.events import EVENT_INSTANCE_CONFIG_CHANGED, RUNNING, EventEmitter
 from sa_home_node.services.instances import InstanceMeta, InstanceStore
 from sa_home_node.services.registry import ServiceTable
@@ -102,6 +109,8 @@ class ConfigReplicator:
     def get_instance_config(self, args: dict[str, Any]) -> dict[str, Any]:
         service = str(args.get("service", ""))
         instance = str(args.get("instance", ""))
+        if not valid_service(service) or not valid_instance(instance):
+            raise ProtoError(ERR_BAD_REQUEST, f"недопустимое имя пакета настроек: {slot_key(service, instance)!r}")
         data = self._store.read_package(service, instance)
         meta = self._store.read_meta(service, instance)
         if data is None or meta is None:
@@ -128,8 +137,8 @@ class ConfigReplicator:
     async def on_event(self, env: Envelope) -> None:
         if env.payload.get("event") != EVENT_INSTANCE_CONFIG_CHANGED:
             return
-        meta = InstanceMeta.from_dict(env.payload.get("data", {}))
-        if not meta.service or not meta.instance:
+        meta = self._parse_meta(env.payload.get("data", {}), env.src.node if env.src else "?")
+        if meta is None:
             return
         if not self._cares_about(meta.service, meta.instance):
             return
@@ -151,12 +160,26 @@ class ConfigReplicator:
             state = await self._peer_state(peer_id, link)
             if state is None:
                 continue
-            for raw in state.get(INSTANCES_KEY, []):
-                meta = InstanceMeta.from_dict(raw)
+            raws = state.get(INSTANCES_KEY) or []
+            if not isinstance(raws, list):
+                log.warning("Репликация: нода %s прислала список пакетов не списком — пропускаю", peer_id)
+                continue
+            for raw in raws:
+                meta = self._parse_meta(raw, peer_id)
+                if meta is None:
+                    continue
                 if not self._cares_about(meta.service, meta.instance):
                     continue
                 if self._wins(meta, self._store.read_meta(meta.service, meta.instance)):
                     await self._pull(meta, peer_id)
+
+    @staticmethod
+    def _parse_meta(raw: Any, source: str) -> InstanceMeta | None:
+        try:
+            return InstanceMeta.from_dict(raw)
+        except ValueError as exc:
+            log.warning("Репликация: нода %s прислала битую запись пакета (%s) — пропускаю", source, exc)
+            return None
 
     async def _peer_state(self, peer_id: str, link) -> dict | None:
         request = make_request(
@@ -200,7 +223,9 @@ class ConfigReplicator:
         content = response.payload.get("content")
         if not isinstance(content, str):
             return
-        remote_meta = InstanceMeta.from_dict(response.payload.get("meta", meta.to_dict()))
+        remote_meta = self._parse_meta(response.payload.get("meta", meta.to_dict()), source)
+        if remote_meta is None:
+            return
         data = content.encode("utf-8")
         local = self._store.read_meta(remote_meta.service, remote_meta.instance)
         force = self._is_passive(remote_meta.service, remote_meta.instance) and self._wins(remote_meta, local)

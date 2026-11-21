@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import contextlib
+import asyncio
 import logging
 import sys
 from collections.abc import Callable, Iterable
@@ -36,7 +36,7 @@ SlotFactory = Callable[[ServiceSpec, Assignment], Slot]
 def process_argv(service: str, instance: str, config_path: str | None) -> list[str]:
     argv = [sys.executable, "-m", "sa_home_node", "service", service]
     if instance:
-        argv += ["--instance", instance]
+        argv.append(f"--instance={instance}")
     if config_path is not None:
         argv += ["--config", config_path]
     return argv
@@ -81,9 +81,12 @@ class Supervisor:
             await svc.start()
 
     async def stop_all(self) -> None:
-        for svc in reversed(list(self.services.values())):
-            with contextlib.suppress(Exception):
-                await svc.stop()
+        results = await asyncio.gather(
+            *(svc.stop() for svc in reversed(list(self.services.values()))), return_exceptions=True
+        )
+        for result in results:
+            if isinstance(result, BaseException):
+                log.warning("Останов службы не удался: %r", result)
 
     def get(self, name: str) -> Slot | None:
         return self.services.get(name)

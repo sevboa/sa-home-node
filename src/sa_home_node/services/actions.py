@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import contextlib
 from collections.abc import Callable
 from pathlib import Path
 from typing import Any
@@ -170,16 +171,23 @@ class SupervisorActions:
         name = str(args.get("name", ""))
         try:
             assignment = parse(name)
+            is_new = self._supervisor.get(assignment.key) is None
             slot = self._supervisor.assign(name)
         except ValueError as exc:
             raise ProtoError(ERR_BAD_REQUEST, str(exc)) from exc
         spec = self._table.spec(assignment.service)
-        if not spec.singleton:
-            await slot.start()
-        if spec.name not in self._router.local_services:
-            target = local_target(spec, slot, self._table, self._config, self._make_local_link)
-            if target is not None:
-                await self._router.add_local_service(spec.name, target)
+        try:
+            if not spec.singleton:
+                await slot.start()
+            if spec.name not in self._router.local_services:
+                target = local_target(spec, slot, self._table, self._config, self._make_local_link)
+                if target is not None:
+                    await self._router.add_local_service(spec.name, target)
+        except BaseException:
+            if is_new:
+                with contextlib.suppress(Exception):
+                    await self._supervisor.unassign(assignment.key)
+            raise
         if name not in self._state.assignments:
             self._state.assignments.append(name)
             self._state.save(self._state_path)

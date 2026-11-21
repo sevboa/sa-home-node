@@ -76,6 +76,7 @@ def make_slot_factory(
             stop_timeout_s=stop_timeout_s,
             assignment=assignment,
             on_fenced=on_fenced,
+            on_spawned=on_spawned,
         )
 
     return factory

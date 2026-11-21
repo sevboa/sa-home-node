@@ -297,6 +297,23 @@ async def test_assign_existing_slot_appends_row_once(tmp_path: Path) -> None:
     assert list(world.supervisor.services) == ["svc", "svc-s", "svc-i@one"]
 
 
+@pytest.mark.parametrize(("name", "key", "kept"), [("svc@two", "svc@two", False), ("svc:standby", "svc", True)])
+async def test_failed_start_rolls_back_new_slot(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, name: str, key: str, kept: bool
+) -> None:
+    world = await build(tmp_path)
+    before = list(world.state.assignments)
+
+    async def boom(self: ProcSlot) -> None:
+        raise RuntimeError("не стартует")
+
+    monkeypatch.setattr(ProcSlot, "start", boom)
+    with pytest.raises(RuntimeError):
+        await world.node_service.run_command("assign", {"name": name})
+    assert (key in world.supervisor.services) is kept
+    assert world.state.assignments == before
+
+
 async def test_unassign_keeps_link_of_sibling_slot(tmp_path: Path) -> None:
     world = await build(tmp_path)
     await world.node_service.run_command("assign", {"name": "svc@two"})

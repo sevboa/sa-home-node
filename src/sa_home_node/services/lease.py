@@ -157,8 +157,18 @@ class LeaseManager:
                 continue
             if not response.ok:
                 continue
-            for key, entry in (response.payload.get(SINGLETONS_KEY) or {}).items():
-                by_slot.setdefault(key, []).append({**entry, "node": peer_id})
+            singletons = response.payload.get(SINGLETONS_KEY) or {}
+            if not isinstance(singletons, dict):
+                log.warning("Аренда: нода %s прислала синглтоны не словарём — пропускаю", peer_id)
+                continue
+            for key, entry in singletons.items():
+                try:
+                    record = {**entry, "node": peer_id}
+                    record_rank(record)
+                except (TypeError, ValueError, KeyError, IndexError):
+                    log.warning("Аренда: нода %s прислала битую запись %s — пропускаю", peer_id, key)
+                    continue
+                by_slot.setdefault(key, []).append(record)
         return by_slot
 
     async def tick(self) -> None:

@@ -23,6 +23,8 @@ from sa_home_node.services.events import (
     RUNNING,
     STOPPED,
     EventEmitter,
+    call_quietly,
+    emit_quietly,
     slot_dict,
 )
 from sa_home_node.services.process import utc_now
@@ -41,6 +43,7 @@ class InProcessService:
         stop_timeout_s: float = 90.0,
         assignment: Assignment | None = None,
         on_fenced: Callable[[str], None] | None = None,
+        on_spawned: Callable[[str], None] | None = None,
     ) -> None:
         self.assignment = assignment or Assignment(service=spec.name)
         self.name = self.assignment.key
@@ -50,6 +53,7 @@ class InProcessService:
         self._restart_delay = restart_delay_s
         self._stop_timeout = stop_timeout_s
         self._on_fenced = on_fenced
+        self._on_spawned = on_spawned
         self._task: asyncio.Task | None = None
         self._desired_running = False
         self._status = STOPPED
@@ -84,14 +88,24 @@ class InProcessService:
         self._task = asyncio.create_task(self._run(), name=f"inproc-{self.name}")
 
     async def stop(self) -> None:
-        if not self._desired_running:
+        task = self._task
+        if not self._desired_running and (task is None or task.done()):
             return
         self._desired_running = False
-        task, self._task = self._task, None
-        if task is None:
-            return
+        if task is not None:
+            await self._cancel_task(task)
+        self._task = None
+        self._status = STOPPED
+        await emit_quietly(self._emit, EVENT_SERVICE_STOPPED, {"name": self.name})
+
+    async def _cancel_task(self, task: asyncio.Task) -> None:
         task.cancel()
-        done, _ = await asyncio.wait({task}, timeout=self._stop_timeout)
+        try:
+            done, _ = await asyncio.wait({task}, timeout=self._stop_timeout)
+        except BaseException:
+            self._status = STOPPED
+            task.cancel()
+            raise
         if not done:
             log.warning(
                 "Служба %s: встроенная задача не остановилась за %.0f с — снимаю",
@@ -101,9 +115,6 @@ class InProcessService:
             task.cancel()
             with contextlib.suppress(asyncio.CancelledError):
                 await task
-        self._status = STOPPED
-        with contextlib.suppress(Exception):
-            await self._emit(EVENT_SERVICE_STOPPED, {"name": self.name})
 
     async def restart(self) -> None:
         await self.stop()
@@ -114,17 +125,15 @@ class InProcessService:
             try:
                 self.started_at = utc_now().isoformat()
                 self._status = RUNNING
-                with contextlib.suppress(Exception):
-                    await self._emit(EVENT_SERVICE_STARTED, {"name": self.name, "pid": None})
+                call_quietly(self._on_spawned, self.name)
+                await emit_quietly(self._emit, EVENT_SERVICE_STARTED, {"name": self.name, "pid": None})
                 await self._spec.run(self._ctx)
             except ServiceFenced:
                 self.last_exit_code = FENCED_EXIT_CODE
                 self._status = STOPPED
                 self._desired_running = False
-                with contextlib.suppress(Exception):
-                    await self._emit(EVENT_SERVICE_FENCED, {"name": self.name})
-                if self._on_fenced is not None:
-                    self._on_fenced(self.name)
+                await emit_quietly(self._emit, EVENT_SERVICE_FENCED, {"name": self.name})
+                call_quietly(self._on_fenced, self.name)
                 break
             except Exception as exc:
                 log.exception(
@@ -134,14 +143,12 @@ class InProcessService:
                 )
                 self.restarts += 1
                 self._status = RESTARTING
-                with contextlib.suppress(Exception):
-                    await self._emit(EVENT_SERVICE_FAILED, {"name": self.name, "error": str(exc)})
+                await emit_quietly(self._emit, EVENT_SERVICE_FAILED, {"name": self.name, "error": str(exc)})
                 await asyncio.sleep(self._restart_delay)
             else:
                 self._status = STOPPED
                 self._desired_running = False
-                with contextlib.suppress(Exception):
-                    await self._emit(EVENT_SERVICE_STOPPED, {"name": self.name})
+                await emit_quietly(self._emit, EVENT_SERVICE_STOPPED, {"name": self.name})
                 break
 
 
