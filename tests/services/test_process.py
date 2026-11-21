@@ -170,7 +170,7 @@ async def test_fenced_not_restarted(spawn: tuple) -> None:
     queue, calls = spawn
     host = FakeHost()
     proc = FakeProc()
-    queue.append(proc)
+    queue.extend([proc, FakeProc(4102)])
     collector = Collector()
     fenced_names: list[str] = []
     svc = make_service("svc-s", ["svc.py"], collector, host, on_fenced=fenced_names.append)
@@ -181,6 +181,10 @@ async def test_fenced_not_restarted(spawn: tuple) -> None:
     assert svc.status == STOPPED
     assert svc.last_exit_code == FENCED_EXIT_CODE
     assert len(calls) == 1
+    await svc.start()
+    assert len(calls) == 2
+    assert svc.status == RUNNING
+    await svc.stop()
 
 
 async def test_hard_kill_on_terminate_timeout(spawn: tuple) -> None:
