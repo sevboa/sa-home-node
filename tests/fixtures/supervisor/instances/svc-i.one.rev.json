@@ -1,0 +1,8 @@
+{
+  "service": "svc-i",
+  "instance": "one",
+  "rev": 1,
+  "hash": "sha256:2ad14f114d3e2dbf904ca37dde2117324883428f3bc9981571da9a6719d139cd",
+  "updated_at": "2026-01-02T03:04:05+00:00",
+  "origin_node": "node-a"
+}

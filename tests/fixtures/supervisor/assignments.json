@@ -1,0 +1,160 @@
+{
+  "valid": [
+    {
+      "text": "svc",
+      "service": "svc",
+      "instance": "",
+      "role": "active",
+      "priority": null,
+      "key": "svc",
+      "standby": false
+    },
+    {
+      "text": "svc-s",
+      "service": "svc-s",
+      "instance": "",
+      "role": "active",
+      "priority": null,
+      "key": "svc-s",
+      "standby": false
+    },
+    {
+      "text": "svc-i@one",
+      "service": "svc-i",
+      "instance": "one",
+      "role": "active",
+      "priority": null,
+      "key": "svc-i@one",
+      "standby": false
+    },
+    {
+      "text": "svc-i@one:standby",
+      "service": "svc-i",
+      "instance": "one",
+      "role": "standby",
+      "priority": null,
+      "key": "svc-i@one",
+      "standby": true
+    },
+    {
+      "text": "svc-i@one:active",
+      "service": "svc-i",
+      "instance": "one",
+      "role": "active",
+      "priority": null,
+      "key": "svc-i@one",
+      "standby": false
+    },
+    {
+      "text": "svc-s:prio=70",
+      "service": "svc-s",
+      "instance": "",
+      "role": "active",
+      "priority": 70,
+      "key": "svc-s",
+      "standby": false
+    },
+    {
+      "text": "svc-s:standby:prio=5",
+      "service": "svc-s",
+      "instance": "",
+      "role": "standby",
+      "priority": 5,
+      "key": "svc-s",
+      "standby": true
+    },
+    {
+      "text": "svc-s:prio=-1:active",
+      "service": "svc-s",
+      "instance": "",
+      "role": "active",
+      "priority": -1,
+      "key": "svc-s",
+      "standby": false
+    },
+    {
+      "text": " svc-i@one : standby ",
+      "service": "svc-i",
+      "instance": "one ",
+      "role": "standby",
+      "priority": null,
+      "key": "svc-i@one ",
+      "standby": true
+    },
+    {
+      "text": "svc-i@one.extra",
+      "service": "svc-i",
+      "instance": "one.extra",
+      "role": "active",
+      "priority": null,
+      "key": "svc-i@one.extra",
+      "standby": false
+    },
+    {
+      "text": "svc@",
+      "service": "svc",
+      "instance": "",
+      "role": "active",
+      "priority": null,
+      "key": "svc",
+      "standby": false
+    }
+  ],
+  "invalid": [
+    {
+      "text": "",
+      "error": "пустое назначение",
+      "key_or_raw": ""
+    },
+    {
+      "text": "   ",
+      "error": "пустое назначение",
+      "key_or_raw": "   "
+    },
+    {
+      "text": "@one",
+      "error": "нет имени службы: '@one'",
+      "key_or_raw": "@one"
+    },
+    {
+      "text": ":standby",
+      "error": "нет имени службы: ':standby'",
+      "key_or_raw": ":standby"
+    },
+    {
+      "text": "svc:prio=x",
+      "error": "приоритет не число: 'prio=x'",
+      "key_or_raw": "svc:prio=x"
+    },
+    {
+      "text": "svc:prio=",
+      "error": "приоритет не число: 'prio='",
+      "key_or_raw": "svc:prio="
+    },
+    {
+      "text": "svc:bogus",
+      "error": "непонятная часть назначения: 'bogus' в 'svc:bogus'",
+      "key_or_raw": "svc:bogus"
+    },
+    {
+      "text": "svc-i@one::standby",
+      "error": "непонятная часть назначения: '' в 'svc-i@one::standby'",
+      "key_or_raw": "svc-i@one::standby"
+    }
+  ],
+  "effective": {
+    "config": [
+      "svc-s",
+      "svc-i@one:standby"
+    ],
+    "state": [
+      "svc",
+      "svc-s"
+    ],
+    "result": [
+      "svc",
+      "svc-i@one:standby",
+      "svc-s"
+    ]
+  }
+}

@@ -1,0 +1,456 @@
+{
+  "workstation": {
+    "node": "node-a",
+    "service": "node",
+    "version": "1.1.0",
+    "node_kind": "workstation",
+    "wake": null,
+    "endpoints": [
+      "tcp://192.0.2.10:8710"
+    ],
+    "proto": 0,
+    "links": {},
+    "capabilities": [
+      "supervisor",
+      "power"
+    ],
+    "actions": [
+      {
+        "id": "start",
+        "title": "▶️ Запустить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stop",
+        "title": "⏹ Остановить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "restart",
+        "title": "🔄 Перезапустить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "assign",
+        "title": "➕ Назначить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Назначение",
+            "choices": [
+              "svc",
+              "svc-s",
+              "svc-i"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unassign",
+        "title": "➖ Снять",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "send_wol",
+        "title": "📡 Отправить Wake-on-LAN",
+        "params": [
+          {
+            "name": "mac",
+            "type": "string",
+            "required": true,
+            "title": "MAC цели"
+          }
+        ]
+      },
+      {
+        "id": "report_ready",
+        "title": "📶 Готовность службы",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Слот службы"
+          },
+          {
+            "name": "ready",
+            "type": "bool",
+            "required": true,
+            "title": "Готова"
+          }
+        ]
+      },
+      {
+        "id": "trigger_peers",
+        "title": "📡 Разослать команду службе на всех нодах",
+        "params": [
+          {
+            "name": "service",
+            "type": "string",
+            "required": true,
+            "title": "Служба"
+          },
+          {
+            "name": "action",
+            "type": "string",
+            "required": true,
+            "title": "Действие"
+          }
+        ]
+      },
+      {
+        "id": "swarm_join",
+        "title": "🤝 Присоединить ноду",
+        "params": [
+          {
+            "name": "node_id",
+            "type": "string",
+            "required": true,
+            "title": "Id ноды"
+          },
+          {
+            "name": "endpoint",
+            "type": "string",
+            "required": true,
+            "title": "Endpoint"
+          }
+        ]
+      },
+      {
+        "id": "join",
+        "title": "🔗 Присоединиться к рою",
+        "params": [
+          {
+            "name": "endpoint",
+            "type": "string",
+            "required": true,
+            "title": "Endpoint соседа"
+          }
+        ]
+      },
+      {
+        "id": "restart_node",
+        "title": "🔄 Перезапустить ноду",
+        "params": []
+      },
+      {
+        "id": "check_update",
+        "title": "🔍 Проверить обновления",
+        "params": []
+      },
+      {
+        "id": "update",
+        "title": "⬆️ Обновить",
+        "params": []
+      },
+      {
+        "id": "poweroff",
+        "title": "⏻ Выключить машину",
+        "params": []
+      },
+      {
+        "id": "reboot",
+        "title": "🔃 Перезагрузить машину",
+        "params": []
+      },
+      {
+        "id": "suspend",
+        "title": "🌙 Усыпить машину",
+        "params": []
+      },
+      {
+        "id": "close_ssh_sessions",
+        "title": "🔌 Закрыть SSH+tmux и выключить",
+        "params": []
+      },
+      {
+        "id": "list_instances",
+        "title": "📦 Пакеты настроек",
+        "params": [
+          {
+            "name": "service",
+            "type": "string",
+            "required": true,
+            "title": "Служба"
+          }
+        ]
+      },
+      {
+        "id": "get_instance_config",
+        "title": "📦 Забрать пакет настроек",
+        "params": [
+          {
+            "name": "service",
+            "type": "string",
+            "required": true,
+            "title": "Служба"
+          },
+          {
+            "name": "instance",
+            "type": "string",
+            "required": true,
+            "title": "Инстанс"
+          }
+        ]
+      }
+    ]
+  },
+  "server": {
+    "node": "node-a",
+    "service": "node",
+    "version": "1.1.0",
+    "node_kind": "server",
+    "wake": null,
+    "endpoints": [
+      "tcp://192.0.2.10:8710"
+    ],
+    "proto": 0,
+    "links": {},
+    "capabilities": [
+      "supervisor",
+      "power"
+    ],
+    "actions": [
+      {
+        "id": "start",
+        "title": "▶️ Запустить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "stop",
+        "title": "⏹ Остановить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "restart",
+        "title": "🔄 Перезапустить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "assign",
+        "title": "➕ Назначить",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Назначение",
+            "choices": [
+              "svc",
+              "svc-s",
+              "svc-i"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "unassign",
+        "title": "➖ Снять",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Служба",
+            "choices": [
+              "svc",
+              "svc-s"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "send_wol",
+        "title": "📡 Отправить Wake-on-LAN",
+        "params": [
+          {
+            "name": "mac",
+            "type": "string",
+            "required": true,
+            "title": "MAC цели"
+          }
+        ]
+      },
+      {
+        "id": "report_ready",
+        "title": "📶 Готовность службы",
+        "params": [
+          {
+            "name": "name",
+            "type": "string",
+            "required": true,
+            "title": "Слот службы"
+          },
+          {
+            "name": "ready",
+            "type": "bool",
+            "required": true,
+            "title": "Готова"
+          }
+        ]
+      },
+      {
+        "id": "trigger_peers",
+        "title": "📡 Разослать команду службе на всех нодах",
+        "params": [
+          {
+            "name": "service",
+            "type": "string",
+            "required": true,
+            "title": "Служба"
+          },
+          {
+            "name": "action",
+            "type": "string",
+            "required": true,
+            "title": "Действие"
+          }
+        ]
+      },
+      {
+        "id": "swarm_join",
+        "title": "🤝 Присоединить ноду",
+        "params": [
+          {
+            "name": "node_id",
+            "type": "string",
+            "required": true,
+            "title": "Id ноды"
+          },
+          {
+            "name": "endpoint",
+            "type": "string",
+            "required": true,
+            "title": "Endpoint"
+          }
+        ]
+      },
+      {
+        "id": "join",
+        "title": "🔗 Присоединиться к рою",
+        "params": [
+          {
+            "name": "endpoint",
+            "type": "string",
+            "required": true,
+            "title": "Endpoint соседа"
+          }
+        ]
+      },
+      {
+        "id": "restart_node",
+        "title": "🔄 Перезапустить ноду",
+        "params": []
+      },
+      {
+        "id": "list_instances",
+        "title": "📦 Пакеты настроек",
+        "params": [
+          {
+            "name": "service",
+            "type": "string",
+            "required": true,
+            "title": "Служба"
+          }
+        ]
+      },
+      {
+        "id": "get_instance_config",
+        "title": "📦 Забрать пакет настроек",
+        "params": [
+          {
+            "name": "service",
+            "type": "string",
+            "required": true,
+            "title": "Служба"
+          },
+          {
+            "name": "instance",
+            "type": "string",
+            "required": true,
+            "title": "Инстанс"
+          }
+        ]
+      }
+    ]
+  }
+}

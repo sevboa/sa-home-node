@@ -1,0 +1,118 @@
+{
+  "cases": {
+    "running": {
+      "name": "svc",
+      "status": "running",
+      "pid": 4101,
+      "restarts": 0,
+      "last_exit_code": null,
+      "started_at": "2026-01-02T03:04:05+00:00",
+      "service": "svc",
+      "instance": "",
+      "role": "active"
+    },
+    "restarting": {
+      "name": "svc",
+      "status": "restarting",
+      "pid": null,
+      "restarts": 1,
+      "last_exit_code": 1,
+      "started_at": "2026-01-02T03:04:05+00:00",
+      "service": "svc",
+      "instance": "",
+      "role": "active"
+    },
+    "stopped": {
+      "name": "svc",
+      "status": "stopped",
+      "pid": null,
+      "restarts": 1,
+      "last_exit_code": 1,
+      "started_at": "2026-01-02T03:04:05+00:00",
+      "service": "svc",
+      "instance": "",
+      "role": "active"
+    },
+    "fenced": {
+      "name": "svc-s",
+      "status": "stopped",
+      "pid": null,
+      "restarts": 0,
+      "last_exit_code": 11,
+      "started_at": "2026-01-02T03:04:05+00:00",
+      "service": "svc-s",
+      "instance": "",
+      "role": "active"
+    },
+    "standby_instance": {
+      "name": "svc-i@one",
+      "status": "stopped",
+      "pid": null,
+      "restarts": 0,
+      "last_exit_code": null,
+      "started_at": null,
+      "service": "svc-i",
+      "instance": "one",
+      "role": "standby"
+    }
+  },
+  "node_state_services": [
+    {
+      "name": "svc",
+      "status": "running",
+      "pid": 4103,
+      "restarts": 0,
+      "last_exit_code": null,
+      "started_at": "2026-01-02T03:04:05+00:00",
+      "service": "svc",
+      "instance": "",
+      "role": "active"
+    },
+    {
+      "name": "svc-s",
+      "status": "stopped",
+      "pid": null,
+      "restarts": 0,
+      "last_exit_code": null,
+      "started_at": null,
+      "service": "svc-s",
+      "instance": "",
+      "role": "active"
+    },
+    {
+      "name": "svc-i@one",
+      "status": "stopped",
+      "pid": null,
+      "restarts": 0,
+      "last_exit_code": null,
+      "started_at": null,
+      "service": "svc-i",
+      "instance": "one",
+      "role": "standby"
+    },
+    {
+      "name": "svc-ext",
+      "status": "running",
+      "pid": null,
+      "restarts": 0,
+      "last_exit_code": null,
+      "started_at": null,
+      "service": "svc-ext",
+      "instance": null,
+      "role": null,
+      "external": true
+    },
+    {
+      "name": "svc-off",
+      "status": "stopped",
+      "pid": null,
+      "restarts": 0,
+      "last_exit_code": null,
+      "started_at": null,
+      "service": "svc-off",
+      "instance": null,
+      "role": null,
+      "external": true
+    }
+  ]
+}

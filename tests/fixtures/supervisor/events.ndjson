@@ -1,0 +1,17 @@
+{"v":0,"id":"00000000000000000000000000000064","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_started","data":{"name":"svc","pid":4109}}}
+{"v":0,"id":"00000000000000000000000000000065","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_failed","data":{"name":"svc","exit_code":1}}}
+{"v":0,"id":"00000000000000000000000000000066","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_stopped","data":{"name":"svc"}}}
+{"v":0,"id":"00000000000000000000000000000067","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_failed","data":{"name":"svc","error":"исполняемый файл не найден"}}}
+{"v":0,"id":"00000000000000000000000000000068","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_stopped","data":{"name":"svc"}}}
+{"v":0,"id":"00000000000000000000000000000069","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_started","data":{"name":"svc-s","pid":4110}}}
+{"v":0,"id":"0000000000000000000000000000006a","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_fenced","data":{"name":"svc-s"}}}
+{"v":0,"id":"0000000000000000000000000000006b","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_started","data":{"name":"svc-s","pid":4111}}}
+{"v":0,"id":"0000000000000000000000000000006c","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"singleton_activated","data":{"slot":"svc-s","node":"node-a"}}}
+{"v":0,"id":"0000000000000000000000000000006d","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_stopped","data":{"name":"svc-s"}}}
+{"v":0,"id":"0000000000000000000000000000006e","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"singleton_yielded","data":{"slot":"svc-s","node":"node-a"}}}
+{"v":0,"id":"0000000000000000000000000000006f","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_started","data":{"name":"svc-s","pid":4112}}}
+{"v":0,"id":"00000000000000000000000000000070","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"singleton_activated","data":{"slot":"svc-s","node":"node-a","reason":"superior_ready_timeout"}}}
+{"v":0,"id":"00000000000000000000000000000071","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"service_stopped","data":{"name":"svc-s"}}}
+{"v":0,"id":"00000000000000000000000000000072","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"instance_config_changed","data":{"service":"svc-i","instance":"one","rev":2,"hash":"sha256:f83c6d6f34e666366fca010d6bc414f3aeb678df53f08ee8e9e91a3d117a35e5","updated_at":"2026-01-02T03:04:05+00:00","origin_node":"node-a"}}}
+{"v":0,"id":"00000000000000000000000000000073","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"update_finished","data":{"ok":true,"version":"1.2.0","error":null}}}
+{"v":0,"id":"00000000000000000000000000000074","type":"event","src":{"node":"node-a","service":"node"},"payload":{"event":"update_finished","data":{"ok":false,"version":"1.2.0","error":"pipx: ошибка установки"}}}

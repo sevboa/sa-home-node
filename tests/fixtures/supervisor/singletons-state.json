@@ -1,0 +1,86 @@
+{
+  "active_running_ready": {
+    "svc-s": {
+      "role": "active",
+      "running": true,
+      "claiming": false,
+      "ready": true,
+      "rank": [
+        1,
+        10,
+        "node-a"
+      ],
+      "fenced": false
+    }
+  },
+  "standby_instance": {
+    "svc-i@one": {
+      "role": "standby",
+      "running": false,
+      "claiming": false,
+      "ready": false,
+      "rank": [
+        0,
+        100,
+        "node-a"
+      ],
+      "fenced": false
+    }
+  },
+  "standby_prio": {
+    "svc-s": {
+      "role": "standby",
+      "running": false,
+      "claiming": false,
+      "ready": false,
+      "rank": [
+        0,
+        70,
+        "node-b"
+      ],
+      "fenced": false
+    }
+  },
+  "fenced": {
+    "svc-s": {
+      "role": "active",
+      "running": false,
+      "claiming": false,
+      "ready": false,
+      "rank": [
+        1,
+        10,
+        "node-a"
+      ],
+      "fenced": true
+    }
+  },
+  "standby_superior_running": {
+    "svc-s": {
+      "role": "standby",
+      "running": false,
+      "claiming": false,
+      "ready": false,
+      "rank": [
+        0,
+        10,
+        "node-a"
+      ],
+      "fenced": false
+    }
+  },
+  "claiming": {
+    "svc-s": {
+      "role": "active",
+      "running": false,
+      "claiming": true,
+      "ready": false,
+      "rank": [
+        1,
+        10,
+        "node-a"
+      ],
+      "fenced": false
+    }
+  }
+}

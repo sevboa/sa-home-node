@@ -1,0 +1,252 @@
+{
+  "wins_over": [
+    {
+      "case": "none",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "other": null,
+      "wins": true
+    },
+    {
+      "case": "rev_higher",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 3,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "wins": true
+    },
+    {
+      "case": "rev_lower",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 1,
+        "hash": "sha256:aa",
+        "updated_at": "2027-01-01T00:00:00+00:00",
+        "origin_node": "node-a"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "wins": false
+    },
+    {
+      "case": "same_rev_same_hash",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2027-01-01T00:00:00+00:00",
+        "origin_node": "node-a"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "wins": false
+    },
+    {
+      "case": "same_rev_later",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:bb",
+        "updated_at": "2026-01-02T03:04:06+00:00",
+        "origin_node": "node-a"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "wins": true
+    },
+    {
+      "case": "same_rev_earlier",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:bb",
+        "updated_at": "2026-01-02T03:04:04+00:00",
+        "origin_node": "node-a"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "wins": false
+    },
+    {
+      "case": "same_time_origin_higher",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:bb",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-b"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "wins": true
+    },
+    {
+      "case": "same_time_origin_lower",
+      "meta": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:bb",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "one",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-b"
+      },
+      "wins": false
+    }
+  ],
+  "passive_source": [
+    {
+      "case": "source_none",
+      "meta": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-b"
+      },
+      "other": null,
+      "wins": true
+    },
+    {
+      "case": "source_later_other_hash_lower_rev",
+      "meta": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 1,
+        "hash": "sha256:bb",
+        "updated_at": "2026-01-02T03:04:06+00:00",
+        "origin_node": "node-b"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 5,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-b"
+      },
+      "wins": true
+    },
+    {
+      "case": "source_same_hash",
+      "meta": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:06+00:00",
+        "origin_node": "node-b"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-b"
+      },
+      "wins": false
+    },
+    {
+      "case": "source_earlier",
+      "meta": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 9,
+        "hash": "sha256:bb",
+        "updated_at": "2026-01-02T03:04:04+00:00",
+        "origin_node": "node-b"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-b"
+      },
+      "wins": false
+    },
+    {
+      "case": "not_from_source",
+      "meta": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 3,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-a"
+      },
+      "other": {
+        "service": "svc-i",
+        "instance": "node-b",
+        "rev": 2,
+        "hash": "sha256:aa",
+        "updated_at": "2026-01-02T03:04:05+00:00",
+        "origin_node": "node-b"
+      },
+      "wins": true
+    }
+  ]
+}

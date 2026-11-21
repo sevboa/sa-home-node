@@ -1,0 +1,592 @@
+{
+  "node_state_after_assign": {
+    "assignments": [
+      "svc@two",
+      "svc-i@two:standby:prio=5",
+      "svc-s:standby"
+    ],
+    "peers": [],
+    "last_known_version": null
+  },
+  "actions": [
+    {
+      "action": "stop",
+      "args": {
+        "name": "svc"
+      },
+      "reply": {
+        "service": {
+          "name": "svc",
+          "status": "stopped",
+          "pid": null,
+          "restarts": 0,
+          "last_exit_code": -15,
+          "started_at": "2026-01-02T03:04:05+00:00",
+          "service": "svc",
+          "instance": "",
+          "role": "active"
+        }
+      }
+    },
+    {
+      "action": "start",
+      "args": {
+        "name": "svc"
+      },
+      "reply": {
+        "service": {
+          "name": "svc",
+          "status": "running",
+          "pid": 4106,
+          "restarts": 0,
+          "last_exit_code": -15,
+          "started_at": "2026-01-02T03:04:05+00:00",
+          "service": "svc",
+          "instance": "",
+          "role": "active"
+        }
+      }
+    },
+    {
+      "action": "restart",
+      "args": {
+        "name": "svc"
+      },
+      "reply": {
+        "service": {
+          "name": "svc",
+          "status": "running",
+          "pid": 4107,
+          "restarts": 0,
+          "last_exit_code": -15,
+          "started_at": "2026-01-02T03:04:05+00:00",
+          "service": "svc",
+          "instance": "",
+          "role": "active"
+        }
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": "svc@two"
+      },
+      "reply": {
+        "service": {
+          "name": "svc@two",
+          "status": "running",
+          "pid": 4108,
+          "restarts": 0,
+          "last_exit_code": null,
+          "started_at": "2026-01-02T03:04:05+00:00",
+          "service": "svc",
+          "instance": "two",
+          "role": "active"
+        }
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": "svc-i@two:standby:prio=5"
+      },
+      "reply": {
+        "service": {
+          "name": "svc-i@two",
+          "status": "stopped",
+          "pid": null,
+          "restarts": 0,
+          "last_exit_code": null,
+          "started_at": null,
+          "service": "svc-i",
+          "instance": "two",
+          "role": "standby"
+        }
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": "svc-s:standby"
+      },
+      "reply": {
+        "service": {
+          "name": "svc-s",
+          "status": "stopped",
+          "pid": null,
+          "restarts": 0,
+          "last_exit_code": null,
+          "started_at": null,
+          "service": "svc-s",
+          "instance": "",
+          "role": "active"
+        }
+      }
+    },
+    {
+      "action": "unassign",
+      "args": {
+        "name": "svc@two"
+      },
+      "reply": {
+        "unassigned": "svc@two"
+      }
+    },
+    {
+      "action": "unassign",
+      "args": {
+        "name": "svc-i@two"
+      },
+      "reply": {
+        "unassigned": "svc-i@two"
+      }
+    },
+    {
+      "action": "report_ready",
+      "args": {
+        "name": "svc-i@one",
+        "ready": true
+      },
+      "reply": {
+        "name": "svc-i@one",
+        "ready": true
+      }
+    },
+    {
+      "action": "report_ready",
+      "args": {
+        "name": "svc-i@one",
+        "ready": false
+      },
+      "reply": {
+        "name": "svc-i@one",
+        "ready": false
+      }
+    },
+    {
+      "action": "list_instances",
+      "args": {
+        "service": "svc-i"
+      },
+      "reply": {
+        "service": "svc-i",
+        "instances": [
+          {
+            "service": "svc-i",
+            "instance": "one",
+            "rev": 1,
+            "hash": "sha256:2ad14f114d3e2dbf904ca37dde2117324883428f3bc9981571da9a6719d139cd",
+            "updated_at": "2026-01-02T03:04:05+00:00",
+            "origin_node": "node-a"
+          }
+        ]
+      }
+    },
+    {
+      "action": "list_instances",
+      "args": {
+        "service": "svc"
+      },
+      "reply": {
+        "service": "svc",
+        "instances": []
+      }
+    },
+    {
+      "action": "get_instance_config",
+      "args": {
+        "service": "svc-i",
+        "instance": "one"
+      },
+      "reply": {
+        "meta": {
+          "service": "svc-i",
+          "instance": "one",
+          "rev": 1,
+          "hash": "sha256:2ad14f114d3e2dbf904ca37dde2117324883428f3bc9981571da9a6719d139cd",
+          "updated_at": "2026-01-02T03:04:05+00:00",
+          "origin_node": "node-a"
+        },
+        "content": "# Пакет настроек инстанса one: комментарий сохраняется байт в байт\n[svc-i]\ntitle = \"Первый инстанс\"\nlimit = 3\n"
+      }
+    }
+  ],
+  "node_state_after_unassign": {
+    "assignments": [
+      "svc-s:standby"
+    ],
+    "peers": [],
+    "last_known_version": null
+  },
+  "power": [
+    {
+      "action": "poweroff",
+      "args": {},
+      "reply": {
+        "scheduled": "poweroff",
+        "delay_s": 1.0
+      }
+    },
+    {
+      "action": "reboot",
+      "args": {},
+      "reply": {
+        "scheduled": "reboot",
+        "delay_s": 1.0
+      }
+    },
+    {
+      "action": "suspend",
+      "args": {},
+      "reply": {
+        "scheduled": "suspend",
+        "delay_s": 1.0
+      }
+    },
+    {
+      "action": "poweroff",
+      "args": {
+        "if_idle": true
+      },
+      "reply": {
+        "done": false,
+        "blockers": [
+          "службы: svc"
+        ]
+      }
+    },
+    {
+      "action": "poweroff",
+      "args": {
+        "if_idle": true
+      },
+      "reply": {
+        "done": false,
+        "blockers": [
+          "службы: svc",
+          "user, pts/0, с 10:00",
+          "tmux: main"
+        ]
+      }
+    },
+    {
+      "action": "poweroff",
+      "args": {
+        "if_idle": true
+      },
+      "reply": {
+        "done": true,
+        "blockers": []
+      }
+    }
+  ],
+  "restart_node": [
+    {
+      "action": "restart_node",
+      "args": {},
+      "reply": {
+        "deferred": [
+          "svc"
+        ],
+        "max_wait_s": 1800.0,
+        "message": "рестарт отложен до освобождения: svc"
+      }
+    },
+    {
+      "action": "restart_node",
+      "args": {},
+      "reply": {
+        "deferred": [
+          "svc"
+        ],
+        "max_wait_s": 1800.0,
+        "message": "рестарт отложен до освобождения: svc"
+      }
+    },
+    {
+      "action": "restart_node",
+      "args": {},
+      "reply": {
+        "deferred": [],
+        "max_wait_s": 1800.0,
+        "message": "ожидание рестарта уже идёт"
+      }
+    },
+    {
+      "action": "restart_node",
+      "args": {
+        "force": true
+      },
+      "reply": {
+        "scheduled": "restart_node",
+        "delay_s": 1.0
+      }
+    },
+    {
+      "action": "restart_node",
+      "args": {},
+      "reply": {
+        "scheduled": "restart_node",
+        "delay_s": 1.0
+      }
+    }
+  ],
+  "update": [
+    {
+      "case": "check_update",
+      "action": "check_update",
+      "args": {},
+      "reply": {
+        "repo": "https://example.invalid/sa-home-node.git",
+        "running": "1.1.0",
+        "installed": "1.1.0",
+        "latest": "1.2.0"
+      }
+    },
+    {
+      "case": "up_to_date_restart_required",
+      "action": "update",
+      "args": {},
+      "reply": {
+        "up_to_date": true,
+        "version": "1.2.0",
+        "restart_required": true
+      }
+    },
+    {
+      "case": "up_to_date",
+      "action": "update",
+      "args": {},
+      "reply": {
+        "up_to_date": true,
+        "version": "1.2.0",
+        "restart_required": false
+      }
+    },
+    {
+      "case": "scheduled",
+      "action": "update",
+      "args": {},
+      "reply": {
+        "scheduled": true,
+        "target_version": "1.2.0"
+      }
+    },
+    {
+      "case": "already_running",
+      "action": "update",
+      "args": {},
+      "error": {
+        "code": "bad_request",
+        "message": "обновление уже выполняется"
+      }
+    },
+    {
+      "case": "get_state_update_running",
+      "state": {
+        "running": "1.1.0",
+        "installed": "1.1.0",
+        "restart_required": false,
+        "last": null
+      }
+    },
+    {
+      "case": "get_state_update_done",
+      "state": {
+        "running": "1.1.0",
+        "installed": "1.1.0",
+        "restart_required": false,
+        "last": {
+          "ok": true,
+          "version": "1.2.0",
+          "error": null
+        }
+      }
+    },
+    {
+      "case": "scheduled_fails",
+      "action": "update",
+      "args": {},
+      "reply": {
+        "scheduled": true,
+        "target_version": "1.2.0"
+      }
+    },
+    {
+      "case": "get_state_update_failed",
+      "state": {
+        "running": "1.1.0",
+        "installed": "1.1.0",
+        "restart_required": false,
+        "last": {
+          "ok": false,
+          "version": "1.2.0",
+          "error": "pipx: ошибка установки"
+        }
+      }
+    },
+    {
+      "case": "windows_scheduled",
+      "action": "update",
+      "args": {},
+      "reply": {
+        "scheduled": true,
+        "target_version": "1.2.0",
+        "via": "scheduled_task"
+      }
+    },
+    {
+      "case": "windows_task_fails",
+      "action": "update",
+      "args": {},
+      "reply": {
+        "scheduled": true,
+        "target_version": "1.2.0",
+        "via": "scheduled_task"
+      }
+    },
+    {
+      "case": "check_update_offline",
+      "action": "check_update",
+      "args": {},
+      "error": {
+        "code": "internal",
+        "message": "не удалось проверить обновления (сеть?)"
+      }
+    },
+    {
+      "case": "update_offline",
+      "action": "update",
+      "args": {},
+      "error": {
+        "code": "internal",
+        "message": "не удалось проверить обновления (сеть?)"
+      }
+    }
+  ],
+  "errors": [
+    {
+      "action": "start",
+      "args": {
+        "name": "x"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "нет такой службы: 'x' (есть: svc, svc-s, svc-i@one)"
+      }
+    },
+    {
+      "action": "unassign",
+      "args": {
+        "name": "x"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "нет такой службы: 'x' (есть: svc, svc-s, svc-i@one)"
+      }
+    },
+    {
+      "action": "report_ready",
+      "args": {
+        "name": "x",
+        "ready": true
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "нет такой службы: 'x' (есть: svc, svc-s, svc-i@one)"
+      }
+    },
+    {
+      "action": "get_instance_config",
+      "args": {
+        "service": "svc-i",
+        "instance": "two"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "нет пакета настроек svc-i@two на ноде node-a"
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": ""
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "пустое назначение"
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": "@one"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "нет имени службы: '@one'"
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": "svc:prio=x"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "приоритет не число: 'prio=x'"
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": "svc:bogus"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "непонятная часть назначения: 'bogus' в 'svc:bogus'"
+      }
+    },
+    {
+      "action": "assign",
+      "args": {
+        "name": "nope"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "неизвестное назначение: 'nope'"
+      }
+    },
+    {
+      "action": "stop",
+      "args": {
+        "name": "x"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "нет такой службы: 'x' (есть: нет служб)"
+      }
+    },
+    {
+      "action": "list_instances",
+      "args": {
+        "service": "svc-i"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "на этой ноде нет каталога пакетов настроек"
+      }
+    },
+    {
+      "action": "get_instance_config",
+      "args": {
+        "service": "svc-i",
+        "instance": "one"
+      },
+      "error": {
+        "code": "bad_request",
+        "message": "на этой ноде нет каталога пакетов настроек"
+      }
+    }
+  ]
+}
