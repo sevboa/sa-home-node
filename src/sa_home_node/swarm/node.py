@@ -139,6 +139,7 @@ class Swarm:
         self.discovery: SwarmDiscovery | None = None
         self._announce_task: asyncio.Task | None = None
         self._started = False
+        self._farewell_sent = False
 
         async def on_peer_event(env: Envelope) -> None:
             await self.relay.on_event(env)
@@ -160,7 +161,7 @@ class Swarm:
         make_peer_link, make_local_link = make_link_factories(
             self.swarm, self.node_id, on_peer_event, on_local_event, on_peer_endpoints
         )
-        self._make_local_link = make_local_link
+        self.make_local_link = make_local_link
 
         kinds = peer_kinds(self.swarm.nodes, self.state.peers)
         for peer_id, endpoints in peer_candidates(self.swarm.nodes, self.state.peers).items():
@@ -208,6 +209,7 @@ class Swarm:
     async def start(self) -> None:
         await self.server.start()
         self._started = True
+        self._farewell_sent = False
         self._announce_task = asyncio.create_task(
             announce_version(
                 self.state, self.state_path, self.server.broadcast_event, version=self.version
@@ -252,8 +254,8 @@ class Swarm:
     async def stop(self) -> None:
         if not self._started:
             return
+        await self.farewell()
         self._started = False
-        await self.emit(EVENT_NODE_LEAVING, {"node": self.node_id, "kind": self.kind})
         if self._announce_task is not None:
             self._announce_task.cancel()
             with contextlib.suppress(asyncio.CancelledError):
@@ -266,6 +268,12 @@ class Swarm:
         for link in self.router.peers.values():
             await link.stop()
         await self.server.stop()
+
+    async def farewell(self) -> None:
+        if not self._started or self._farewell_sent:
+            return
+        self._farewell_sent = True
+        await self.emit(EVENT_NODE_LEAVING, {"node": self.node_id, "kind": self.kind})
 
     async def emit(self, event: str, data: dict, *, service: str = NODE_SERVICE) -> None:
         env = make_event(event, data, src=Address(node=self.node_id, service=service))

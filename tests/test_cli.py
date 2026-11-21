@@ -43,10 +43,29 @@ def test_run_passes_config(monkeypatch, tmp_path):
 
     async def run_node(config_path):
         called.append(config_path)
+        return False
 
     monkeypatch.setattr(cli, "run_node", run_node)
+    monkeypatch.setattr(cli, "current", lambda: pytest.fail("перезапуск не нужен"))
     assert cli.main(["run", "--config", str(tmp_path / "cfg.toml")]) == 0
     assert called == [tmp_path / "cfg.toml"]
+
+
+def test_run_self_restarts(monkeypatch, tmp_path):
+    restarts = []
+
+    async def run_node(config_path):
+        return True
+
+    class FakeHost:
+        def self_restart(self, argv):
+            restarts.append(argv)
+
+    monkeypatch.setattr(cli, "run_node", run_node)
+    monkeypatch.setattr(cli, "current", FakeHost)
+    monkeypatch.setattr(cli.sys, "argv", ["sa-home-node", "run"])
+    assert cli.main(["run", "--config", str(tmp_path / "cfg.toml")]) == 0
+    assert restarts == [["sa-home-node", "run"]]
 
 
 def test_no_command(capsys):

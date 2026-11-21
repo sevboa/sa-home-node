@@ -6,6 +6,7 @@ from pathlib import Path
 
 from sa_home_node.config import ConfigError
 from sa_home_node.content import ContentError
+from sa_home_node.host import current
 from sa_home_node.node import run_node, run_service
 from sa_home_node.plugins import PluginError, available
 
@@ -35,7 +36,8 @@ def main(argv: list[str] | None = None) -> int:
     logging.basicConfig(level=logging.INFO)
     try:
         if args.command == "run":
-            asyncio.run(run_node(args.config))
+            if asyncio.run(run_node(args.config)):
+                current().self_restart(sys.argv)
         else:
             return asyncio.run(run_service(args.name, args.instance, args.config))
     except (ConfigError, ContentError, PluginError) as e:

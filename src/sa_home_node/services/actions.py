@@ -39,6 +39,21 @@ NO_CATALOG = "на этой ноде нет каталога пакетов на
 LocalLinkFactory = Callable[[str, str], LocalTarget]
 
 
+def local_target(
+    spec: ServiceSpec,
+    slot: Slot | None,
+    table: ServiceTable,
+    config: NodeConfig,
+    make_local_link: LocalLinkFactory,
+) -> LocalTarget | None:
+    if spec.process or spec.external:
+        endpoint = table.endpoints(config).get(spec.name)
+        return make_local_link(spec.name, endpoint) if endpoint is not None else None
+    if spec.handler is not None and isinstance(slot, InProcessService):
+        return InProcessTarget(slot, spec.handler(slot.ctx))
+    return None
+
+
 class SupervisorActions:
     def __init__(
         self,
@@ -151,14 +166,6 @@ class SupervisorActions:
 
         return handler
 
-    def _target(self, slot: Slot, spec: ServiceSpec) -> LocalTarget | None:
-        if spec.process:
-            endpoint = self._table.endpoints(self._config).get(spec.name)
-            return self._make_local_link(spec.name, endpoint) if endpoint is not None else None
-        if spec.handler is not None and isinstance(slot, InProcessService):
-            return InProcessTarget(slot, spec.handler(slot.ctx))
-        return None
-
     async def _assign(self, args: dict[str, Any]) -> dict[str, Any]:
         name = str(args.get("name", ""))
         try:
@@ -170,7 +177,7 @@ class SupervisorActions:
         if not spec.singleton:
             await slot.start()
         if spec.name not in self._router.local_services:
-            target = self._target(slot, spec)
+            target = local_target(spec, slot, self._table, self._config, self._make_local_link)
             if target is not None:
                 await self._router.add_local_service(spec.name, target)
         if name not in self._state.assignments:
