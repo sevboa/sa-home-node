@@ -10,6 +10,8 @@ EVENT_SERVICE_STARTED = "service_started"
 EVENT_SERVICE_FAILED = "service_failed"
 EVENT_SERVICE_STOPPED = "service_stopped"
 EVENT_SERVICE_FENCED = "service_fenced"
+EVENT_SINGLETON_ACTIVATED = "singleton_activated"
+EVENT_SINGLETON_YIELDED = "singleton_yielded"
 
 FENCED_EXIT_CODE = 11
 
