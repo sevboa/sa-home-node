@@ -60,11 +60,12 @@ def test_run_self_restarts(monkeypatch, tmp_path):
     class FakeHost:
         def self_restart(self, argv):
             restarts.append(argv)
+            return 10
 
     monkeypatch.setattr(cli, "run_node", run_node)
     monkeypatch.setattr(cli, "current", FakeHost)
     monkeypatch.setattr(cli.sys, "argv", ["sa-home-node", "run"])
-    assert cli.main(["run", "--config", str(tmp_path / "cfg.toml")]) == 0
+    assert cli.main(["run", "--config", str(tmp_path / "cfg.toml")]) == 10
     assert restarts == [["sa-home-node", "run"]]
 
 

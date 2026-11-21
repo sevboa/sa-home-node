@@ -37,7 +37,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "run":
             if asyncio.run(run_node(args.config)):
-                current().self_restart(sys.argv)
+                return current().self_restart(sys.argv)
         else:
             return asyncio.run(run_service(args.name, args.instance, args.config))
     except (ConfigError, ContentError, PluginError) as e:
