@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import asyncio
 import contextlib
+import os
+import signal
 import socket
 
 from .base import (
@@ -8,12 +11,14 @@ from .base import (
     TCP_KEEPALIVE_IDLE_S,
     TCP_KEEPALIVE_INTERVAL_S,
     TCP_USER_TIMEOUT_S,
+    check_power_action,
 )
 
 
 class LinuxHost:
     name = "linux"
     unix_sockets = True
+    update_via_task = False
     uptime_path = "/proc/uptime"
 
     def enable_tcp_keepalive(self, sock: socket.socket) -> None:
@@ -40,3 +45,23 @@ class LinuxHost:
                 return float(f.read().split()[0])
         except (OSError, ValueError, IndexError):
             return None
+
+    def spawn_kwargs(self) -> dict:
+        return {}
+
+    def power_argv(self, action: str) -> list[str]:
+        check_power_action(action)
+        return ["systemctl", action]
+
+    def self_restart(self, argv: list[str]) -> int:
+        os.execv(argv[0], argv)
+        return 0
+
+    async def trigger_update_task(self) -> tuple[bool, str]:
+        return False, "нет задачи обновления"
+
+    def terminate(self, proc: asyncio.subprocess.Process) -> None:
+        proc.terminate()
+
+    def stop_signals(self) -> tuple[int, ...]:
+        return (signal.SIGINT, signal.SIGTERM)
