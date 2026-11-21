@@ -147,7 +147,7 @@ LAN, оверлей, прочие. Сортировка устойчивая, п
   - `join` — присоединиться к соседу по endpoint и добавить его пиров себе в состояние.
 - `node-state.json` (`NodeState`): `assignments`, `peers` (`SwarmPeer`: id, endpoint, endpoints,
   kind), `last_known_version`. Рой сохраняет сам: пиры и их адреса (`remember_peer`), типы соседей
-  (`record_peer_kind`), версию (`last_known_version`) — атомарно (`_atomic_write`, временный файл и
+  (`record_peer_kind`), версию (`last_known_version`) — атомарно (`atomic_write_text`, временный файл и
   `os.replace`).
 
 ## Сборка роя (`Swarm`)

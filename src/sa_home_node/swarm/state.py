@@ -1,13 +1,11 @@
 from __future__ import annotations
 
-import contextlib
-import os
-import tempfile
 from collections.abc import Sequence
 from pathlib import Path
 
 from pydantic import BaseModel, Field
 
+from sa_home_node.files import atomic_write_text
 from sa_home_node.swarm.config import SwarmPeer
 
 
@@ -24,7 +22,7 @@ class NodeState(BaseModel):
         return cls.model_validate_json(path.read_bytes())
 
     def save(self, path: str | Path) -> None:
-        _atomic_write(path, self.model_dump_json(indent=2))
+        atomic_write_text(path, self.model_dump_json(indent=2))
 
     def remember_peer(self, node_id: str, endpoint: str, endpoints: Sequence[str] = ()) -> None:
         known = self._peer(node_id)
@@ -64,18 +62,4 @@ class NodeState(BaseModel):
 
     def _peer(self, node_id: str) -> SwarmPeer | None:
         return next((p for p in self.peers if p.id == node_id), None)
-
-
-def _atomic_write(path: str | Path, data: str) -> None:
-    path = Path(path)
-    path.parent.mkdir(parents=True, exist_ok=True)
-    fd, tmp_name = tempfile.mkstemp(dir=path.parent, prefix=f".{path.name}.", suffix=".tmp")
-    try:
-        with os.fdopen(fd, "w", encoding="utf-8") as handle:
-            handle.write(data)
-        os.replace(tmp_name, path)
-    except BaseException:
-        with contextlib.suppress(OSError):
-            os.unlink(tmp_name)
-        raise
 
