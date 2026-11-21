@@ -9,7 +9,13 @@ from support import wait_for
 from sa_home_node import node
 from sa_home_node.config import ConfigError
 from sa_home_node.content import ContentError
-from sa_home_node.plugins import Plugin, ServiceContext, ServiceSpec
+from sa_home_node.plugins import (
+    Plugin,
+    PluginError,
+    ServiceContext,
+    ServiceFenced,
+    ServiceSpec,
+)
 from sa_home_node.proto.actions import NodeAction
 from sa_home_node.proto.client import ProtoClient
 from sa_home_node.proto.describe import ActionParam, ActionSpec
@@ -32,6 +38,10 @@ def write_config(tmp_path, sock_dir, plugins):
 
 def make_plugin(name, run, keys=()):
     return Plugin(name=name, services=(ServiceSpec("s", run),), content_keys=keys)
+
+
+async def _noop_svc(ctx: ServiceContext) -> None:
+    return None
 
 
 def make_service(name, started, cancelled, ev):
@@ -163,3 +173,54 @@ async def test_node_with_swarm_api_and_node_actions(tmp_path, monkeypatch, sock_
             await client.close()
         stop.set()
         await asyncio.wait_for(task, timeout=10)
+
+
+async def test_run_service_unknown(tmp_path, monkeypatch, sock_dir):
+    cfg = write_config(tmp_path, sock_dir, ["p1"])
+    monkeypatch.setattr(node, "load_plugins", lambda names: [make_plugin("p1", _noop_svc)])
+    with pytest.raises(PluginError, match="нет процессной службы: hello"):
+        await node.run_service("hello", config_path=cfg, stop=asyncio.Event())
+
+
+def patch_service(monkeypatch, tmp_path, sock_dir, run):
+    monkeypatch.chdir(tmp_path)
+    plugin = make_plugin("p1", _noop_svc)
+    monkeypatch.setattr(node, "load_plugins", lambda names: [plugin])
+    monkeypatch.setattr(
+        node.ServiceTable, "spec", lambda self, name: ServiceSpec(name="hello", run=run, process=True)
+    )
+    monkeypatch.setattr(node.ServiceTable, "plugin_of", lambda self, name: plugin)
+    return write_config(tmp_path, sock_dir, ["p1"])
+
+
+async def test_run_service_fenced(tmp_path, monkeypatch, sock_dir):
+    ctxs = []
+
+    async def svc(ctx: ServiceContext) -> None:
+        ctxs.append(ctx)
+        raise ServiceFenced("вытеснена")
+
+    cfg = patch_service(monkeypatch, tmp_path, sock_dir, svc)
+    assert await node.run_service("hello", instance="one", config_path=cfg, stop=asyncio.Event()) == 11
+    assert ctxs[0].instance == "one"
+    assert (tmp_path / "data" / "p1").is_dir()
+
+
+async def test_run_service_returns_zero(tmp_path, monkeypatch, sock_dir):
+    cfg = patch_service(monkeypatch, tmp_path, sock_dir, _noop_svc)
+    assert await node.run_service("hello", config_path=cfg, stop=asyncio.Event()) == 0
+
+
+async def test_run_service_stops(tmp_path, monkeypatch, sock_dir):
+    started = []
+
+    async def svc(ctx: ServiceContext) -> None:
+        started.append(True)
+        await asyncio.Event().wait()
+
+    cfg = patch_service(monkeypatch, tmp_path, sock_dir, svc)
+    stop = asyncio.Event()
+    task = asyncio.create_task(node.run_service("hello", config_path=cfg, stop=stop))
+    await wait_for(lambda: bool(started), timeout=5)
+    stop.set()
+    assert await asyncio.wait_for(task, timeout=10) == 0

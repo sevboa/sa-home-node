@@ -6,7 +6,7 @@ from pathlib import Path
 
 from sa_home_node.config import ConfigError
 from sa_home_node.content import ContentError
-from sa_home_node.node import run_node
+from sa_home_node.node import run_node, run_service
 from sa_home_node.plugins import PluginError, available
 
 
@@ -15,6 +15,10 @@ def main(argv: list[str] | None = None) -> int:
     subparsers = parser.add_subparsers(dest="command")
     run_parser = subparsers.add_parser("run", help="запуск ноды")
     run_parser.add_argument("--config", type=Path, default=None, help="путь к config.toml")
+    service_parser = subparsers.add_parser("service", help="запуск процессной службы")
+    service_parser.add_argument("name", help="имя службы")
+    service_parser.add_argument("--instance", default="", help="имя экземпляра")
+    service_parser.add_argument("--config", type=Path, default=None, help="путь к config.toml")
     subparsers.add_parser("plugins", help="список установленных плагинов")
     args = parser.parse_args(argv)
     if args.command is None:
@@ -30,7 +34,10 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     logging.basicConfig(level=logging.INFO)
     try:
-        asyncio.run(run_node(args.config))
+        if args.command == "run":
+            asyncio.run(run_node(args.config))
+        else:
+            return asyncio.run(run_service(args.name, args.instance, args.config))
     except (ConfigError, ContentError, PluginError) as e:
         print(f"ошибка: {e}", file=sys.stderr)
         return 2
