@@ -8,6 +8,8 @@ from collections.abc import Callable
 from sa_home_node.config import NodeConfig, NodeSection
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription, ServiceInfo
 from sa_home_node.proto.server import ProtoServer
+from sa_home_node.services.assignments import Assignment, parse
+from sa_home_node.services.events import RUNNING, STOPPED
 
 TOKEN = "test-token"
 
@@ -86,6 +88,40 @@ class StubService:
 
     async def run_command(self, action: str, args: dict) -> dict:
         return {"accepted": True}
+
+
+class Clock:
+    def __init__(self) -> None:
+        self.now = 1000.0
+        self.sleeps: list[float] = []
+
+    def __call__(self) -> float:
+        return self.now
+
+    async def sleep(self, delay: float) -> None:
+        self.sleeps.append(delay)
+        self.now += delay
+        await asyncio.sleep(0)
+
+
+class FakeSlot:
+    def __init__(self, text: str, *, running: bool = False, alive: bool = True) -> None:
+        self.assignment: Assignment = parse(text)
+        self.name = self.assignment.key
+        self.status = RUNNING if running else STOPPED
+        self.process_alive = alive
+        self.trace: list[str] = []
+
+    async def start(self) -> None:
+        self.status = RUNNING
+        self.trace.append("start")
+
+    async def stop(self) -> None:
+        self.status = STOPPED
+        self.trace.append("stop")
+
+    async def restart(self) -> None:
+        self.trace.append("restart")
 
 
 async def wait_for(predicate: Callable[[], bool], timeout: float = 5.0) -> bool:

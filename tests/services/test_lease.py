@@ -5,6 +5,7 @@ from types import SimpleNamespace
 from typing import Any
 
 import pytest
+from support import Clock, FakeSlot
 
 from sa_home_node.plugins import Plugin, ServiceSpec
 from sa_home_node.proto.wire import ERR_UNAVAILABLE, ProtoError, make_response
@@ -12,8 +13,6 @@ from sa_home_node.services.assignments import Assignment, parse
 from sa_home_node.services.events import (
     EVENT_SINGLETON_ACTIVATED,
     EVENT_SINGLETON_YIELDED,
-    RUNNING,
-    STOPPED,
 )
 from sa_home_node.services.lease import (
     FENCED_HOLDOFF_S,
@@ -44,37 +43,6 @@ def table() -> ServiceTable:
         ServiceSpec(name="svc", run=_run),
     )
     return ServiceTable((Plugin(name="p", services=specs),))
-
-
-class Clock:
-    def __init__(self) -> None:
-        self.now = 1000.0
-        self.sleeps: list[float] = []
-
-    def __call__(self) -> float:
-        return self.now
-
-    async def sleep(self, delay: float) -> None:
-        self.sleeps.append(delay)
-        self.now += delay
-        await asyncio.sleep(0)
-
-
-class FakeSlot:
-    def __init__(self, text: str, *, running: bool = False, alive: bool = True) -> None:
-        self.assignment: Assignment = parse(text)
-        self.name = self.assignment.key
-        self.status = RUNNING if running else STOPPED
-        self.process_alive = alive
-        self.trace: list[str] = []
-
-    async def start(self) -> None:
-        self.status = RUNNING
-        self.trace.append("start")
-
-    async def stop(self) -> None:
-        self.status = STOPPED
-        self.trace.append("stop")
 
 
 class FakeLink:

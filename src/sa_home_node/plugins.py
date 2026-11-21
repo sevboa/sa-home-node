@@ -9,6 +9,7 @@ from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
 from sa_home_node.proto.actions import NodeAction
 from sa_home_node.proto.server import ServiceHandler
+from sa_home_node.services.instances import InstanceMeta
 from sa_home_node.swarm.node import SwarmApi
 
 ENTRY_POINT_GROUP = "sa_home_node.plugins"
@@ -48,6 +49,13 @@ class ServiceSpec:
 
 
 @dataclass(frozen=True)
+class ReplicationHooks:
+    passive: Callable[[str, str], bool] | None = None
+    before_announce: Callable[[], Awaitable[object]] | None = None
+    on_applied: Callable[[InstanceMeta, bytes], None] | None = None
+
+
+@dataclass(frozen=True)
 class Plugin:
     name: str
     config_model: type[BaseModel] | None = None
@@ -55,6 +63,7 @@ class Plugin:
     content_keys: tuple[str, ...] = ()
     node_actions: tuple[NodeAction, ...] = ()
     power_blockers: tuple[Callable[[], Awaitable[list[str]]], ...] = ()
+    replication_hooks: ReplicationHooks | None = None
 
 
 def available() -> dict[str, EntryPoint]:
