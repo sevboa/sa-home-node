@@ -157,6 +157,7 @@ async def run_node(
         emit=swarm.emit,
         subscribe=swarm.subscribe,
         hooks=[p.replication_hooks for p in plugins if p.replication_hooks is not None],
+        poll_interval_s=swarm.swarm.replication_poll_interval_s,
     )
     lease = LeaseManager(
         cfg.node.id,
@@ -167,6 +168,8 @@ async def run_node(
         emit=swarm.emit,
         grace_s=swarm.swarm.failover_grace_s,
         ready_timeout_s=swarm.swarm.superior_ready_timeout_s,
+        poll_interval_s=swarm.swarm.lease_poll_interval_s,
+        settle_s=swarm.swarm.lease_settle_s,
     )
     register_supervisor(
         node_service,

@@ -12,6 +12,9 @@
 
 ## Решение (раз в `POLL_INTERVAL_S`)
 
+Интервалы задаются в секции `[swarm]` ноды: `lease_poll_interval_s` (10), `lease_settle_s` (15),
+`failover_grace_s` (120), `superior_ready_timeout_s` (45), `replication_poll_interval_s` (30, репликация пакетов).
+
 Менеджер опрашивает живых соседей (`get_state` службы `node`, `PEER_TIMEOUT_S`) и для каждого слота:
 
 1. Слот работает, а старший сосед работает или заявил притязание: уступить (`stop`, событие

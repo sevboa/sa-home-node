@@ -26,6 +26,9 @@ class SwarmSection(BaseModel):
     node_down_alert_after_s: float = Field(default=300.0, gt=0)
     failover_grace_s: float = Field(default=120.0, gt=0)
     superior_ready_timeout_s: float = Field(default=45.0, gt=0)
+    lease_poll_interval_s: float = Field(default=10.0, gt=0)
+    lease_settle_s: float = Field(default=15.0, gt=0)
+    replication_poll_interval_s: float = Field(default=30.0, gt=0)
     discovery: DiscoverySection = Field(default_factory=DiscoverySection)
 
 

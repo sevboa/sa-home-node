@@ -8,7 +8,7 @@ from collections.abc import AsyncIterator, Callable
 from pathlib import Path
 
 import pytest
-from support import wait_for
+from support import install_example_entry_point, wait_for
 
 from sa_home_node.proto.client import ProtoClient
 from sa_home_node.proto.wire import Address
@@ -26,13 +26,7 @@ HANG_SCRIPT = Path(__file__).parent.parent / "fixtures" / "hang_service.py"
 
 @pytest.fixture
 def example_entry_point(tmp_path, monkeypatch) -> None:
-    dist = tmp_path / "eps" / "sa_home_node_example-0.dist-info"
-    dist.mkdir(parents=True)
-    (dist / "METADATA").write_text("Metadata-Version: 2.1\nName: sa-home-node-example\nVersion: 0\n")
-    (dist / "entry_points.txt").write_text("[sa_home_node.plugins]\nexample = sa_home_node.example:PLUGIN\n")
-    src = Path(__file__).parents[2] / "src"
-    paths = [str(dist.parent), str(src), os.environ.get("PYTHONPATH", "")]
-    monkeypatch.setenv("PYTHONPATH", os.pathsep.join(p for p in paths if p))
+    install_example_entry_point(tmp_path, monkeypatch)
 
 
 @pytest.fixture

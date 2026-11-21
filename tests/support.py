@@ -4,6 +4,7 @@ import asyncio
 import os
 import socket
 from collections.abc import Callable
+from pathlib import Path
 
 from sa_home_node.config import NodeConfig, NodeSection
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription, ServiceInfo
@@ -168,3 +169,13 @@ async def wait_for(predicate: Callable[[], bool], timeout: float = 5.0) -> bool:
             return True
         await asyncio.sleep(0.01)
     return predicate()
+
+
+def install_example_entry_point(tmp_path: Path, monkeypatch) -> None:
+    dist = tmp_path / "eps" / "sa_home_node_example-0.dist-info"
+    dist.mkdir(parents=True)
+    (dist / "METADATA").write_text("Metadata-Version: 2.1\nName: sa-home-node-example\nVersion: 0\n")
+    (dist / "entry_points.txt").write_text("[sa_home_node.plugins]\nexample = sa_home_node.example:PLUGIN\n")
+    src = Path(__file__).parents[1] / "src"
+    paths = [str(dist.parent), str(src), os.environ.get("PYTHONPATH", "")]
+    monkeypatch.setenv("PYTHONPATH", os.pathsep.join(p for p in paths if p))
