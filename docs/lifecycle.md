@@ -80,6 +80,21 @@ power_controllable, request_restart, router, blockers)` (необязатель�
 «не занято», в ожидании — приводит к принудительному перезапуску: нода не должна зависнуть из-за сломанного
 опроса.
 
+## Самоперезапуск
+
+Действие `restart_node` (и вызов `request_restart`) ставит флаг и сигналит остановку: `run_node` штатно
+останавливает ноду (см. «Останов») и возвращает `True`. `sa-home-node run` после закрытия цикла событий зовёт
+`host.current().self_restart(sys.argv)`:
+
+- Linux — `os.execv`: процесс заменяется на месте, PID тот же, менеджер служб ничего не замечает;
+- Windows — хост возвращает `RESTART_EXIT_CODE` (10), `cli` завершается с этим кодом, перезапуск делает
+  обёртка службы.
+
+## Сигналы остановки
+
+Сигналы остановки (`host.current().stop_signals()`) вешает `install_stop_handlers` — на ноде и в процессной
+службе (см. [host](host.md)). Дочерним службам нода шлёт `host.terminate` и по истечении `stop_timeout_s` — `kill`.
+
 ## Обновление
 
 Модуль `sa_home_node/lifecycle/update.py`, точка входа `register_update(node_service, *, repo, emit, run)`.

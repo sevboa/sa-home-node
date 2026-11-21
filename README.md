@@ -9,7 +9,7 @@
 ## Устройство
 - `src/sa_home_node/` — пакет ядра.
 - `docs/` — описание модулей.
-- Плагины — Python-пакеты с точкой входа `sa_home_node.plugins`.
+- Плагины — Python-пакеты с точкой входа `sa_home_node.plugins`; службы плагина, назначения и аренда — [docs/plugins.md](docs/plugins.md), [docs/services.md](docs/services.md).
 
 ## Лицензия
 [PolyForm Noncommercial 1.0.0](LICENSE): пользоваться, изменять и распространять можно в некоммерческих

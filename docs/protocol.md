@@ -99,6 +99,72 @@
 пока не придёт `eof`. Целостность — sha256 от собранного файла (`expected_sha256`),
 несовпадение — ошибка целостности. `data_b64` — стандартный base64.
 
+## Служба `node`: действия, состояние, события
+
+Службу `node` отдаёт каждая нода; её действия видны в `describe`, порядок кнопок задаёт `NODE_ACTION_ORDER`
+(`swarm/service.py`): `start`, `stop`, `restart`, `assign`, `unassign`, `send_wol`, `report_ready`, `trigger_peers`,
+`swarm_join`, `join`, `restart_node`, `check_update`, `update`, `poweroff`, `reboot`, `suspend`,
+`close_ssh_sessions`, `list_instances`, `get_instance_config`. Действия, которых на ноде нет, пропускаются; действия
+плагинов (`Plugin.node_actions`) и прочих вкладов, не названные в списке, идут после, в порядке регистрации.
+Действия роя (`send_wol`, `trigger_peers`, `swarm_join`, `join`) описаны в [swarm](swarm.md).
+
+### Действия
+
+| действие | параметры | ответ | условие объявления |
+|---|---|---|---|
+| `start`, `stop`, `restart` | `name` — ключ слота (выбор из слотов супервизора) | `{service: <слот>}` | всегда |
+| `assign` | `name` — строка назначения (выбор из назначаемых служб) | `{service: <слот>}` | всегда |
+| `unassign` | `name` — ключ слота | `{unassigned: name}` | всегда |
+| `report_ready` | `name` — слот, `ready` — bool | `{name, ready}` | всегда |
+| `list_instances` | `service` | `{service, instances: [meta]}` | есть каталог пакетов |
+| `get_instance_config` | `service`, `instance` | `{meta, content}`, `content` — текст пакета UTF-8 | есть каталог пакетов |
+| `poweroff`, `reboot`, `suspend` | нет (у `poweroff` допустим `if_idle: true`) | `{scheduled, delay_s: 1.0}`; `poweroff` с `if_idle` — `{done, blockers}` | `[node].power_controllable` или тип ноды |
+| `restart_node` | нет (допустим `force: true`) | `{scheduled: "restart_node", delay_s: 1.0}` или `{deferred, max_wait_s, message}` | всегда |
+| `check_update` | нет | `{repo, running, installed, latest}` | есть источник обновления |
+| `update` | нет | `{up_to_date, version, restart_required}` или `{scheduled, target_version}` (на Windows ещё `via: "scheduled_task"`) | есть источник обновления |
+
+Замечания:
+
+- `force` и `if_idle` в `describe` не объявляются (панели рисуют кнопки только для действий без параметров), но
+  принимаются; `if_idle` — только строго `true`.
+- Источник обновления — git-установка не в режиме разработки. Без каталога пакетов `list_instances` и
+  `get_instance_config` остаются в обработчиках, но в `describe` не видны и отвечают `bad_request` «на этой ноде
+  нет каталога пакетов настроек».
+- Ответ действий питания уходит раньше самой команды (задержка 1 с).
+- Ошибки `bad_request`: `нет такой службы: 'x' (есть: …)` (или `нет служб`), ошибки разбора назначения (список в
+  [services](services.md)), `нет пакета настроек s@i на ноде n`, `обновление уже выполняется`. `internal`:
+  `не удалось проверить обновления (сеть?)`.
+- Устройство: [services](services.md), [lifecycle](lifecycle.md).
+
+### `get_state` службы `node`
+
+Помимо полей роя ([swarm](swarm.md)) вклады:
+
+- `services` — слоты `{name, status, pid, restarts, last_exit_code, started_at, service, instance, role}`;
+  `status` — `running`, `restarting` или `stopped`; у встроенной службы `pid: null`. Внешние службы роутера —
+  с `"external": true`, `instance` и `role` — `null`;
+- `instances` — список `meta` пакетов настроек: `{service, instance, rev, hash, updated_at, origin_node}`;
+- `singletons` — `{слот: {role, running, claiming, ready, rank: [роль, приоритет, нода], fenced}}`;
+- `update` — `{running, installed, restart_required, last}` (только при источнике обновления).
+
+### События
+
+| событие | данные |
+|---|---|
+| `service_started` | `{name, pid}` (`pid: null` у встроенной) |
+| `service_failed` | `{name, exit_code}` или `{name, error}` |
+| `service_stopped` | `{name}` |
+| `service_fenced` | `{name}` |
+| `singleton_activated` | `{slot, node}`, при захвате из-за молчания старшей ноды ещё `reason: "superior_ready_timeout"` |
+| `singleton_yielded` | `{slot, node}` |
+| `instance_config_changed` | `meta` пакета, без содержимого |
+| `update_finished` | `{ok, version, error}` |
+
+### Коды выхода
+
+`11` — служба вытеснена другим экземпляром (`FENCED_EXIT_CODE`); `10` — самоперезапуск на Windows
+(`RESTART_EXIT_CODE`, возвращает хост) и принудительный выход сторожа останова (`HARD_EXIT_CODE`).
+
 ## Обвязка
 
 - `ProtoServer(endpoint(s), handler, token=, router=, on_peer_connect=)` — слушает
