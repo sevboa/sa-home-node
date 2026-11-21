@@ -1,19 +1,12 @@
 from __future__ import annotations
 
 import asyncio
-import contextlib
 import logging
 import time
 from collections.abc import Awaitable, Callable
 from typing import Any
 
-from sa_home_node.proto.wire import (
-    MSG_GET_STATE,
-    NODE_SERVICE,
-    Address,
-    ProtoError,
-    make_request,
-)
+from sa_home_node.proto.wire import MSG_GET_STATE
 from sa_home_node.services.assignments import ROLE_ACTIVE, Assignment
 from sa_home_node.services.events import (
     EVENT_SINGLETON_ACTIVATED,
@@ -21,6 +14,7 @@ from sa_home_node.services.events import (
     RUNNING,
     EventEmitter,
 )
+from sa_home_node.services.periodic import PEER_ERRORS, Periodic, request_peer
 from sa_home_node.services.registry import ServiceTable
 from sa_home_node.services.supervisor import Supervisor
 from sa_home_node.swarm.kind import traits_for
@@ -44,16 +38,12 @@ Rank = tuple[int, int, str]
 
 
 def rank(assignment: Assignment, node_kind: str, node_id: str) -> Rank:
-    priority = assignment.priority
-    if priority is None:
-        priority = traits_for(node_kind).lease_priority
+    priority = assignment.priority if assignment.priority is not None else traits_for(node_kind).lease_priority
     return (int(assignment.role == ROLE_ACTIVE), priority, node_id)
 
 
 def outranks(a: Rank, b: Rank) -> bool:
-    if a[:2] != b[:2]:
-        return a[:2] > b[:2]
-    return a[2] < b[2]
+    return (a[:2], b[2]) > (b[:2], a[2])
 
 
 def record_rank(record: dict) -> Rank:
@@ -61,7 +51,10 @@ def record_rank(record: dict) -> Rank:
     return (int(raw[0]), int(raw[1]), str(raw[2]))
 
 
-class LeaseManager:
+class LeaseManager(Periodic):
+    task_name = "lease-manager"
+    loop_error = "Аренда: ошибка цикла"
+
     def __init__(
         self,
         node_id: str,
@@ -101,7 +94,6 @@ class LeaseManager:
         self._yielded_since: dict[str, float] = {}
         self._not_running_since: dict[str, float] = {}
         self._stuck_warned: set[str] = set()
-        self._task: asyncio.Task | None = None
 
     def _slots(self) -> list:
         return [
@@ -132,28 +124,17 @@ class LeaseManager:
 
     def note_fenced(self, slot_name: str) -> None:
         self._fenced_until[slot_name] = self._clock() + self._holdoff_s
-        self._claiming.discard(slot_name)
-        self._silent_since.pop(slot_name, None)
-        log.warning(
-            "Аренда %s: службу вытеснил другой экземпляр — молчу %.0f с", slot_name, self._holdoff_s
-        )
+        self._stand_down(slot_name)
+        log.warning("Аренда %s: службу вытеснил другой экземпляр — молчу %.0f с", slot_name, self._holdoff_s)
 
     async def _peer_singletons(self) -> dict[str, list[dict]]:
         by_slot: dict[str, list[dict]] = {}
-        if self._router is None:
-            return by_slot
-        for peer_id, link in list(self._router.peers.items()):
+        for peer_id, link in list(self._router.peers.items() if self._router is not None else ()):
             if not link.alive:
                 continue
-            request = make_request(
-                MSG_GET_STATE,
-                src=Address(node=self._node_id, service=NODE_SERVICE),
-                dst=Address(node=peer_id, service=NODE_SERVICE),
-                timeout_s=PEER_TIMEOUT_S,
-            )
             try:
-                response = await asyncio.wait_for(link.forward(request), PEER_TIMEOUT_S)
-            except (ProtoError, TimeoutError, ConnectionError, OSError):
+                response = await request_peer(link, self._node_id, peer_id, PEER_TIMEOUT_S, MSG_GET_STATE)
+            except PEER_ERRORS:
                 continue
             if not response.ok:
                 continue
@@ -181,9 +162,11 @@ class LeaseManager:
 
     async def _activate(self, slot, **extra: str) -> None:
         await slot.start()
-        await self._emit(
-            EVENT_SINGLETON_ACTIVATED, {"slot": slot.name, "node": self._node_id, **extra}
-        )
+        await self._emit(EVENT_SINGLETON_ACTIVATED, {"slot": slot.name, "node": self._node_id, **extra})
+
+    def _stand_down(self, name: str) -> None:
+        self._claiming.discard(name)
+        self._silent_since.pop(name, None)
 
     async def _decide(self, slot, peers: list[dict]) -> None:
         now = self._clock()
@@ -224,8 +207,7 @@ class LeaseManager:
             )
 
         if holding:
-            self._claiming.discard(name)
-            self._silent_since.pop(name, None)
+            self._stand_down(name)
             since = self._yielded_since.get(name)
             expired = since is not None and now - since >= self._ready_timeout_s
             if expired and not any(p.get("ready") for p in holding):
@@ -244,9 +226,7 @@ class LeaseManager:
         if running_inferior:
             if name not in self._claiming:
                 log.info(
-                    "Аренда %s: службу держит %s — объявляю притязание",
-                    name,
-                    running_inferior[0].get("node"),
+                    "Аренда %s: службу держит %s — объявляю притязание", name, running_inferior[0].get("node")
                 )
             self._claiming.add(name)
             self._silent_since.pop(name, None)
@@ -257,12 +237,10 @@ class LeaseManager:
             return
 
         grace = 0.0 if slot.assignment.role == ROLE_ACTIVE else self._grace_s
-        since = self._silent_since.setdefault(name, now)
-        if now - since < grace:
+        if now - self._silent_since.setdefault(name, now) < grace:
             return
         log.info("Аренда %s: свободна — беру", name)
-        self._claiming.discard(name)
-        self._silent_since.pop(name, None)
+        self._stand_down(name)
         await self._activate(slot)
 
     async def _settle(self) -> None:
@@ -277,21 +255,4 @@ class LeaseManager:
 
     async def start(self) -> None:
         await self._settle()
-        with contextlib.suppress(Exception):
-            await self.tick()
-        self._task = asyncio.create_task(self._run(), name="lease-manager")
-
-    async def stop(self) -> None:
-        if self._task is not None:
-            self._task.cancel()
-            with contextlib.suppress(asyncio.CancelledError):
-                await self._task
-        self._task = None
-
-    async def _run(self) -> None:
-        while True:
-            await self._sleep(self._poll_interval_s)
-            try:
-                await self.tick()
-            except Exception:
-                log.exception("Аренда: ошибка цикла")
+        await self._launch()

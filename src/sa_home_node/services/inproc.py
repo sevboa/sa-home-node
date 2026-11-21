@@ -1,38 +1,29 @@
 from __future__ import annotations
 
 import asyncio
-import contextlib
 import logging
 from collections.abc import Callable
 
-from sa_home_node.plugins import (
-    ServiceContext,
-    ServiceFenced,
-    ServiceSpec,
-)
+from sa_home_node.plugins import ServiceContext, ServiceFenced, ServiceSpec
 from sa_home_node.proto.server import ServiceHandler, dispatch_request
 from sa_home_node.proto.wire import Envelope
 from sa_home_node.services.assignments import Assignment
 from sa_home_node.services.events import (
     EVENT_SERVICE_FAILED,
-    EVENT_SERVICE_FENCED,
     EVENT_SERVICE_STARTED,
-    EVENT_SERVICE_STOPPED,
     FENCED_EXIT_CODE,
     RESTARTING,
     RUNNING,
     STOPPED,
     EventEmitter,
     call_quietly,
-    emit_quietly,
-    slot_dict,
 )
-from sa_home_node.services.process import utc_now
+from sa_home_node.services.slot import SlotBase, utc_now
 
 log = logging.getLogger(__name__)
 
 
-class InProcessService:
+class InProcessService(SlotBase):
     def __init__(
         self,
         spec: ServiceSpec,
@@ -45,41 +36,18 @@ class InProcessService:
         on_fenced: Callable[[str], None] | None = None,
         on_spawned: Callable[[str], None] | None = None,
     ) -> None:
-        self.assignment = assignment or Assignment(service=spec.name)
-        self.name = self.assignment.key
+        assignment = assignment or Assignment(service=spec.name)
+        super().__init__(
+            assignment.key, assignment, emit=emit, restart_delay_s=restart_delay_s,
+            stop_timeout_s=stop_timeout_s, on_fenced=on_fenced, on_spawned=on_spawned,
+        )
         self._spec = spec
-        self._ctx = ctx
-        self._emit = emit
-        self._restart_delay = restart_delay_s
-        self._stop_timeout = stop_timeout_s
-        self._on_fenced = on_fenced
-        self._on_spawned = on_spawned
-        self._task: asyncio.Task | None = None
-        self._desired_running = False
-        self._status = STOPPED
-        self.restarts = 0
-        self.last_exit_code: int | None = None
-        self.started_at: str | None = None
-
-    @property
-    def status(self) -> str:
-        return self._status
-
-    @property
-    def ctx(self) -> ServiceContext:
-        return self._ctx
-
-    @property
-    def pid(self) -> int | None:
-        return None
+        self.ctx = ctx
 
     @property
     def process_alive(self) -> bool:
         task = self._task
         return task is not None and not task.done() and self._status == RUNNING
-
-    def to_dict(self) -> dict:
-        return slot_dict(self)
 
     async def start(self) -> None:
         if self._desired_running:
@@ -93,32 +61,15 @@ class InProcessService:
             return
         self._desired_running = False
         if task is not None:
-            await self._cancel_task(task)
+            task.cancel()
+            try:
+                await self._cancel(task, self._stop_timeout, "встроенная задача не остановилась")
+            except BaseException:
+                self._status = STOPPED
+                task.cancel()
+                raise
         self._task = None
-        self._status = STOPPED
-        await emit_quietly(self._emit, EVENT_SERVICE_STOPPED, {"name": self.name})
-
-    async def _cancel_task(self, task: asyncio.Task) -> None:
-        task.cancel()
-        try:
-            done, _ = await asyncio.wait({task}, timeout=self._stop_timeout)
-        except BaseException:
-            self._status = STOPPED
-            task.cancel()
-            raise
-        if not done:
-            log.warning(
-                "Служба %s: встроенная задача не остановилась за %.0f с — снимаю",
-                self.name,
-                self._stop_timeout,
-            )
-            task.cancel()
-            with contextlib.suppress(asyncio.CancelledError):
-                await task
-
-    async def restart(self) -> None:
-        await self.stop()
-        await self.start()
+        await self._stopped()
 
     async def _run(self) -> None:
         while self._desired_running:
@@ -126,29 +77,21 @@ class InProcessService:
                 self.started_at = utc_now().isoformat()
                 self._status = RUNNING
                 call_quietly(self._on_spawned, self.name)
-                await emit_quietly(self._emit, EVENT_SERVICE_STARTED, {"name": self.name, "pid": None})
-                await self._spec.run(self._ctx)
+                await self._event(EVENT_SERVICE_STARTED, pid=None)
+                await self._spec.run(self.ctx)
             except ServiceFenced:
                 self.last_exit_code = FENCED_EXIT_CODE
-                self._status = STOPPED
-                self._desired_running = False
-                await emit_quietly(self._emit, EVENT_SERVICE_FENCED, {"name": self.name})
-                call_quietly(self._on_fenced, self.name)
+                await self._fenced()
                 break
             except Exception as exc:
-                log.exception(
-                    "Служба %s упала, перезапуск через %.0f с",
-                    self.name,
-                    self._restart_delay,
-                )
+                log.exception("Служба %s упала, перезапуск через %.0f с", self.name, self._restart_delay)
                 self.restarts += 1
                 self._status = RESTARTING
-                await emit_quietly(self._emit, EVENT_SERVICE_FAILED, {"name": self.name, "error": str(exc)})
+                await self._event(EVENT_SERVICE_FAILED, error=str(exc))
                 await asyncio.sleep(self._restart_delay)
             else:
-                self._status = STOPPED
                 self._desired_running = False
-                await emit_quietly(self._emit, EVENT_SERVICE_STOPPED, {"name": self.name})
+                await self._stopped()
                 break
 
 

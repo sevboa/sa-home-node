@@ -4,37 +4,28 @@ import asyncio
 import contextlib
 import logging
 from collections.abc import Callable
-from datetime import UTC, datetime
 
 from sa_home_node.host import Host, current
 from sa_home_node.services.assignments import Assignment
 from sa_home_node.services.events import (
     EVENT_SERVICE_FAILED,
-    EVENT_SERVICE_FENCED,
     EVENT_SERVICE_STARTED,
-    EVENT_SERVICE_STOPPED,
     FENCED_EXIT_CODE,
     RESTARTING,
     RUNNING,
     STOPPED,
     EventEmitter,
     call_quietly,
-    emit_quietly,
-    slot_dict,
 )
+from sa_home_node.services.slot import SlotBase, utc_now
 
 log = logging.getLogger(__name__)
 
 SUPERVISE_EXIT_TIMEOUT_S = 5.0
-
 SPAWN_TIMEOUT_S = 5.0
 
 
-def utc_now() -> datetime:
-    return datetime.now(UTC)
-
-
-class ProcessService:
+class ProcessService(SlotBase):
     def __init__(
         self,
         name: str,
@@ -48,28 +39,14 @@ class ProcessService:
         on_spawned: Callable[[str], None] | None = None,
         host: Host | None = None,
     ) -> None:
-        self.name = name
-        self._on_fenced = on_fenced
-        self._on_spawned = on_spawned
-        self.assignment = assignment or Assignment(service=name)
+        super().__init__(
+            name, assignment or Assignment(service=name), emit=emit, restart_delay_s=restart_delay_s,
+            stop_timeout_s=stop_timeout_s, on_fenced=on_fenced, on_spawned=on_spawned,
+        )
         self._argv = argv
-        self._emit = emit
-        self._restart_delay = restart_delay_s
-        self._stop_timeout = stop_timeout_s
         self._host = host or current()
-
         self._proc: asyncio.subprocess.Process | None = None
-        self._task: asyncio.Task | None = None
         self._spawned = asyncio.Event()
-        self._desired_running = False
-        self._status = STOPPED
-        self.restarts = 0
-        self.last_exit_code: int | None = None
-        self.started_at: str | None = None
-
-    @property
-    def status(self) -> str:
-        return self._status
 
     @property
     def pid(self) -> int | None:
@@ -78,9 +55,6 @@ class ProcessService:
     @property
     def process_alive(self) -> bool:
         return self._proc is not None and self._proc.returncode is None
-
-    def to_dict(self) -> dict:
-        return slot_dict(self)
 
     async def start(self) -> None:
         if self._desired_running:
@@ -95,10 +69,7 @@ class ProcessService:
             await asyncio.wait_for(self._spawned.wait(), timeout=SPAWN_TIMEOUT_S)
 
     def _on_task_done(self, task: asyncio.Task) -> None:
-        if task.cancelled():
-            return
-        exc = task.exception()
-        if exc is not None:
+        if not task.cancelled() and (exc := task.exception()) is not None:
             log.error(
                 "Служба %s: наблюдающая задача завершилась с необработанным "
                 "исключением — служба больше НЕ супервизируется",
@@ -113,13 +84,14 @@ class ProcessService:
         self._desired_running = False
         try:
             await self._halt_process()
-            await self._reap_task()
+            if task is not None:
+                await self._cancel(task, SUPERVISE_EXIT_TIMEOUT_S, "наблюдающая задача не завершилась")
+                self._task = None
         except BaseException:
             self._status = STOPPED
             self._kill(self._proc)
             raise
-        self._status = STOPPED
-        await emit_quietly(self._emit, EVENT_SERVICE_STOPPED, {"name": self.name})
+        await self._stopped()
 
     async def _halt_process(self) -> None:
         proc = self._proc
@@ -136,46 +108,26 @@ class ProcessService:
         self._kill(proc)
         await proc.wait()
 
-    async def _reap_task(self) -> None:
-        task = self._task
-        if task is None:
-            return
-        done, _ = await asyncio.wait({task}, timeout=SUPERVISE_EXIT_TIMEOUT_S)
-        if not done:
-            log.warning(
-                "Служба %s: наблюдающая задача не завершилась за %.0f с — снимаю",
-                self.name,
-                SUPERVISE_EXIT_TIMEOUT_S,
-            )
-            task.cancel()
-            with contextlib.suppress(asyncio.CancelledError):
-                await task
-        self._task = None
-
     @staticmethod
     def _kill(proc: asyncio.subprocess.Process | None) -> None:
         if proc is not None and proc.returncode is None:
             with contextlib.suppress(OSError):
                 proc.kill()
 
-    async def restart(self) -> None:
-        await self.stop()
-        await self.start()
+    async def _failed(self, **payload) -> None:
+        self._status = RESTARTING
+        await self._event(EVENT_SERVICE_FAILED, **payload)
 
     async def _run(self) -> None:
         while self._desired_running:
             try:
-                proc = await asyncio.create_subprocess_exec(
-                    *self._argv, **self._host.spawn_kwargs()
-                )
+                proc = await asyncio.create_subprocess_exec(*self._argv, **self._host.spawn_kwargs())
             except OSError as exc:
                 log.error("Не удалось запустить службу %s: %s", self.name, exc)
                 self._spawned.set()
-                await emit_quietly(self._emit, EVENT_SERVICE_FAILED, {"name": self.name, "error": str(exc)})
-                self._status = RESTARTING
+                await self._failed(error=str(exc))
                 await asyncio.sleep(self._restart_delay)
                 continue
-
             try:
                 self._proc = proc
                 self._status = RUNNING
@@ -183,11 +135,9 @@ class ProcessService:
                 self.started_at = utc_now().isoformat()
                 log.info("Служба %s запущена (pid=%s)", self.name, proc.pid)
                 call_quietly(self._on_spawned, self.name)
-                await emit_quietly(self._emit, EVENT_SERVICE_STARTED, {"name": self.name, "pid": proc.pid})
-
-                rc = await proc.wait()
+                await self._event(EVENT_SERVICE_STARTED, pid=proc.pid)
+                rc = self.last_exit_code = await proc.wait()
                 self._proc = None
-                self.last_exit_code = rc
                 if not self._desired_running:
                     log.info(
                         "Служба %s: процесс завершился (код %s) во время "
@@ -197,14 +147,8 @@ class ProcessService:
                     )
                     break
                 if rc == FENCED_EXIT_CODE:
-                    log.warning(
-                        "Служба %s вытеснена другим экземпляром — не перезапускаю",
-                        self.name,
-                    )
-                    self._desired_running = False
-                    self._status = STOPPED
-                    await emit_quietly(self._emit, EVENT_SERVICE_FENCED, {"name": self.name})
-                    call_quietly(self._on_fenced, self.name)
+                    log.warning("Служба %s вытеснена другим экземпляром — не перезапускаю", self.name)
+                    await self._fenced()
                     break
                 log.warning(
                     "Служба %s завершилась (код %s) — перезапуск через %.0f с",
@@ -212,9 +156,8 @@ class ProcessService:
                     rc,
                     self._restart_delay,
                 )
-                self._status = RESTARTING
                 self.restarts += 1
-                await emit_quietly(self._emit, EVENT_SERVICE_FAILED, {"name": self.name, "exit_code": rc})
+                await self._failed(exit_code=rc)
             except Exception:
                 log.exception(
                     "Служба %s: необработанная ошибка в цикле наблюдения — "
@@ -225,12 +168,6 @@ class ProcessService:
                 self._proc = None
                 if not self._desired_running:
                     break
-                self._status = RESTARTING
                 self.restarts += 1
-                await emit_quietly(
-                    self._emit,
-                    EVENT_SERVICE_FAILED,
-                    {"name": self.name, "error": "supervisor_internal_error"},
-                )
-
+                await self._failed(error="supervisor_internal_error")
             await asyncio.sleep(self._restart_delay)

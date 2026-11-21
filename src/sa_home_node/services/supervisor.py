@@ -4,33 +4,16 @@ import asyncio
 import logging
 import sys
 from collections.abc import Callable, Iterable
-from typing import Protocol
 
 from sa_home_node.plugins import ServiceSpec
 from sa_home_node.services.assignments import Assignment, AssignmentError, parse
 from sa_home_node.services.registry import ServiceTable
+from sa_home_node.services.slot import SlotBase
 
 log = logging.getLogger(__name__)
 
 
-class Slot(Protocol):
-    name: str
-    assignment: Assignment
-
-    async def start(self) -> None:
-        ...
-
-    async def stop(self) -> None:
-        ...
-
-    async def restart(self) -> None:
-        ...
-
-    def to_dict(self) -> dict:
-        ...
-
-
-SlotFactory = Callable[[ServiceSpec, Assignment], Slot]
+SlotFactory = Callable[[ServiceSpec, Assignment], SlotBase]
 
 
 def process_argv(service: str, instance: str, config_path: str | None) -> list[str]:
@@ -44,7 +27,7 @@ def process_argv(service: str, instance: str, config_path: str | None) -> list[s
 
 class Supervisor:
     def __init__(self, assignments: Iterable[str], table: ServiceTable, factory: SlotFactory) -> None:
-        self.services: dict[str, Slot] = {}
+        self.services: dict[str, SlotBase] = {}
         self._table = table
         self._factory = factory
         for item in assignments:
@@ -66,7 +49,7 @@ class Supervisor:
                     ", ".join(table.supervised_names()),
                 )
 
-    def make(self, assignment: Assignment) -> Slot:
+    def make(self, assignment: Assignment) -> SlotBase:
         spec = self._table.spec(assignment.service)
         if spec is None or spec.external:
             raise ValueError(f"неизвестное назначение: {assignment.service!r}")
@@ -88,10 +71,10 @@ class Supervisor:
             if isinstance(result, BaseException):
                 log.warning("Останов службы не удался: %r", result)
 
-    def get(self, name: str) -> Slot | None:
+    def get(self, name: str) -> SlotBase | None:
         return self.services.get(name)
 
-    def assign(self, text: str) -> Slot:
+    def assign(self, text: str) -> SlotBase:
         assignment = parse(text)
         existing = self.services.get(assignment.key)
         if existing is not None:

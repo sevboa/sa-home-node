@@ -18,7 +18,8 @@ from sa_home_node.services.replication import (
     ACTION_LIST_INSTANCES,
     ConfigReplicator,
 )
-from sa_home_node.services.supervisor import Slot, Supervisor
+from sa_home_node.services.slot import SlotBase
+from sa_home_node.services.supervisor import Supervisor
 from sa_home_node.swarm.router import LocalTarget, NodeRouter
 from sa_home_node.swarm.service import NodeService
 from sa_home_node.swarm.state import NodeState
@@ -31,9 +32,7 @@ ACTION_UNASSIGN = "unassign"
 ACTION_REPORT_READY = "report_ready"
 
 CONTROL_TITLES = {
-    ACTION_START: "▶️ Запустить",
-    ACTION_STOP: "⏹ Остановить",
-    ACTION_RESTART: "🔄 Перезапустить",
+    ACTION_START: "▶️ Запустить", ACTION_STOP: "⏹ Остановить", ACTION_RESTART: "🔄 Перезапустить",
 }
 NO_CATALOG = "на этой ноде нет каталога пакетов настроек"
 
@@ -42,7 +41,7 @@ LocalLinkFactory = Callable[[str, str], LocalTarget]
 
 def local_target(
     spec: ServiceSpec,
-    slot: Slot | None,
+    slot: SlotBase | None,
     table: ServiceTable,
     config: NodeConfig,
     make_local_link: LocalLinkFactory,
@@ -83,17 +82,15 @@ class SupervisorActions:
         actions = node_service.actions
         for action_id, title in CONTROL_TITLES.items():
             actions.add(self._named(action_id, title, "Служба", self._slot_names), self._control(action_id))
-        actions.add(self._named(ACTION_ASSIGN, "➕ Назначить", "Назначение", self._table.assignable_names), self._assign)
+        assignable = self._named(ACTION_ASSIGN, "➕ Назначить", "Назначение", self._table.assignable_names)
+        actions.add(assignable, self._assign)
         actions.add(self._named(ACTION_UNASSIGN, "➖ Снять", "Служба", self._slot_names), self._unassign)
+        ready_params = (
+            ActionParam(name="name", required=True, title="Слот службы"),
+            ActionParam(name="ready", type="bool", required=True, title="Готова"),
+        )
         actions.add(
-            ActionSpec(
-                id=ACTION_REPORT_READY,
-                title="📶 Готовность службы",
-                params=(
-                    ActionParam(name="name", required=True, title="Слот службы"),
-                    ActionParam(name="ready", type="bool", required=True, title="Готова"),
-                ),
-            ),
+            ActionSpec(id=ACTION_REPORT_READY, title="📶 Готовность службы", params=ready_params),
             self._report_ready,
         )
         self._register_instances(node_service)
@@ -115,25 +112,16 @@ class SupervisorActions:
         async def get_instance_config(args: dict[str, Any]) -> dict[str, Any]:
             return replicator.get_instance_config(args)
 
+        service = ActionParam(name="service", required=True, title="Служба")
+        instance = ActionParam(name="instance", required=True, title="Инстанс")
         actions.add(
-            ActionSpec(
-                id=ACTION_LIST_INSTANCES,
-                title="📦 Пакеты настроек",
-                params=(ActionParam(name="service", required=True, title="Служба"),),
-            ),
+            ActionSpec(id=ACTION_LIST_INSTANCES, title="📦 Пакеты настроек", params=(service,)),
             list_instances,
         )
-        actions.add(
-            ActionSpec(
-                id=ACTION_GET_INSTANCE_CONFIG,
-                title="📦 Забрать пакет настроек",
-                params=(
-                    ActionParam(name="service", required=True, title="Служба"),
-                    ActionParam(name="instance", required=True, title="Инстанс"),
-                ),
-            ),
-            get_instance_config,
+        spec = ActionSpec(
+            id=ACTION_GET_INSTANCE_CONFIG, title="📦 Забрать пакет настроек", params=(service, instance)
         )
+        actions.add(spec, get_instance_config)
 
     def _slot_names(self) -> tuple[str, ...]:
         return tuple(self._supervisor.services)
@@ -149,14 +137,11 @@ class SupervisorActions:
     async def _no_catalog(self, args: dict[str, Any]) -> dict[str, Any]:
         raise ProtoError(ERR_BAD_REQUEST, NO_CATALOG)
 
-    def _no_such_service(self, name: str) -> ProtoError:
-        known = ", ".join(self._supervisor.services) or "нет служб"
-        return ProtoError(ERR_BAD_REQUEST, f"нет такой службы: {name!r} (есть: {known})")
-
-    def _slot(self, name: str) -> Slot:
+    def _slot(self, name: str) -> SlotBase:
         slot = self._supervisor.get(name)
         if slot is None:
-            raise self._no_such_service(name)
+            known = ", ".join(self._supervisor.services) or "нет служб"
+            raise ProtoError(ERR_BAD_REQUEST, f"нет такой службы: {name!r} (есть: {known})")
         return slot
 
     def _control(self, action_id: str):
@@ -220,19 +205,10 @@ class SupervisorActions:
         for name, link in self._router.local_services.items():
             if name in supervised:
                 continue
+            status = "running" if link.alive else "stopped"
             services.append(
-                {
-                    "name": name,
-                    "status": "running" if link.alive else "stopped",
-                    "pid": None,
-                    "restarts": 0,
-                    "last_exit_code": None,
-                    "started_at": None,
-                    "service": name,
-                    "instance": None,
-                    "role": None,
-                    "external": True,
-                }
+                {"name": name, "status": status, "pid": None, "restarts": 0, "last_exit_code": None}
+                | {"started_at": None, "service": name, "instance": None, "role": None, "external": True}
             )
         return services
 
@@ -244,26 +220,6 @@ class SupervisorActions:
 
 
 def register_supervisor(
-    node_service: NodeService,
-    supervisor: Supervisor,
-    table: ServiceTable,
-    *,
-    router: NodeRouter,
-    state: NodeState,
-    state_path: str | Path,
-    make_local_link: LocalLinkFactory,
-    lease: LeaseManager | None,
-    replicator: ConfigReplicator | None,
-    config: NodeConfig,
+    node_service: NodeService, supervisor: Supervisor, table: ServiceTable, **kwargs
 ) -> None:
-    SupervisorActions(
-        supervisor,
-        table,
-        router=router,
-        state=state,
-        state_path=state_path,
-        make_local_link=make_local_link,
-        lease=lease,
-        replicator=replicator,
-        config=config,
-    ).register(node_service)
+    SupervisorActions(supervisor, table, **kwargs).register(node_service)

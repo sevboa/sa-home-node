@@ -1,22 +1,12 @@
 from __future__ import annotations
 
 import asyncio
-import contextlib
 import logging
 from collections.abc import Awaitable, Callable, Iterable
 from typing import Any
 
 from sa_home_node.plugins import ReplicationHooks
-from sa_home_node.proto.wire import (
-    ERR_BAD_REQUEST,
-    MSG_COMMAND,
-    MSG_GET_STATE,
-    NODE_SERVICE,
-    Address,
-    Envelope,
-    ProtoError,
-    make_request,
-)
+from sa_home_node.proto.wire import ERR_BAD_REQUEST, MSG_COMMAND, MSG_GET_STATE, Envelope, ProtoError
 from sa_home_node.services.assignments import (
     Assignment,
     base_instance,
@@ -27,6 +17,7 @@ from sa_home_node.services.assignments import (
 )
 from sa_home_node.services.events import EVENT_INSTANCE_CONFIG_CHANGED, RUNNING, EventEmitter
 from sa_home_node.services.instances import InstanceMeta, InstanceStore
+from sa_home_node.services.periodic import PEER_ERRORS, Periodic, request_peer
 from sa_home_node.services.registry import ServiceTable
 from sa_home_node.services.supervisor import Supervisor
 from sa_home_node.swarm.relay import EventHandler
@@ -43,7 +34,10 @@ POLL_INTERVAL_S = 30.0
 PEER_TIMEOUT_S = 10.0
 
 
-class ConfigReplicator:
+class ConfigReplicator(Periodic):
+    task_name = "config-replicator"
+    loop_error = "Репликация: ошибка цикла синхронизации"
+
     def __init__(
         self,
         node_id: str,
@@ -68,12 +62,9 @@ class ConfigReplicator:
         self._hooks = tuple(hooks)
         self._poll_interval_s = poll_interval_s
         self._sleep = sleep
-        self._task: asyncio.Task | None = None
 
     def _my_instances(self) -> list[Assignment]:
-        return [
-            slot.assignment for slot in self._supervisor.services.values() if slot.assignment.instance
-        ]
+        return [slot.assignment for slot in self._supervisor.services.values() if slot.assignment.instance]
 
     def _satellites(self, service: str) -> tuple[str, ...]:
         spec = self._table.spec(service)
@@ -103,14 +94,18 @@ class ConfigReplicator:
 
     def list_instances(self, args: dict[str, Any]) -> dict[str, Any]:
         service = str(args.get("service", ""))
-        revisions = [meta for meta in self.local_revisions() if meta["service"] == service]
-        return {"service": service, INSTANCES_KEY: revisions}
+        return {
+            "service": service,
+            INSTANCES_KEY: [m for m in self.local_revisions() if m["service"] == service],
+        }
 
     def get_instance_config(self, args: dict[str, Any]) -> dict[str, Any]:
         service = str(args.get("service", ""))
         instance = str(args.get("instance", ""))
         if not valid_service(service) or not valid_instance(instance):
-            raise ProtoError(ERR_BAD_REQUEST, f"недопустимое имя пакета настроек: {slot_key(service, instance)!r}")
+            raise ProtoError(
+                ERR_BAD_REQUEST, f"недопустимое имя пакета настроек: {slot_key(service, instance)!r}"
+            )
         data = self._store.read_package(service, instance)
         meta = self._store.read_meta(service, instance)
         if data is None or meta is None:
@@ -120,9 +115,7 @@ class ConfigReplicator:
         return {"meta": meta.to_dict(), "content": data.decode("utf-8")}
 
     async def announce_local_changes(self) -> list[InstanceMeta]:
-        for hook in self._hooks:
-            if hook.before_announce is None:
-                continue
+        for hook in filter(lambda h: h.before_announce is not None, self._hooks):
             try:
                 await hook.before_announce()
             except Exception:
@@ -137,22 +130,18 @@ class ConfigReplicator:
     async def on_event(self, env: Envelope) -> None:
         if env.payload.get("event") != EVENT_INSTANCE_CONFIG_CHANGED:
             return
-        meta = self._parse_meta(env.payload.get("data", {}), env.src.node if env.src else "?")
-        if meta is None:
-            return
-        if not self._cares_about(meta.service, meta.instance):
+        sender = env.src.node if env.src else ""
+        meta = self._parse_meta(env.payload.get("data", {}), sender or "?")
+        if meta is None or not self._cares_about(meta.service, meta.instance):
             return
         if not self._wins(meta, self._store.read_meta(meta.service, meta.instance)):
             return
-        source = meta.origin_node or (env.src.node if env.src else "")
-        if not source or source == self._node_id:
-            return
-        await self._pull(meta, source)
+        source = meta.origin_node or sender
+        if source and source != self._node_id:
+            await self._pull(meta, source)
 
     async def sync_from_peers(self) -> None:
-        if self._router is None:
-            return
-        if not self._my_instances() and not self._has_passive():
+        if self._router is None or (not self._my_instances() and not self._has_passive()):
             return
         for peer_id, link in list(self._router.peers.items()):
             if not link.alive:
@@ -166,9 +155,7 @@ class ConfigReplicator:
                 continue
             for raw in raws:
                 meta = self._parse_meta(raw, peer_id)
-                if meta is None:
-                    continue
-                if not self._cares_about(meta.service, meta.instance):
+                if meta is None or not self._cares_about(meta.service, meta.instance):
                     continue
                 if self._wins(meta, self._store.read_meta(meta.service, meta.instance)):
                     await self._pull(meta, peer_id)
@@ -182,58 +169,44 @@ class ConfigReplicator:
             return None
 
     async def _peer_state(self, peer_id: str, link) -> dict | None:
-        request = make_request(
-            MSG_GET_STATE,
-            src=Address(node=self._node_id, service=NODE_SERVICE),
-            dst=Address(node=peer_id, service=NODE_SERVICE),
-            timeout_s=PEER_TIMEOUT_S,
-        )
         try:
-            response = await asyncio.wait_for(link.forward(request), PEER_TIMEOUT_S)
-        except (ProtoError, TimeoutError, ConnectionError, OSError) as exc:
+            response = await request_peer(link, self._node_id, peer_id, PEER_TIMEOUT_S, MSG_GET_STATE)
+        except PEER_ERRORS as exc:
             log.debug("Репликация: нода %s не ответила о своих пакетах (%s)", peer_id, exc)
             return None
         return response.payload if response.ok else None
 
     async def _pull(self, meta: InstanceMeta, source: str) -> None:
-        if self._router is None:
-            return
-        link = self._router.peers.get(source)
+        link = self._router.peers.get(source) if self._router is not None else None
         if link is None or not link.alive:
             return
         key = slot_key(meta.service, meta.instance)
-        request = make_request(
-            MSG_COMMAND,
-            {
-                "action": ACTION_GET_INSTANCE_CONFIG,
-                "args": {"service": meta.service, "instance": meta.instance},
-            },
-            src=Address(node=self._node_id, service=NODE_SERVICE),
-            dst=Address(node=source, service=NODE_SERVICE),
-            timeout_s=PEER_TIMEOUT_S,
-        )
+        payload = {
+            "action": ACTION_GET_INSTANCE_CONFIG,
+            "args": {"service": meta.service, "instance": meta.instance},
+        }
         try:
-            response = await asyncio.wait_for(link.forward(request), PEER_TIMEOUT_S)
-        except (ProtoError, TimeoutError, ConnectionError, OSError) as exc:
-            log.warning("Репликация: не удалось забрать пакет %s с ноды %s (%s) — попробую позже", key, source, exc)
+            response = await request_peer(link, self._node_id, source, PEER_TIMEOUT_S, MSG_COMMAND, payload)
+        except PEER_ERRORS as exc:
+            log.warning(
+                "Репликация: не удалось забрать пакет %s с ноды %s (%s) — попробую позже", key, source, exc
+            )
             return
         if not response.ok:
-            log.warning("Репликация: нода %s отказала в пакете %s (%s)", source, key, response.error_message() or "?")
+            log.warning(
+                "Репликация: нода %s отказала в пакете %s (%s)", source, key, response.error_message() or "?"
+            )
             return
         content = response.payload.get("content")
-        if not isinstance(content, str):
-            return
         remote_meta = self._parse_meta(response.payload.get("meta", meta.to_dict()), source)
-        if remote_meta is None:
+        if not isinstance(content, str) or remote_meta is None:
             return
         data = content.encode("utf-8")
         local = self._store.read_meta(remote_meta.service, remote_meta.instance)
         force = self._is_passive(remote_meta.service, remote_meta.instance) and self._wins(remote_meta, local)
         if not self._store.apply(remote_meta, data, force=force):
             return
-        for hook in self._hooks:
-            if hook.on_applied is None:
-                continue
+        for hook in filter(lambda h: h.on_applied is not None, self._hooks):
             try:
                 hook.on_applied(remote_meta, data)
             except Exception:
@@ -255,21 +228,4 @@ class ConfigReplicator:
     async def start(self) -> None:
         if self._subscribe is not None:
             self._subscribe(self.on_event)
-        with contextlib.suppress(Exception):
-            await self.tick()
-        self._task = asyncio.create_task(self._run(), name="config-replicator")
-
-    async def stop(self) -> None:
-        if self._task is not None:
-            self._task.cancel()
-            with contextlib.suppress(asyncio.CancelledError):
-                await self._task
-        self._task = None
-
-    async def _run(self) -> None:
-        while True:
-            await self._sleep(self._poll_interval_s)
-            try:
-                await self.tick()
-            except Exception:
-                log.exception("Репликация: ошибка цикла синхронизации")
+        await self._launch()

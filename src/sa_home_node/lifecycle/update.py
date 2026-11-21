@@ -40,13 +40,7 @@ UpdateRunner = Callable[..., Awaitable[CommandOutput]]
 
 
 def version_key(version: str) -> tuple[int, ...]:
-    parts = []
-    for chunk in version.split("."):
-        try:
-            parts.append(int(chunk))
-        except ValueError:
-            parts.append(0)
-    return tuple(parts)
+    return tuple(int(chunk) if chunk.isdecimal() else 0 for chunk in version.split("."))
 
 
 def installed_version() -> str | None:
@@ -59,18 +53,10 @@ def installed_version() -> str | None:
 
 def origin_repo_url() -> str | None:
     try:
-        raw = importlib.metadata.distribution(PACKAGE_NAME).read_text("direct_url.json")
-    except importlib.metadata.PackageNotFoundError:
+        data = json.loads(importlib.metadata.distribution(PACKAGE_NAME).read_text("direct_url.json") or "")
+    except (importlib.metadata.PackageNotFoundError, json.JSONDecodeError):
         return None
-    if not raw:
-        return None
-    try:
-        data = json.loads(raw)
-    except json.JSONDecodeError:
-        return None
-    if data.get("dir_info", {}).get("editable"):
-        return None
-    if (data.get("vcs_info") or {}).get("vcs") != "git":
+    if data.get("dir_info", {}).get("editable") or (data.get("vcs_info") or {}).get("vcs") != "git":
         return None
     return data.get("url")
 
@@ -95,10 +81,7 @@ async def latest_tag(repo_url: str, run: UpdateRunner = run_command) -> str | No
     if code != 0:
         log.warning("git ls-remote %s вернул код %s: %s", repo_url, code, stderr)
         return None
-    tags = parse_tags(stdout)
-    if not tags:
-        return None
-    return max(tags, key=lambda tag: version_key(tag.lstrip("v")))
+    return max(parse_tags(stdout), key=lambda tag: version_key(tag.lstrip("v")), default=None)
 
 
 def pipx_home() -> str:
@@ -112,9 +95,7 @@ def installed_extras() -> str | None:
     except (OSError, ValueError, KeyError, TypeError):
         return None
     match = EXTRAS_RE.match(spec) if isinstance(spec, str) else None
-    if not match:
-        return None
-    extras = ",".join(e.strip() for e in match.group(1).split(",") if e.strip())
+    extras = ",".join(e.strip() for e in match.group(1).split(",") if e.strip()) if match else ""
     return extras or None
 
 
@@ -125,8 +106,7 @@ async def pipx_reinstall(repo_url: str, ref: str, run: UpdateRunner = run_comman
         spec = f"{PACKAGE_NAME}[{extras}] @ {spec}"
     try:
         code, stdout, stderr = await run(
-            ["pipx", "install", "--force", spec],
-            timeout=PIPX_INSTALL_TIMEOUT_S,
+            ["pipx", "install", "--force", spec], timeout=PIPX_INSTALL_TIMEOUT_S,
             env={**os.environ, "PIPX_HOME": pipx_home()},
         )
     except (OSError, TimeoutError) as exc:
@@ -161,8 +141,7 @@ class UpdateActions:
         }
 
     async def _latest(self) -> str:
-        latest = await latest_tag(self._repo, self._run)
-        if latest is None:
+        if (latest := await latest_tag(self._repo, self._run)) is None:
             raise ProtoError(ERR_INTERNAL, "не удалось проверить обновления (сеть?)")
         return latest
 
@@ -189,14 +168,19 @@ class UpdateActions:
         self._task = asyncio.create_task(self._run_install(latest, target), name="node-update")
         return {"scheduled": True, "target_version": target}
 
-    async def _run_task(self, target: str) -> None:
+    async def _guarded(self, work: Awaitable[tuple[bool, str]], failure: str) -> tuple[bool, str]:
         try:
-            ok, output = await host.current().trigger_update_task()
+            return await work
         except Exception as exc:
-            log.exception("Запуск задачи автообновления сорвался")
-            ok, output = False, str(exc)
+            log.exception(failure)
+            return False, str(exc)
         finally:
             self._updating = False
+
+    async def _run_task(self, target: str) -> None:
+        ok, output = await self._guarded(
+            host.current().trigger_update_task(), "Запуск задачи автообновления сорвался"
+        )
         if ok:
             log.warning("Задача автообновления запущена — служба скоро перезапустится сама")
             return
@@ -204,13 +188,9 @@ class UpdateActions:
         await self._finish(False, target, output)
 
     async def _run_install(self, ref: str, target: str) -> None:
-        try:
-            ok, output = await pipx_reinstall(self._repo, ref, self._run)
-        except Exception as exc:
-            log.exception("Установка обновления сорвалась")
-            ok, output = False, str(exc)
-        finally:
-            self._updating = False
+        ok, output = await self._guarded(
+            pipx_reinstall(self._repo, ref, self._run), "Установка обновления сорвалась"
+        )
         if ok:
             log.warning("Обновление до %s установлено — нужен restart_node", target)
         else:
@@ -223,11 +203,7 @@ class UpdateActions:
 
 
 def register_update(
-    node_service: NodeService,
-    *,
-    repo: str | None,
-    emit: EventEmitter,
-    run: UpdateRunner = run_command,
+    node_service: NodeService, *, repo: str | None, emit: EventEmitter, run: UpdateRunner = run_command
 ) -> None:
     if repo is None:
         return

@@ -36,12 +36,9 @@ class InstanceMeta:
     def from_dict(cls, data: dict) -> InstanceMeta:
         try:
             return cls(
-                service=str(data.get("service", "")),
-                instance=str(data.get("instance", "")),
-                rev=int(data.get("rev", 0)),
-                hash=str(data.get("hash", "")),
-                updated_at=str(data.get("updated_at", "")),
-                origin_node=str(data.get("origin_node", "")),
+                service=str(data.get("service", "")), instance=str(data.get("instance", "")),
+                rev=int(data.get("rev", 0)), hash=str(data.get("hash", "")),
+                updated_at=str(data.get("updated_at", "")), origin_node=str(data.get("origin_node", "")),
             )
         except (AttributeError, TypeError, OverflowError) as exc:
             raise ValueError(f"битая запись пакета: {exc}") from exc
@@ -108,18 +105,11 @@ class InstanceStore:
             return None
 
     def known(self) -> list[InstanceMeta]:
-        metas = []
-        for path in self._packages():
-            service, instance = _split(path)
-            if not instance:
-                log.warning("Пакет %s: имя не вида '<служба>.<инстанс>.toml' — пропускаю", path.name)
-                continue
-            if not _named_ok(path, service, instance):
-                continue
-            meta = self.read_meta(service, instance)
-            if meta is not None:
-                metas.append(meta)
-        return metas
+        return [
+            meta
+            for service, instance in self._named(loud=True)
+            if (meta := self.read_meta(service, instance))
+        ]
 
     def refresh(self, service: str, instance: str) -> InstanceMeta | None:
         data = self.read_package(service, instance)
@@ -130,27 +120,17 @@ class InstanceStore:
         if meta is not None and meta.hash == current:
             return None
         new_meta = InstanceMeta(
-            service=service,
-            instance=instance,
-            rev=meta.rev + 1 if meta is not None else 1,
-            hash=current,
-            updated_at=datetime.now(tz=UTC).isoformat(),
-            origin_node=self._node_id,
+            service=service, instance=instance, rev=meta.rev + 1 if meta is not None else 1, hash=current,
+            updated_at=datetime.now(tz=UTC).isoformat(), origin_node=self._node_id,
         )
         self._write_meta(new_meta)
         log.info("Пакет %s изменён локально — ревизия %d", slot_key(service, instance), new_meta.rev)
         return new_meta
 
     def refresh_all(self) -> list[InstanceMeta]:
-        changed = []
-        for path in self._packages():
-            service, instance = _split(path)
-            if not instance or not _named_ok(path, service, instance):
-                continue
-            meta = self.refresh(service, instance)
-            if meta is not None:
-                changed.append(meta)
-        return changed
+        return [
+            meta for service, instance in self._named(loud=False) if (meta := self.refresh(service, instance))
+        ]
 
     def apply(self, meta: InstanceMeta, data: bytes, *, force: bool = False) -> bool:
         key = slot_key(meta.service, meta.instance)
@@ -180,10 +160,16 @@ class InstanceStore:
         log.info("Пакет %s обновлён с ноды %s — ревизия %d", key, meta.origin_node, meta.rev)
         return True
 
-    def _packages(self) -> list[Path]:
-        if not self.dir.exists():
-            return []
-        return sorted(self.dir.glob(f"*{PACKAGE_SUFFIX}"))
+    def _named(self, *, loud: bool) -> list[tuple[str, str]]:
+        named = []
+        for path in sorted(self.dir.glob(f"*{PACKAGE_SUFFIX}")) if self.dir.exists() else []:
+            service, instance = _split(path)
+            if not instance:
+                if loud:
+                    log.warning("Пакет %s: имя не вида '<служба>.<инстанс>.toml' — пропускаю", path.name)
+            elif _named_ok(path, service, instance):
+                named.append((service, instance))
+        return named
 
     def _write_meta(self, meta: InstanceMeta) -> None:
         text = json.dumps(meta.to_dict(), ensure_ascii=False, indent=2)

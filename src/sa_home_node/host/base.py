@@ -4,7 +4,7 @@ import asyncio
 import signal
 import socket
 from collections.abc import Callable
-from typing import Protocol
+from typing import Any, Protocol
 
 TCP_KEEPALIVE_IDLE_S = 20
 TCP_KEEPALIVE_INTERVAL_S = 10
@@ -31,45 +31,35 @@ class Host(Protocol):
     def system_uptime_s(self) -> float | None:
         ...
 
-    def power_argv(self, action: str) -> list[str]:
-        ...
+    def power_argv(self, action: str) -> list[str]: ...
 
-    def self_restart(self, argv: list[str]) -> int:
-        ...
+    def self_restart(self, argv: list[str]) -> int: ...
 
-    async def trigger_update_task(self) -> tuple[bool, str]:
-        ...
+    async def trigger_update_task(self) -> tuple[bool, str]: ...
 
-    def spawn_kwargs(self) -> dict:
-        ...
+    def spawn_kwargs(self) -> dict: ...
 
-    def terminate(self, proc: asyncio.subprocess.Process) -> None:
-        ...
+    def terminate(self, proc: asyncio.subprocess.Process) -> None: ...
 
-    def stop_signals(self) -> tuple[int, ...]:
-        ...
+    def stop_signals(self) -> tuple[int, ...]: ...
 
 
 def install_stop_handlers(
-    loop: asyncio.AbstractEventLoop,
-    signals: tuple[int, ...],
-    callback: Callable[[], None],
+    loop: asyncio.AbstractEventLoop, signals: tuple[int, ...], callback: Callable[[], None]
 ) -> Callable[[], None]:
     handled: list[int] = []
-    restored: list[int] = []
-    previous: list = []
+    restored: list[tuple[int, Any]] = []
     for sig in signals:
         try:
             loop.add_signal_handler(sig, callback)
             handled.append(sig)
         except NotImplementedError:
-            previous.append(signal.signal(sig, lambda *_: callback()))
-            restored.append(sig)
+            restored.append((sig, signal.signal(sig, lambda *_: callback())))
 
     def remove() -> None:
         for sig in handled:
             loop.remove_signal_handler(sig)
-        for i, sig in enumerate(restored):
-            signal.signal(sig, previous[i])
+        for sig, previous in restored:
+            signal.signal(sig, previous)
 
     return remove

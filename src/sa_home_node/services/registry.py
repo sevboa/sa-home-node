@@ -6,14 +6,15 @@ from sa_home_node.plugins import Plugin, PluginError, ServiceSpec
 
 class ServiceTable:
     def __init__(self, plugins: Sequence[Plugin]) -> None:
-        self._plugins = list(plugins)
         self._specs: dict[str, ServiceSpec] = {}
         self._owners: dict[str, Plugin] = {}
-        for plugin in self._plugins:
+        for plugin in plugins:
             for spec in plugin.services:
                 owner = self._owners.get(spec.name)
                 if owner is not None:
-                    raise PluginError(f"Повтор имени службы: {spec.name} (плагины {owner.name}, {plugin.name})")
+                    raise PluginError(
+                        f"Повтор имени службы: {spec.name} (плагины {owner.name}, {plugin.name})"
+                    )
                 self._specs[spec.name] = spec
                 self._owners[spec.name] = plugin
 

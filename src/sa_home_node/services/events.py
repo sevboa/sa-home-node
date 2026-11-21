@@ -41,13 +41,9 @@ def call_quietly(callback: Callable[[str], None] | None, name: str) -> None:
 
 def slot_dict(service) -> dict:
     assignment = service.assignment
+    fields = ("name", "status", "pid", "restarts", "last_exit_code", "started_at")
     return {
-        "name": service.name,
-        "status": service.status,
-        "pid": service.pid,
-        "restarts": service.restarts,
-        "last_exit_code": service.last_exit_code,
-        "started_at": service.started_at,
+        **{field: getattr(service, field) for field in fields},
         "service": assignment.service,
         "instance": assignment.instance,
         "role": assignment.role,

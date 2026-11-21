@@ -42,9 +42,7 @@ class ShutdownBudget:
     def remaining_s(self) -> float:
         return max(0.0, self._deadline - time.monotonic())
 
-    async def step(
-        self, name: str, awaitable: Awaitable[Any], *, timeout: float | None = None
-    ) -> bool:
+    async def step(self, name: str, awaitable: Awaitable[Any], *, timeout: float | None = None) -> bool:
         cap = self._step_s if timeout is None else timeout
         budget = max(0.1, min(cap, self.remaining_s))
         try:
@@ -65,9 +63,7 @@ class ShutdownBudget:
 def arm_hard_exit(delay_s: float, exit_code: int = HARD_EXIT_CODE) -> None:
     def _watch() -> None:
         time.sleep(delay_s)
-        log.error(
-            "Останов не закончился за %.0f с — принудительный выход (код %d)", delay_s, exit_code
-        )
+        log.error("Останов не закончился за %.0f с — принудительный выход (код %d)", delay_s, exit_code)
         with contextlib.suppress(Exception):
             sys.stderr.flush()
             logging.shutdown()

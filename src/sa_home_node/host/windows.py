@@ -63,25 +63,17 @@ class WindowsHost:
                 stdout=asyncio.subprocess.PIPE,
                 stderr=asyncio.subprocess.STDOUT,
             )
-            stdout, _ = await asyncio.wait_for(
-                proc.communicate(), timeout=SCHTASKS_RUN_TIMEOUT_S
-            )
+            stdout, _ = await asyncio.wait_for(proc.communicate(), timeout=SCHTASKS_RUN_TIMEOUT_S)
         except (OSError, TimeoutError) as exc:
             return False, str(exc)
-        output = stdout.decode(errors="replace").strip()
-        if proc.returncode != 0:
-            return False, output
-        return True, output
+        return proc.returncode == 0, stdout.decode(errors="replace").strip()
 
     def spawn_kwargs(self) -> dict:
-        return {
-            "creationflags": getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0x200),
-        }
+        return {"creationflags": getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0x200)}
 
     def terminate(self, proc: asyncio.subprocess.Process) -> None:
         proc.send_signal(getattr(signal, "CTRL_BREAK_EVENT", 1))
 
     def stop_signals(self) -> tuple[int, ...]:
         sigbreak = getattr(signal, "SIGBREAK", None)
-        base = (signal.SIGINT, signal.SIGTERM)
-        return base if sigbreak is None else base + (sigbreak,)
+        return (signal.SIGINT, signal.SIGTERM) + (() if sigbreak is None else (sigbreak,))
