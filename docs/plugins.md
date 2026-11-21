@@ -70,15 +70,26 @@ example = "my_pkg.plugin:PLUGIN"
 ядра):
 
 - `ExampleConfig` — pydantic-модель секции `[example]`: `interval_s`
-  (по умолчанию 60.0);
+  (по умолчанию 60.0) и `socket` (по умолчанию `./data/example.sock`) —
+  адрес процессной службы `echo`;
 - служба `hello` — бесконечный цикл: пишет в журнал приветствие из
   контента (`ctx.content.get("example.greeting")`) и, если рой запущен
   (`ctx.swarm is not None`), шлёт в рой событие `example_greeting` с
   этим текстом (`ctx.swarm.emit`); затем спит `interval_s`;
+- процессная служба `echo` — супервизор поднимает её отдельным
+  процессом (`python -m sa_home_node service echo`); сама служба ничего
+  не делает и живёт вечно, а сервер протокола слушает юникс-сокет
+  `config.socket` (`endpoint` в `ServiceSpec`) и обслуживает запросы
+  handler'а `EchoHandler`: `describe()` отдаёт `ServiceInfo(node=<node_id>,
+  service="echo", version="1")` и действие `echo` с обязательным
+  параметром `text`; `run_command` отвечает `{"text": <текст>}` и считает
+  выполненные эхо, `get_state()` отдаёт `{"count": <счёт>}`;
 - действие `example_ping` — handler для `NodeAction`: возвращает словарь
   с ключом `pong` и текстом из `text`;
 - `PLUGIN = Plugin(name="example", config_model=ExampleConfig,
-  services=(ServiceSpec("hello", hello),),
+  services=(ServiceSpec("hello", hello),
+  ServiceSpec("echo", echo, handler=EchoHandler, process=True,
+  endpoint=lambda config: config.socket),),
   content_keys=("example.greeting",),
   node_actions=(NodeAction(ActionSpec(...), example_ping),))` — требует ключ
   контента `example.greeting` из `content/example.toml`, объявляет действие
