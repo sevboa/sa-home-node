@@ -4,9 +4,9 @@ from types import SimpleNamespace
 from typing import Any
 
 import pytest
-from support import Clock, FakeSlot
+from support import Clock, Collector, FakeSlot, slot_factory, spec, table
 
-from sa_home_node.plugins import Plugin, ReplicationHooks, ServiceSpec
+from sa_home_node.plugins import ReplicationHooks
 from sa_home_node.proto.wire import (
     ERR_BAD_REQUEST,
     ERR_UNAVAILABLE,
@@ -18,15 +18,9 @@ from sa_home_node.proto.wire import (
     make_event,
     make_response,
 )
-from sa_home_node.services.assignments import Assignment
 from sa_home_node.services.events import EVENT_INSTANCE_CONFIG_CHANGED
 from sa_home_node.services.instances import InstanceMeta, InstanceStore, content_hash
-from sa_home_node.services.registry import ServiceTable
-from sa_home_node.services.replication import (
-    ACTION_GET_INSTANCE_CONFIG,
-    INSTANCES_KEY,
-    ConfigReplicator,
-)
+from sa_home_node.services.replication import ACTION_GET_INSTANCE_CONFIG, INSTANCES_KEY, ConfigReplicator
 from sa_home_node.services.supervisor import Supervisor
 
 PACKAGE = 'token = "aaa"\n# заметка\n'.encode()
@@ -34,31 +28,11 @@ NEWER = b'token = "bbb"\n'
 EXTRA = b'[[item]]\nname = "x"\n'
 EARLY = "2026-07-26T10:00:00+00:00"
 LATE = "2026-07-27T10:00:00+00:00"
+TABLE = table(spec("svc", instanced=True, satellites=(".extra",)), spec("plain"))
 
 
-async def _run(ctx: object) -> None:
-    pass
-
-
-def table() -> ServiceTable:
-    specs = (
-        ServiceSpec(name="svc", run=_run, instanced=True, satellites=(".extra",)),
-        ServiceSpec(name="plain", run=_run),
-    )
-    return ServiceTable((Plugin(name="p", services=specs),))
-
-
-def meta_of(
-    data: bytes, *, rev: int = 1, node: str = "node-b", instance: str = "one", at: str = EARLY
-) -> InstanceMeta:
-    return InstanceMeta(
-        service="svc",
-        instance=instance,
-        rev=rev,
-        hash=content_hash(data),
-        updated_at=at,
-        origin_node=node,
-    )
+def meta_of(data: bytes, *, rev: int = 1, node: str = "node-b", instance: str = "one", at: str = EARLY) -> InstanceMeta:
+    return InstanceMeta(service="svc", instance=instance, rev=rev, hash=content_hash(data), updated_at=at, origin_node=node)
 
 
 class FakePeer:
@@ -69,28 +43,33 @@ class FakePeer:
         alive: bool = True,
         state_error: Exception | None = None,
         lie: bool = False,
+        listing: list | None = None,
+        odd: dict | None = None,
     ) -> None:
         self.alive = alive
         self.packages = packages or {}
         self.state_error = state_error
         self.lie = lie
+        self.listing = listing
+        self.odd = odd
         self.asked: list[str] = []
 
     async def forward(self, env: Envelope) -> Envelope:
+        if self.odd is not None:
+            return make_response(env, self.odd)
         if env.type == MSG_GET_STATE:
             self.asked.append("get_state")
             if self.state_error is not None:
                 raise self.state_error
-            return make_response(env, {INSTANCES_KEY: [m.to_dict() for m, _ in self.packages.values()]})
+            listing = [m.to_dict() for m, _ in self.packages.values()] if self.listing is None else self.listing
+            return make_response(env, {INSTANCES_KEY: listing})
         assert env.payload["action"] == ACTION_GET_INSTANCE_CONFIG
         self.asked.append(ACTION_GET_INSTANCE_CONFIG)
-        args = env.payload["args"]
-        entry = self.packages.get(args["instance"])
+        entry = self.packages.get(env.payload["args"]["instance"])
         if entry is None:
             return make_error_response(env.id, ERR_BAD_REQUEST, "нет")
         meta, data = entry
-        content = NEWER if self.lie else data
-        return make_response(env, {"meta": meta.to_dict(), "content": content.decode()})
+        return make_response(env, {"meta": meta.to_dict(), "content": (NEWER if self.lie else data).decode()})
 
 
 def build(
@@ -100,35 +79,21 @@ def build(
     hooks: tuple[ReplicationHooks, ...] = (),
     running: tuple[str, ...] = (),
     **kw: Any,
-) -> tuple[ConfigReplicator, InstanceStore, dict[str, FakeSlot], list, list]:
+) -> tuple[ConfigReplicator, InstanceStore, dict[str, FakeSlot], Collector, list]:
     slots: dict[str, FakeSlot] = {}
-
-    def factory(spec: ServiceSpec, assignment: Assignment) -> FakeSlot:
-        slot = FakeSlot(assignment.key, running=assignment.key in running)
-        slot.assignment = assignment
-        slots[assignment.key] = slot
-        return slot
-
-    supervisor = Supervisor(texts, table(), factory)
-    events: list = []
-    handlers: list = []
-
-    async def emit(name: str, data: dict) -> None:
-        events.append((name, data))
-
+    events, handlers = Collector(), []
     store = InstanceStore(tmp_path / "instances", "node-a")
     router = SimpleNamespace(peers=peers) if peers is not None else None
-    clock = Clock()
     rep = ConfigReplicator(
         "node-a",
         store,
-        supervisor,
-        table(),
+        Supervisor(texts, TABLE, slot_factory(slots, running)),
+        TABLE,
         router=router,
-        emit=emit,
+        emit=events,
         subscribe=handlers.append,
         hooks=hooks,
-        sleep=clock.sleep,
+        sleep=Clock().sleep,
         **kw,
     )
     return rep, store, slots, events, handlers
@@ -140,22 +105,28 @@ def write_package(store: InstanceStore, data: bytes, instance: str = "one") -> N
     path.write_bytes(data)
 
 
-def changed(meta: InstanceMeta, src: str = "node-b") -> Envelope:
-    return make_event(
-        EVENT_INSTANCE_CONFIG_CHANGED, meta.to_dict(), src=Address(node=src, service="node")
-    )
+def changed(meta: InstanceMeta | dict, src: str = "node-b", kind: str = EVENT_INSTANCE_CONFIG_CHANGED) -> Envelope:
+    payload = meta if isinstance(meta, dict) else meta.to_dict()
+    return make_event(kind, payload, src=Address(node=src, service="node"))
 
 
-async def test_local_edit_is_announced_once(tmp_path) -> None:
-    rep, store, _, events, _ = build(tmp_path, "svc@one")
+async def test_local_edit_is_announced_once_and_restarts_active_slot(tmp_path) -> None:
+    rep, store, slots, events, _ = build(tmp_path, "svc@one", running=("svc@one",))
     write_package(store, PACKAGE)
     await rep.announce_local_changes()
-    assert [(n, d["rev"], d["origin_node"]) for n, d in events] == [
-        (EVENT_INSTANCE_CONFIG_CHANGED, 1, "node-a")
-    ]
-    events.clear()
+    assert [(n, d["rev"], d["origin_node"]) for n, d in events.events] == [(EVENT_INSTANCE_CONFIG_CHANGED, 1, "node-a")]
+    assert slots["svc@one"].trace == ["restart"]
+    events.events.clear()
     await rep.announce_local_changes()
-    assert events == []
+    assert events.events == []
+
+
+async def test_local_satellite_edit_announces_without_restart(tmp_path) -> None:
+    rep, store, slots, events, _ = build(tmp_path, "svc@one", running=("svc@one",))
+    write_package(store, EXTRA, "one.extra")
+    await rep.announce_local_changes()
+    assert slots["svc@one"].trace == []
+    assert [n for n, _ in events.events] == [EVENT_INSTANCE_CONFIG_CHANGED]
 
 
 async def test_before_announce_error_does_not_break_cycle(tmp_path, caplog) -> None:
@@ -173,30 +144,31 @@ async def test_before_announce_error_does_not_break_cycle(tmp_path, caplog) -> N
     write_package(store, PACKAGE)
     with caplog.at_level(logging.ERROR):
         await rep.tick()
-    assert called == ["broken", "fine"]
-    assert len(events) == 1
+    assert (called, len(events.events)) == (["broken", "fine"], 1)
     assert "ошибка подготовки" in caplog.text
 
 
 @pytest.mark.parametrize("text", ["svc@one", "svc@one:standby"])
 async def test_announced_revision_is_pulled_in_any_role(tmp_path, text: str) -> None:
     meta = meta_of(PACKAGE)
-    peer = FakePeer({"one": (meta, PACKAGE)})
-    rep, store, _, _, _ = build(tmp_path, text, peers={"node-b": peer})
+    rep, store, _, _, _ = build(tmp_path, text, peers={"node-b": FakePeer({"one": (meta, PACKAGE)})})
     await rep.on_event(changed(meta))
     assert store.read_package("svc", "one") == PACKAGE
     assert store.read_meta("svc", "one") == meta
 
 
-async def test_event_filters(tmp_path) -> None:
+async def test_ignored_events_pull_nothing(tmp_path) -> None:
     meta = meta_of(PACKAGE)
     peer = FakePeer({"one": (meta, PACKAGE), "two": (meta_of(PACKAGE, instance="two"), PACKAGE)})
     rep, store, _, _, _ = build(tmp_path, "svc@one", "plain", peers={"node-b": peer})
-    other = make_event("other_event", meta.to_dict(), src=Address(node="node-b", service="node"))
-    foreign = changed(meta_of(PACKAGE, instance="two"))
-    empty = make_event(EVENT_INSTANCE_CONFIG_CHANGED, {}, src=Address(node="node-b", service="node"))
-    own = changed(meta_of(PACKAGE, node="node-a"))
-    for env in (other, foreign, empty, own):
+    ignored = [
+        changed(meta, kind="other_event"),
+        changed(meta_of(PACKAGE, instance="two")),
+        changed({}),
+        changed(meta_of(PACKAGE, node="node-a")),
+        changed({"service": "svc", "instance": "one", "rev": "x"}),
+    ]
+    for env in ignored:
         await rep.on_event(env)
     assert peer.asked == []
     write_package(store, PACKAGE)
@@ -207,68 +179,62 @@ async def test_event_filters(tmp_path) -> None:
 
 async def test_source_falls_back_to_event_sender(tmp_path) -> None:
     meta = meta_of(PACKAGE, node="")
-    peer = FakePeer({"one": (meta, PACKAGE)})
-    rep, store, _, _, _ = build(tmp_path, "svc@one", peers={"node-c": peer})
+    rep, store, _, _, _ = build(tmp_path, "svc@one", peers={"node-c": FakePeer({"one": (meta, PACKAGE)})})
     await rep.on_event(changed(meta, src="node-c"))
     assert store.read_package("svc", "one") == PACKAGE
 
 
 async def test_catch_up_pulls_newer_and_skips_sleeping(tmp_path) -> None:
     meta = meta_of(NEWER, rev=7)
-    live = FakePeer({"one": (meta, NEWER)})
-    asleep = FakePeer({"one": (meta, NEWER)}, alive=False)
-    silent = FakePeer(state_error=ProtoError(ERR_UNAVAILABLE, "нет"))
-    timed_out = FakePeer(state_error=TimeoutError())
-    rep, store, _, _, _ = build(
-        tmp_path, "svc@one:standby", peers={"a": asleep, "b": silent, "c": timed_out, "d": live}
-    )
+    live, asleep = FakePeer({"one": (meta, NEWER)}), FakePeer({"one": (meta, NEWER)}, alive=False)
+    peers = {
+        "a": asleep,
+        "b": FakePeer(state_error=ProtoError(ERR_UNAVAILABLE, "нет")),
+        "c": FakePeer(state_error=TimeoutError()),
+        "d": live,
+    }
+    rep, store, _, _, _ = build(tmp_path, "svc@one:standby", peers=peers)
     store.apply(meta_of(PACKAGE, rev=2), PACKAGE)
     await rep.sync_from_peers()
-    assert store.read_package("svc", "one") == NEWER
-    assert store.read_meta("svc", "one").rev == 7
-    assert asleep.asked == []
-    assert live.asked == ["get_state", ACTION_GET_INSTANCE_CONFIG]
+    assert (store.read_package("svc", "one"), store.read_meta("svc", "one").rev) == (NEWER, 7)
+    assert (asleep.asked, live.asked) == ([], ["get_state", ACTION_GET_INSTANCE_CONFIG])
 
 
 async def test_catch_up_idle_without_instances_or_router(tmp_path) -> None:
     peer = FakePeer({"one": (meta_of(PACKAGE), PACKAGE)})
-    rep, _, _, _, _ = build(tmp_path, "plain", peers={"node-b": peer})
+    rep, *_ = build(tmp_path, "plain", peers={"node-b": peer})
     await rep.sync_from_peers()
     assert peer.asked == []
-    solo, _, _, _, _ = build(tmp_path, "svc@one")
-    await solo.sync_from_peers()
+    await build(tmp_path, "svc@one")[0].sync_from_peers()
 
 
 async def test_failed_pull_is_left_for_next_cycle(tmp_path, caplog) -> None:
-    meta = meta_of(PACKAGE)
-    refusing = FakePeer()
-    rep, store, _, _, _ = build(tmp_path, "svc@one", peers={"node-b": refusing})
+    rep, store, _, _, _ = build(tmp_path, "svc@one", peers={"node-b": FakePeer()})
     with caplog.at_level(logging.WARNING):
-        await rep._pull(meta, "node-b")
-        await rep._pull(meta, "node-z")
+        await rep._pull(meta_of(PACKAGE), "node-b")
+        await rep._pull(meta_of(PACKAGE), "node-z")
     assert store.read_package("svc", "one") is None
     assert "отказала" in caplog.text
 
 
 async def test_passive_package_pulled_with_force_and_hooks(tmp_path) -> None:
-    applied: list[tuple[InstanceMeta, bytes]] = []
+    applied: list[bytes] = []
 
     def on_applied(meta: InstanceMeta, data: bytes) -> None:
-        applied.append((meta, data))
+        applied.append(data)
         raise RuntimeError("сбой")
 
     hooks = (
         ReplicationHooks(passive=lambda s, i: (s, i) == ("svc", "node-b"), on_applied=on_applied),
-        ReplicationHooks(on_applied=lambda m, d: applied.append((m, b"second"))),
+        ReplicationHooks(on_applied=lambda m, d: applied.append(b"second")),
     )
-    fresh = meta_of(NEWER, rev=1, node="node-b", instance="node-b", at=LATE)
+    fresh = meta_of(NEWER, node="node-b", instance="node-b", at=LATE)
     peer = FakePeer({"node-b": (fresh, NEWER)})
     rep, store, _, _, _ = build(tmp_path, "plain", peers={"node-b": peer}, hooks=hooks)
-    store.apply(meta_of(PACKAGE, rev=5, node="node-b", instance="node-b", at=EARLY), PACKAGE)
+    store.apply(meta_of(PACKAGE, rev=5, instance="node-b"), PACKAGE)
     await rep.sync_from_peers()
-    assert store.read_package("svc", "node-b") == NEWER
-    assert store.read_meta("svc", "node-b").rev == 1
-    assert [d for _, d in applied] == [NEWER, b"second"]
+    assert (store.read_package("svc", "node-b"), store.read_meta("svc", "node-b").rev) == (NEWER, 1)
+    assert applied == [NEWER, b"second"]
     peer.asked.clear()
     await rep.sync_from_peers()
     assert peer.asked == ["get_state"]
@@ -276,9 +242,9 @@ async def test_passive_package_pulled_with_force_and_hooks(tmp_path) -> None:
 
 async def test_passive_without_local_copy_and_non_authoritative(tmp_path) -> None:
     hooks = (ReplicationHooks(passive=lambda s, i: i == "node-b"),)
-    first = meta_of(PACKAGE, node="node-b", instance="node-b")
-    relayed = meta_of(PACKAGE, node="node-c", instance="node-b", rev=1)
-    rep, store, _, _, _ = build(tmp_path, "plain", peers={}, hooks=hooks)
+    first = meta_of(PACKAGE, instance="node-b")
+    relayed = meta_of(PACKAGE, node="node-c", instance="node-b")
+    rep, store, *_ = build(tmp_path, "plain", peers={}, hooks=hooks)
     assert rep._wins(first, None)
     store.apply(first, PACKAGE)
     assert not rep._wins(relayed, store.read_meta("svc", "node-b"))
@@ -286,41 +252,22 @@ async def test_passive_without_local_copy_and_non_authoritative(tmp_path) -> Non
 
 
 @pytest.mark.parametrize(
-    ("text", "status_running", "expect"),
-    [
-        ("svc@one", True, ["restart"]),
-        ("svc@one", False, []),
-        ("svc@one:standby", True, []),
-    ],
+    ("text", "running", "expect"),
+    [("svc@one", True, ["restart"]), ("svc@one", False, []), ("svc@one:standby", True, [])],
 )
-async def test_restart_only_active_running_slot(tmp_path, text, status_running, expect) -> None:
+async def test_restart_only_active_running_slot(tmp_path, text, running, expect) -> None:
     meta = meta_of(NEWER, rev=2)
-    peer = FakePeer({"one": (meta, NEWER)})
-    running = ("svc@one",) if status_running else ()
-    rep, _, slots, _, _ = build(tmp_path, text, peers={"node-b": peer}, running=running)
+    rep, _, slots, _, _ = build(
+        tmp_path, text, peers={"node-b": FakePeer({"one": (meta, NEWER)})}, running=("svc@one",) if running else ()
+    )
     await rep.on_event(changed(meta))
     assert slots["svc@one"].trace == expect
 
 
-async def test_local_edit_restarts_active_slot(tmp_path) -> None:
-    rep, store, slots, _, _ = build(tmp_path, "svc@one", running=("svc@one",))
-    write_package(store, PACKAGE)
-    await rep.announce_local_changes()
-    assert slots["svc@one"].trace == ["restart"]
-
-
-async def test_local_satellite_edit_does_not_restart(tmp_path) -> None:
-    rep, store, slots, events, _ = build(tmp_path, "svc@one", running=("svc@one",))
-    write_package(store, EXTRA, "one.extra")
-    await rep.announce_local_changes()
-    assert slots["svc@one"].trace == []
-    assert [n for n, _ in events] == [EVENT_INSTANCE_CONFIG_CHANGED]
-
-
 async def test_incoming_satellite_is_pulled_and_restarts_owner(tmp_path) -> None:
-    meta = meta_of(EXTRA, instance="one.extra", node="node-b")
-    peer = FakePeer({"one.extra": (meta, EXTRA)})
-    rep, store, slots, _, _ = build(tmp_path, "svc@one", peers={"node-b": peer}, running=("svc@one",))
+    meta = meta_of(EXTRA, instance="one.extra")
+    peers = {"node-b": FakePeer({"one.extra": (meta, EXTRA)})}
+    rep, store, slots, _, _ = build(tmp_path, "svc@one", peers=peers, running=("svc@one",))
     await rep.on_event(changed(meta))
     assert store.read_package("svc", "one.extra") == EXTRA
     assert slots["svc@one"].trace == ["restart"]
@@ -328,35 +275,28 @@ async def test_incoming_satellite_is_pulled_and_restarts_owner(tmp_path) -> None
 
 async def test_foreign_hash_is_rejected(tmp_path) -> None:
     meta = meta_of(PACKAGE, rev=3)
-    peer = FakePeer({"one": (meta, PACKAGE)}, lie=True)
-    rep, store, slots, _, _ = build(
-        tmp_path, "svc@one", peers={"node-b": peer}, running=("svc@one",)
-    )
+    peers = {"node-b": FakePeer({"one": (meta, PACKAGE)}, lie=True)}
+    rep, store, slots, _, _ = build(tmp_path, "svc@one", peers=peers, running=("svc@one",))
     await rep.on_event(changed(meta))
     assert store.read_package("svc", "one") is None
     assert slots["svc@one"].trace == []
 
 
-async def test_pull_ignores_malformed_content(tmp_path) -> None:
-    meta = meta_of(PACKAGE)
-
-    class Odd(FakePeer):
-        async def forward(self, env: Envelope) -> Envelope:
-            return make_response(env, {"content": 5})
-
-    rep, store, _, _, _ = build(tmp_path, "svc@one", peers={"node-b": Odd()})
-    await rep.on_event(changed(meta))
-    assert store.read_package("svc", "one") is None
+@pytest.mark.parametrize("odd", [{"content": 5}, {INSTANCES_KEY: 5}])
+async def test_malformed_peer_replies_are_ignored(tmp_path, odd) -> None:
+    rep, store, *_ = build(tmp_path, "svc@one", peers={"node-b": FakePeer(odd=odd)})
+    await rep.on_event(changed(meta_of(PACKAGE)))
+    await rep.sync_from_peers()
+    assert store.read_package("svc", "one") is None and store.known() == []
 
 
 async def test_serving_replies(tmp_path) -> None:
-    rep, store, _, _, _ = build(tmp_path, "svc@one")
+    rep, store, *_ = build(tmp_path, "svc@one")
     write_package(store, PACKAGE)
     write_package(store, EXTRA, "two")
     await rep.announce_local_changes()
     payload = rep.get_instance_config({"service": "svc", "instance": "one"})
-    assert payload["content"].encode() == PACKAGE
-    assert payload["meta"]["rev"] == 1
+    assert (payload["content"].encode(), payload["meta"]["rev"]) == (PACKAGE, 1)
     listed = rep.list_instances({"service": "svc"})
     assert listed["service"] == "svc"
     assert [m["instance"] for m in listed[INSTANCES_KEY]] == ["one", "two"]
@@ -368,11 +308,9 @@ async def test_serving_replies(tmp_path) -> None:
     assert "node-a" in str(exc.value)
 
 
-@pytest.mark.parametrize(
-    "instance", ["../x", "a/b", "..", "", "-x", ".hidden"]
-)
+@pytest.mark.parametrize("instance", ["../x", "a/b", "..", "", "-x", ".hidden"])
 async def test_get_instance_config_rejects_unsafe_names(tmp_path, instance: str) -> None:
-    rep, _, _, _, _ = build(tmp_path, "svc@one")
+    rep, *_ = build(tmp_path, "svc@one")
     with pytest.raises(ProtoError) as exc:
         rep.get_instance_config({"service": "svc", "instance": instance})
     assert exc.value.code == ERR_BAD_REQUEST
@@ -390,46 +328,19 @@ async def test_get_instance_config_rejects_unsafe_names(tmp_path, instance: str)
 )
 async def test_broken_peer_record_is_skipped(tmp_path, bad, caplog) -> None:
     good = meta_of(NEWER, rev=7)
-
-    class Mixed(FakePeer):
-        async def forward(self, env: Envelope) -> Envelope:
-            if env.type == MSG_GET_STATE:
-                return make_response(env, {INSTANCES_KEY: [bad, good.to_dict()]})
-            return await super().forward(env)
-
-    rep, store, _, _, _ = build(
-        tmp_path, "svc@one", peers={"node-b": Mixed({"one": (good, NEWER)})}
-    )
+    peer = FakePeer({"one": (good, NEWER)}, listing=[bad, good.to_dict()])
+    rep, store, *_ = build(tmp_path, "svc@one", peers={"node-b": peer})
     with caplog.at_level(logging.WARNING):
         await rep.sync_from_peers()
     assert store.read_meta("svc", "one") == good
     assert "битую запись" in caplog.text
 
 
-async def test_non_list_peer_instances_skipped(tmp_path) -> None:
-    class Odd(FakePeer):
-        async def forward(self, env: Envelope) -> Envelope:
-            return make_response(env, {INSTANCES_KEY: 5})
-
-    rep, store, _, _, _ = build(tmp_path, "svc@one", peers={"node-b": Odd()})
-    await rep.sync_from_peers()
-    assert store.known() == []
-
-
-async def test_broken_event_record_is_skipped(tmp_path) -> None:
-    peer = FakePeer({"one": (meta_of(PACKAGE), PACKAGE)})
-    rep, _, _, _, _ = build(tmp_path, "svc@one", peers={"node-b": peer})
-    bad = {"service": "svc", "instance": "one", "rev": "x"}
-    await rep.on_event(make_event(EVENT_INSTANCE_CONFIG_CHANGED, bad, src=Address(node="node-b", service="node")))
-    assert peer.asked == []
-
-
 async def test_start_subscribes_ticks_and_stops(tmp_path) -> None:
     rep, store, _, events, handlers = build(tmp_path, "svc@one", peers={})
     write_package(store, PACKAGE)
     await rep.start()
-    assert handlers == [rep.on_event]
-    assert len(events) == 1
+    assert (handlers, len(events.events)) == ([rep.on_event], 1)
     assert rep._task is not None
     await rep.stop()
     assert rep._task is None
@@ -437,7 +348,7 @@ async def test_start_subscribes_ticks_and_stops(tmp_path) -> None:
 
 
 async def test_run_loops_and_survives_tick_error(tmp_path, caplog) -> None:
-    rep, _, _, _, _ = build(tmp_path, "svc@one", poll_interval_s=3.0)
+    rep, *_ = build(tmp_path, "svc@one", poll_interval_s=3.0)
     calls = 0
 
     async def tick() -> None:

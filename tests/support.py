@@ -5,13 +5,16 @@ import os
 import socket
 from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 from sa_home_node.config import NodeConfig, NodeSection
+from sa_home_node.plugins import Plugin, ServiceSpec
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription, ServiceInfo
 from sa_home_node.proto.server import ProtoServer
 from sa_home_node.proto.wire import Envelope, make_response
 from sa_home_node.services.assignments import Assignment, parse
 from sa_home_node.services.events import RUNNING, STOPPED, slot_dict
+from sa_home_node.services.registry import ServiceTable
 
 TOKEN = "test-token"
 
@@ -179,3 +182,42 @@ def install_example_entry_point(tmp_path: Path, monkeypatch) -> None:
     src = Path(__file__).parents[1] / "src"
     paths = [str(dist.parent), str(src), os.environ.get("PYTHONPATH", "")]
     monkeypatch.setenv("PYTHONPATH", os.pathsep.join(p for p in paths if p))
+
+
+class Collector:
+    def __init__(self, raise_on: str = "") -> None:
+        self.events: list[tuple[str, dict]] = []
+        self.raise_on = raise_on
+
+    async def __call__(self, name: str, payload: dict) -> None:
+        self.events.append((name, payload))
+        if name == self.raise_on:
+            raise RuntimeError("emit сломан")
+
+    def of(self, name: str) -> list[dict]:
+        return [payload for kind, payload in self.events if kind == name]
+
+    async def seen(self, name: str, timeout: float = 2.0) -> None:
+        assert await wait_for(lambda: bool(self.of(name)), timeout), name
+
+
+async def noop_run(ctx: object) -> None:
+    return None
+
+
+def spec(name: str, **kw: Any) -> ServiceSpec:
+    return ServiceSpec(name=name, run=noop_run, **kw)
+
+
+def table(*specs: ServiceSpec) -> ServiceTable:
+    return ServiceTable((Plugin(name="p", services=specs),))
+
+
+def slot_factory(slots: dict[str, FakeSlot], running: tuple[str, ...] = ()) -> Callable:
+    def factory(_spec: ServiceSpec, assignment: Assignment) -> FakeSlot:
+        slot = FakeSlot(assignment.key, running=assignment.key in running)
+        slot.assignment = assignment
+        slots[assignment.key] = slot
+        return slot
+
+    return factory

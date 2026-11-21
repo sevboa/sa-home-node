@@ -7,11 +7,10 @@ from pathlib import Path
 from typing import Any
 
 import pytest
-from support import wait_for
+from support import Collector, wait_for
 
 from sa_home_node import host
 from sa_home_node.lifecycle import update
-from sa_home_node.lifecycle.power import run_command
 from sa_home_node.proto.wire import ProtoError
 from sa_home_node.swarm.router import NodeRouter
 from sa_home_node.swarm.service import NodeService
@@ -25,7 +24,7 @@ EVENTS = [
 ]
 REPO = REPLIES["check_update"]["reply"]["repo"]
 TAGS = "a\trefs/tags/v1.0.0\nb\trefs/tags/v1.2.0\nc\trefs/tags/v1.10.0-rc\nd\trefs/tags/v1.1.9\ne\trefs/heads/main\n"
-PIPX_FAILURE = EVENTS[1]["error"]
+SPEC = "sa-home-node[tts]@ git+https://h/r.git@v1.0.0"
 
 
 class FakeHost:
@@ -68,22 +67,26 @@ class FakeRunner:
 class World:
     def __init__(self, repo: str | None = REPO, version: str = "1.1.0") -> None:
         self.runner = FakeRunner()
-        self.events: list[tuple[str, dict]] = []
+        self.events = Collector()
         self.node_service = NodeService("node-a", kind="workstation", version=version, router=NodeRouter("node-a"))
-        update.register_update(self.node_service, repo=repo, emit=self.emit, run=self.runner)
-
-    async def emit(self, name: str, data: dict) -> None:
-        self.events.append((name, data))
+        update.register_update(self.node_service, repo=repo, emit=self.events, run=self.runner)
 
     async def run(self, case: str) -> dict[str, Any]:
         item = REPLIES[case]
         return await self.node_service.run_command(item["action"], item["args"])
 
-    def action_ids(self) -> list[str]:
-        return [a.id for a in self.node_service.describe().actions if "update" in a.id]
-
     def state(self) -> dict[str, Any]:
         return self.node_service.state_parts["update"]()
+
+    async def finished(self) -> dict[str, Any]:
+        await wait_for(lambda: self.state()["last"] is not None)
+        return self.state()
+
+
+def use_host(monkeypatch: pytest.MonkeyPatch, via_task: bool) -> FakeHost:
+    fake = FakeHost(via_task)
+    monkeypatch.setattr(host, "current", lambda: fake)
+    return fake
 
 
 @pytest.fixture
@@ -94,32 +97,16 @@ def installed(monkeypatch: pytest.MonkeyPatch) -> dict[str, str | None]:
 
 
 @pytest.fixture
-def linux_host(monkeypatch: pytest.MonkeyPatch) -> FakeHost:
-    fake = FakeHost(False)
-    monkeypatch.setattr(host, "current", lambda: fake)
-    return fake
-
-
-@pytest.fixture
-def windows_host(monkeypatch: pytest.MonkeyPatch) -> FakeHost:
-    fake = FakeHost(True)
-    monkeypatch.setattr(host, "current", lambda: fake)
-    return fake
-
-
-@pytest.fixture
-def world(installed: dict, linux_host: FakeHost) -> World:
+def world(installed: dict, monkeypatch: pytest.MonkeyPatch) -> World:
+    use_host(monkeypatch, False)
     return World()
 
 
-def test_not_registered_without_source() -> None:
+def test_registered_only_with_source(world: World) -> None:
     bare = World(repo=None)
-    assert bare.action_ids() == []
+    assert [a.id for a in bare.node_service.describe().actions if "update" in a.id] == []
     assert "update" not in bare.node_service.state_parts
-
-
-def test_registered_actions(world: World) -> None:
-    assert world.action_ids() == ["check_update", "update"]
+    assert [a.id for a in world.node_service.describe().actions if "update" in a.id] == ["check_update", "update"]
 
 
 async def test_check_update_matches_reference(world: World) -> None:
@@ -127,42 +114,32 @@ async def test_check_update_matches_reference(world: World) -> None:
 
 
 @pytest.mark.parametrize("case", ["check_update_offline", "update_offline"])
-@pytest.mark.parametrize("failure", ["error", "code"])
+@pytest.mark.parametrize("failure", ["error", "code", "no_tags"])
 async def test_offline_errors_match_reference(world: World, case: str, failure: str) -> None:
     if failure == "error":
         world.runner.git_error = OSError("git")
-    else:
+    elif failure == "code":
         world.runner.git_code = 128
+    else:
+        world.runner.tags = "a\trefs/heads/main\n"
     with pytest.raises(ProtoError) as exc:
         await world.run(case)
     assert {"code": exc.value.code, "message": exc.value.message} == REPLIES[case]["error"]
 
 
-async def test_no_tags_is_offline(world: World) -> None:
-    world.runner.tags = "a\trefs/heads/main\n"
-    with pytest.raises(ProtoError):
-        await world.run("check_update_offline")
-
-
-@pytest.mark.parametrize(
-    ("case", "running"),
-    [("up_to_date_restart_required", "1.1.0"), ("up_to_date", "1.2.0")],
-)
-async def test_up_to_date_compares_disk_version(
-    installed: dict, linux_host: FakeHost, case: str, running: str
-) -> None:
+@pytest.mark.parametrize(("case", "running"), [("up_to_date_restart_required", "1.1.0"), ("up_to_date", "1.2.0")])
+async def test_up_to_date_compares_disk_version(installed: dict, monkeypatch, case: str, running: str) -> None:
+    use_host(monkeypatch, False)
     installed["value"] = "1.2.0"
     world = World(version=running)
-    reply = await world.run(case)
-    assert reply == REPLIES[case]["reply"]
+    assert await world.run(case) == REPLIES[case]["reply"]
     assert world.runner.pipx_calls() == []
 
 
 async def test_scheduled_install_success(world: World) -> None:
     assert await world.run("scheduled") == REPLIES["scheduled"]["reply"]
-    await wait_for(lambda: world.state()["last"] is not None)
-    assert world.state() == REPLIES["get_state_update_done"]["state"]
-    assert world.events == [("update_finished", EVENTS[0])]
+    assert await world.finished() == REPLIES["get_state_update_done"]["state"]
+    assert world.events.events == [("update_finished", EVENTS[0])]
     argv, kwargs = world.runner.pipx_calls()[0]
     assert argv[:3] == ["pipx", "install", "--force"]
     assert argv[3].endswith(f"git+{REPO}@v1.2.0")
@@ -170,19 +147,15 @@ async def test_scheduled_install_success(world: World) -> None:
     assert kwargs["timeout"] == update.PIPX_INSTALL_TIMEOUT_S
 
 
-async def test_scheduled_install_failure(world: World) -> None:
-    world.runner.pipx_result = (1, PIPX_FAILURE, "")
+async def test_scheduled_install_failure_and_exception(world: World) -> None:
+    world.runner.pipx_result = (1, EVENTS[1]["error"], "")
     assert await world.run("scheduled_fails") == REPLIES["scheduled_fails"]["reply"]
-    await wait_for(lambda: world.state()["last"] is not None)
-    assert world.state() == REPLIES["get_state_update_failed"]["state"]
-    assert world.events == [("update_finished", EVENTS[1])]
-
-
-async def test_install_exception_is_failure(world: World) -> None:
-    world.runner.pipx_error = OSError("нет pipx")
-    await world.run("scheduled")
-    await wait_for(lambda: world.state()["last"] is not None)
-    assert world.state()["last"] == {"ok": False, "version": "1.2.0", "error": "нет pipx"}
+    assert await world.finished() == REPLIES["get_state_update_failed"]["state"]
+    assert world.events.events == [("update_finished", EVENTS[1])]
+    other = World()
+    other.runner.pipx_error = OSError("нет pipx")
+    await other.run("scheduled")
+    assert (await other.finished())["last"] == {"ok": False, "version": "1.2.0", "error": "нет pipx"}
 
 
 async def test_second_update_rejected_while_running(world: World) -> None:
@@ -193,72 +166,55 @@ async def test_second_update_rejected_while_running(world: World) -> None:
         await world.run("already_running")
     assert {"code": exc.value.code, "message": exc.value.message} == REPLIES["already_running"]["error"]
     world.runner.gate.set()
-    await wait_for(lambda: world.state()["last"] is not None)
+    await world.finished()
     assert len(world.runner.pipx_calls()) == 1
     await world.run("scheduled")
     await wait_for(lambda: len(world.runner.pipx_calls()) == 2)
 
 
-async def test_windows_runs_task_and_stays_silent(installed: dict, windows_host: FakeHost) -> None:
+async def test_windows_runs_task_and_stays_silent(installed: dict, monkeypatch) -> None:
+    windows = use_host(monkeypatch, True)
     world = World()
     assert await world.run("windows_scheduled") == REPLIES["windows_scheduled"]["reply"]
-    await wait_for(lambda: windows_host.triggered == 1)
+    await wait_for(lambda: windows.triggered == 1)
     await asyncio.sleep(0)
-    assert world.runner.pipx_calls() == []
-    assert world.events == []
-    assert world.state()["last"] is None
+    assert (world.runner.pipx_calls(), world.events.events, world.state()["last"]) == ([], [], None)
 
 
-async def test_windows_task_failure_emits_event(installed: dict, windows_host: FakeHost) -> None:
-    windows_host.task_result = (False, "нет задачи")
+@pytest.mark.parametrize("exception", [False, True])
+async def test_windows_task_failure_emits_event_and_releases_lock(installed: dict, monkeypatch, exception: bool) -> None:
+    windows = use_host(monkeypatch, True)
+    if exception:
+        async def boom() -> tuple[bool, str]:
+            raise RuntimeError("сбой")
+
+        windows.trigger_update_task = boom
+    else:
+        windows.task_result = (False, "нет задачи")
     world = World()
     assert await world.run("windows_task_fails") == REPLIES["windows_task_fails"]["reply"]
-    await wait_for(lambda: world.events != [])
-    assert world.events == [("update_finished", {"ok": False, "version": "1.2.0", "error": "нет задачи"})]
-    assert world.state()["last"] == world.events[0][1]
-
-
-async def test_windows_task_exception_releases_lock(installed: dict, windows_host: FakeHost) -> None:
-    async def boom() -> tuple[bool, str]:
-        raise RuntimeError("сбой")
-
-    windows_host.trigger_update_task = boom
-    world = World()
-    await world.run("windows_task_fails")
-    await wait_for(lambda: world.state()["last"] is not None)
-    assert world.state()["last"]["error"] == "сбой"
+    last = (await world.finished())["last"]
+    assert last == {"ok": False, "version": "1.2.0", "error": "сбой" if exception else "нет задачи"}
+    assert world.events.events == [("update_finished", last)]
     await world.run("windows_task_fails")
 
 
-@pytest.mark.parametrize(
-    ("disk", "restart"),
-    [("1.1.0", False), ("1.2.0", True), (None, False)],
-)
+@pytest.mark.parametrize(("disk", "restart"), [("1.1.0", False), ("1.2.0", True), (None, False)])
 def test_state_restart_required(world: World, installed: dict, disk: str | None, restart: bool) -> None:
     installed["value"] = disk
     assert world.state() == {"running": "1.1.0", "installed": disk, "restart_required": restart, "last": None}
 
 
-def test_parse_tags() -> None:
+async def test_tags_and_latest_tag() -> None:
     assert update.parse_tags(TAGS) == ["v1.0.0", "v1.2.0", "v1.1.9"]
-
-
-async def test_latest_tag_picks_highest_numeric() -> None:
+    assert update.version_key("1.2.3") < update.version_key("1.10.0")
+    assert update.version_key("0.21.0-rc1") == (0, 21, 0)
     runner = FakeRunner()
     assert await update.latest_tag(REPO, runner) == "v1.2.0"
     assert runner.calls[0][0] == ["git", "ls-remote", "--tags", "--refs", REPO]
     assert runner.calls[0][1]["timeout"] == update.LS_REMOTE_TIMEOUT_S
-
-
-async def test_latest_tag_timeout_is_none() -> None:
-    runner = FakeRunner()
     runner.git_error = TimeoutError()
     assert await update.latest_tag(REPO, runner) is None
-
-
-def test_version_key() -> None:
-    assert update.version_key("1.2.3") < update.version_key("1.10.0")
-    assert update.version_key("0.21.0-rc1") == (0, 21, 0)
 
 
 def venv_python(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, spec: str | None) -> Path:
@@ -284,29 +240,18 @@ def test_installed_extras(tmp_path: Path, monkeypatch: pytest.MonkeyPatch, spec:
     assert update.installed_extras() == expected
 
 
-async def test_pipx_reinstall_spec_and_home(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    home = venv_python(tmp_path, monkeypatch, "sa-home-node[tts]@ git+https://h/r.git@v1.0.0")
+async def test_pipx_reinstall(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    home = venv_python(tmp_path, monkeypatch, SPEC)
     runner = FakeRunner()
     assert await update.pipx_reinstall("https://h/r.git", "v1.2.0", runner) == (True, "installed")
     argv, kwargs = runner.calls[0]
     assert argv[-1] == "sa-home-node[tts] @ git+https://h/r.git@v1.2.0"
     assert kwargs["env"]["PIPX_HOME"] == str(home)
-
-
-async def test_pipx_reinstall_failure_keeps_output_tail(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    venv_python(tmp_path, monkeypatch, None)
-    runner = FakeRunner()
+    (home / "venvs" / "sa-home-node" / "pipx_metadata.json").unlink()
     runner.pipx_result = (1, "x" * 3000, "boom")
     ok, output = await update.pipx_reinstall("https://h/r.git", "v1.2.0", runner)
-    assert not ok
-    assert len(output) == update.OUTPUT_TAIL
-    assert output.endswith("boom")
-    assert runner.calls[0][0][-1] == "git+https://h/r.git@v1.2.0"
-
-
-async def test_pipx_reinstall_timeout(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    venv_python(tmp_path, monkeypatch, None)
-    runner = FakeRunner()
+    assert (ok, len(output), output.endswith("boom")) == (False, update.OUTPUT_TAIL, True)
+    assert runner.calls[1][0][-1] == "git+https://h/r.git@v1.2.0"
     runner.pipx_error = TimeoutError("долго")
     assert await update.pipx_reinstall("https://h/r.git", "v1.2.0", runner) == (False, "долго")
 
@@ -335,16 +280,10 @@ def test_origin_repo_url(monkeypatch: pytest.MonkeyPatch, direct_url, expected) 
     assert update.origin_repo_url() == expected
 
 
-def test_origin_repo_url_package_missing(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_package_missing(monkeypatch: pytest.MonkeyPatch) -> None:
     def missing(name: str) -> None:
         raise update.importlib.metadata.PackageNotFoundError(name)
 
     monkeypatch.setattr(update.importlib.metadata, "distribution", missing)
     monkeypatch.setattr(update.importlib.metadata, "version", missing)
-    assert update.origin_repo_url() is None
-    assert update.installed_version() is None
-
-
-async def test_run_command_timeout_kills_process() -> None:
-    with pytest.raises(TimeoutError):
-        await run_command([sys.executable, "-c", "import time; time.sleep(30)"], timeout=0.3)
+    assert (update.origin_repo_url(), update.installed_version()) == (None, None)

@@ -15,22 +15,23 @@ def spec(action_id: str = "ping", params: tuple[ActionParam, ...] = ()) -> Actio
     return ActionSpec(id=action_id, title=f"Действие {action_id}", params=params)
 
 
+async def test_specs_in_registration_order() -> None:
+    table = ActionTable()
+    table.add(spec("b"), noop)
+    table.add(spec("a"), noop)
+    table.add(spec("c"), noop)
+    assert [s.id for s in table.specs()] == ["b", "a", "c"]
+
+
 @pytest.mark.parametrize(
     "adds, expected",
     [(["x", "c", "a"], ["a", "c", "x"]), (["b", "y", "x"], ["b", "y", "x"])],
 )
-async def test_specs_order(adds: list, expected: list) -> None:
+async def test_specs_follow_explicit_order(adds: list, expected: list) -> None:
     table = ActionTable(order=("a", "b", "c"))
     for action_id in adds:
         table.add(spec(action_id), noop)
     assert [s.id for s in table.specs()] == expected
-
-
-async def test_specs_order_empty() -> None:
-    table = ActionTable()
-    for action_id in ["b", "a", "c"]:
-        table.add(spec(action_id), noop)
-    assert [s.id for s in table.specs()] == ["b", "a", "c"]
 
 
 async def test_duplicate_id_raises() -> None:
@@ -74,13 +75,8 @@ async def test_callable_spec_resolved_on_each_describe() -> None:
     choices.append("b")
     assert table.specs()[0].params[0].choices == ("a", "b")
     assert "pick" in table
-
-
-async def test_callable_spec_duplicate_raises() -> None:
-    table = ActionTable()
-    table.add(spec("ping"), noop)
     with pytest.raises(ValueError):
-        table.add(lambda: spec("ping"), noop)
+        table.add(lambda: spec("pick"), noop)
 
 
 async def test_hidden_action_runs_but_is_not_described() -> None:

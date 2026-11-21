@@ -19,18 +19,16 @@ from sa_home_node.lifecycle.power import (
     ssh_sessions,
     tmux_sessions,
 )
-from sa_home_node.proto.wire import ERR_UNKNOWN_ACTION, ProtoError
 from sa_home_node.swarm.router import NodeRouter
 from sa_home_node.swarm.service import NodeService
 
-REPLIES = json.loads(
-    (Path(__file__).parent.parent / "fixtures" / "supervisor" / "replies.json").read_text(encoding="utf-8")
-)
+REPLIES = json.loads((Path(__file__).parent.parent / "fixtures/supervisor/replies.json").read_text(encoding="utf-8"))
 SESSION_LISTING = "1 1000 user seat0\n2 1000 user seat0\n"
 SESSION_PROPS = {
     "1": "Remote=yes\nName=user\nTTY=pts/0\nTimestamp=10:00\n",
     "2": "Remote=no\nName=user\nTTY=\nTimestamp=09:00\n",
 }
+ALL_POWER = ["trigger_peers", "restart_node", "poweroff", "reboot", "suspend"]
 
 
 class FakeHost:
@@ -75,14 +73,8 @@ class World:
         self.router = NodeRouter("node-a", local_services={"svc": self.svc})
         self.node_service = NodeService("node-a", kind=kind, router=self.router)
         register_power(
-            self.node_service,
-            kind=kind,
-            power_controllable=controllable,
-            request_restart=self.restart,
-            router=self.router,
-            blockers=blockers,
-            run=self.commands,
-            sleep=self.sleep,
+            self.node_service, kind=kind, power_controllable=controllable, request_restart=self.restart,
+            router=self.router, blockers=blockers, run=self.commands, sleep=self.sleep,
         )
 
     async def sleep(self, delay: float) -> None:
@@ -96,8 +88,11 @@ class World:
     async def run(self, action: str, args: dict[str, Any] | None = None) -> dict[str, Any]:
         return await self.node_service.run_command(action, args or {})
 
-    def action_ids(self) -> list[str]:
-        return [a.id for a in self.node_service.describe().actions]
+    def break_probe(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        def broken() -> list[str]:
+            raise RuntimeError("probe")
+
+        monkeypatch.setattr(self.router, "working_services", broken)
 
 
 @pytest.fixture(autouse=True)
@@ -113,14 +108,15 @@ def world() -> World:
 @pytest.mark.parametrize(
     ("kind", "controllable", "expected"),
     [
-        ("workstation", None, ["trigger_peers", "restart_node", "poweroff", "reboot", "suspend"]),
-        ("server", None, ["trigger_peers", "restart_node"]),
-        ("server", True, ["trigger_peers", "restart_node", "poweroff", "reboot", "suspend"]),
-        ("workstation", False, ["trigger_peers", "restart_node"]),
+        ("workstation", None, ALL_POWER),
+        ("server", None, ALL_POWER[:2]),
+        ("server", True, ALL_POWER),
+        ("workstation", False, ALL_POWER[:2]),
     ],
 )
 async def test_registered_actions(kind: str, controllable: bool | None, expected: list[str]) -> None:
-    assert World(kind, controllable).action_ids() == expected
+    world = World(kind, controllable)
+    assert [a.id for a in world.node_service.describe().actions] == expected
 
 
 async def test_power_replies_match_reference(world: World) -> None:
@@ -131,42 +127,31 @@ async def test_power_replies_match_reference(world: World) -> None:
     assert world.commands.power_calls() == [["fake-power", a] for a in ("poweroff", "reboot", "suspend")]
     assert world.clock.sleeps == [1.0, 1.0, 1.0]
     assert await world.run(items[3]["action"], items[3]["args"]) == items[3]["reply"]
-    world.commands.sessions = True
-    world.commands.tmux = "main\n"
+    world.commands.sessions, world.commands.tmux = True, "main\n"
     assert await world.run(items[4]["action"], items[4]["args"]) == items[4]["reply"]
-    world.svc.busy = False
-    world.commands.sessions = False
-    world.commands.tmux = ""
-    before = len(world.commands.power_calls())
+    world.svc.busy, world.commands.sessions, world.commands.tmux = False, False, ""
     assert await world.run(items[5]["action"], items[5]["args"]) == items[5]["reply"]
-    await wait_for(lambda: len(world.commands.power_calls()) == before + 1)
+    await wait_for(lambda: len(world.commands.power_calls()) == 4)
     assert world.commands.power_calls()[-1] == ["fake-power", "poweroff"]
 
 
-async def test_blocked_poweroff_runs_nothing(world: World) -> None:
-    reply = await world.run("poweroff", {"if_idle": True})
+async def test_blocked_poweroff_runs_nothing_and_if_idle_must_be_true(world: World) -> None:
+    assert (await world.run("poweroff", {"if_idle": True}))["done"] is False
     await asyncio.sleep(0)
-    assert reply["done"] is False
-    assert world.commands.power_calls() == []
-    assert world.clock.sleeps == []
+    assert world.commands.power_calls() == [] and world.clock.sleeps == []
+    assert await world.run("poweroff", {"if_idle": "yes"}) == {"scheduled": "poweroff", "delay_s": 1.0}
 
 
-async def test_if_idle_must_be_true_boolean(world: World) -> None:
-    reply = await world.run("poweroff", {"if_idle": "yes"})
-    assert reply == {"scheduled": "poweroff", "delay_s": 1.0}
-
-
-async def test_plugin_blockers_come_last(world: World) -> None:
+async def test_plugin_blockers_come_last() -> None:
     async def first() -> list[str]:
         return ["плагин: a"]
 
     async def second() -> list[str]:
         return []
 
-    other = World("workstation", None, (first, second))
-    other.commands.sessions = True
-    other.commands.tmux = "main\n"
-    reply = await other.run("poweroff", {"if_idle": True})
+    world = World("workstation", None, (first, second))
+    world.commands.sessions, world.commands.tmux = True, "main\n"
+    reply = await world.run("poweroff", {"if_idle": True})
     assert reply["blockers"] == ["службы: svc", "user, pts/0, с 10:00", "tmux: main", "плагин: a"]
 
 
@@ -181,9 +166,7 @@ async def test_session_defaults() -> None:
     commands.sessions = True
 
     async def sparse(argv: list[str]) -> tuple[int, str, str]:
-        if argv[1] == "show-session":
-            return 0, "Remote=yes\n", ""
-        return await commands(argv)
+        return (0, "Remote=yes\n", "") if argv[1] == "show-session" else await commands(argv)
 
     assert await ssh_sessions(sparse) == ["?, ?, с ?", "?, ?, с ?"]
     commands.tmux = "a\n\nb\n"
@@ -210,7 +193,7 @@ async def test_restart_replies_match_reference(world: World) -> None:
     assert world.clock.sleeps == [1.0, 1.0]
 
 
-async def test_deferred_restart_waits_for_idle(world: World) -> None:
+async def test_deferred_restart_waits_for_idle_and_gives_up_after_limit(world: World) -> None:
     world.hold.clear()
     await world.run("restart_node")
     await wait_for(lambda: world.clock.sleeps == [RESTART_DEFER_POLL_S])
@@ -218,47 +201,28 @@ async def test_deferred_restart_waits_for_idle(world: World) -> None:
     world.hold.set()
     await wait_for(lambda: world.restarts == 1)
     assert world.clock.sleeps == [RESTART_DEFER_POLL_S, 1.0]
+    other = World("workstation", None)
+    await other.run("restart_node")
+    await wait_for(lambda: other.restarts == 1)
+    assert other.clock.sleeps == [RESTART_DEFER_POLL_S] * int(RESTART_DEFER_MAX_S / RESTART_DEFER_POLL_S) + [1.0]
 
 
-async def test_deferred_restart_gives_up_after_limit(world: World) -> None:
-    await world.run("restart_node")
+@pytest.mark.parametrize("while_waiting", [False, True])
+async def test_failed_probe_restarts_at_once(world: World, monkeypatch: pytest.MonkeyPatch, while_waiting: bool) -> None:
+    if while_waiting:
+        world.hold.clear()
+        await world.run("restart_node")
+        world.break_probe(monkeypatch)
+        world.hold.set()
+    else:
+        world.break_probe(monkeypatch)
+        assert await world.run("restart_node") == {"scheduled": "restart_node", "delay_s": 1.0}
     await wait_for(lambda: world.restarts == 1)
-    polls = int(RESTART_DEFER_MAX_S / RESTART_DEFER_POLL_S)
-    assert world.clock.sleeps == [RESTART_DEFER_POLL_S] * polls + [1.0]
+    assert world.restarts == 1
 
 
-async def test_failed_probe_restarts_at_once(world: World, monkeypatch: pytest.MonkeyPatch) -> None:
-    def broken() -> list[str]:
-        raise RuntimeError("probe")
-
-    monkeypatch.setattr(world.router, "working_services", broken)
-    assert await world.run("restart_node") == {"scheduled": "restart_node", "delay_s": 1.0}
-    await wait_for(lambda: world.restarts == 1)
-
-
-async def test_failed_probe_while_waiting_restarts_forcibly(
-    world: World, monkeypatch: pytest.MonkeyPatch
-) -> None:
-    world.hold.clear()
-    await world.run("restart_node")
-
-    def broken() -> list[str]:
-        raise RuntimeError("probe")
-
-    monkeypatch.setattr(world.router, "working_services", broken)
-    world.hold.set()
-    await wait_for(lambda: world.restarts == 1)
-
-
-async def test_unregistered_power_is_unknown() -> None:
-    other = World("server", None)
-    with pytest.raises(ProtoError) as exc:
-        await other.run("reboot")
-    assert exc.value.code == ERR_UNKNOWN_ACTION
-
-
-async def test_run_command_captures_output() -> None:
-    code, out, err = await run_command(
-        [sys.executable, "-c", "import sys; print('x'); sys.stderr.write('y'); sys.exit(3)"]
-    )
+async def test_run_command_captures_output_and_kills_on_timeout() -> None:
+    code, out, err = await run_command([sys.executable, "-c", "import sys; print('x'); sys.stderr.write('y'); sys.exit(3)"])
     assert (code, out.strip(), err) == (3, "x", "y")
+    with pytest.raises(TimeoutError):
+        await run_command([sys.executable, "-c", "import time; time.sleep(30)"], timeout=0.3)

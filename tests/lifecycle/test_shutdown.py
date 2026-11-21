@@ -18,10 +18,12 @@ async def broken() -> None:
     raise RuntimeError("сломалось")
 
 
-async def test_step_fits():
+async def test_step_fits_and_failure_is_contained(caplog):
     budget = ShutdownBudget(5.0)
     assert await budget.step("быстрый", fast()) is True
+    assert await budget.step("упавший", broken()) is False
     assert budget.overdue == []
+    assert "упавший" in caplog.text
 
 
 async def test_step_overdue_dumps_once(caplog):
@@ -39,13 +41,6 @@ async def test_step_cap_by_remaining_budget():
     assert budget.overdue == ["поздний"]
 
 
-async def test_step_failure_is_contained(caplog):
-    budget = ShutdownBudget(5.0)
-    assert await budget.step("упавший", broken()) is False
-    assert budget.overdue == []
-    assert "упавший" in caplog.text
-
-
 def test_arm_hard_exit(monkeypatch):
     slept, exits = [], []
 
@@ -61,5 +56,4 @@ def test_arm_hard_exit(monkeypatch):
     monkeypatch.setattr(shutdown, "os", SimpleNamespace(_exit=exits.append))
     monkeypatch.setattr(shutdown.logging, "shutdown", lambda: None)
     arm_hard_exit(7.0)
-    assert slept == [7.0]
-    assert exits == [HARD_EXIT_CODE]
+    assert (slept, exits) == ([7.0], [HARD_EXIT_CODE])

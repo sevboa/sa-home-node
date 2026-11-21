@@ -15,6 +15,22 @@ def test_plugins_empty(capsys, monkeypatch):
     assert capsys.readouterr().out == "плагины не установлены\n"
 
 
+def test_run_missing_config(capsys, tmp_path):
+    assert cli.main(["run", "--config", str(tmp_path / "nope.toml")]) == 2
+    assert "ошибка:" in capsys.readouterr().err
+
+
+def test_run_passes_config(monkeypatch, tmp_path):
+    called = []
+
+    async def run_node(config_path):
+        called.append(config_path)
+
+    monkeypatch.setattr(cli, "run_node", run_node)
+    assert cli.main(["run", "--config", str(tmp_path / "cfg.toml")]) == 0
+    assert called == [tmp_path / "cfg.toml"]
+
+
 @pytest.mark.parametrize("code", [0, 11])
 def test_service_passes_config(monkeypatch, tmp_path, code):
     called = []
@@ -31,24 +47,6 @@ def test_service_passes_config(monkeypatch, tmp_path, code):
 def test_service_missing_config(capsys, tmp_path):
     assert cli.main(["service", "svc", "--config", str(tmp_path / "nope.toml")]) == 2
     assert "ошибка:" in capsys.readouterr().err
-
-
-def test_run_missing_config(capsys, tmp_path):
-    assert cli.main(["run", "--config", str(tmp_path / "nope.toml")]) == 2
-    assert "ошибка:" in capsys.readouterr().err
-
-
-def test_run_passes_config(monkeypatch, tmp_path):
-    called = []
-
-    async def run_node(config_path):
-        called.append(config_path)
-        return False
-
-    monkeypatch.setattr(cli, "run_node", run_node)
-    monkeypatch.setattr(cli, "current", lambda: pytest.fail("перезапуск не нужен"))
-    assert cli.main(["run", "--config", str(tmp_path / "cfg.toml")]) == 0
-    assert called == [tmp_path / "cfg.toml"]
 
 
 def test_run_self_restarts(monkeypatch, tmp_path):

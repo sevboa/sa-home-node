@@ -3,7 +3,6 @@ from __future__ import annotations
 import asyncio
 import contextlib
 import sys
-from collections.abc import AsyncIterator
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -16,13 +15,9 @@ from sa_home_node.plugins import Plugin, ServiceContext, ServiceSpec
 from sa_home_node.proto.client import ProtoClient
 from sa_home_node.proto.wire import Address, ProtoError
 
-pytestmark = [
-    pytest.mark.skipif(sys.platform != "linux", reason="unix"),
-    pytest.mark.timeout(90),
-]
+pytestmark = [pytest.mark.skipif(sys.platform != "linux", reason="unix"), pytest.mark.timeout(90)]
 
 NODE_IDS = ("node-a", "node-b")
-PACKAGE = "svc-s.one.toml"
 
 
 @dataclass
@@ -48,14 +43,12 @@ class LiveNode:
     def __init__(self, node_id: str, root: Path, sock_dir: str, port: int, peer_port: int, assignments) -> None:
         self.id = node_id
         self.root = root
-        self.port = port
         self.stop = asyncio.Event()
         self.task: asyncio.Task | None = None
         self.sock = f"{sock_dir}/{node_id}.sock"
         self.echo_sock = f"{sock_dir}/{node_id}-echo.sock"
         peer = NODE_IDS[1 - NODE_IDS.index(node_id)]
-        root.mkdir()
-        (root / "content").mkdir()
+        (root / "content").mkdir(parents=True)
         (root / "content" / "example.toml").write_text('greeting = "Привет"\n')
         listed = ", ".join(f'"{a}"' for a in assignments)
         (root / "config.toml").write_text(
@@ -72,10 +65,9 @@ class LiveNode:
 
     @property
     def package(self) -> Path:
-        return self.root / "instances" / PACKAGE
+        return self.root / "instances" / "svc-s.one.toml"
 
     def start(self) -> None:
-        self.stop = asyncio.Event()
         self.task = asyncio.create_task(node.run_node(self.root / "config.toml", stop=self.stop))
 
     async def shutdown(self) -> None:
@@ -114,61 +106,46 @@ class LiveNode:
 
 
 @pytest.fixture
-def runs() -> Runs:
-    return Runs()
-
-
-@pytest.fixture
-async def make_pair(tmp_path, sock_dir, monkeypatch, runs):
+async def make_pair(tmp_path, sock_dir, monkeypatch):
+    runs = Runs()
     install_example_entry_point(tmp_path, monkeypatch)
     monkeypatch.chdir(tmp_path)
     monkeypatch.setattr(node, "load_plugins", lambda names: [EXAMPLE, live_plugin(runs)])
     monkeypatch.setattr(node, "arm_hard_exit", lambda total: None)
     nodes: list[LiveNode] = []
 
-    def make(assignments=()) -> list[LiveNode]:
+    def make(assignments=()) -> tuple[list[LiveNode], Runs]:
         ports = [free_port(), free_port()]
-        for index, node_id in enumerate(NODE_IDS):
-            nodes.append(
-                LiveNode(node_id, tmp_path / node_id, sock_dir, ports[index], ports[1 - index], assignments)
-            )
-        return nodes
+        nodes.extend(
+            LiveNode(node_id, tmp_path / node_id, sock_dir, ports[i], ports[1 - i], assignments)
+            for i, node_id in enumerate(NODE_IDS)
+        )
+        return nodes, runs
 
     yield make
     await asyncio.gather(*(n.shutdown() for n in nodes), return_exceptions=True)
 
 
-@pytest.fixture
-async def pair(make_pair) -> AsyncIterator[list[LiveNode]]:
-    nodes = make_pair()
-    for n in nodes:
+async def test_assign_echo_and_route_via_peer(make_pair) -> None:
+    (first, second), _ = make_pair()
+    for n in (first, second):
         n.start()
-    for n in nodes:
+    for n in (first, second):
         assert await n.ready()
-    yield nodes
-
-
-async def test_assign_echo_and_route_via_peer(pair) -> None:
-    first, second = pair
     client = await second.client()
     try:
         await client.command("assign", {"name": "echo"})
         assert await wait_for(lambda: Path(second.echo_sock).exists(), timeout=20)
-        state = await client.get_state()
+        slots = {s["name"]: s for s in (await client.get_state())["services"]}
     finally:
         await client.close()
-    slots = {s["name"]: s for s in state["services"]}
-    assert slots["echo"]["status"] == "running"
-    assert slots["echo"]["service"] == "echo"
-
+    assert (slots["echo"]["status"], slots["echo"]["service"]) == ("running", "echo")
     caller = await first.client()
     try:
         result = None
         for _ in range(100):
             try:
-                result = await caller.command(
-                    "echo", {"text": "эхо"}, dst=Address(node=second.id, service="echo")
-                )
+                result = await caller.command("echo", {"text": "эхо"}, dst=Address(node=second.id, service="echo"))
                 break
             except (ProtoError, ConnectionError, OSError, TimeoutError):
                 await asyncio.sleep(0.2)
@@ -177,34 +154,29 @@ async def test_assign_echo_and_route_via_peer(pair) -> None:
     assert result == {"text": "эхо"}
 
 
-async def test_singleton_lease_moves_to_other_node(make_pair, runs) -> None:
-    first, second = make_pair(["svc-s"])
+async def test_singleton_lease_moves_to_other_node(make_pair) -> None:
+    (first, second), runs = make_pair(["svc-s"])
     first.start()
     second.start()
     assert await wait_for(lambda: len(runs.running) == 1, timeout=30)
     await asyncio.sleep(1.5)
-    assert runs.running == {first.id}
-    assert len(runs.started) == 1
-
+    assert (runs.running, len(runs.started)) == ({first.id}, 1)
     await first.shutdown()
     assert await wait_for(lambda: runs.running == {second.id}, timeout=30)
-    state = await second.state()
-    assert state["singletons"]["svc-s"]["running"] is True
+    assert (await second.state())["singletons"]["svc-s"]["running"] is True
 
 
-async def test_package_edit_replicates_and_restarts_active(make_pair, runs) -> None:
-    first, second = make_pair(["svc-s@one"])
+async def test_package_edit_replicates_and_restarts_active(make_pair) -> None:
+    (first, second), runs = make_pair(["svc-s@one"])
     first.package.parent.mkdir()
-    first.package.write_text('value = 1\n')
+    first.package.write_text("value = 1\n")
     first.start()
     second.start()
-    assert await wait_for(lambda: runs.running == {first.id}, timeout=30)
-    assert await wait_for(lambda: second.package.exists(), timeout=30)
-    assert second.package.read_text() == 'value = 1\n'
-    assert runs.started == [(first.id, 'value = 1\n')]
-
-    second.package.write_text('value = 2\n')
+    assert await wait_for(lambda: runs.running == {first.id} and second.package.exists(), timeout=30)
+    assert second.package.read_text() == "value = 1\n"
+    assert runs.started == [(first.id, "value = 1\n")]
+    second.package.write_text("value = 2\n")
     assert await wait_for(lambda: len(runs.started) == 2, timeout=30)
-    assert runs.started[1] == (first.id, 'value = 2\n')
+    assert runs.started[1] == (first.id, "value = 2\n")
     assert first.package.read_bytes() == second.package.read_bytes()
     assert runs.running == {first.id}

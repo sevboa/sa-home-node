@@ -4,7 +4,7 @@ from pathlib import Path
 
 import pytest
 from pydantic import BaseModel
-from support import wait_for
+from support import Collector, wait_for
 
 from sa_home_node import node
 from sa_home_node.config import ConfigError, load_config
@@ -95,14 +95,14 @@ async def test_start_and_cancel_order(tmp_path, monkeypatch, sock_dir):
     assert await task is False
 
 
-async def test_only_assigned_services_start(tmp_path, monkeypatch, sock_dir, hard_exits):
+async def test_state_assignments_and_only_assigned_start(tmp_path, monkeypatch, sock_dir, hard_exits):
     monkeypatch.chdir(tmp_path)
-    cfg = write_config(tmp_path, sock_dir, ["p1", "p2"], ["p1-s", "ghost"])
-    started, cancelled = [], []
-    ev = asyncio.Event()
+    cfg = write_config(tmp_path, sock_dir, ["p1", "p2"], ["ghost"])
+    (tmp_path / "node-state.json").write_text('{"assignments": ["p1-s"]}')
+    started, ev = [], asyncio.Event()
     plugins = [
-        make_plugin("p1", make_service("p1", started, cancelled, ev)),
-        make_plugin("p2", make_service("p2", started, cancelled, asyncio.Event())),
+        make_plugin("p1", make_service("p1", started, [], ev)),
+        make_plugin("p2", make_service("p2", started, [], asyncio.Event())),
     ]
     monkeypatch.setattr(node, "load_plugins", lambda names: plugins)
     stop = asyncio.Event()
@@ -115,27 +115,10 @@ async def test_only_assigned_services_start(tmp_path, monkeypatch, sock_dir, har
     assert hard_exits == [90.0 + 20.0 + 15.0]
 
 
-async def test_state_assignment_starts_service(tmp_path, monkeypatch, sock_dir):
-    monkeypatch.chdir(tmp_path)
-    cfg = write_config(tmp_path, sock_dir, ["p1"])
-    (tmp_path / "node-state.json").write_text('{"assignments": ["p1-s"]}')
-    started = []
-    ev = asyncio.Event()
-    monkeypatch.setattr(
-        node, "load_plugins", lambda names: [make_plugin("p1", make_service("p1", started, [], ev))]
-    )
-    stop = asyncio.Event()
-    task = asyncio.create_task(node.run_node(cfg, stop=stop))
-    await asyncio.wait_for(ev.wait(), timeout=5)
-    stop.set()
-    await asyncio.wait_for(task, timeout=10)
-
-
 async def test_instance_service_gets_package_path(tmp_path, monkeypatch, sock_dir):
     monkeypatch.chdir(tmp_path)
     cfg = write_config(tmp_path, sock_dir, ["p1"], ["p1-s@one"])
-    ctxs = []
-    ev = asyncio.Event()
+    ctxs, ev = [], asyncio.Event()
 
     async def svc(ctx: ServiceContext) -> None:
         ctxs.append(ctx)
@@ -155,10 +138,8 @@ async def test_instance_service_gets_package_path(tmp_path, monkeypatch, sock_di
 async def test_restart_node_returns_true(tmp_path, monkeypatch, sock_dir):
     monkeypatch.chdir(tmp_path)
     cfg = write_config(tmp_path, sock_dir, ["p1"], ["p1-s"])
-    ev = asyncio.Event()
-    monkeypatch.setattr(
-        node, "load_plugins", lambda names: [make_plugin("p1", make_service("p1", [], [], ev))]
-    )
+    plugin = make_plugin("p1", make_service("p1", [], [], asyncio.Event()))
+    monkeypatch.setattr(node, "load_plugins", lambda names: [plugin])
     task = asyncio.create_task(node.run_node(cfg, stop=asyncio.Event()))
     sock = Path(sock_dir) / "node.sock"
     assert await wait_for(lambda: os.path.exists(sock), timeout=5)
@@ -275,22 +256,16 @@ def test_slot_factory_picks_process_or_embedded(tmp_path, sock_dir):
     )
     table = ServiceTable([plugin])
     contexts = {"p1": make_context(plugin, cfg, ContentStore(cfg.content_dir))}
-    store = node.instance_store(cfg)
     factory = node.make_slot_factory(
-        cfg, table, contexts, store, emit=_emit, restart_delay_s=1.0,
+        cfg, table, contexts, node.instance_store(cfg), emit=Collector(), restart_delay_s=1.0,
         on_fenced=lambda name: None, on_spawned=lambda name: None,
     )
     proc = factory(table.spec("proc"), parse("proc@one"))
     emb = factory(table.spec("emb"), parse("emb"))
     assert isinstance(proc, ProcessService)
-    assert proc.name == "proc@one"
-    assert proc._argv == process_argv("proc", "one", str(cfg.path))
+    assert (proc.name, proc._argv) == ("proc@one", process_argv("proc", "one", str(cfg.path)))
     assert isinstance(emb, InProcessService)
     assert emb.ctx.package_path is None
-
-
-async def _emit(event, data):
-    return None
 
 
 async def test_run_service_unknown(tmp_path, monkeypatch, sock_dir):
@@ -325,18 +300,15 @@ async def test_run_service_fenced(tmp_path, monkeypatch, sock_dir):
     assert (tmp_path / "data" / "p1").is_dir()
 
 
-async def test_run_service_returns_zero(tmp_path, monkeypatch, sock_dir):
-    cfg = patch_service(monkeypatch, tmp_path, sock_dir, _noop_svc)
-    assert await node.run_service("hello", config_path=cfg, stop=asyncio.Event()) == 0
-
-
-async def test_run_service_stops(tmp_path, monkeypatch, sock_dir):
+async def test_run_service_returns_zero_on_return_and_on_stop(tmp_path, monkeypatch, sock_dir):
     started = []
 
     async def svc(ctx: ServiceContext) -> None:
         started.append(True)
         await asyncio.Event().wait()
 
+    cfg = patch_service(monkeypatch, tmp_path, sock_dir, _noop_svc)
+    assert await node.run_service("hello", config_path=cfg, stop=asyncio.Event()) == 0
     cfg = patch_service(monkeypatch, tmp_path, sock_dir, svc)
     stop = asyncio.Event()
     task = asyncio.create_task(node.run_service("hello", config_path=cfg, stop=stop))

@@ -2,12 +2,11 @@ from __future__ import annotations
 
 import asyncio
 import json
-import time
-from collections.abc import Callable
 from datetime import UTC, datetime
 from pathlib import Path
 
 import pytest
+from support import Collector, wait_for
 
 from sa_home_node.services import process
 from sa_home_node.services.assignments import Assignment
@@ -25,7 +24,6 @@ from sa_home_node.services.events import (
 REF: dict[str, dict] = json.loads(
     (Path(__file__).parents[1] / "fixtures/supervisor/services-state.json").read_text(encoding="utf-8")
 )["cases"]
-FIXED_NOW = datetime(2026, 1, 2, 3, 4, 5, tzinfo=UTC)
 
 
 class FakeProc:
@@ -69,17 +67,6 @@ class FakeHost:
         proc.terminate()
 
 
-class Collector:
-    def __init__(self):
-        self.events: list[tuple[str, dict]] = []
-        self.raise_on = ""
-
-    async def __call__(self, name: str, payload: dict) -> None:
-        self.events.append((name, payload))
-        if name == self.raise_on:
-            raise RuntimeError("emit сломан")
-
-
 @pytest.fixture()
 def spawn(monkeypatch: pytest.MonkeyPatch):
     queue: list[FakeProc] = []
@@ -95,120 +82,71 @@ def spawn(monkeypatch: pytest.MonkeyPatch):
     return queue, calls
 
 
-def make_service(name: str, argv: list[str], collector: Collector, host: FakeHost, **kwargs) -> process.ProcessService:
-    options = {"restart_delay_s": 0.01, "stop_timeout_s": 0.1, **kwargs}
-    return process.ProcessService(name, argv, emit=collector, host=host, **options)
-
-
-async def wait_until(cond: Callable[[], bool], timeout_s: float = 2.0) -> None:
-    end = time.monotonic() + timeout_s
-    while time.monotonic() < end:
-        if cond():
-            return
-        await asyncio.sleep(0.01)
-    raise TimeoutError("событие не пришло вовремя")
-
-
-def has_event(events: list[tuple[str, dict]], name: str) -> bool:
-    return any(n == name for n, _ in events)
+async def boot(spawn, *procs, name="svc", collector=None, host=None, **kw):
+    queue, calls = spawn
+    queue.extend(procs)
+    collector = collector or Collector()
+    host = host or FakeHost()
+    options = {"restart_delay_s": 0.01, "stop_timeout_s": 0.1, **kw}
+    svc = process.ProcessService(name, ["svc.py"], emit=collector, host=host, **options)
+    await svc.start()
+    return svc, collector, host, calls
 
 
 async def test_start_and_soft_stop(spawn: tuple) -> None:
-    queue, calls = spawn
-    host = FakeHost()
-    proc = FakeProc()
-    queue.append(proc)
-    collector = Collector()
-    spawned_names: list[str] = []
-    svc = make_service(
-        "svc", ["svc.py"], collector, host, on_spawned=spawned_names.append
-    )
-    await svc.start()
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_STARTED))
-    assert spawned_names == ["svc"]
-    assert svc.pid == 4101
-    assert svc.process_alive
-    assert svc.status == RUNNING
-    assert calls[0][0] == ("svc.py",)
-    assert calls[0][1] == {"x": 1}
-
+    proc, spawned = FakeProc(), []
+    collector = Collector(raise_on=EVENT_SERVICE_STOPPED)
+    svc, collector, host, calls = await boot(spawn, proc, on_spawned=spawned.append, collector=collector)
+    await collector.seen(EVENT_SERVICE_STARTED)
+    assert (spawned, svc.pid, svc.process_alive, svc.status) == (["svc"], 4101, True, RUNNING)
+    assert calls == [(("svc.py",), {"x": 1})]
     await svc.stop()
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_STOPPED))
-    assert svc.status == STOPPED
-    assert not svc.process_alive
+    await collector.seen(EVENT_SERVICE_STOPPED)
+    assert (svc.status, svc.process_alive) == (STOPPED, False)
     assert proc.calls == ["terminate"]
     assert host.terminate_targets == [proc]
 
 
 async def test_restart_after_crash(spawn: tuple) -> None:
-    queue, calls = spawn
-    host = FakeHost()
-    first, second = FakeProc(4101), FakeProc(4102)
-    queue.extend([first, second])
-    collector = Collector()
-    svc = make_service("svc", ["svc.py"], collector, host)
-    await svc.start()
+    first = FakeProc()
+    svc, collector, _, calls = await boot(spawn, first, FakeProc(4102))
     first.finish(1)
-    await wait_until(
-        lambda: any(
-            n == EVENT_SERVICE_FAILED and p.get("exit_code") == 1 for n, p in collector.events
-        )
-    )
-    assert svc.restarts == 1
-    await wait_until(lambda: len(calls) == 2)
-    assert len(calls) == 2
-    assert svc.pid == 4102
-    assert svc.status == RUNNING
+    await collector.seen(EVENT_SERVICE_FAILED)
+    assert collector.of(EVENT_SERVICE_FAILED)[0]["exit_code"] == 1
+    assert await wait_for(lambda: len(calls) == 2 and svc.pid == 4102, 2)
+    assert (svc.restarts, svc.status) == (1, RUNNING)
     await svc.stop()
 
 
 async def test_fenced_not_restarted(spawn: tuple) -> None:
-    queue, calls = spawn
-    host = FakeHost()
-    proc = FakeProc()
-    queue.extend([proc, FakeProc(4102)])
-    collector = Collector()
-    fenced_names: list[str] = []
-    svc = make_service("svc-s", ["svc.py"], collector, host, on_fenced=fenced_names.append)
-    await svc.start()
+    proc, fenced = FakeProc(), []
+    svc, collector, _, calls = await boot(spawn, proc, FakeProc(4102), name="svc-s", on_fenced=fenced.append)
     proc.finish(FENCED_EXIT_CODE)
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_FENCED))
-    assert fenced_names == ["svc-s"]
-    assert svc.status == STOPPED
-    assert svc.last_exit_code == FENCED_EXIT_CODE
-    assert len(calls) == 1
+    await collector.seen(EVENT_SERVICE_FENCED)
+    assert (fenced, svc.status, svc.last_exit_code, len(calls)) == (["svc-s"], STOPPED, FENCED_EXIT_CODE, 1)
     await svc.start()
-    assert len(calls) == 2
-    assert svc.status == RUNNING
+    assert (len(calls), svc.status) == (2, RUNNING)
     await svc.stop()
 
 
-async def test_hard_kill_on_terminate_timeout(spawn: tuple) -> None:
-    queue, _calls = spawn
-    host = FakeHost()
-    proc = FakeProc()
-    proc.terminate_finishes = False
-    queue.append(proc)
-    collector = Collector()
-    svc = make_service("svc", ["svc.py"], collector, host)
-    await svc.start()
+@pytest.mark.parametrize(
+    ("finishes", "error", "expected"),
+    [(False, None, ["terminate", "kill"]), (True, OSError("нет"), ["kill"]), (True, ValueError("плохо"), ["kill"])],
+)
+async def test_stop_escalates_to_kill(spawn: tuple, finishes: bool, error: Exception | None, expected: list) -> None:
+    proc, host = FakeProc(), FakeHost()
+    proc.terminate_finishes, host.terminate_error = finishes, error
+    svc, *_ = await boot(spawn, proc, host=host)
     await svc.stop()
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_STOPPED))
-    assert svc.status == STOPPED
-    assert proc.calls == ["terminate", "kill"]
-    assert proc.returncode == 9
+    assert (proc.calls, proc.returncode) == (expected, 9)
+    assert (svc.status, svc.process_alive) == (STOPPED, False)
 
 
-async def test_spawn_oserror_reports_failure(spawn: tuple) -> None:
-    _queue, _calls = spawn
-    host = FakeHost()
-    collector = Collector()
-    svc = make_service("svc", ["svc.py"], collector, host)
-    await svc.start()
-    await wait_until(lambda: any(n == EVENT_SERVICE_FAILED and p.get("error") for n, p in collector.events))
+async def test_spawn_failure_reports_and_retries(spawn: tuple) -> None:
+    svc, collector, *_ = await boot(spawn)
+    assert await wait_for(lambda: any(p.get("error") for p in collector.of(EVENT_SERVICE_FAILED)), 2)
     assert svc.status == RESTARTING
     await svc.stop()
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_STOPPED))
     assert svc.status == STOPPED
 
 
@@ -218,114 +156,53 @@ def raising(_name: str) -> None:
 
 @pytest.mark.parametrize("broken", ["emit", "on_spawned"])
 async def test_broken_start_callbacks_do_not_double_spawn(spawn: tuple, broken: str) -> None:
-    queue, calls = spawn
-    host = FakeHost()
-    first, second = FakeProc(4101), FakeProc(4102)
-    queue.extend([first, second])
-    collector = Collector()
-    options = {}
-    if broken == "emit":
-        collector.raise_on = EVENT_SERVICE_STARTED
-    else:
-        options["on_spawned"] = raising
-    svc = make_service("svc", ["svc.py"], collector, host, **options)
-    await svc.start()
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_STARTED))
+    first = FakeProc()
+    options = {"on_spawned": raising} if broken == "on_spawned" else {"collector": Collector(raise_on=EVENT_SERVICE_STARTED)}
+    svc, collector, _, calls = await boot(spawn, first, FakeProc(4102), **options)
+    await collector.seen(EVENT_SERVICE_STARTED)
     await asyncio.sleep(0.1)
-    assert len(calls) == 1
-    assert svc.pid == 4101
-    assert svc.status == RUNNING
+    assert (len(calls), svc.pid, svc.status) == (1, 4101, RUNNING)
     first.finish(1)
-    await wait_until(lambda: len(calls) == 2)
+    assert await wait_for(lambda: len(calls) == 2, 2)
     assert svc.restarts == 1
     await svc.stop()
     assert svc.status == STOPPED
 
 
-@pytest.mark.parametrize("error", [OSError("нет"), ValueError("плохо")])
-async def test_terminate_error_falls_back_to_kill(spawn: tuple, error: Exception) -> None:
-    queue, _calls = spawn
-    host = FakeHost()
-    host.terminate_error = error
-    proc = FakeProc()
-    queue.append(proc)
-    collector = Collector()
-    svc = make_service("svc", ["svc.py"], collector, host)
-    await svc.start()
-    await svc.stop()
-    assert proc.calls == ["kill"]
-    assert svc.status == STOPPED
-    assert not svc.process_alive
-
-
-async def test_broken_stopped_emit_does_not_fail_stop(spawn: tuple) -> None:
-    queue, _calls = spawn
-    queue.append(FakeProc())
-    collector = Collector()
-    collector.raise_on = EVENT_SERVICE_STOPPED
-    svc = make_service("svc", ["svc.py"], collector, FakeHost())
-    await svc.start()
-    await svc.stop()
-    assert svc.status == STOPPED
-
-
 async def test_cancelled_stop_kills_and_repeat_finishes(spawn: tuple) -> None:
-    queue, _calls = spawn
     proc = FakeProc()
     proc.terminate_finishes = False
-    queue.append(proc)
-    collector = Collector()
-    svc = make_service("svc", ["svc.py"], collector, FakeHost(), stop_timeout_s=30.0)
-    await svc.start()
+    svc, *_ = await boot(spawn, proc, stop_timeout_s=30.0)
     stopping = asyncio.create_task(svc.stop())
-    await wait_until(lambda: proc.calls == ["terminate"])
+    assert await wait_for(lambda: proc.calls == ["terminate"], 2)
     stopping.cancel()
     await asyncio.gather(stopping, return_exceptions=True)
     assert stopping.cancelled()
-    assert proc.calls == ["terminate", "kill"]
-    assert svc.status == STOPPED
+    assert (proc.calls, svc.status) == (["terminate", "kill"], STOPPED)
     await asyncio.wait_for(svc.stop(), 2.0)
     assert not svc.process_alive
     await svc.start()
-    assert svc.status == RUNNING or svc.status == RESTARTING
+    assert svc.status in (RUNNING, RESTARTING)
     await svc.stop()
 
 
 async def test_to_dict_matches_reference(spawn: tuple, monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(process, "utc_now", lambda: FIXED_NOW)
-    queue, _calls = spawn
-    host = FakeHost()
-    crash_proc, fenced_proc = FakeProc(), FakeProc()
-    queue.extend([crash_proc, fenced_proc])
-    collector = Collector()
-    svc = make_service("svc", ["svc.py"], collector, host)
-    await svc.start()
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_STARTED))
+    monkeypatch.setattr(process, "utc_now", lambda: datetime(2026, 1, 2, 3, 4, 5, tzinfo=UTC))
+    crash, fenced_proc = FakeProc(), FakeProc()
+    svc, collector, host, _ = await boot(spawn, crash, fenced_proc)
+    await collector.seen(EVENT_SERVICE_STARTED)
     assert svc.to_dict() == REF["running"]
-
-    crash_proc.finish(1)
-    await wait_until(lambda: any(n == EVENT_SERVICE_FAILED and p.get("exit_code") == 1 for n, p in collector.events))
+    crash.finish(1)
+    await collector.seen(EVENT_SERVICE_FAILED)
     assert svc.to_dict() == REF["restarting"]
-
     await svc.stop()
-    await wait_until(lambda: has_event(collector.events, EVENT_SERVICE_STOPPED))
+    await collector.seen(EVENT_SERVICE_STOPPED)
     assert svc.to_dict() == REF["stopped"]
-
-    fenced_collector = Collector()
-    fenced_names: list[str] = []
-    svc_fenced = make_service(
-        "svc-s", ["svc.py"], fenced_collector, host, on_fenced=fenced_names.append
-    )
-    await svc_fenced.start()
+    fenced, fenced_collector, *_ = await boot(spawn, name="svc-s", host=host, on_fenced=lambda name: None)
     fenced_proc.finish(FENCED_EXIT_CODE)
-    await wait_until(lambda: has_event(fenced_collector.events, EVENT_SERVICE_FENCED))
-    assert svc_fenced.to_dict() == REF["fenced"]
-
-    svc_standby = make_service(
-        "svc-i@one",
-        [],
-        Collector(),
-        host,
-        assignment=Assignment("svc-i", "one", "standby"),
+    await fenced_collector.seen(EVENT_SERVICE_FENCED)
+    assert fenced.to_dict() == REF["fenced"]
+    standby = process.ProcessService(
+        "svc-i@one", [], emit=Collector(), host=host, assignment=Assignment("svc-i", "one", "standby")
     )
-    assert svc_standby.to_dict() == REF["standby_instance"]
+    assert standby.to_dict() == REF["standby_instance"]

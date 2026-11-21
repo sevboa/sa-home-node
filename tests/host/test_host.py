@@ -57,6 +57,7 @@ def test_select(platform, cls, unix):
     assert type(host) is cls
     assert host.unix_sockets is unix
     assert host.update_via_task is not unix
+    assert host.update_via_task is not unix
 
 
 @pytest.mark.parametrize(
@@ -107,39 +108,29 @@ class FakeProc:
         self.calls.append(("send_signal", sig))
 
 
-@pytest.mark.parametrize(
-    ("platform", "expected"),
-    [("linux", {}), ("win32", {"creationflags": 0x200})],
-)
-def test_spawn_kwargs(platform, expected, monkeypatch):
-    if platform == "win32":
-        monkeypatch.setattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0x200, raising=False)
-    assert select(platform).spawn_kwargs() == expected
+@pytest.fixture
+def pick(monkeypatch):
+    def pick(platform):
+        if platform == "win32":
+            monkeypatch.setattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0x200, raising=False)
+            monkeypatch.setattr(signal, "SIGBREAK", 21, raising=False)
+            monkeypatch.setattr(signal, "CTRL_BREAK_EVENT", 1, raising=False)
+        return select(platform)
+
+    return pick
 
 
 @pytest.mark.parametrize(
-    ("platform", "sigbreak"),
-    [("linux", None), ("win32", 21)],
+    ("platform", "kwargs", "signals", "terminated"),
+    [
+        ("linux", {}, (signal.SIGINT, signal.SIGTERM), ["terminate"]),
+        ("win32", {"creationflags": 0x200}, (signal.SIGINT, signal.SIGTERM, 21), [("send_signal", 1)]),
+    ],
 )
-def test_stop_signals(platform, sigbreak, monkeypatch):
-    if platform == "win32":
-        monkeypatch.setattr(signal, "SIGBREAK", 21, raising=False)
-    expected = (signal.SIGINT, signal.SIGTERM)
-    if sigbreak is not None:
-        expected += (sigbreak,)
-    assert select(platform).stop_signals() == expected
-
-
-@pytest.mark.parametrize(
-    ("platform", "expected"),
-    [("linux", ["terminate"]), ("win32", [("send_signal", 1)])],
-)
-def test_terminate(platform, expected, monkeypatch):
-    if platform == "win32":
-        monkeypatch.setattr(signal, "CTRL_BREAK_EVENT", 1, raising=False)
-    proc = FakeProc()
-    select(platform).terminate(proc)
-    assert proc.calls == expected
+def test_process_control(pick, platform, kwargs, signals, terminated):
+    host, proc = pick(platform), FakeProc()
+    host.terminate(proc)
+    assert (host.spawn_kwargs(), host.stop_signals(), proc.calls) == (kwargs, signals, terminated)
 
 
 class FakeLoop:
@@ -158,12 +149,7 @@ class FakeLoop:
 
 
 def test_install_stop_handlers_loop():
-    loop = FakeLoop()
-    seen = []
-
-    def cb():
-        seen.append(1)
-
+    loop, cb = FakeLoop(), lambda: None
     remove = install_stop_handlers(loop, (signal.SIGINT, signal.SIGTERM), cb)
     assert loop.added == [(signal.SIGINT, cb), (signal.SIGTERM, cb)]
     remove()
@@ -171,19 +157,16 @@ def test_install_stop_handlers_loop():
 
 
 def test_install_stop_handlers_fallback(monkeypatch):
-    loop = FakeLoop(fail=True)
-    seen = []
-    calls = []
+    seen, calls = [], []
 
     def fake_signal(sig, handler):
         calls.append((sig, handler))
         return "old"
 
     monkeypatch.setattr(signal, "signal", fake_signal)
-    remove = install_stop_handlers(loop, (signal.SIGINT, signal.SIGTERM), lambda: seen.append(1))
-    handlers = [calls[0][1], calls[1][1]]
-    assert calls == [(signal.SIGINT, handlers[0]), (signal.SIGTERM, handlers[1])]
-    for handler in handlers:
+    remove = install_stop_handlers(FakeLoop(fail=True), (signal.SIGINT, signal.SIGTERM), lambda: seen.append(1))
+    assert [sig for sig, _ in calls] == [signal.SIGINT, signal.SIGTERM]
+    for _, handler in calls:
         handler("x")
     assert seen == [1, 1]
     calls.clear()
@@ -199,43 +182,21 @@ def test_install_stop_handlers_fallback(monkeypatch):
         ("linux", "suspend", ["systemctl", "suspend"]),
         ("win32", "poweroff", ["shutdown", "/s", "/t", "5"]),
         ("win32", "reboot", ["shutdown", "/r", "/t", "5"]),
-        (
-            "win32",
-            "suspend",
-            ["rundll32.exe", "powrprof.dll,SetSuspendState", "0,1,0"],
-        ),
+        ("win32", "suspend", ["rundll32.exe", "powrprof.dll,SetSuspendState", "0,1,0"]),
     ],
 )
 def test_power_argv(platform, action, expected):
     assert select(platform).power_argv(action) == expected
-
-
-@pytest.mark.parametrize("platform", ["linux", "win32"])
-def test_power_argv_unknown(platform):
     with pytest.raises(ValueError):
         select(platform).power_argv("hibernate")
 
 
-@pytest.mark.parametrize(
-    ("platform", "expected"),
-    [("linux", 0), ("win32", RESTART_EXIT_CODE)],
-)
+@pytest.mark.parametrize(("platform", "expected"), [("linux", 0), ("win32", RESTART_EXIT_CODE)])
 def test_self_restart(platform, expected, monkeypatch):
     recorded = []
-
-    def fake_execv(prog, argv):
-        recorded.append((prog, argv))
-
-    if platform == "linux":
-        monkeypatch.setattr(os, "execv", fake_execv, raising=False)
-    host = select(platform)
-    assert host.self_restart(["prog", "-x"]) == expected
-    if platform == "linux":
-        assert recorded == [("prog", ["prog", "-x"])]
-
-
-async def test_trigger_update_task_linux():
-    assert await select("linux").trigger_update_task() == (False, "нет задачи обновления")
+    monkeypatch.setattr(os, "execv", lambda prog, argv: recorded.append((prog, argv)), raising=False)
+    assert select(platform).self_restart(["prog", "-x"]) == expected
+    assert recorded == ([("prog", ["prog", "-x"])] if platform == "linux" else [])
 
 
 class FakeSchedProc:
@@ -247,24 +208,24 @@ class FakeSchedProc:
 
 
 @pytest.mark.parametrize(
-    ("returncode", "expected"),
-    [(0, (True, "ok")), (1, (False, "ok"))],
+    ("platform", "returncode", "expected"),
+    [
+        ("linux", 0, (False, "нет задачи обновления")),
+        ("win32", 0, (True, "ok")),
+        ("win32", 1, (False, "ok")),
+        ("win32", None, (False, "нет")),
+    ],
 )
-async def test_trigger_update_task_windows(returncode, expected, monkeypatch):
+async def test_trigger_update_task(platform, returncode, expected, monkeypatch):
     seen = []
 
     async def fake_exec(*args, **kwargs):
         seen.append(args)
+        if returncode is None:
+            raise OSError("нет")
         return FakeSchedProc(returncode)
 
     monkeypatch.setattr(asyncio, "create_subprocess_exec", fake_exec)
-    assert await select("win32").trigger_update_task() == expected
-    assert seen == [("schtasks", "/run", "/tn", "sa-home-node-autoupdate")]
-
-
-async def test_trigger_update_task_windows_error(monkeypatch):
-    async def fake_exec(*args, **kwargs):
-        raise OSError("нет")
-
-    monkeypatch.setattr(asyncio, "create_subprocess_exec", fake_exec)
-    assert await select("win32").trigger_update_task() == (False, "нет")
+    assert await select(platform).trigger_update_task() == expected
+    expected_calls = [("schtasks", "/run", "/tn", "sa-home-node-autoupdate")] if platform == "win32" else []
+    assert seen == expected_calls
