@@ -138,6 +138,23 @@ async def test_cancelled_stop_cancels_stubborn_task(tmp_path):
     await asyncio.wait_for(svc.stop(), 2.0)
 
 
+async def test_stop_timeout_recancels_stubborn_task(tmp_path, caplog):
+    async def run(ctx):
+        try:
+            await sleep_forever(ctx)
+        except asyncio.CancelledError:
+            await sleep_forever(ctx)
+
+    svc, collector = make(tmp_path, run, stop_timeout_s=0.1)
+    await svc.start()
+    await collector.seen(EVENT_SERVICE_STARTED)
+    task = svc._task
+    await asyncio.wait_for(svc.stop(), 2.0)
+    assert task.done()
+    assert svc.status == STOPPED
+    assert "не остановилась" in caplog.text
+
+
 async def test_target_routes_get_state_and_rejects_unknown_action(tmp_path):
     svc, _ = make(tmp_path, sleep_forever)
     await svc.start()

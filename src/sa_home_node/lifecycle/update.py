@@ -168,9 +168,9 @@ class UpdateActions:
         self._task = asyncio.create_task(self._run_install(latest, target), name="node-update")
         return {"scheduled": True, "target_version": target}
 
-    async def _guarded(self, work: Awaitable[tuple[bool, str]], failure: str) -> tuple[bool, str]:
+    async def _guarded(self, work: Callable[[], Awaitable[tuple[bool, str]]], failure: str) -> tuple[bool, str]:
         try:
-            return await work
+            return await work()
         except Exception as exc:
             log.exception(failure)
             return False, str(exc)
@@ -179,7 +179,7 @@ class UpdateActions:
 
     async def _run_task(self, target: str) -> None:
         ok, output = await self._guarded(
-            host.current().trigger_update_task(), "Запуск задачи автообновления сорвался"
+            lambda: host.current().trigger_update_task(), "Запуск задачи автообновления сорвался"
         )
         if ok:
             log.warning("Задача автообновления запущена — служба скоро перезапустится сама")
@@ -189,7 +189,7 @@ class UpdateActions:
 
     async def _run_install(self, ref: str, target: str) -> None:
         ok, output = await self._guarded(
-            pipx_reinstall(self._repo, ref, self._run), "Установка обновления сорвалась"
+            lambda: pipx_reinstall(self._repo, ref, self._run), "Установка обновления сорвалась"
         )
         if ok:
             log.warning("Обновление до %s установлено — нужен restart_node", target)
