@@ -67,6 +67,49 @@ def test_run_self_restarts(monkeypatch, tmp_path):
     assert restarts == [["sa-home-node", "run"]]
 
 
+@pytest.mark.parametrize(
+    ("argv", "expected"),
+    [
+        (["fix"], (None, False, (), False)),
+        (["fix", "--list", "--dry-run", "--only", "a,b"], (None, True, ("a", "b"), True)),
+    ],
+)
+def test_fix_passes_args(monkeypatch, argv, expected):
+    called = []
+
+    def fix_command(config_path, *, dry_run, only, list_only):
+        called.append((config_path, dry_run, only, list_only))
+        return 3
+
+    monkeypatch.setattr(cli, "fix_command", fix_command)
+    assert cli.main(argv) == 3
+    assert called == [expected]
+
+
+def test_fix_missing_config(capsys, tmp_path):
+    assert cli.main(["fix", "--config", str(tmp_path / "nope.toml")]) == 2
+    assert "ошибка:" in capsys.readouterr().err
+
+
+def test_run_node_ignores_fixups(tmp_path, monkeypatch):
+    from sa_home_node import node
+    from sa_home_node.fixups.core import Fixup
+    from sa_home_node.plugins import Plugin
+
+    def trap():
+        raise AssertionError("fixup called")
+
+    plugin = Plugin("pl", fixups=lambda ctx: [Fixup("t", "T", trap, trap)])
+    monkeypatch.setattr(node, "load_plugins", lambda names: [plugin])
+    path = tmp_path / "config.toml"
+    path.write_text(f'[node]\nid = "node-a"\ndata_dir = "{tmp_path}"\nplugins = ["pl"]\nsocket = "{tmp_path}/s.sock"\n')
+    import asyncio
+
+    stop = asyncio.Event()
+    stop.set()
+    asyncio.run(node.run_node(path, stop))
+
+
 def test_no_command(capsys):
     assert cli.main([]) == 2
     assert capsys.readouterr().out

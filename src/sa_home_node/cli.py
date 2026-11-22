@@ -6,6 +6,7 @@ from pathlib import Path
 
 from sa_home_node.config import ConfigError
 from sa_home_node.content import ContentError
+from sa_home_node.fixups.runner import fix_command
 from sa_home_node.host import current
 from sa_home_node.node import run_node, run_service
 from sa_home_node.plugins import PluginError, available
@@ -20,6 +21,11 @@ def main(argv: list[str] | None = None) -> int:
     service_parser.add_argument("name", help="имя службы")
     service_parser.add_argument("--instance", default="", help="имя экземпляра")
     service_parser.add_argument("--config", type=Path, default=None, help="путь к config.toml")
+    fix_parser = subparsers.add_parser("fix", help="применить фиксапы")
+    fix_parser.add_argument("--config", type=Path, default=None, help="путь к config.toml")
+    fix_parser.add_argument("--list", dest="list_only", action="store_true", help="показать список фиксапов")
+    fix_parser.add_argument("--dry-run", action="store_true", help="только проверить, ничего не применять")
+    fix_parser.add_argument("--only", default="", help="id фиксапов через запятую")
     subparsers.add_parser("plugins", help="список установленных плагинов")
     args = parser.parse_args(argv)
     if args.command is None:
@@ -33,6 +39,9 @@ def main(argv: list[str] | None = None) -> int:
             for name in names:
                 print(name)
         return 0
+    if args.command == "fix":
+        only = tuple(fid for fid in args.only.split(",") if fid)
+        return fix_command(args.config, dry_run=args.dry_run, only=only, list_only=args.list_only)
     logging.basicConfig(level=logging.INFO)
     try:
         if args.command == "run":

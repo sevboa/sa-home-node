@@ -3,14 +3,16 @@ from __future__ import annotations
 import asyncio
 import ctypes
 import os
+import shutil
 import signal
 import socket
 import subprocess
+from pathlib import Path
 
 import pytest
 
 from sa_home_node.host import current, select
-from sa_home_node.host.base import RESTART_EXIT_CODE, install_stop_handlers
+from sa_home_node.host.base import RESTART_EXIT_CODE, NodeUnit, install_stop_handlers
 from sa_home_node.host.linux import LinuxHost
 from sa_home_node.host.windows import WindowsHost
 
@@ -229,3 +231,51 @@ async def test_trigger_update_task(platform, returncode, expected, monkeypatch):
     assert await select(platform).trigger_update_task() == expected
     expected_calls = [("schtasks", "/run", "/tn", "sa-home-node-autoupdate")] if platform == "win32" else []
     assert seen == expected_calls
+
+
+@pytest.mark.parametrize(
+    ("manager", "argv"),
+    [
+        ("apt", ["apt-get", "install", "-y"]),
+        ("pacman", ["pacman", "-S", "--noconfirm"]),
+        ("dnf", ["dnf", "install", "-y"]),
+        ("zypper", ["zypper", "--non-interactive", "install"]),
+        ("apk", ["apk", "add"]),
+        ("brew", ["brew", "install"]),
+    ],
+)
+def test_package_install_argv(manager, argv, monkeypatch):
+    monkeypatch.setattr(shutil, "which", lambda name: "/bin/x" if name == manager else None)
+    assert select("linux").package_install_argv("pkg-a") == [*argv, "pkg-a"]
+    assert select("win32").package_install_argv("pkg-a") is None
+
+
+def test_package_install_argv_first_wins_and_none(monkeypatch):
+    monkeypatch.setattr(shutil, "which", lambda name: "/bin/x" if name in ("dnf", "brew") else None)
+    assert select("linux").package_install_argv("pkg-a")[0] == "dnf"
+    monkeypatch.setattr(shutil, "which", lambda name: None)
+    assert select("linux").package_install_argv("pkg-a") is None
+
+
+def test_elevate_argv():
+    assert select("linux").elevate_argv(["id", "-u"]) == ["sudo", "id", "-u"]
+    assert select("win32").elevate_argv(["id"]) is None
+
+
+@pytest.mark.parametrize(
+    ("platform", "expected"),
+    [
+        (
+            "linux",
+            NodeUnit(
+                "systemd-user",
+                Path("/home/user-a/.config/systemd/user/sa-home-node.service"),
+                ["systemctl", "--user", "daemon-reload"],
+            ),
+        ),
+        ("win32", NodeUnit("winsw", Path("/cfg/service/sa-home-node.xml"), None)),
+    ],
+)
+def test_node_unit(platform, expected, monkeypatch):
+    monkeypatch.setattr(Path, "home", classmethod(lambda cls: Path("/home/user-a")))
+    assert select(platform).node_unit(Path("/cfg/config.toml")) == expected

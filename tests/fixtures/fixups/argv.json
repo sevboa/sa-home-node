@@ -1,0 +1,356 @@
+[
+  {
+    "name": "install_root_file",
+    "calls": [
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0644",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/file-a.conf"
+      ]
+    ],
+    "installed": {
+      "/etc/file-a.conf": "a\n"
+    }
+  },
+  {
+    "name": "install_root_file_parents",
+    "calls": [
+      [
+        "sudo",
+        "install",
+        "-D",
+        "-m",
+        "0755",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/dir-a/file-a.conf"
+      ]
+    ],
+    "installed": {
+      "/etc/dir-a/file-a.conf": "a\n"
+    }
+  },
+  {
+    "name": "install_executable",
+    "error": "не удалось запустить sudo install -m 0755 /home/user-a/bin-a /usr/local/bin/bin-a: [Errno 2] No such file or directory: '/home/user-a/bin-a'",
+    "calls": [
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0755",
+        "/home/user-a/bin-a",
+        "/usr/local/bin/bin-a"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "sudoers_accepted",
+    "calls": [
+      [
+        "/usr/bin/visudo",
+        "-cf",
+        "<tmp>"
+      ],
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0440",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/sudoers.d/50-test-a"
+      ]
+    ],
+    "installed": {
+      "/etc/sudoers.d/50-test-a": "user-a ALL=(root) NOPASSWD: /bin/true\n"
+    }
+  },
+  {
+    "name": "sudoers_rejected",
+    "error": "visudo отверг сниппет 50-test-a: syntax error",
+    "calls": [
+      [
+        "/usr/bin/visudo",
+        "-cf",
+        "<tmp>"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "sudoers_no_visudo",
+    "error": "visudo не найден (проверьте установку пакета sudo)",
+    "calls": [],
+    "installed": {}
+  },
+  {
+    "name": "path_exists_denied_present",
+    "result": true,
+    "calls": [
+      [
+        "sudo",
+        "test",
+        "-e",
+        "/etc/private-a/file"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "path_exists_denied_absent",
+    "result": false,
+    "calls": [
+      [
+        "sudo",
+        "test",
+        "-e",
+        "/etc/private-a/file"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "path_exists_plain",
+    "result": true,
+    "calls": [],
+    "installed": {}
+  },
+  {
+    "name": "install_package_apt",
+    "calls": [
+      [
+        "sudo",
+        "apt-get",
+        "install",
+        "-y",
+        "pkg-a"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "install_package_dnf",
+    "calls": [
+      [
+        "sudo",
+        "dnf",
+        "install",
+        "-y",
+        "pkg-a"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "install_package_none",
+    "error": "нет менеджера",
+    "calls": [],
+    "installed": {}
+  },
+  {
+    "name": "replace_unit_new",
+    "calls": [
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0644",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/systemd/system/unit-a.service"
+      ],
+      [
+        "sudo",
+        "systemctl",
+        "daemon-reload"
+      ]
+    ],
+    "installed": {
+      "/etc/systemd/system/unit-a.service": "[Unit]\n"
+    }
+  },
+  {
+    "name": "replace_unit_same",
+    "calls": [
+      [
+        "sudo",
+        "cat",
+        "/etc/systemd/system/unit-a.service"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "replace_unit_other",
+    "calls": [
+      [
+        "sudo",
+        "cat",
+        "/etc/systemd/system/unit-a.service"
+      ],
+      [
+        "sudo",
+        "systemctl",
+        "stop",
+        "unit-a.service"
+      ],
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0644",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/systemd/system/unit-a.service"
+      ],
+      [
+        "sudo",
+        "systemctl",
+        "daemon-reload"
+      ]
+    ],
+    "installed": {
+      "/etc/systemd/system/unit-a.service": "[Unit]\n"
+    }
+  },
+  {
+    "name": "daemon_reload",
+    "calls": [
+      [
+        "sudo",
+        "systemctl",
+        "daemon-reload"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "enable_now",
+    "calls": [
+      [
+        "sudo",
+        "systemctl",
+        "enable",
+        "--now",
+        "unit-a.service"
+      ]
+    ],
+    "installed": {}
+  },
+  {
+    "name": "power_polkit_with_rules_dir",
+    "calls": [
+      [
+        "sudo",
+        "install",
+        "-d",
+        "-m",
+        "0755",
+        "/etc/polkit-1/rules.d"
+      ],
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0644",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/polkit-1/rules.d/50-sa-home-node-power.rules"
+      ]
+    ],
+    "installed": {
+      "/etc/polkit-1/rules.d/50-sa-home-node-power.rules": "// Сгенерировано sa-home-bot (nodectl fix) — нода-супервизор выключает/перезагружает/усыпляет свою workstation без sudo.\npolkit.addRule(function(action, subject) {\n    if ([\n        \"org.freedesktop.login1.power-off\",\n        \"org.freedesktop.login1.power-off-multiple-sessions\",\n        \"org.freedesktop.login1.reboot\",\n        \"org.freedesktop.login1.reboot-multiple-sessions\",\n        \"org.freedesktop.login1.suspend\",\n        \"org.freedesktop.login1.suspend-multiple-sessions\"\n    ].indexOf(action.id) !== -1 && subject.user == \"user-a\") {\n        return polkit.Result.YES;\n    }\n});\n"
+    }
+  },
+  {
+    "name": "power_polkit_without_rules_dir",
+    "calls": [
+      [
+        "sudo",
+        "apt-get",
+        "install",
+        "-y",
+        "polkitd"
+      ],
+      [
+        "sudo",
+        "install",
+        "-d",
+        "-m",
+        "0755",
+        "/etc/polkit-1/rules.d"
+      ],
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0644",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/polkit-1/rules.d/50-sa-home-node-power.rules"
+      ]
+    ],
+    "installed": {
+      "/etc/polkit-1/rules.d/50-sa-home-node-power.rules": "// Сгенерировано sa-home-bot (nodectl fix) — нода-супервизор выключает/перезагружает/усыпляет свою workstation без sudo.\npolkit.addRule(function(action, subject) {\n    if ([\n        \"org.freedesktop.login1.power-off\",\n        \"org.freedesktop.login1.power-off-multiple-sessions\",\n        \"org.freedesktop.login1.reboot\",\n        \"org.freedesktop.login1.reboot-multiple-sessions\",\n        \"org.freedesktop.login1.suspend\",\n        \"org.freedesktop.login1.suspend-multiple-sessions\"\n    ].indexOf(action.id) !== -1 && subject.user == \"user-a\") {\n        return polkit.Result.YES;\n    }\n});\n"
+    }
+  },
+  {
+    "name": "wol_enable",
+    "calls": [
+      [
+        "sudo",
+        "install",
+        "-m",
+        "0644",
+        "-o",
+        "root",
+        "-g",
+        "root",
+        "<tmp>",
+        "/etc/systemd/system/sa-home-wol.service"
+      ],
+      [
+        "sudo",
+        "systemctl",
+        "daemon-reload"
+      ],
+      [
+        "sudo",
+        "systemctl",
+        "enable",
+        "--now",
+        "sa-home-wol.service"
+      ]
+    ],
+    "installed": {
+      "/etc/systemd/system/sa-home-wol.service": "[Unit]\nDescription=sa-home-bot: включить Wake-on-LAN (magic packet)\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/sbin/ethtool -s eth0 wol g\n\n[Install]\nWantedBy=multi-user.target\n"
+    }
+  }
+]

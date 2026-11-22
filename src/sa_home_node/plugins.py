@@ -1,4 +1,4 @@
-from collections.abc import Awaitable, Callable, Iterable
+from collections.abc import Awaitable, Callable, Iterable, Sequence
 from dataclasses import dataclass
 from importlib.metadata import EntryPoint, entry_points
 from pathlib import Path
@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
+from sa_home_node.fixups.core import Fixup, FixupContext
 from sa_home_node.proto.actions import NodeAction
 from sa_home_node.proto.server import ServiceHandler
 from sa_home_node.services.instances import InstanceMeta
@@ -64,6 +65,7 @@ class Plugin:
     node_actions: tuple[NodeAction, ...] = ()
     power_blockers: tuple[Callable[[], Awaitable[list[str]]], ...] = ()
     replication_hooks: ReplicationHooks | None = None
+    fixups: Callable[[FixupContext], Sequence[Fixup]] | None = None
 
 
 def available() -> dict[str, EntryPoint]:

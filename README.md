@@ -9,6 +9,7 @@
 ## Устройство
 - `src/sa_home_node/` — пакет ядра.
 - `docs/` — описание модулей.
+- Фиксапы хоста (донастройка машины под назначения, команда `sa-home-node fix`) — [docs/fixups.md](docs/fixups.md).
 - Плагины — Python-пакеты с точкой входа `sa_home_node.plugins`; службы плагина, назначения и аренда — [docs/plugins.md](docs/plugins.md), [docs/services.md](docs/services.md).
 
 ## Лицензия

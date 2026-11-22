@@ -1,0 +1,275 @@
+[
+  {
+    "kind": "server",
+    "assignments": [],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "server",
+    "assignments": [
+      "svc"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": true,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "server",
+    "assignments": [
+      "svc",
+      "svc-s"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": true,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "server",
+    "assignments": [
+      "svc-s:standby"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "server",
+    "assignments": [
+      "svc-i@one:standby"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": false,
+      "svc-i": true
+    }
+  },
+  {
+    "kind": "server",
+    "assignments": [
+      "svc-s:prio=70"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "server",
+    "assignments": [
+      "bad:",
+      "svc"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": true,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "workstation",
+    "assignments": [],
+    "power_controllable": true,
+    "wakeable": true,
+    "assigned": {
+      "svc": false,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "workstation",
+    "assignments": [
+      "svc"
+    ],
+    "power_controllable": true,
+    "wakeable": true,
+    "assigned": {
+      "svc": true,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "workstation",
+    "assignments": [
+      "svc",
+      "svc-s"
+    ],
+    "power_controllable": true,
+    "wakeable": true,
+    "assigned": {
+      "svc": true,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "workstation",
+    "assignments": [
+      "svc-s:standby"
+    ],
+    "power_controllable": true,
+    "wakeable": true,
+    "assigned": {
+      "svc": false,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "workstation",
+    "assignments": [
+      "svc-i@one:standby"
+    ],
+    "power_controllable": true,
+    "wakeable": true,
+    "assigned": {
+      "svc": false,
+      "svc-s": false,
+      "svc-i": true
+    }
+  },
+  {
+    "kind": "workstation",
+    "assignments": [
+      "svc-s:prio=70"
+    ],
+    "power_controllable": true,
+    "wakeable": true,
+    "assigned": {
+      "svc": false,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "workstation",
+    "assignments": [
+      "bad:",
+      "svc"
+    ],
+    "power_controllable": true,
+    "wakeable": true,
+    "assigned": {
+      "svc": true,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "vps",
+    "assignments": [],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "vps",
+    "assignments": [
+      "svc"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": true,
+      "svc-s": false,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "vps",
+    "assignments": [
+      "svc",
+      "svc-s"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": true,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "vps",
+    "assignments": [
+      "svc-s:standby"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "vps",
+    "assignments": [
+      "svc-i@one:standby"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": false,
+      "svc-i": true
+    }
+  },
+  {
+    "kind": "vps",
+    "assignments": [
+      "svc-s:prio=70"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": false,
+      "svc-s": true,
+      "svc-i": false
+    }
+  },
+  {
+    "kind": "vps",
+    "assignments": [
+      "bad:",
+      "svc"
+    ],
+    "power_controllable": false,
+    "wakeable": false,
+    "assigned": {
+      "svc": true,
+      "svc-s": false,
+      "svc-i": false
+    }
+  }
+]

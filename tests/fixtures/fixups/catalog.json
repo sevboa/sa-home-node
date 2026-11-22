@@ -1,0 +1,88 @@
+{
+  "core_new": [
+    "node-linger",
+    "node-unit-command"
+  ],
+  "cases": {
+    "server/none": [],
+    "server/svc-a": [],
+    "server/svc-a-disks": [],
+    "server/svc-b": [],
+    "server/svc-c": [],
+    "server/svc-c-awg": [],
+    "server/svc-c-nft": [],
+    "server/svc-d": [],
+    "server/svc-e": [],
+    "server/all": [],
+    "workstation/none": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-a": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-a-disks": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-b": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-c": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-c-awg": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-c-nft": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-d": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/svc-e": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "workstation/all": [
+      {
+        "id": "power-control-polkit",
+        "title": "Разрешить ноде выключать/перезагружать/усыплять машину без sudo (polkit)"
+      }
+    ],
+    "vps/none": [],
+    "vps/svc-a": [],
+    "vps/svc-a-disks": [],
+    "vps/svc-b": [],
+    "vps/svc-c": [],
+    "vps/svc-c-awg": [],
+    "vps/svc-c-nft": [],
+    "vps/svc-d": [],
+    "vps/svc-e": [],
+    "vps/all": []
+  }
+}

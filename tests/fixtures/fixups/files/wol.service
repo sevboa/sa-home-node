@@ -1,0 +1,11 @@
+[Unit]
+Description=sa-home-bot: включить Wake-on-LAN (magic packet)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/sbin/ethtool -s eth0 wol g
+
+[Install]
+WantedBy=multi-user.target

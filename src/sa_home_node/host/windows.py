@@ -5,6 +5,7 @@ import contextlib
 import signal
 import socket
 import subprocess
+from pathlib import Path
 
 from .base import (
     RESTART_EXIT_CODE,
@@ -12,6 +13,7 @@ from .base import (
     TCP_KEEPALIVE_INTERVAL_S,
     TCP_USER_TIMEOUT_S,
     WINDOWS_TCP_MAXRT,
+    NodeUnit,
     check_power_action,
 )
 
@@ -77,3 +79,12 @@ class WindowsHost:
     def stop_signals(self) -> tuple[int, ...]:
         sigbreak = getattr(signal, "SIGBREAK", None)
         return (signal.SIGINT, signal.SIGTERM) + (() if sigbreak is None else (sigbreak,))
+
+    def elevate_argv(self, argv: list[str]) -> list[str] | None:
+        return None
+
+    def package_install_argv(self, package: str) -> list[str] | None:
+        return None
+
+    def node_unit(self, config_path: Path) -> NodeUnit:
+        return NodeUnit("winsw", Path(config_path).parent / "service" / "sa-home-node.xml", None)

@@ -1,0 +1,18 @@
+[Unit]
+Description=sa-home-node (нода: супервизор служб роя)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/user-a/sa-home/data
+ExecStartPre=/bin/sh -c 'true'
+ExecStart=/home/user-a/.local/bin/sa-home-bot --service node --config /home/user-a/sa-home/config.toml
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=300
+KillSignal=SIGTERM
+TimeoutStopSec=150
+Environment=PATH=/home/user-a/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+[Install]
+WantedBy=default.target

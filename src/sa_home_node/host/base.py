@@ -4,6 +4,8 @@ import asyncio
 import signal
 import socket
 from collections.abc import Callable
+from dataclasses import dataclass
+from pathlib import Path
 from typing import Any, Protocol
 
 TCP_KEEPALIVE_IDLE_S = 20
@@ -13,6 +15,13 @@ TCP_USER_TIMEOUT_S = 30
 WINDOWS_TCP_MAXRT = 5
 RESTART_EXIT_CODE = 10
 POWER_ACTIONS = ("poweroff", "reboot", "suspend")
+
+
+@dataclass(frozen=True)
+class NodeUnit:
+    format: str
+    path: Path
+    reload_argv: list[str] | None
 
 
 def check_power_action(action: str) -> None:
@@ -42,6 +51,12 @@ class Host(Protocol):
     def terminate(self, proc: asyncio.subprocess.Process) -> None: ...
 
     def stop_signals(self) -> tuple[int, ...]: ...
+
+    def elevate_argv(self, argv: list[str]) -> list[str] | None: ...
+
+    def package_install_argv(self, package: str) -> list[str] | None: ...
+
+    def node_unit(self, config_path: Path) -> NodeUnit: ...
 
 
 def install_stop_handlers(

@@ -3,16 +3,31 @@ from __future__ import annotations
 import asyncio
 import contextlib
 import os
+import shutil
 import signal
 import socket
+from pathlib import Path
 
 from .base import (
     TCP_KEEPALIVE_COUNT,
     TCP_KEEPALIVE_IDLE_S,
     TCP_KEEPALIVE_INTERVAL_S,
     TCP_USER_TIMEOUT_S,
+    NodeUnit,
     check_power_action,
 )
+
+PACKAGE_INSTALL_ARGV: tuple[tuple[str, tuple[str, ...]], ...] = (
+    ("apt", ("apt-get", "install", "-y")),
+    ("pacman", ("pacman", "-S", "--noconfirm")),
+    ("dnf", ("dnf", "install", "-y")),
+    ("zypper", ("zypper", "--non-interactive", "install")),
+    ("apk", ("apk", "add")),
+    ("brew", ("brew", "install")),
+)
+
+
+NODE_UNIT_NAME = "sa-home-node.service"
 
 
 class LinuxHost:
@@ -65,3 +80,19 @@ class LinuxHost:
 
     def stop_signals(self) -> tuple[int, ...]:
         return (signal.SIGINT, signal.SIGTERM)
+
+    def elevate_argv(self, argv: list[str]) -> list[str] | None:
+        return ["sudo", *argv]
+
+    def package_install_argv(self, package: str) -> list[str] | None:
+        for manager, argv in PACKAGE_INSTALL_ARGV:
+            if shutil.which(manager) is not None:
+                return [*argv, package]
+        return None
+
+    def node_unit(self, config_path: Path) -> NodeUnit:
+        return NodeUnit(
+            "systemd-user",
+            Path.home() / ".config" / "systemd" / "user" / NODE_UNIT_NAME,
+            ["systemctl", "--user", "daemon-reload"],
+        )

@@ -15,7 +15,8 @@
 - `node_actions` — кортеж `NodeAction(spec, handler)`: действия службы `node`, регистрируются при старте ноды,
   видны в `describe` и вызываются с других нод через `command` на службу `node`;
 - `power_blockers` — кортеж асинхронных функций `() -> list[str]`: что мешает выключить машину (см. ниже);
-- `replication_hooks` — `ReplicationHooks` или `None` (см. ниже).
+- `replication_hooks` — `ReplicationHooks` или `None` (см. ниже);
+- `fixups` — фабрика фиксапов хоста `Callable[[FixupContext], Sequence[Fixup]]` или `None` (см. ниже).
 
 ### `ServiceSpec`
 
@@ -75,6 +76,45 @@
   пишется в журнал и цикл не ломает;
 - `on_applied(meta, data)` — после записи принятого от соседа пакета (`InstanceMeta` и байты); ошибка только
   в журнал.
+
+### Фиксапы хоста (`fixups`)
+
+Фабрика вызывается один раз при сборке списка командой `sa-home-node fix` (не при старте ноды) и возвращает
+фиксапы плагина; что именно строить, она решает по контексту: `ctx.assigned("svc")`, `ctx.section(имя, модель)`,
+`ctx.traits`, `ctx.host`. Устройство фиксапов, порядок и правила — [fixups](fixups.md).
+
+- фиксапы одной службы задают с `needed=needs.assigned("svc")`; тогда они появляются, только когда служба назначена
+  на ноду (по конфигу или `assign`);
+- семейства (по приложению, по слоту) фабрика разворачивает циклом; id уникальны среди ядра и всех плагинов, у
+  семейства общий префикс;
+- платформа задаётся `platforms` (по умолчанию только `linux`);
+- повтор id или исключение фабрики — `PluginError`, `fix` завершается кодом 2 и ничего не применяет.
+
+```python
+from sa_home_node.fixups import needs
+from sa_home_node.fixups.core import Fixup, FixupContext
+from sa_home_node.fixups.privileged import install_sudoers_snippet, path_exists, SUDOERS_DIR
+
+
+def svc_fixups(ctx: FixupContext) -> list[Fixup]:
+    name = "50-svc-reload"
+    content = "user-a ALL=(root) NOPASSWD: /usr/bin/systemctl reload svc\n"
+    return [
+        Fixup(
+            id="svc-sudoers",
+            title="Разрешить службе svc перезагрузку без пароля",
+            needed=needs.assigned("svc"),
+            check=lambda: path_exists(SUDOERS_DIR / name),
+            apply=lambda: install_sudoers_snippet(name, content),
+        )
+    ]
+
+
+PLUGIN = Plugin(name="svc", fixups=svc_fixups)
+```
+
+Привилегированные действия — только через примитивы `fixups/privileged.py`; `sudo` из кода службы и ноды не
+вызывают.
 
 ## Загрузка
 

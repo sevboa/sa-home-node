@@ -1,0 +1,1 @@
+user-a ALL=(root) NOPASSWD: /usr/bin/systemctl start app-a.service, /usr/bin/systemctl stop app-a.service, /usr/bin/systemctl restart app-a.service

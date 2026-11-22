@@ -1,0 +1,50 @@
+[
+  {
+    "name": "no_path_line",
+    "before": "[Service]\nExecStart=/bin/true\n",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": null
+  },
+  {
+    "name": "wrapper_first",
+    "before": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/bin\nExecStart=/bin/true\n",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/bin\nExecStart=/bin/true\n"
+  },
+  {
+    "name": "wrapper_not_first",
+    "before": "[Service]\nEnvironment=PATH=/usr/local/bin:/home/user-a/.local/bin:/usr/bin\nExecStart=/bin/true\n",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/local/bin:/usr/bin\nExecStart=/bin/true\n"
+  },
+  {
+    "name": "wrapper_duplicates",
+    "before": "[Service]\nEnvironment=PATH=/usr/bin:/home/user-a/.local/bin:/usr/bin:/home/user-a/.local/bin\n",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/bin:/usr/bin\n"
+  },
+  {
+    "name": "no_trailing_newline",
+    "before": "[Service]\nEnvironment=PATH=/usr/bin",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/bin"
+  },
+  {
+    "name": "empty_path",
+    "before": "[Service]\nEnvironment=PATH=\nExecStart=/bin/true\n",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin\nExecStart=/bin/true\n"
+  },
+  {
+    "name": "two_path_lines",
+    "before": "Environment=PATH=/usr/bin\nEnvironment=PATH=/bin\n",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": "Environment=PATH=/home/user-a/.local/bin:/usr/bin\nEnvironment=PATH=/home/user-a/.local/bin:/bin\n"
+  },
+  {
+    "name": "wizard_unit",
+    "before": "[Unit]\nDescription=sa-home-node (нода: супервизор служб роя)\nAfter=network.target\n\n[Service]\nType=simple\nWorkingDirectory=/home/user-a/sa-home/data\nExecStartPre=/bin/sh -c 'true'\nExecStart=/home/user-a/.local/bin/sa-home-bot --service node --config /home/user-a/sa-home/config.toml\nRestart=on-failure\nRestartSec=5\nTimeoutStartSec=300\nKillSignal=SIGTERM\nTimeoutStopSec=150\nEnvironment=PATH=/home/user-a/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin\n\n[Install]\nWantedBy=default.target\n",
+    "wrapper_dir": "/home/user-a/.local/bin",
+    "after": "[Unit]\nDescription=sa-home-node (нода: супервизор служб роя)\nAfter=network.target\n\n[Service]\nType=simple\nWorkingDirectory=/home/user-a/sa-home/data\nExecStartPre=/bin/sh -c 'true'\nExecStart=/home/user-a/.local/bin/sa-home-bot --service node --config /home/user-a/sa-home/config.toml\nRestart=on-failure\nRestartSec=5\nTimeoutStartSec=300\nKillSignal=SIGTERM\nTimeoutStopSec=150\nEnvironment=PATH=/home/user-a/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin\n\n[Install]\nWantedBy=default.target\n"
+  }
+]

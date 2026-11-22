@@ -6,6 +6,7 @@ from pydantic import BaseModel
 from sa_home_node import plugins
 from sa_home_node.config import ConfigError, NodeConfig, load_config
 from sa_home_node.content import ContentError, ContentStore
+from sa_home_node.fixups.core import Fixup
 from sa_home_node.plugins import (
     Plugin,
     PluginError,
@@ -48,6 +49,15 @@ def test_plugin_model() -> None:
     assert plugin.services[0].name == "svc"
     assert plugin.config_model is None
     assert plugin.content_keys == ()
+    assert plugin.fixups is None
+
+
+def test_plugin_with_fixups(monkeypatch: pytest.MonkeyPatch) -> None:
+    fixup = Fixup("fx-a", "T", lambda: True, lambda: None)
+    plugin = Plugin(name="plug", fixups=lambda ctx: [fixup])
+    patch_eps(monkeypatch, {"plug": FakeEP("plug", plugin)})
+    (loaded,) = load_plugins(["plug"])
+    assert loaded.fixups(None) == [fixup]
 
 
 def test_load_order(monkeypatch: pytest.MonkeyPatch) -> None:
