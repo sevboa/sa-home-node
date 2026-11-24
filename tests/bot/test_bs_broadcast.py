@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import pytest
-from botfix import drive_broadcast, load
+from botfix import load
+from drivers import drive_broadcast
 
 from sa_home_node.bot import broadcast
 from sa_home_node.bot.book import SubscriptionBook

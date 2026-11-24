@@ -1,0 +1,390 @@
+{
+  "catalog": [
+    {
+      "key": "net",
+      "title": "🌐 Сеть",
+      "fine": false,
+      "members": [
+        {
+          "right": "ping@net",
+          "title": "пинг",
+          "hint": ""
+        },
+        {
+          "right": "trace@net",
+          "title": "трасса",
+          "hint": ""
+        },
+        {
+          "right": "scan@net",
+          "title": "скан портов",
+          "hint": ""
+        }
+      ]
+    },
+    {
+      "key": "files",
+      "title": "📁 Файлы",
+      "fine": false,
+      "members": [
+        {
+          "right": "list@files",
+          "title": "список",
+          "hint": ""
+        },
+        {
+          "right": "get@files",
+          "title": "скачать",
+          "hint": ""
+        }
+      ]
+    },
+    {
+      "key": "notes",
+      "title": "📝 Заметки",
+      "fine": false,
+      "members": [
+        {
+          "right": "read@notes",
+          "title": "читать",
+          "hint": ""
+        },
+        {
+          "right": "write@notes",
+          "title": "писать",
+          "hint": ""
+        }
+      ]
+    },
+    {
+      "key": "extra",
+      "title": "⭐ Тонкая настройка",
+      "fine": true,
+      "members": [
+        {
+          "right": "proxy@net",
+          "title": "🌐 Сеть: прокси",
+          "hint": ""
+        }
+      ]
+    }
+  ],
+  "labels": {
+    "ping@net": "🌐 Сеть: пинг",
+    "trace@net": "🌐 Сеть: трасса",
+    "scan@net": "🌐 Сеть: скан портов",
+    "list@files": "📁 Файлы: список",
+    "get@files": "📁 Файлы: скачать",
+    "read@notes": "📝 Заметки: читать",
+    "write@notes": "📝 Заметки: писать",
+    "proxy@net": "🌐 Сеть: прокси",
+    "unknown@x": "unknown@x",
+    "*": "*",
+    "nodes": "nodes"
+  },
+  "group_rights": {
+    "net": [
+      "ping@net",
+      "scan@net",
+      "trace@net"
+    ],
+    "files": [
+      "get@files",
+      "list@files"
+    ],
+    "notes": [
+      "read@notes",
+      "write@notes"
+    ]
+  },
+  "lookups": {
+    "net": "🌐 Сеть",
+    "files": "📁 Файлы",
+    "notes": "📝 Заметки",
+    "nope": null,
+    "": null
+  },
+  "grantable": [
+    "get@files",
+    "list@files",
+    "ping@net",
+    "read@notes",
+    "scan@net",
+    "trace@net",
+    "write@notes"
+  ],
+  "ops": [
+    {
+      "group": "net",
+      "current": [],
+      "on": [
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ],
+      "off": []
+    },
+    {
+      "group": "net",
+      "current": [
+        "ping@net"
+      ],
+      "on": [
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ],
+      "off": []
+    },
+    {
+      "group": "net",
+      "current": [
+        "ping@net",
+        "trace@net",
+        "scan@net"
+      ],
+      "on": [
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ],
+      "off": []
+    },
+    {
+      "group": "net",
+      "current": [
+        "ping@net",
+        "list@files",
+        "other@x"
+      ],
+      "on": [
+        "list@files",
+        "other@x",
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ],
+      "off": [
+        "list@files",
+        "other@x"
+      ]
+    },
+    {
+      "group": "net",
+      "current": [
+        "*"
+      ],
+      "on": [
+        "*",
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ],
+      "off": [
+        "*"
+      ]
+    },
+    {
+      "group": "net",
+      "current": [
+        "proxy@net",
+        "get@files"
+      ],
+      "on": [
+        "get@files",
+        "ping@net",
+        "proxy@net",
+        "scan@net",
+        "trace@net"
+      ],
+      "off": [
+        "get@files",
+        "proxy@net"
+      ]
+    },
+    {
+      "group": "files",
+      "current": [],
+      "on": [
+        "get@files",
+        "list@files"
+      ],
+      "off": []
+    },
+    {
+      "group": "files",
+      "current": [
+        "ping@net"
+      ],
+      "on": [
+        "get@files",
+        "list@files",
+        "ping@net"
+      ],
+      "off": [
+        "ping@net"
+      ]
+    },
+    {
+      "group": "files",
+      "current": [
+        "ping@net",
+        "trace@net",
+        "scan@net"
+      ],
+      "on": [
+        "get@files",
+        "list@files",
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ],
+      "off": [
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ]
+    },
+    {
+      "group": "files",
+      "current": [
+        "ping@net",
+        "list@files",
+        "other@x"
+      ],
+      "on": [
+        "get@files",
+        "list@files",
+        "other@x",
+        "ping@net"
+      ],
+      "off": [
+        "other@x",
+        "ping@net"
+      ]
+    },
+    {
+      "group": "files",
+      "current": [
+        "*"
+      ],
+      "on": [
+        "*",
+        "get@files",
+        "list@files"
+      ],
+      "off": [
+        "*"
+      ]
+    },
+    {
+      "group": "files",
+      "current": [
+        "proxy@net",
+        "get@files"
+      ],
+      "on": [
+        "get@files",
+        "list@files",
+        "proxy@net"
+      ],
+      "off": [
+        "proxy@net"
+      ]
+    },
+    {
+      "group": "notes",
+      "current": [],
+      "on": [
+        "read@notes",
+        "write@notes"
+      ],
+      "off": []
+    },
+    {
+      "group": "notes",
+      "current": [
+        "ping@net"
+      ],
+      "on": [
+        "ping@net",
+        "read@notes",
+        "write@notes"
+      ],
+      "off": [
+        "ping@net"
+      ]
+    },
+    {
+      "group": "notes",
+      "current": [
+        "ping@net",
+        "trace@net",
+        "scan@net"
+      ],
+      "on": [
+        "ping@net",
+        "read@notes",
+        "scan@net",
+        "trace@net",
+        "write@notes"
+      ],
+      "off": [
+        "ping@net",
+        "scan@net",
+        "trace@net"
+      ]
+    },
+    {
+      "group": "notes",
+      "current": [
+        "ping@net",
+        "list@files",
+        "other@x"
+      ],
+      "on": [
+        "list@files",
+        "other@x",
+        "ping@net",
+        "read@notes",
+        "write@notes"
+      ],
+      "off": [
+        "list@files",
+        "other@x",
+        "ping@net"
+      ]
+    },
+    {
+      "group": "notes",
+      "current": [
+        "*"
+      ],
+      "on": [
+        "*",
+        "read@notes",
+        "write@notes"
+      ],
+      "off": [
+        "*"
+      ]
+    },
+    {
+      "group": "notes",
+      "current": [
+        "proxy@net",
+        "get@files"
+      ],
+      "on": [
+        "get@files",
+        "proxy@net",
+        "read@notes",
+        "write@notes"
+      ],
+      "off": [
+        "get@files",
+        "proxy@net"
+      ]
+    }
+  ]
+}

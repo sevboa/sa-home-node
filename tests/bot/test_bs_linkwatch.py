@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import pytest
-from botfix import drive_linkwatch, load
+from botfix import load
+from drivers import drive_linkwatch
 
 from sa_home_node.bot import linkwatch
 from sa_home_node.bot.linkwatch import LinkWatchMiddleware

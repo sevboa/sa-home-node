@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import pytest
-from botfix import load, play
+from botfix import load
+from drivers import play
 
 from sa_home_node.bot.attach import AttachMixin
 

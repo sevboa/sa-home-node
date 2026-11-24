@@ -1,0 +1,1173 @@
+{
+  "get_state": {
+    "ok": {
+      "health": [
+        {
+          "class": "HealthState",
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "alerting",
+          "temperature_c": 89.0,
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:14:01+00:00"
+        },
+        {
+          "class": "HealthState",
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 54.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 40.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sdb",
+          "kind": "disk",
+          "label": "SSD",
+          "status": "ok",
+          "temperature_c": 33.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_health": [],
+      "disks": [
+        {
+          "class": "DiskSummary",
+          "label": "HDD1",
+          "health": "ok",
+          "temperature_c": 38.0,
+          "free_bytes": 100000000000,
+          "total_bytes": 320000000000,
+          "model": "Disk-A",
+          "kind": "hdd"
+        },
+        {
+          "class": "DiskSummary",
+          "label": "SSD",
+          "health": "warning",
+          "temperature_c": 30.0,
+          "free_bytes": 200000000000,
+          "total_bytes": 256000000000,
+          "model": "Disk-B",
+          "kind": "ssd"
+        }
+      ],
+      "last_outage": {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-28T23:00:00+00:00",
+        "down_at": "2026-02-28T22:53:00+00:00",
+        "up_at": "2026-02-28T23:00:00+00:00",
+        "down_approx": true
+      }
+    },
+    "missing-programs": {
+      "health": [
+        {
+          "class": "HealthState",
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "alerting",
+          "temperature_c": 89.0,
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:14:01+00:00"
+        },
+        {
+          "class": "HealthState",
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 54.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 40.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sdb",
+          "kind": "disk",
+          "label": "SSD",
+          "status": "ok",
+          "temperature_c": 33.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_health": [
+        {
+          "class": "HostMetricState",
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "value": 2.1,
+          "unit": "",
+          "status": "alerting",
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "value": 53.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "disks": [
+        {
+          "class": "DiskSummary",
+          "label": "HDD1",
+          "health": "ok",
+          "temperature_c": 38.0,
+          "free_bytes": 100000000000,
+          "total_bytes": 320000000000,
+          "model": "Disk-A",
+          "kind": "hdd"
+        },
+        {
+          "class": "DiskSummary",
+          "label": "SSD",
+          "health": "warning",
+          "temperature_c": 30.0,
+          "free_bytes": 200000000000,
+          "total_bytes": 256000000000,
+          "model": "Disk-B",
+          "kind": "ssd"
+        }
+      ],
+      "last_outage": {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-28T23:00:00+00:00",
+        "down_at": "2026-02-28T22:53:00+00:00",
+        "up_at": "2026-02-28T23:00:00+00:00",
+        "down_approx": true
+      }
+    },
+    "last-needs-privilege": {
+      "health": [
+        {
+          "class": "HealthState",
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "alerting",
+          "temperature_c": 89.0,
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:14:01+00:00"
+        },
+        {
+          "class": "HealthState",
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 54.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 40.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sdb",
+          "kind": "disk",
+          "label": "SSD",
+          "status": "ok",
+          "temperature_c": 33.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_health": [],
+      "disks": [
+        {
+          "class": "DiskSummary",
+          "label": "HDD1",
+          "health": "ok",
+          "temperature_c": 38.0,
+          "free_bytes": 100000000000,
+          "total_bytes": 320000000000,
+          "model": "Disk-A",
+          "kind": "hdd"
+        },
+        {
+          "class": "DiskSummary",
+          "label": "SSD",
+          "health": "warning",
+          "temperature_c": 30.0,
+          "free_bytes": 200000000000,
+          "total_bytes": 256000000000,
+          "model": "Disk-B",
+          "kind": "ssd"
+        }
+      ],
+      "last_outage": {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-28T23:00:00+00:00",
+        "down_at": "2026-02-28T22:53:00+00:00",
+        "up_at": "2026-02-28T23:00:00+00:00",
+        "down_approx": true
+      }
+    },
+    "unsupported-platform": {
+      "health": [
+        {
+          "class": "HealthState",
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "alerting",
+          "temperature_c": 89.0,
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:14:01+00:00"
+        },
+        {
+          "class": "HealthState",
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 54.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 40.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sdb",
+          "kind": "disk",
+          "label": "SSD",
+          "status": "ok",
+          "temperature_c": 33.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_health": [
+        {
+          "class": "HostMetricState",
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "value": 2.1,
+          "unit": "",
+          "status": "alerting",
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "value": 53.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "disks": [
+        {
+          "class": "DiskSummary",
+          "label": "HDD1",
+          "health": "ok",
+          "temperature_c": 38.0,
+          "free_bytes": 100000000000,
+          "total_bytes": 320000000000,
+          "model": "Disk-A",
+          "kind": "hdd"
+        },
+        {
+          "class": "DiskSummary",
+          "label": "SSD",
+          "health": "warning",
+          "temperature_c": 30.0,
+          "free_bytes": 200000000000,
+          "total_bytes": 256000000000,
+          "model": "Disk-B",
+          "kind": "ssd"
+        }
+      ],
+      "last_outage": {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-28T23:00:00+00:00",
+        "down_at": "2026-02-28T22:53:00+00:00",
+        "up_at": "2026-02-28T23:00:00+00:00",
+        "down_approx": true
+      }
+    },
+    "vps-no-outage": {
+      "health": [
+        {
+          "class": "HealthState",
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "alerting",
+          "temperature_c": 89.0,
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:14:01+00:00"
+        },
+        {
+          "class": "HealthState",
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 54.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 40.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sdb",
+          "kind": "disk",
+          "label": "SSD",
+          "status": "ok",
+          "temperature_c": 33.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_health": [
+        {
+          "class": "HostMetricState",
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "value": 2.1,
+          "unit": "",
+          "status": "alerting",
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "value": 53.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "disks": [
+        {
+          "class": "DiskSummary",
+          "label": "HDD1",
+          "health": "ok",
+          "temperature_c": 38.0,
+          "free_bytes": 100000000000,
+          "total_bytes": 320000000000,
+          "model": "Disk-A",
+          "kind": "hdd"
+        },
+        {
+          "class": "DiskSummary",
+          "label": "SSD",
+          "health": "warning",
+          "temperature_c": 30.0,
+          "free_bytes": 200000000000,
+          "total_bytes": 256000000000,
+          "model": "Disk-B",
+          "kind": "ssd"
+        }
+      ],
+      "last_outage": null
+    },
+    "host-disabled-with-seeded-states": {
+      "health": [
+        {
+          "class": "HealthState",
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "alerting",
+          "temperature_c": 89.0,
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:14:01+00:00"
+        },
+        {
+          "class": "HealthState",
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 54.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 40.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sdb",
+          "kind": "disk",
+          "label": "SSD",
+          "status": "ok",
+          "temperature_c": 33.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_health": [],
+      "disks": [
+        {
+          "class": "DiskSummary",
+          "label": "HDD1",
+          "health": "ok",
+          "temperature_c": 38.0,
+          "free_bytes": 100000000000,
+          "total_bytes": 320000000000,
+          "model": "Disk-A",
+          "kind": "hdd"
+        },
+        {
+          "class": "DiskSummary",
+          "label": "SSD",
+          "health": "warning",
+          "temperature_c": 30.0,
+          "free_bytes": 200000000000,
+          "total_bytes": 256000000000,
+          "model": "Disk-B",
+          "kind": "ssd"
+        }
+      ],
+      "last_outage": {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-28T23:00:00+00:00",
+        "down_at": "2026-02-28T22:53:00+00:00",
+        "up_at": "2026-02-28T23:00:00+00:00",
+        "down_approx": true
+      }
+    },
+    "host-enabled-with-seeded-states": {
+      "health": [
+        {
+          "class": "HealthState",
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "alerting",
+          "temperature_c": 89.0,
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:14:01+00:00"
+        },
+        {
+          "class": "HealthState",
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 54.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 40.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HealthState",
+          "component_id": "disk:/dev/sdb",
+          "kind": "disk",
+          "label": "SSD",
+          "status": "ok",
+          "temperature_c": 33.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_health": [
+        {
+          "class": "HostMetricState",
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "value": 2.1,
+          "unit": "",
+          "status": "alerting",
+          "consecutive_count": 0,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "value": 53.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "class": "HostMetricState",
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "disks": [
+        {
+          "class": "DiskSummary",
+          "label": "HDD1",
+          "health": "ok",
+          "temperature_c": 38.0,
+          "free_bytes": 100000000000,
+          "total_bytes": 320000000000,
+          "model": "Disk-A",
+          "kind": "hdd"
+        },
+        {
+          "class": "DiskSummary",
+          "label": "SSD",
+          "health": "warning",
+          "temperature_c": 30.0,
+          "free_bytes": 200000000000,
+          "total_bytes": 256000000000,
+          "model": "Disk-B",
+          "kind": "ssd"
+        }
+      ],
+      "last_outage": {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-28T23:00:00+00:00",
+        "down_at": "2026-02-28T22:53:00+00:00",
+        "up_at": "2026-02-28T23:00:00+00:00",
+        "down_approx": true
+      }
+    }
+  },
+  "payloads": {
+    "event_payload": [
+      {
+        "class": "Event",
+        "type": "overheat_started",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 86.5,
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "Event",
+        "type": "overheat_cleared",
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "temperature_c": 41.0,
+        "at": "2026-03-01T00:10:00+00:00"
+      }
+    ],
+    "host_event_payload": [
+      {
+        "class": "HostEvent",
+        "type": "host_degraded",
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 14.0,
+        "unit": "%",
+        "hint": "вероятна переподписка ноды провайдером",
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "HostEvent",
+        "type": "host_recovered",
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 0.5,
+        "unit": "",
+        "hint": "нода перегружена",
+        "at": "2026-03-01T00:10:00+00:00"
+      }
+    ],
+    "smart_change_payload": [
+      {
+        "class": "SmartChange",
+        "component_id": "disk:/dev/sda",
+        "label": "Disk-A",
+        "event_type": "smart_degraded",
+        "health_from": "ok",
+        "health_to": "warning",
+        "attr_changes": [
+          {
+            "class": "SmartAttrChange",
+            "attr_id": 5,
+            "name": "Reallocated_Sector_Ct",
+            "old": 31,
+            "new": 35
+          },
+          {
+            "class": "SmartAttrChange",
+            "attr_id": 197,
+            "name": "Current_Pending_Sector",
+            "old": 0,
+            "new": 2
+          }
+        ],
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "SmartChange",
+        "component_id": "disk:/dev/sdb",
+        "label": "Disk-B",
+        "event_type": "smart_recovered",
+        "health_from": "failed",
+        "health_to": "ok",
+        "attr_changes": [],
+        "at": "2026-03-01T00:10:00+00:00"
+      }
+    ],
+    "health_dict": [
+      {
+        "class": "HealthState",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 55.0,
+        "consecutive_count": 0,
+        "alerting_since": null
+      },
+      {
+        "class": "HealthState",
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 88.5,
+        "consecutive_count": 0,
+        "alerting_since": "2026-03-01T00:10:00+00:00"
+      }
+    ],
+    "host_state_dict": [
+      {
+        "class": "HostMetricState",
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 3.0,
+        "unit": "%",
+        "status": "ok",
+        "consecutive_count": 0,
+        "alerting_since": null
+      },
+      {
+        "class": "HostMetricState",
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 2.0,
+        "unit": "",
+        "status": "alerting",
+        "consecutive_count": 0,
+        "alerting_since": "2026-03-01T00:10:00+00:00"
+      }
+    ],
+    "outage_dict": [
+      null,
+      {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-28T23:00:00+00:00",
+        "down_at": "2026-02-28T22:53:00+00:00",
+        "up_at": "2026-02-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      {
+        "class": "PowerEvent",
+        "kind": "clean",
+        "boot_at": "2026-02-25T23:00:00+00:00",
+        "down_at": "2026-02-25T22:56:00+00:00",
+        "up_at": "2026-02-25T23:00:00+00:00",
+        "down_approx": false
+      },
+      {
+        "class": "PowerEvent",
+        "kind": "clean",
+        "boot_at": "2026-02-22T23:00:00+00:00",
+        "down_at": null,
+        "up_at": "2026-02-22T23:00:00+00:00",
+        "down_approx": false
+      },
+      {
+        "class": "PowerEvent",
+        "kind": "clean",
+        "boot_at": "2026-02-19T23:00:00+00:00",
+        "down_at": "2026-02-19T22:54:00+00:00",
+        "up_at": "2026-02-19T23:00:00+00:00",
+        "down_approx": false
+      },
+      {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-02-16T23:00:00+00:00",
+        "down_at": "2026-02-16T22:49:00+00:00",
+        "up_at": "2026-02-16T23:00:00+00:00",
+        "down_approx": true
+      }
+    ]
+  },
+  "extras": {
+    "health": [
+      {
+        "class": "HealthState",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "alerting",
+        "temperature_c": 91.5,
+        "consecutive_count": 0,
+        "alerting_since": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "HealthState",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "consecutive_count": 0,
+        "alerting_since": null
+      },
+      {
+        "class": "HealthState",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "consecutive_count": 0,
+        "alerting_since": null
+      },
+      {
+        "class": "HealthState",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "consecutive_count": 0,
+        "alerting_since": "2026-03-01T05:10:00+05:00"
+      },
+      {
+        "class": "HealthState",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "consecutive_count": 0,
+        "alerting_since": "2026-03-01T00:10:00"
+      },
+      {
+        "class": "HealthState",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "consecutive_count": 0,
+        "alerting_since": null
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "ValueError"
+      }
+    ],
+    "host_state": [
+      {
+        "class": "HostMetricState",
+        "component_id": "host:load",
+        "metric": "load",
+        "label": "load",
+        "value": 1.5,
+        "unit": "x",
+        "status": "alerting",
+        "consecutive_count": 0,
+        "alerting_since": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "HostMetricState",
+        "component_id": "host:load",
+        "metric": "load",
+        "label": "load",
+        "value": 1,
+        "unit": "",
+        "status": "ok",
+        "consecutive_count": 0,
+        "alerting_since": null
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "disk": [
+      {
+        "class": "DiskSummary",
+        "label": "eMMC",
+        "health": null,
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "emmc"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "eMMC",
+        "health": "ok",
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "emmc"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "eMMC",
+        "health": "ok",
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "emmc"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "eMMC",
+        "health": null,
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "ssd"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "HDD1",
+        "health": null,
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "hdd"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "HDD1",
+        "health": null,
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "hdd"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "emmc",
+        "health": null,
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "hdd"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 31.0,
+        "free_bytes": 5,
+        "total_bytes": 10,
+        "model": "M",
+        "kind": "ssd"
+      },
+      {
+        "class": "DiskSummary",
+        "label": "HDD1",
+        "health": null,
+        "temperature_c": null,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": null,
+        "kind": "hdd"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "outage": [
+      null,
+      {
+        "class": "PowerEvent",
+        "kind": "clean",
+        "boot_at": "2026-03-01T00:10:00+00:00",
+        "down_at": null,
+        "up_at": null,
+        "down_approx": false
+      },
+      {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T00:10:00+00:00",
+        "down_at": null,
+        "up_at": null,
+        "down_approx": false
+      },
+      {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T00:10:00+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T00:10:00+00:00",
+        "down_approx": true
+      },
+      {
+        "class": "PowerEvent",
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T00:10:00+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T00:10:00+00:00",
+        "down_approx": true
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ],
+    "overheat": [
+      {
+        "class": "Event",
+        "type": "t",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "temperature_c": 90.0,
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "class": "Event",
+        "type": "t",
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU",
+        "temperature_c": 90.0,
+        "at": null
+      }
+    ],
+    "host_event": [
+      {
+        "class": "HostEvent",
+        "type": "t",
+        "component_id": "host:load",
+        "metric": "load",
+        "label": "load",
+        "value": 2.0,
+        "unit": "x",
+        "hint": "подсказка",
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "HostEvent",
+        "type": "t",
+        "component_id": "host:load",
+        "metric": "load",
+        "label": "load",
+        "value": 2.0,
+        "unit": "",
+        "hint": "",
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "class": "HostEvent",
+        "type": "t",
+        "component_id": "host:load",
+        "metric": "load",
+        "label": "load",
+        "value": 2.0,
+        "unit": "",
+        "hint": "",
+        "at": null
+      }
+    ],
+    "smart": [
+      {
+        "class": "SmartChange",
+        "component_id": "disk:/dev/sda",
+        "label": "Disk",
+        "event_type": "t",
+        "health_from": null,
+        "health_to": null,
+        "attr_changes": [],
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "SmartChange",
+        "component_id": "disk:/dev/sda",
+        "label": "Disk",
+        "event_type": "t",
+        "health_from": "ok",
+        "health_to": "failed",
+        "attr_changes": [],
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "class": "SmartChange",
+        "component_id": "disk:/dev/sda",
+        "label": "Disk",
+        "event_type": "t",
+        "health_from": null,
+        "health_to": "ok",
+        "attr_changes": [
+          {
+            "class": "SmartAttrChange",
+            "attr_id": 5,
+            "name": "Reallocated",
+            "old": 1,
+            "new": 2
+          }
+        ],
+        "at": "2026-03-01T00:10:00+00:00"
+      },
+      {
+        "error": "KeyError"
+      },
+      {
+        "error": "KeyError"
+      }
+    ]
+  }
+}

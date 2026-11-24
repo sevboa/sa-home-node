@@ -1,0 +1,279 @@
+{
+  "health": [
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "alerting",
+      "temperature_c": 91.5,
+      "alerting_since": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok",
+      "temperature_c": 40.0
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok",
+      "temperature_c": 40.0,
+      "alerting_since": ""
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok",
+      "temperature_c": 40.0,
+      "alerting_since": "2026-03-01T05:10:00+05:00"
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok",
+      "temperature_c": 40.0,
+      "alerting_since": "2026-03-01T00:10:00"
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok",
+      "temperature_c": 40.0,
+      "consecutive_count": 9
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok"
+    },
+    {
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok",
+      "temperature_c": 1.0
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "status": "ok",
+      "temperature_c": 1.0,
+      "alerting_since": "вчера"
+    }
+  ],
+  "host_state": [
+    {
+      "component_id": "host:load",
+      "metric": "load",
+      "label": "load",
+      "value": 1.5,
+      "unit": "x",
+      "status": "alerting",
+      "alerting_since": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "host:load",
+      "metric": "load",
+      "label": "load",
+      "value": 1,
+      "status": "ok"
+    },
+    {
+      "component_id": "host:load",
+      "metric": "load",
+      "label": "load",
+      "status": "ok"
+    }
+  ],
+  "disk": [
+    {
+      "label": "eMMC"
+    },
+    {
+      "label": "eMMC",
+      "kind": null,
+      "health": "ok"
+    },
+    {
+      "label": "eMMC",
+      "kind": "",
+      "health": "ok"
+    },
+    {
+      "label": "eMMC",
+      "kind": "ssd"
+    },
+    {
+      "label": "HDD1"
+    },
+    {
+      "label": "HDD1",
+      "kind": null
+    },
+    {
+      "label": "emmc"
+    },
+    {
+      "label": "SSD",
+      "kind": "ssd",
+      "health": "warning",
+      "temperature_c": 31.0,
+      "free_bytes": 5,
+      "total_bytes": 10,
+      "model": "M"
+    },
+    {
+      "label": "HDD1",
+      "health": null,
+      "temperature_c": null,
+      "free_bytes": null,
+      "total_bytes": null,
+      "model": null,
+      "kind": "hdd"
+    },
+    {
+      "health": "ok"
+    }
+  ],
+  "outage": [
+    null,
+    {
+      "kind": "clean",
+      "boot_at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "kind": "unexpected",
+      "boot_at": "2026-03-01T00:10:00+00:00",
+      "down_at": null,
+      "up_at": null,
+      "down_approx": null
+    },
+    {
+      "kind": "unexpected",
+      "boot_at": "2026-03-01T00:10:00+00:00",
+      "down_at": "2026-03-01T00:00:00+00:00",
+      "up_at": "2026-03-01T00:10:00+00:00",
+      "down_approx": 1
+    },
+    {
+      "kind": "unexpected",
+      "boot_at": "2026-03-01T00:10:00+00:00",
+      "down_at": "2026-03-01T00:00:00+00:00",
+      "up_at": "2026-03-01T00:10:00+00:00",
+      "down_approx": "no",
+      "downtime_s": 600.0
+    },
+    {
+      "boot_at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "kind": "clean"
+    }
+  ],
+  "overheat": [
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "temperature_c": 90.0,
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "temperature_c": 90.0
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU",
+      "temperature_c": 90.0,
+      "at": null
+    }
+  ],
+  "host_event": [
+    {
+      "component_id": "host:load",
+      "metric": "load",
+      "label": "load",
+      "value": 2.0,
+      "unit": "x",
+      "hint": "подсказка",
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "host:load",
+      "metric": "load",
+      "label": "load",
+      "value": 2.0,
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "host:load",
+      "metric": "load",
+      "label": "load",
+      "value": 2.0
+    },
+    {
+      "component_id": "host:load",
+      "metric": "load",
+      "label": "load",
+      "value": 2.0,
+      "at": null
+    }
+  ],
+  "smart": [
+    {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk",
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk",
+      "health_from": "ok",
+      "health_to": "failed",
+      "attr_changes": [],
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk",
+      "health_from": null,
+      "health_to": "ok",
+      "attr_changes": [
+        {
+          "attr_id": 5,
+          "name": "Reallocated",
+          "old": 1,
+          "new": 2
+        }
+      ],
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk",
+      "attr_changes": [
+        {
+          "attr_id": 5,
+          "name": "Reallocated",
+          "old": 1
+        }
+      ],
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk"
+    }
+  ]
+}

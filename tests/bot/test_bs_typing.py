@@ -1,7 +1,8 @@
 from __future__ import annotations
 
 import pytest
-from botfix import drive_typing, load
+from botfix import load
+from drivers import drive_typing
 
 from sa_home_node.bot import typing
 from sa_home_node.bot.typing import TypingIndicator, typing_action
