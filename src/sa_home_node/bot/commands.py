@@ -194,6 +194,9 @@ class Registry:
             if cmd.menu and not cmd.universal and subscription.allows_command(cmd.right or cmd.name)
         ]
 
+    def menu_universal_commands(self) -> list[Command]:
+        return [cmd for cmd in self._commands.values() if cmd.universal and cmd.menu]
+
     def can_run_action(self, subscription: Subscription | None, action: str, service: str) -> bool:
         if subscription is None:
             return False
