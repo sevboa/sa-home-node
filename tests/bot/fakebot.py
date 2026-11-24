@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import hashlib
 import re
 from types import SimpleNamespace
 from typing import Any
@@ -14,6 +15,8 @@ from aiogram.exceptions import (
     TelegramRetryAfter,
 )
 from aiogram.methods import GetMe
+from aiogram.types import InputFile
+from pydantic import BaseModel
 
 SIGNATURES: dict[str, tuple[str, ...]] = {
     "send_message": ("chat_id", "text"),
@@ -68,6 +71,52 @@ def record_sleeps(monkeypatch: Any) -> list[float]:
     return sleeps
 
 
+def norm(value: Any) -> Any:
+    if isinstance(value, InputFile):
+        return {"file": value.filename, "size": len(getattr(value, "data", b""))}
+    if isinstance(value, BaseModel):
+        fields = type(value).model_fields
+        return {
+            name: norm(item)
+            for name in fields
+            if (item := getattr(value, name)) is not None and not isinstance(item, Default)
+        }
+    if isinstance(value, str) and len(value) > 200:
+        return f"<{len(value)}:{hashlib.sha256(value.encode()).hexdigest()[:12]}>"
+    if isinstance(value, (bytes, bytearray)):
+        return {"bytes": len(value)}
+    if isinstance(value, dict):
+        return {key: norm(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [norm(item) for item in value]
+    return value
+
+
+class OutboxLog:
+    def __init__(self) -> None:
+        self.rows: list[dict[str, Any]] = []
+
+    async def enqueue(
+        self,
+        chat_id: int,
+        kind: str,
+        payload: dict[str, Any],
+        now: Any = None,
+        dedup_key: str | None = None,
+        message_thread_id: int | None = None,
+    ) -> int:
+        self.rows.append(
+            {
+                "chat_id": chat_id,
+                "kind": kind,
+                "payload": norm(payload),
+                "dedup_key": dedup_key,
+                "thread": message_thread_id,
+            }
+        )
+        return len(self.rows)
+
+
 def snake(name: str) -> str:
     return re.sub(r"(?<!^)(?=[A-Z])", "_", name).lower()
 
@@ -84,8 +133,19 @@ class FakeBot:
     def of(self, name: str) -> list[dict[str, Any]]:
         return [kwargs for call, kwargs in self.calls if call == name]
 
+    def dump(self) -> list[list[Any]]:
+        return [
+            [name, norm({k: v for k, v in kwargs.items() if v is not None or k == "parse_mode"})]
+            for name, kwargs in self.calls
+        ]
+
     def _message(self) -> SimpleNamespace:
-        message = SimpleNamespace(message_id=self._next_id)
+        number = self._next_id
+        message = SimpleNamespace(
+            message_id=number,
+            document=SimpleNamespace(file_id=f"doc-{number}"),
+            photo=[SimpleNamespace(file_id=f"photo-{number}")],
+        )
         self._next_id += 1
         return message
 

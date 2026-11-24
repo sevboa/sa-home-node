@@ -1,0 +1,614 @@
+{
+  "reconnect_delay_s": 5.0,
+  "cases": [
+    {
+      "name": "down-then-up",
+      "steps": [
+        [
+          "start_link"
+        ],
+        [
+          "connected"
+        ],
+        [
+          "get_state"
+        ],
+        [
+          "command",
+          "echo",
+          {
+            "k": "v"
+          },
+          null
+        ],
+        [
+          "describe"
+        ],
+        [
+          "actions"
+        ],
+        [
+          "start_server"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "get_state"
+        ],
+        [
+          "command",
+          "echo",
+          {
+            "k": "v"
+          },
+          null
+        ],
+        [
+          "command",
+          "bare",
+          null,
+          null
+        ],
+        [
+          "describe"
+        ],
+        [
+          "actions"
+        ],
+        [
+          "connected"
+        ],
+        [
+          "stop_link"
+        ],
+        [
+          "connected"
+        ],
+        [
+          "get_state"
+        ]
+      ],
+      "trace": [
+        null,
+        false,
+        {
+          "error": "ServiceUnavailableError",
+          "unavailable": true,
+          "timeout": false,
+          "code": null,
+          "head": "нет соединения"
+        },
+        {
+          "error": "ServiceUnavailableError",
+          "unavailable": true,
+          "timeout": false,
+          "code": null,
+          "head": "нет соединения"
+        },
+        null,
+        [],
+        null,
+        true,
+        {
+          "ok": {
+            "service": "stub",
+            "n": 1
+          }
+        },
+        {
+          "ok": {
+            "action": "echo",
+            "args": {
+              "k": "v"
+            }
+          }
+        },
+        {
+          "error": "ProtoError",
+          "unavailable": false,
+          "timeout": false,
+          "code": "unknown_action",
+          "head": "unknown_action"
+        },
+        [
+          "echo",
+          "noop"
+        ],
+        [
+          "echo",
+          "noop"
+        ],
+        true,
+        null,
+        false,
+        {
+          "error": "ServiceUnavailableError",
+          "unavailable": true,
+          "timeout": false,
+          "code": null,
+          "head": "нет соединения"
+        }
+      ]
+    },
+    {
+      "name": "drop-and-return",
+      "steps": [
+        [
+          "handler",
+          {
+            "actions": [
+              "echo",
+              "a"
+            ]
+          }
+        ],
+        [
+          "start_server"
+        ],
+        [
+          "start_link"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "actions"
+        ],
+        [
+          "stop_server"
+        ],
+        [
+          "wait_disconnected"
+        ],
+        [
+          "command",
+          "echo",
+          {},
+          null
+        ],
+        [
+          "get_state"
+        ],
+        [
+          "describe"
+        ],
+        [
+          "actions"
+        ],
+        [
+          "start_server"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "get_state"
+        ],
+        [
+          "connects",
+          2
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        null,
+        true,
+        [
+          "echo",
+          "a"
+        ],
+        null,
+        true,
+        {
+          "error": "ServiceUnavailableError",
+          "unavailable": true,
+          "timeout": false,
+          "code": null,
+          "head": "нет соединения"
+        },
+        {
+          "error": "ServiceUnavailableError",
+          "unavailable": true,
+          "timeout": false,
+          "code": null,
+          "head": "нет соединения"
+        },
+        null,
+        [
+          "echo",
+          "a"
+        ],
+        null,
+        true,
+        {
+          "ok": {
+            "service": "stub",
+            "n": 1
+          }
+        },
+        2
+      ]
+    },
+    {
+      "name": "actions-refresh",
+      "steps": [
+        [
+          "handler",
+          {
+            "actions": [
+              "echo",
+              "a"
+            ]
+          }
+        ],
+        [
+          "start_server"
+        ],
+        [
+          "start_link"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "actions"
+        ],
+        [
+          "handler",
+          {
+            "actions": [
+              "echo",
+              "a",
+              "b"
+            ]
+          }
+        ],
+        [
+          "describe"
+        ],
+        [
+          "actions"
+        ],
+        [
+          "stop_server"
+        ],
+        [
+          "wait_disconnected"
+        ],
+        [
+          "describe"
+        ],
+        [
+          "actions"
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        null,
+        true,
+        [
+          "echo",
+          "a"
+        ],
+        null,
+        [
+          "echo",
+          "a",
+          "b"
+        ],
+        [
+          "echo",
+          "a",
+          "b"
+        ],
+        null,
+        true,
+        null,
+        [
+          "echo",
+          "a",
+          "b"
+        ]
+      ]
+    },
+    {
+      "name": "slow-handler-timeout",
+      "steps": [
+        [
+          "start_server"
+        ],
+        [
+          "start_link"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "handler",
+          {
+            "delay": 1.0
+          }
+        ],
+        [
+          "command",
+          "echo",
+          {},
+          0.2
+        ],
+        [
+          "connected"
+        ],
+        [
+          "handler",
+          {
+            "delay": 0.0
+          }
+        ],
+        [
+          "command",
+          "echo",
+          {
+            "n": 2
+          },
+          2.0
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        true,
+        null,
+        {
+          "error": "ServiceTimeoutError",
+          "unavailable": true,
+          "timeout": true,
+          "code": null,
+          "head": "нет ответа"
+        },
+        true,
+        null,
+        {
+          "ok": {
+            "action": "echo",
+            "args": {
+              "n": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "frozen-link-timeout",
+      "tcp": true,
+      "steps": [
+        [
+          "start_server"
+        ],
+        [
+          "start_link"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "command",
+          "echo",
+          {
+            "n": 1
+          },
+          2.0
+        ],
+        [
+          "freeze"
+        ],
+        [
+          "command",
+          "echo",
+          {
+            "n": 2
+          },
+          0.3
+        ],
+        [
+          "unfreeze"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "command",
+          "echo",
+          {
+            "n": 3
+          },
+          2.0
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        true,
+        {
+          "ok": {
+            "action": "echo",
+            "args": {
+              "n": 1
+            }
+          }
+        },
+        null,
+        {
+          "error": "ServiceTimeoutError",
+          "unavailable": true,
+          "timeout": true,
+          "code": null,
+          "head": "нет ответа"
+        },
+        null,
+        true,
+        {
+          "ok": {
+            "action": "echo",
+            "args": {
+              "n": 3
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "events-survive-reconnect",
+      "steps": [
+        [
+          "start_server"
+        ],
+        [
+          "start_link"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "broadcast",
+          "ping",
+          {
+            "a": 1
+          }
+        ],
+        [
+          "stop_server"
+        ],
+        [
+          "wait_disconnected"
+        ],
+        [
+          "start_server"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "broadcast",
+          "pong",
+          {
+            "b": 2
+          }
+        ],
+        [
+          "events"
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        true,
+        1,
+        null,
+        true,
+        null,
+        true,
+        1,
+        [
+          {
+            "event": "ping",
+            "data": {
+              "a": 1
+            }
+          },
+          {
+            "event": "pong",
+            "data": {
+              "b": 2
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "connected-hook",
+      "steps": [
+        [
+          "start_server"
+        ],
+        [
+          "start_link"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "connects",
+          1
+        ],
+        [
+          "stop_server"
+        ],
+        [
+          "wait_disconnected"
+        ],
+        [
+          "start_server"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "connects",
+          2
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        true,
+        1,
+        null,
+        true,
+        null,
+        true,
+        2
+      ]
+    },
+    {
+      "name": "connected-hook-raises",
+      "hook_raises": true,
+      "steps": [
+        [
+          "start_server"
+        ],
+        [
+          "start_link"
+        ],
+        [
+          "wait_connected"
+        ],
+        [
+          "get_state"
+        ],
+        [
+          "connects",
+          1
+        ],
+        [
+          "connected"
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        true,
+        {
+          "ok": {
+            "service": "stub",
+            "n": 1
+          }
+        },
+        1,
+        true
+      ]
+    }
+  ]
+}
