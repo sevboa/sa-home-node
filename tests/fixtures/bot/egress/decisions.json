@@ -1,0 +1,1884 @@
+{
+  "constants": {
+    "DIRECT": "direct",
+    "TICK_S": 300.0,
+    "BAN_S": 900.0,
+    "DIRECT_RETURN_STREAK": 2,
+    "SWITCH_GAIN_FACTOR": 2.0,
+    "SWITCH_GAIN_MS": 300,
+    "TROUBLE_CONSECUTIVE": 3,
+    "TROUBLE_NO_SUCCESS_S": 60.0,
+    "DIRECT_PROBE_TIMEOUT_S": 8.0
+  },
+  "fresh_route": "direct",
+  "socks_url": [
+    [
+      "h:1",
+      "socks5://h:1"
+    ],
+    [
+      "socks5://h:1",
+      "socks5://h:1"
+    ],
+    [
+      "http://h:1",
+      "http://h:1"
+    ],
+    [
+      "",
+      "socks5://"
+    ],
+    [
+      "socks5h://h:1",
+      "socks5h://h:1"
+    ],
+    [
+      "user:pass@h:1",
+      "socks5://user:pass@h:1"
+    ]
+  ],
+  "normalize": [
+    {
+      "name": "empty",
+      "raw": [],
+      "extra": [],
+      "out": []
+    },
+    {
+      "name": "sorted-by-ms",
+      "raw": [
+        {
+          "socks": "10.0.0.2:1080",
+          "label": "b",
+          "check": {
+            "ok": true,
+            "ms": 300,
+            "stale": false
+          }
+        },
+        {
+          "socks": "10.0.0.1:1080",
+          "label": "a",
+          "check": {
+            "ok": true,
+            "ms": 100,
+            "stale": false
+          }
+        }
+      ],
+      "extra": [],
+      "out": [
+        [
+          "socks5://10.0.0.1:1080",
+          "a",
+          100,
+          true
+        ],
+        [
+          "socks5://10.0.0.2:1080",
+          "b",
+          300,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "invalid-last",
+      "raw": [
+        {
+          "socks": "10.0.0.1:1080",
+          "check": {
+            "ok": false,
+            "ms": 10,
+            "stale": false
+          }
+        },
+        {
+          "socks": "10.0.0.2:1080",
+          "check": {
+            "ok": true,
+            "ms": 900,
+            "stale": false
+          }
+        }
+      ],
+      "extra": [],
+      "out": [
+        [
+          "socks5://10.0.0.2:1080",
+          "socks5://10.0.0.2:1080",
+          900,
+          true
+        ],
+        [
+          "socks5://10.0.0.1:1080",
+          "socks5://10.0.0.1:1080",
+          10,
+          false
+        ]
+      ]
+    },
+    {
+      "name": "label-fallbacks",
+      "raw": [
+        {
+          "socks": "10.0.0.1:1080",
+          "node": "node-1",
+          "check": {
+            "ok": true,
+            "ms": 5
+          }
+        },
+        {
+          "socks": "10.0.0.2:1080",
+          "check": {
+            "ok": true,
+            "ms": 6
+          }
+        }
+      ],
+      "extra": [],
+      "out": [
+        [
+          "socks5://10.0.0.1:1080",
+          "node-1",
+          5,
+          true
+        ],
+        [
+          "socks5://10.0.0.2:1080",
+          "socks5://10.0.0.2:1080",
+          6,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "scheme-kept",
+      "raw": [
+        {
+          "socks": "socks5://h:1",
+          "check": {
+            "ok": true,
+            "ms": 5
+          }
+        },
+        {
+          "socks": "http://h:2",
+          "check": {
+            "ok": true,
+            "ms": 6
+          }
+        }
+      ],
+      "extra": [],
+      "out": [
+        [
+          "socks5://h:1",
+          "socks5://h:1",
+          5,
+          true
+        ],
+        [
+          "http://h:2",
+          "http://h:2",
+          6,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "missing-socks",
+      "raw": [
+        {
+          "label": "x"
+        },
+        {
+          "socks": "",
+          "check": {
+            "ok": true,
+            "ms": 1
+          }
+        },
+        {
+          "socks": null
+        }
+      ],
+      "extra": [],
+      "out": []
+    },
+    {
+      "name": "check-forms",
+      "raw": [
+        {
+          "socks": "h1:1",
+          "check": null
+        },
+        {
+          "socks": "h2:1",
+          "check": {}
+        },
+        {
+          "socks": "h3:1",
+          "check": {
+            "ok": true
+          }
+        },
+        {
+          "socks": "h4:1",
+          "check": {
+            "ok": true,
+            "ms": 7.9
+          }
+        },
+        {
+          "socks": "h5:1",
+          "check": {
+            "ok": true,
+            "ms": "7"
+          }
+        },
+        {
+          "socks": "h6:1",
+          "check": {
+            "ok": 1,
+            "ms": 0
+          }
+        },
+        {
+          "socks": "h7:1",
+          "check": {
+            "ok": false,
+            "ms": 3
+          }
+        }
+      ],
+      "extra": [],
+      "out": [
+        [
+          "socks5://h6:1",
+          "socks5://h6:1",
+          0,
+          true
+        ],
+        [
+          "socks5://h4:1",
+          "socks5://h4:1",
+          7,
+          true
+        ],
+        [
+          "socks5://h7:1",
+          "socks5://h7:1",
+          3,
+          false
+        ],
+        [
+          "socks5://h1:1",
+          "socks5://h1:1",
+          null,
+          false
+        ],
+        [
+          "socks5://h2:1",
+          "socks5://h2:1",
+          null,
+          false
+        ],
+        [
+          "socks5://h3:1",
+          "socks5://h3:1",
+          null,
+          false
+        ],
+        [
+          "socks5://h5:1",
+          "socks5://h5:1",
+          null,
+          false
+        ]
+      ]
+    },
+    {
+      "name": "extras",
+      "raw": [
+        {
+          "socks": "10.0.0.1:1080",
+          "label": "a",
+          "check": {
+            "ok": true,
+            "ms": 100,
+            "stale": false
+          }
+        }
+      ],
+      "extra": [
+        "10.0.0.1:1080",
+        "10.0.0.9:1080",
+        "",
+        "socks5://10.0.0.9:1080"
+      ],
+      "out": [
+        [
+          "socks5://10.0.0.1:1080",
+          "a",
+          100,
+          true
+        ],
+        [
+          "socks5://10.0.0.9:1080",
+          "socks5://10.0.0.9:1080",
+          null,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "extras-only",
+      "raw": [],
+      "extra": [
+        "z:1",
+        "y:2"
+      ],
+      "out": [
+        [
+          "socks5://z:1",
+          "socks5://z:1",
+          null,
+          true
+        ],
+        [
+          "socks5://y:2",
+          "socks5://y:2",
+          null,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "duplicates",
+      "raw": [
+        {
+          "socks": "10.0.0.1:1080",
+          "label": "first",
+          "check": {
+            "ok": true,
+            "ms": 100,
+            "stale": false
+          }
+        },
+        {
+          "socks": "10.0.0.1:1080",
+          "label": "second",
+          "check": {
+            "ok": true,
+            "ms": 50,
+            "stale": false
+          }
+        }
+      ],
+      "extra": [],
+      "out": [
+        [
+          "socks5://10.0.0.1:1080",
+          "second",
+          50,
+          true
+        ],
+        [
+          "socks5://10.0.0.1:1080",
+          "first",
+          100,
+          true
+        ]
+      ]
+    },
+    {
+      "name": "ties-stable",
+      "raw": [
+        {
+          "socks": "c:1",
+          "label": "c",
+          "check": {
+            "ok": true,
+            "ms": 5,
+            "stale": false
+          }
+        },
+        {
+          "socks": "a:1",
+          "label": "a",
+          "check": {
+            "ok": true,
+            "ms": 5,
+            "stale": false
+          }
+        },
+        {
+          "socks": "b:1",
+          "label": "b",
+          "check": {
+            "ok": true,
+            "ms": 5,
+            "stale": false
+          }
+        }
+      ],
+      "extra": [],
+      "out": [
+        [
+          "socks5://c:1",
+          "c",
+          5,
+          true
+        ],
+        [
+          "socks5://a:1",
+          "a",
+          5,
+          true
+        ],
+        [
+          "socks5://b:1",
+          "b",
+          5,
+          true
+        ]
+      ]
+    }
+  ],
+  "trouble": [
+    {
+      "name": "three-failures",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 1
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "two-failures-then-ok",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response",
+        "TelegramNetworkError",
+        "TelegramNetworkError"
+      ],
+      "counts": {
+        "trouble": 0,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "client-and-timeout",
+      "steps": [
+        [
+          "client"
+        ],
+        [
+          "timeout"
+        ],
+        [
+          "proxy"
+        ]
+      ],
+      "outcomes": [
+        "ClientError",
+        "TimeoutError",
+        "ProxyConnectionError"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "proxy-timeout",
+      "steps": [
+        [
+          "proxy_timeout"
+        ],
+        [
+          "proxy_timeout"
+        ],
+        [
+          "proxy_timeout"
+        ]
+      ],
+      "outcomes": [
+        "ProxyTimeoutError",
+        "ProxyTimeoutError",
+        "ProxyTimeoutError"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "other-errors-ignored",
+      "steps": [
+        [
+          "bad"
+        ],
+        [
+          "bad"
+        ],
+        [
+          "bad"
+        ],
+        [
+          "bad"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramBadRequest",
+        "TelegramBadRequest",
+        "TelegramBadRequest",
+        "TelegramBadRequest",
+        "response"
+      ],
+      "counts": {
+        "trouble": 0,
+        "recovered": 0
+      },
+      "state": [
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "silence-triggers",
+      "steps": [
+        [
+          "advance",
+          30
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          29.9
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          0.1
+        ],
+        [
+          "net"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "silence-exact",
+      "steps": [
+        [
+          "advance",
+          60
+        ],
+        [
+          "net"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          true,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "silence-just-below",
+      "steps": [
+        [
+          "advance",
+          59.9
+        ],
+        [
+          "net"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError"
+      ],
+      "counts": {
+        "trouble": 0,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "success-resets-silence",
+      "steps": [
+        [
+          "advance",
+          50
+        ],
+        [
+          "ok"
+        ],
+        [
+          "advance",
+          50
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          10
+        ],
+        [
+          "net"
+        ]
+      ],
+      "outcomes": [
+        "response",
+        "TelegramNetworkError",
+        "TelegramNetworkError"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 0
+      },
+      "state": [
+        [
+          0,
+          false,
+          50.0
+        ],
+        [
+          1,
+          false,
+          50.0
+        ],
+        [
+          2,
+          true,
+          50.0
+        ]
+      ]
+    },
+    {
+      "name": "trouble-once",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          4,
+          true,
+          0.0
+        ],
+        [
+          5,
+          true,
+          0.0
+        ],
+        [
+          6,
+          true,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "recover-then-trouble-again",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ],
+        [
+          "ok"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response",
+        "response",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "counts": {
+        "trouble": 2,
+        "recovered": 2
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "reset-clears",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          5
+        ],
+        [
+          "reset"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 1
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          5.0
+        ],
+        [
+          1,
+          false,
+          5.0
+        ],
+        [
+          2,
+          false,
+          5.0
+        ],
+        [
+          0,
+          false,
+          5.0
+        ]
+      ]
+    },
+    {
+      "name": "reset-keeps-recovery-pending",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "reset"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 1
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "no-callbacks",
+      "callbacks": "none",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "counts": {
+        "trouble": 0,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "async-callbacks",
+      "callbacks": "async",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 1
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "callbacks-raise",
+      "callbacks": "raises",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "counts": {
+        "trouble": 2,
+        "recovered": 2
+      },
+      "state": [
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ],
+        [
+          1,
+          false,
+          0.0
+        ],
+        [
+          2,
+          false,
+          0.0
+        ],
+        [
+          3,
+          true,
+          0.0
+        ],
+        [
+          0,
+          false,
+          0.0
+        ]
+      ]
+    },
+    {
+      "name": "clock-start",
+      "start": 1000.0,
+      "steps": [
+        [
+          "advance",
+          30
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          31
+        ],
+        [
+          "net"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError"
+      ],
+      "counts": {
+        "trouble": 1,
+        "recovered": 0
+      },
+      "state": [
+        [
+          1,
+          false,
+          1000.0
+        ],
+        [
+          2,
+          true,
+          1000.0
+        ]
+      ]
+    }
+  ],
+  "routes": [
+    {
+      "name": "direct-default",
+      "routes": [
+        "direct"
+      ],
+      "out": [
+        {
+          "current": "direct",
+          "proxy": null,
+          "connector": [
+            "TCPConnector",
+            100,
+            3600
+          ]
+        }
+      ]
+    },
+    {
+      "name": "proxy-then-direct",
+      "routes": [
+        "socks5://10.0.0.1:1080",
+        "direct",
+        "socks5://10.0.0.2:1080",
+        "socks5://10.0.0.2:1080",
+        "direct",
+        "direct"
+      ],
+      "out": [
+        {
+          "current": "socks5://10.0.0.1:1080",
+          "proxy": "socks5://10.0.0.1:1080"
+        },
+        {
+          "current": "direct",
+          "proxy": null,
+          "connector": [
+            "TCPConnector",
+            100,
+            3600
+          ]
+        },
+        {
+          "current": "socks5://10.0.0.2:1080",
+          "proxy": "socks5://10.0.0.2:1080"
+        },
+        {
+          "current": "socks5://10.0.0.2:1080",
+          "proxy": "socks5://10.0.0.2:1080"
+        },
+        {
+          "current": "direct",
+          "proxy": null,
+          "connector": [
+            "TCPConnector",
+            100,
+            3600
+          ]
+        },
+        {
+          "current": "direct",
+          "proxy": null,
+          "connector": [
+            "TCPConnector",
+            100,
+            3600
+          ]
+        }
+      ]
+    },
+    {
+      "name": "other-schemes",
+      "routes": [
+        "socks5://u:p@h:1080",
+        "http://h:3128",
+        "direct"
+      ],
+      "out": [
+        {
+          "current": "socks5://u:p@h:1080",
+          "proxy": "socks5://u:p@h:1080"
+        },
+        {
+          "current": "http://h:3128",
+          "proxy": "http://h:3128"
+        },
+        {
+          "current": "direct",
+          "proxy": null,
+          "connector": [
+            "TCPConnector",
+            100,
+            3600
+          ]
+        }
+      ]
+    }
+  ],
+  "choose": [
+    {"set": "none", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-bad", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "no-socks", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "none", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-bad", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "no-socks", "current": "direct", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "none", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-bad", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "no-socks", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "none", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-bad", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "no-socks", "current": "direct", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "none", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-bad", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "no-socks", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "none", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-bad", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "no-socks", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "none", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-bad", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["direct", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "no-socks", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "direct недоступен", true]},
+    {"set": "none", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-slow-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-bad", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "gain-ok", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "no-socks", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "direct недоступен", true]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "выигрыш 1000→100 мс", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "выигрыш 700→300 мс", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 1000→100 мс", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 700→300 мс", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "выигрыш 1000→100 мс", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "выигрыш 700→300 мс", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 1000→100 мс", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 700→300 мс", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 1000→100 мс", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 700→300 мс", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "выигрыш 1000→100 мс", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "выигрыш 700→300 мс", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 1000→100 мс", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "выигрыш 700→300 мс", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-slow-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-bad", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "gain-ok", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "no-socks", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 1, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-slow-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 1000, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-bad", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": false, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-stale", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": true}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-nocheck", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080"}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "gain-edge", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 500, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 200, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "gain-ok", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 700, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 300, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "no-socks", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"label": "x", "check": {"ok": true, "ms": 5}}, {"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "direct жив", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет", false]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "direct недоступен", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "кандидатов нет", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "кандидатов нет", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.0.0.2:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси годен", false]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["direct", "кандидатов нет, direct жив", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.1:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 1000.0, "socks5://10.0.0.2:1080": 1000.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.9.9.9:1080", "кандидатов нет", false]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 400.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "a-b", "current": "socks5://10.9.9.9:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}, {"socks": "10.0.0.2:1080", "label": "node-b", "check": {"ok": true, "ms": 40, "stale": false}}], "bans": {"socks5://10.0.0.1:1080": 500.0}, "now": 500.0, "prefer_direct": false, "out": ["socks5://10.0.0.2:1080", "текущий прокси негоден", true]},
+    {"set": "none", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.9:1080"], "out": ["direct", "direct жив", false]},
+    {"set": "a", "current": "direct", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.1:1080", "10.0.0.9:1080", "socks5://10.0.0.9:1080"], "out": ["direct", "direct жив", false]},
+    {"set": "none", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.9:1080"], "out": ["socks5://10.0.0.9:1080", "direct недоступен", true]},
+    {"set": "a", "current": "direct", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.1:1080", "10.0.0.9:1080", "socks5://10.0.0.9:1080"], "out": ["socks5://10.0.0.1:1080", "direct недоступен", true]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.9:1080"], "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": true, "direct_streak": 2, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.1:1080", "10.0.0.9:1080", "socks5://10.0.0.9:1080"], "out": ["direct", "direct снова стабильно жив", true]},
+    {"set": "none", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.9:1080"], "out": ["socks5://10.0.0.9:1080", "текущий прокси негоден", true]},
+    {"set": "a", "current": "socks5://10.0.0.1:1080", "direct_ok": false, "direct_streak": 0, "candidates": [{"socks": "10.0.0.1:1080", "label": "node-a", "check": {"ok": true, "ms": 100, "stale": false}}], "bans": {}, "now": 500.0, "extra_proxies": ["10.0.0.1:1080", "10.0.0.9:1080", "socks5://10.0.0.9:1080"], "out": ["socks5://10.0.0.1:1080", "текущий прокси годен", false]}
+  ]
+}

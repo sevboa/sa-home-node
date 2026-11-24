@@ -1,0 +1,1987 @@
+{
+  "cases": [
+    {
+      "name": "summary-ok",
+      "fn": "render_status_summary",
+      "state": "ok",
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 3 d\nlast off: ⚡ 03/01 03:53 - 03/01 04:00 (7m)\n\n🔥 CPU: 89.0°C 🥵\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\n⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "full-ok",
+      "fn": "render_status_full",
+      "state": "ok",
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>89.0°C</b> с 05:14:01\n✅ CPU «CPU Package»: <b>54.0°C</b>\n✅ Диск «HDD1»: <b>40.0°C</b>\n✅ Диск «SSD»: <b>33.0°C</b>"
+    },
+    {
+      "name": "stats-ok",
+      "fn": "render_stats",
+      "state": "ok",
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 8 (ok=7, error=1, running=0)\n\nПоследние:\n❌ sensor_scan @ 03-01 05:36:00\n✅ sensor_scan @ 03-01 05:35:00\n✅ sensor_scan @ 03-01 05:28:00\n✅ sensor_scan @ 03-01 05:21:00\n✅ sensor_scan @ 03-01 05:14:00\n✅ sensor_scan @ 03-01 05:07:00\n✅ smart_scan @ 03-01 05:01:00\n✅ sensor_scan @ 03-01 05:00:00"
+    },
+    {
+      "name": "host-block-ok",
+      "fn": "render_host_block",
+      "items": [],
+      "expected": ""
+    },
+    {
+      "name": "summary-missing-programs",
+      "fn": "render_status_summary",
+      "state": "missing-programs",
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 3 d\nlast off: ⚡ 03/01 03:53 - 03/01 04:00 (7m)\n\n🔥 CPU: 89.0°C 🥵\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\n⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "full-missing-programs",
+      "fn": "render_status_full",
+      "state": "missing-programs",
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>89.0°C</b> с 05:14:01\n✅ CPU «CPU Package»: <b>54.0°C</b>\n✅ Диск «HDD1»: <b>40.0°C</b>\n✅ Диск «SSD»: <b>33.0°C</b>"
+    },
+    {
+      "name": "stats-missing-programs",
+      "fn": "render_stats",
+      "state": "missing-programs",
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 8 (ok=7, error=1, running=0)\n\nПоследние:\n❌ sensor_scan @ 03-01 05:36:00\n✅ sensor_scan @ 03-01 05:35:00\n✅ sensor_scan @ 03-01 05:28:00\n✅ sensor_scan @ 03-01 05:21:00\n✅ sensor_scan @ 03-01 05:14:00\n✅ sensor_scan @ 03-01 05:07:00\n✅ smart_scan @ 03-01 05:01:00\n✅ sensor_scan @ 03-01 05:00:00"
+    },
+    {
+      "name": "host-block-missing-programs",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "unit": "",
+          "status": "alerting",
+          "value": 2.1,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "unit": "%",
+          "status": "ok",
+          "value": 53.0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "unit": "%",
+          "status": "ok",
+          "value": 3.0,
+          "alerting_since": null
+        }
+      ],
+      "expected": "⚠️ <b>Хост VPS</b>\n • CPU steal: <b>3%</b>\n • ⚠️ load / ядро: <b>2.1</b> (с 05:21)\n • RAM свободно: <b>53%</b>"
+    },
+    {
+      "name": "summary-last-needs-privilege",
+      "fn": "render_status_summary",
+      "state": "last-needs-privilege",
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 3 d\nlast off: ⚡ 03/01 03:53 - 03/01 04:00 (7m)\n\n🔥 CPU: 89.0°C 🥵\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\n⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "full-last-needs-privilege",
+      "fn": "render_status_full",
+      "state": "last-needs-privilege",
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>89.0°C</b> с 05:14:01\n✅ CPU «CPU Package»: <b>54.0°C</b>\n✅ Диск «HDD1»: <b>40.0°C</b>\n✅ Диск «SSD»: <b>33.0°C</b>"
+    },
+    {
+      "name": "stats-last-needs-privilege",
+      "fn": "render_stats",
+      "state": "last-needs-privilege",
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 8 (ok=7, error=1, running=0)\n\nПоследние:\n❌ sensor_scan @ 03-01 05:36:00\n✅ sensor_scan @ 03-01 05:35:00\n✅ sensor_scan @ 03-01 05:28:00\n✅ sensor_scan @ 03-01 05:21:00\n✅ sensor_scan @ 03-01 05:14:00\n✅ sensor_scan @ 03-01 05:07:00\n✅ smart_scan @ 03-01 05:01:00\n✅ sensor_scan @ 03-01 05:00:00"
+    },
+    {
+      "name": "host-block-last-needs-privilege",
+      "fn": "render_host_block",
+      "items": [],
+      "expected": ""
+    },
+    {
+      "name": "summary-unsupported-platform",
+      "fn": "render_status_summary",
+      "state": "unsupported-platform",
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 3 d\nlast off: ⚡ 03/01 03:53 - 03/01 04:00 (7m)\n\n🔥 CPU: 89.0°C 🥵\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\n⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "full-unsupported-platform",
+      "fn": "render_status_full",
+      "state": "unsupported-platform",
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>89.0°C</b> с 05:14:01\n✅ CPU «CPU Package»: <b>54.0°C</b>\n✅ Диск «HDD1»: <b>40.0°C</b>\n✅ Диск «SSD»: <b>33.0°C</b>"
+    },
+    {
+      "name": "stats-unsupported-platform",
+      "fn": "render_stats",
+      "state": "unsupported-platform",
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 8 (ok=7, error=1, running=0)\n\nПоследние:\n❌ sensor_scan @ 03-01 05:36:00\n✅ sensor_scan @ 03-01 05:35:00\n✅ sensor_scan @ 03-01 05:28:00\n✅ sensor_scan @ 03-01 05:21:00\n✅ sensor_scan @ 03-01 05:14:00\n✅ sensor_scan @ 03-01 05:07:00\n✅ smart_scan @ 03-01 05:01:00\n✅ sensor_scan @ 03-01 05:00:00"
+    },
+    {
+      "name": "host-block-unsupported-platform",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "unit": "",
+          "status": "alerting",
+          "value": 2.1,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "unit": "%",
+          "status": "ok",
+          "value": 53.0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "unit": "%",
+          "status": "ok",
+          "value": 3.0,
+          "alerting_since": null
+        }
+      ],
+      "expected": "⚠️ <b>Хост VPS</b>\n • CPU steal: <b>3%</b>\n • ⚠️ load / ядро: <b>2.1</b> (с 05:21)\n • RAM свободно: <b>53%</b>"
+    },
+    {
+      "name": "summary-vps-no-outage",
+      "fn": "render_status_summary",
+      "state": "vps-no-outage",
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\n\n🔥 CPU: 89.0°C 🔥\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\n⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "full-vps-no-outage",
+      "fn": "render_status_full",
+      "state": "vps-no-outage",
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>89.0°C</b> с 05:14:01\n✅ CPU «CPU Package»: <b>54.0°C</b>\n✅ Диск «HDD1»: <b>40.0°C</b>\n✅ Диск «SSD»: <b>33.0°C</b>"
+    },
+    {
+      "name": "stats-vps-no-outage",
+      "fn": "render_stats",
+      "state": "vps-no-outage",
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 8 (ok=7, error=1, running=0)\n\nПоследние:\n❌ sensor_scan @ 03-01 05:36:00\n✅ sensor_scan @ 03-01 05:35:00\n✅ sensor_scan @ 03-01 05:28:00\n✅ sensor_scan @ 03-01 05:21:00\n✅ sensor_scan @ 03-01 05:14:00\n✅ sensor_scan @ 03-01 05:07:00\n✅ smart_scan @ 03-01 05:01:00\n✅ sensor_scan @ 03-01 05:00:00"
+    },
+    {
+      "name": "host-block-vps-no-outage",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "unit": "",
+          "status": "alerting",
+          "value": 2.1,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "unit": "%",
+          "status": "ok",
+          "value": 53.0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "unit": "%",
+          "status": "ok",
+          "value": 3.0,
+          "alerting_since": null
+        }
+      ],
+      "expected": "⚠️ <b>Хост VPS</b>\n • CPU steal: <b>3%</b>\n • ⚠️ load / ядро: <b>2.1</b> (с 05:21)\n • RAM свободно: <b>53%</b>"
+    },
+    {
+      "name": "summary-host-disabled-with-seeded-states",
+      "fn": "render_status_summary",
+      "state": "host-disabled-with-seeded-states",
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 3 d\nlast off: ⚡ 03/01 03:53 - 03/01 04:00 (7m)\n\n🔥 CPU: 89.0°C 🥵\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\n⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "full-host-disabled-with-seeded-states",
+      "fn": "render_status_full",
+      "state": "host-disabled-with-seeded-states",
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>89.0°C</b> с 05:14:01\n✅ CPU «CPU Package»: <b>54.0°C</b>\n✅ Диск «HDD1»: <b>40.0°C</b>\n✅ Диск «SSD»: <b>33.0°C</b>"
+    },
+    {
+      "name": "stats-host-disabled-with-seeded-states",
+      "fn": "render_stats",
+      "state": "host-disabled-with-seeded-states",
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 8 (ok=7, error=1, running=0)\n\nПоследние:\n❌ sensor_scan @ 03-01 05:36:00\n✅ sensor_scan @ 03-01 05:35:00\n✅ sensor_scan @ 03-01 05:28:00\n✅ sensor_scan @ 03-01 05:21:00\n✅ sensor_scan @ 03-01 05:14:00\n✅ sensor_scan @ 03-01 05:07:00\n✅ smart_scan @ 03-01 05:01:00\n✅ sensor_scan @ 03-01 05:00:00"
+    },
+    {
+      "name": "host-block-host-disabled-with-seeded-states",
+      "fn": "render_host_block",
+      "items": [],
+      "expected": ""
+    },
+    {
+      "name": "summary-host-enabled-with-seeded-states",
+      "fn": "render_status_summary",
+      "state": "host-enabled-with-seeded-states",
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 3 d\nlast off: ⚡ 03/01 03:53 - 03/01 04:00 (7m)\n\n🔥 CPU: 89.0°C 🥵\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\n⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "full-host-enabled-with-seeded-states",
+      "fn": "render_status_full",
+      "state": "host-enabled-with-seeded-states",
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>89.0°C</b> с 05:14:01\n✅ CPU «CPU Package»: <b>54.0°C</b>\n✅ Диск «HDD1»: <b>40.0°C</b>\n✅ Диск «SSD»: <b>33.0°C</b>"
+    },
+    {
+      "name": "stats-host-enabled-with-seeded-states",
+      "fn": "render_stats",
+      "state": "host-enabled-with-seeded-states",
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 8 (ok=7, error=1, running=0)\n\nПоследние:\n❌ sensor_scan @ 03-01 05:36:00\n✅ sensor_scan @ 03-01 05:35:00\n✅ sensor_scan @ 03-01 05:28:00\n✅ sensor_scan @ 03-01 05:21:00\n✅ sensor_scan @ 03-01 05:14:00\n✅ sensor_scan @ 03-01 05:07:00\n✅ smart_scan @ 03-01 05:01:00\n✅ sensor_scan @ 03-01 05:00:00"
+    },
+    {
+      "name": "host-block-host-enabled-with-seeded-states",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "load/ядро",
+          "unit": "",
+          "status": "alerting",
+          "value": 2.1,
+          "alerting_since": "2026-03-01T00:21:01+00:00"
+        },
+        {
+          "component_id": "host:mem_available_pct",
+          "metric": "mem_available_pct",
+          "label": "RAM свободно",
+          "unit": "%",
+          "status": "ok",
+          "value": 53.0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "unit": "%",
+          "status": "ok",
+          "value": 3.0,
+          "alerting_since": null
+        }
+      ],
+      "expected": "⚠️ <b>Хост VPS</b>\n • CPU steal: <b>3%</b>\n • ⚠️ load / ядро: <b>2.1</b> (с 05:21)\n • RAM свободно: <b>53%</b>"
+    },
+    {
+      "name": "downtime-from-state",
+      "fn": "render_downtime",
+      "events": [
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-02-28T23:00:00+00:00",
+          "down_at": "2026-02-28T22:53:00+00:00",
+          "up_at": "2026-02-28T23:00:00+00:00",
+          "down_approx": true,
+          "downtime_s": 420.0
+        }
+      ],
+      "offset": 0,
+      "expected": "<b>Последние отключения</b>\n\n⚡ 03/01 03:53 - 03/01 04:00 (7m)"
+    },
+    {
+      "name": "summary-hot-cpu-gpu",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [
+          {
+            "component_id": "cpu:CPU Core 0",
+            "kind": "cpu",
+            "label": "CPU Core 0",
+            "status": "alerting",
+            "temperature_c": 91.0,
+            "alerting_since": "2026-03-01T00:10:00+00:00"
+          },
+          {
+            "component_id": "cpu:CPU Core 1",
+            "kind": "cpu",
+            "label": "CPU Core 1",
+            "status": "ok",
+            "temperature_c": 55.5,
+            "alerting_since": null
+          },
+          {
+            "component_id": "gpu:GPU <0>",
+            "kind": "gpu",
+            "label": "GPU <0>",
+            "status": "alerting",
+            "temperature_c": 86.0,
+            "alerting_since": "2026-03-01T00:30:00+00:00"
+          },
+          {
+            "component_id": "gpu:GPU 1",
+            "kind": "gpu",
+            "label": "GPU 1",
+            "status": "ok",
+            "temperature_c": 30.0,
+            "alerting_since": null
+          },
+          {
+            "component_id": "disk:HDD1",
+            "kind": "disk",
+            "label": "HDD1",
+            "status": "ok",
+            "temperature_c": 41.0,
+            "alerting_since": null
+          }
+        ],
+        "disks": [],
+        "thresholds": {
+          "cpu": {
+            "warn_c": 80.0,
+            "crit_c": 90.0
+          },
+          "gpu": {
+            "warn_c": 80.0,
+            "crit_c": 90.0
+          },
+          "disk": {
+            "warn_c": 45.0,
+            "crit_c": 55.0
+          }
+        },
+        "uptime_s": 59
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: &lt;1 m\n\n🔥 CPU: 91.0°C 🔥\n🔥 GPU GPU &lt;0&gt;: 86.0°C 🥵\n✅ GPU GPU 1: 30.0°C 🥶"
+    },
+    {
+      "name": "full-hot",
+      "fn": "render_status_full",
+      "wire": {
+        "health": [
+          {
+            "component_id": "cpu:CPU Core 0",
+            "kind": "cpu",
+            "label": "CPU Core 0",
+            "status": "alerting",
+            "temperature_c": 91.0,
+            "alerting_since": "2026-03-01T00:10:00+00:00"
+          },
+          {
+            "component_id": "cpu:CPU Core 1",
+            "kind": "cpu",
+            "label": "CPU Core 1",
+            "status": "ok",
+            "temperature_c": 55.5,
+            "alerting_since": null
+          },
+          {
+            "component_id": "gpu:GPU <0>",
+            "kind": "gpu",
+            "label": "GPU <0>",
+            "status": "alerting",
+            "temperature_c": 86.0,
+            "alerting_since": "2026-03-01T00:30:00+00:00"
+          },
+          {
+            "component_id": "gpu:GPU 1",
+            "kind": "gpu",
+            "label": "GPU 1",
+            "status": "ok",
+            "temperature_c": 30.0,
+            "alerting_since": null
+          },
+          {
+            "component_id": "disk:HDD1",
+            "kind": "disk",
+            "label": "HDD1",
+            "status": "ok",
+            "temperature_c": 41.0,
+            "alerting_since": null
+          }
+        ],
+        "disks": [],
+        "thresholds": {
+          "cpu": {
+            "warn_c": 80.0,
+            "crit_c": 90.0
+          },
+          "gpu": {
+            "warn_c": 80.0,
+            "crit_c": 90.0
+          },
+          "disk": {
+            "warn_c": 45.0,
+            "crit_c": 55.0
+          }
+        },
+        "uptime_s": 59
+      },
+      "expected": "🔥 <b>Есть перегрев!</b>\n\n🔥 CPU «CPU Core 0»: <b>91.0°C</b> с 05:10:00\n✅ CPU «CPU Core 1»: <b>55.5°C</b>\n🔥 GPU «GPU &lt;0&gt;»: <b>86.0°C</b> с 05:30:00\n✅ GPU «GPU 1»: <b>30.0°C</b>\n✅ Диск «HDD1»: <b>41.0°C</b>"
+    },
+    {
+      "name": "full-empty",
+      "fn": "render_status_full",
+      "wire": {
+        "health": []
+      },
+      "expected": "Пока нет данных — сканер ещё не снимал срез."
+    },
+    {
+      "name": "full-all-ok",
+      "fn": "render_status_full",
+      "wire": {
+        "health": [
+          {
+            "component_id": "cpu:CPU",
+            "kind": "cpu",
+            "label": "CPU",
+            "status": "ok",
+            "temperature_c": 40.0,
+            "alerting_since": null
+          },
+          {
+            "component_id": "disk:D<1>",
+            "kind": "disk",
+            "label": "D<1>",
+            "status": "ok",
+            "temperature_c": 33.0,
+            "alerting_since": null
+          }
+        ]
+      },
+      "expected": "✅ <b>Всё в норме.</b>\n\n✅ CPU «CPU»: <b>40.0°C</b>\n✅ Диск «D&lt;1&gt;»: <b>33.0°C</b>"
+    },
+    {
+      "name": "summary-uptime-none",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [],
+        "thresholds": {}
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20"
+    },
+    {
+      "name": "summary-uptime-zero",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [],
+        "thresholds": {},
+        "uptime_s": 0
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: &lt;1 m"
+    },
+    {
+      "name": "summary-uptime-seconds",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [],
+        "thresholds": {},
+        "uptime_s": 30
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: &lt;1 m"
+    },
+    {
+      "name": "summary-uptime-minutes",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [],
+        "thresholds": {},
+        "uptime_s": 600
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 10 m"
+    },
+    {
+      "name": "summary-uptime-hours",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [],
+        "thresholds": {},
+        "uptime_s": 7300
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 2 h"
+    },
+    {
+      "name": "summary-uptime-days",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [],
+        "thresholds": {},
+        "uptime_s": 200000
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: 2 d"
+    },
+    {
+      "name": "summary-uptime-negative",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [],
+        "thresholds": {},
+        "uptime_s": -5
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nuptime: &lt;1 m"
+    },
+    {
+      "name": "summary-empty",
+      "fn": "render_status_summary",
+      "wire": {},
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20"
+    },
+    {
+      "name": "summary-no-last-outage",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [
+          {
+            "component_id": "cpu:CPU",
+            "kind": "cpu",
+            "label": "CPU",
+            "status": "ok",
+            "temperature_c": 36.0,
+            "alerting_since": null
+          }
+        ],
+        "last_outage": null,
+        "thresholds": {
+          "cpu": {
+            "warn_c": 80.0,
+            "crit_c": 90.0
+          }
+        }
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\n\n✅ CPU: 36.0°C 🙂"
+    },
+    {
+      "name": "summary-clean-last-outage",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "last_outage": {
+          "kind": "clean",
+          "boot_at": "2026-03-01T05:00:00+00:00",
+          "down_at": "2026-03-01T04:00:00+00:00",
+          "up_at": "2026-03-01T05:00:00+00:00"
+        }
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\nlast off: 🔌 03/01 09:00 - 03/01 10:00 (1h)"
+    },
+    {
+      "name": "summary-cpu-max-picks-hottest",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [
+          {
+            "component_id": "cpu:A",
+            "kind": "cpu",
+            "label": "A",
+            "status": "ok",
+            "temperature_c": 34.9,
+            "alerting_since": null
+          },
+          {
+            "component_id": "cpu:B",
+            "kind": "cpu",
+            "label": "B",
+            "status": "ok",
+            "temperature_c": 35.0,
+            "alerting_since": null
+          },
+          {
+            "component_id": "cpu:C",
+            "kind": "cpu",
+            "label": "C",
+            "status": "ok",
+            "temperature_c": 20.0,
+            "alerting_since": null
+          }
+        ],
+        "thresholds": {
+          "cpu": {
+            "warn_c": 60.0,
+            "crit_c": 70.0
+          }
+        }
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\n\n✅ CPU: 35.0°C 🙂"
+    },
+    {
+      "name": "summary-disks-only",
+      "fn": "render_status_summary",
+      "wire": {
+        "health": [],
+        "disks": [
+          {
+            "label": "HDD1",
+            "health": "ok",
+            "temperature_c": 38.0,
+            "free_bytes": 100000000000,
+            "total_bytes": 320000000000,
+            "model": "Disk-A",
+            "kind": "hdd"
+          },
+          {
+            "label": "eMMC",
+            "health": null,
+            "temperature_c": null,
+            "free_bytes": 50000000000,
+            "total_bytes": 58000000000,
+            "model": null,
+            "kind": "emmc"
+          }
+        ],
+        "thresholds": {
+          "disk": {
+            "warn_c": 45.0,
+            "crit_c": 55.0
+          }
+        }
+      },
+      "now": "2026-03-01T01:20:00+00:00",
+      "expected": "2026-03-01 06:20\n\n✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)\neMMC: 8 из 58 ГБ (14%)"
+    },
+    {
+      "name": "summary-naive-now",
+      "fn": "render_status_summary",
+      "wire": {},
+      "now": "2026-03-01T12:00:00",
+      "expected": "2026-03-01 12:00"
+    },
+    {
+      "name": "state-line-cold",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 24.9,
+        "alerting_since": null
+      },
+      "expected": "✅ CPU «CPU»: <b>24.9°C</b>"
+    },
+    {
+      "name": "state-line-at-cold",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 35.0,
+        "alerting_since": null
+      },
+      "expected": "✅ CPU «CPU»: <b>35.0°C</b>"
+    },
+    {
+      "name": "state-line-below-warn",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 79.9,
+        "alerting_since": null
+      },
+      "expected": "✅ CPU «CPU»: <b>79.9°C</b>"
+    },
+    {
+      "name": "state-line-at-warn",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 80.0,
+        "alerting_since": null
+      },
+      "expected": "✅ CPU «CPU»: <b>80.0°C</b>"
+    },
+    {
+      "name": "state-line-at-crit",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 90.0,
+        "alerting_since": null
+      },
+      "expected": "✅ CPU «CPU»: <b>90.0°C</b>"
+    },
+    {
+      "name": "state-line-above-crit",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 95.5,
+        "alerting_since": null
+      },
+      "expected": "✅ CPU «CPU»: <b>95.5°C</b>"
+    },
+    {
+      "name": "state-line-alerting-since",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU <1>",
+        "kind": "cpu",
+        "label": "CPU <1>",
+        "status": "alerting",
+        "temperature_c": 88.0,
+        "alerting_since": "2026-03-01T23:59:59+00:00"
+      },
+      "expected": "🔥 CPU «CPU &lt;1&gt;»: <b>88.0°C</b> с 04:59:59"
+    },
+    {
+      "name": "state-line-alerting-no-since",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "gpu:GPU",
+        "kind": "gpu",
+        "label": "GPU",
+        "status": "alerting",
+        "temperature_c": 88.0,
+        "alerting_since": null
+      },
+      "expected": "🔥 GPU «GPU»: <b>88.0°C</b>"
+    },
+    {
+      "name": "state-line-disk-kind",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "disk:HDD",
+        "kind": "disk",
+        "label": "HDD",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      "expected": "✅ Диск «HDD»: <b>40.0°C</b>"
+    },
+    {
+      "name": "state-line-ok-with-since",
+      "fn": "render_state_line",
+      "item": {
+        "component_id": "cpu:CPU",
+        "kind": "cpu",
+        "label": "CPU",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": "2026-03-01T01:00:00+00:00"
+      },
+      "expected": "✅ CPU «CPU»: <b>40.0°C</b>"
+    },
+    {
+      "name": "gpu-line-cold",
+      "fn": "render_gpu_line",
+      "item": {
+        "component_id": "gpu:GPU 0",
+        "kind": "gpu",
+        "label": "GPU 0",
+        "status": "ok",
+        "temperature_c": 39.9,
+        "alerting_since": null
+      },
+      "warn": 80.0,
+      "crit": 90.0,
+      "expected": "✅ GPU GPU 0: 39.9°C 🥶"
+    },
+    {
+      "name": "gpu-line-at-cold",
+      "fn": "render_gpu_line",
+      "item": {
+        "component_id": "gpu:GPU 0",
+        "kind": "gpu",
+        "label": "GPU 0",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      "warn": 80.0,
+      "crit": 90.0,
+      "expected": "✅ GPU GPU 0: 40.0°C 🙂"
+    },
+    {
+      "name": "gpu-line-warm",
+      "fn": "render_gpu_line",
+      "item": {
+        "component_id": "gpu:GPU 0",
+        "kind": "gpu",
+        "label": "GPU 0",
+        "status": "ok",
+        "temperature_c": 75.0,
+        "alerting_since": null
+      },
+      "warn": 80.0,
+      "crit": 90.0,
+      "expected": "✅ GPU GPU 0: 75.0°C 🙂"
+    },
+    {
+      "name": "gpu-line-hot",
+      "fn": "render_gpu_line",
+      "item": {
+        "component_id": "gpu:GPU 0",
+        "kind": "gpu",
+        "label": "GPU 0",
+        "status": "ok",
+        "temperature_c": 83.0,
+        "alerting_since": null
+      },
+      "warn": 80.0,
+      "crit": 90.0,
+      "expected": "✅ GPU GPU 0: 83.0°C 🥵"
+    },
+    {
+      "name": "gpu-line-crit",
+      "fn": "render_gpu_line",
+      "item": {
+        "component_id": "gpu:GPU 0",
+        "kind": "gpu",
+        "label": "GPU 0",
+        "status": "ok",
+        "temperature_c": 90.0,
+        "alerting_since": null
+      },
+      "warn": 80.0,
+      "crit": 90.0,
+      "expected": "✅ GPU GPU 0: 90.0°C 🔥"
+    },
+    {
+      "name": "gpu-line-alerting-escape",
+      "fn": "render_gpu_line",
+      "item": {
+        "component_id": "gpu:GPU <x>",
+        "kind": "gpu",
+        "label": "GPU <x>",
+        "status": "alerting",
+        "temperature_c": 91.0,
+        "alerting_since": "2026-03-01T01:00:00+00:00"
+      },
+      "warn": 80.0,
+      "crit": 90.0,
+      "expected": "🔥 GPU GPU &lt;x&gt;: 91.0°C 🔥"
+    },
+    {
+      "name": "host-line-steal_pct",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "Своя <метка>",
+        "value": 12.4,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • CPU steal: <b>12%</b>"
+    },
+    {
+      "name": "host-line-steal_pct-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "Своя <метка>",
+        "value": 12.4,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ CPU steal: <b>12%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-iowait_pct",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "Своя <метка>",
+        "value": 7.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • iowait (нагрузка на диск): <b>7%</b>"
+    },
+    {
+      "name": "host-line-iowait_pct-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "Своя <метка>",
+        "value": 7.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ iowait (нагрузка на диск): <b>7%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-load_per_core",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "Своя <метка>",
+        "value": 1.234,
+        "unit": "",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • load / ядро: <b>1.2</b>"
+    },
+    {
+      "name": "host-line-load_per_core-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "Своя <метка>",
+        "value": 1.234,
+        "unit": "",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ load / ядро: <b>1.2</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-mem_available_pct",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "Своя <метка>",
+        "value": 53.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • RAM свободно: <b>53%</b>"
+    },
+    {
+      "name": "host-line-mem_available_pct-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "Своя <метка>",
+        "value": 53.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ RAM свободно: <b>53%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-swap_used_pct",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "Своя <метка>",
+        "value": 0.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • swap занято: <b>0%</b>"
+    },
+    {
+      "name": "host-line-swap_used_pct-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "Своя <метка>",
+        "value": 0.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ swap занято: <b>0%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-disk_used_pct",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "Своя <метка>",
+        "value": 91.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • диск / заполнен: <b>91%</b>"
+    },
+    {
+      "name": "host-line-disk_used_pct-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "Своя <метка>",
+        "value": 91.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ диск / заполнен: <b>91%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-psi_cpu",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "Своя <метка>",
+        "value": 4.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • PSI cpu: <b>4%</b>"
+    },
+    {
+      "name": "host-line-psi_cpu-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "Своя <метка>",
+        "value": 4.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ PSI cpu: <b>4%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-psi_memory",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "Своя <метка>",
+        "value": 1.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • PSI mem: <b>1%</b>"
+    },
+    {
+      "name": "host-line-psi_memory-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "Своя <метка>",
+        "value": 1.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ PSI mem: <b>1%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-psi_io",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "Своя <метка>",
+        "value": 2.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • PSI io: <b>2%</b>"
+    },
+    {
+      "name": "host-line-psi_io-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "Своя <метка>",
+        "value": 2.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ PSI io: <b>2%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-oom_kills",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "Своя <метка>",
+        "value": 3.0,
+        "unit": "",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • OOM-kill: <b>3.0</b>"
+    },
+    {
+      "name": "host-line-oom_kills-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "Своя <метка>",
+        "value": 3.0,
+        "unit": "",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ OOM-kill: <b>3.0</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-conntrack_pct",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "Своя <метка>",
+        "value": 12.0,
+        "unit": "%",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • conntrack заполнен: <b>12%</b>"
+    },
+    {
+      "name": "host-line-conntrack_pct-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "Своя <метка>",
+        "value": 12.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ conntrack заполнен: <b>12%</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-net_err_rate",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "Своя <метка>",
+        "value": 0.5,
+        "unit": "/s",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • ошибки/дропы NIC: <b>0/s</b>"
+    },
+    {
+      "name": "host-line-net_err_rate-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "Своя <метка>",
+        "value": 0.5,
+        "unit": "/s",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ ошибки/дропы NIC: <b>0/s</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-kernel_stall_events",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "Своя <метка>",
+        "value": 1.0,
+        "unit": "",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • стойла ядра: <b>1.0</b>"
+    },
+    {
+      "name": "host-line-kernel_stall_events-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "Своя <метка>",
+        "value": 1.0,
+        "unit": "",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ стойла ядра: <b>1.0</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-custom_metric",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:custom_metric",
+        "metric": "custom_metric",
+        "label": "Своя <метка>",
+        "value": 9.0,
+        "unit": "ms",
+        "status": "ok",
+        "alerting_since": null
+      },
+      "expected": " • Своя <метка>: <b>9ms</b>"
+    },
+    {
+      "name": "host-line-custom_metric-alerting",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:custom_metric",
+        "metric": "custom_metric",
+        "label": "Своя <метка>",
+        "value": 9.0,
+        "unit": "ms",
+        "status": "alerting",
+        "alerting_since": "2026-03-01T18:45:00+00:00"
+      },
+      "expected": " • ⚠️ Своя <метка>: <b>9ms</b> (с 23:45)"
+    },
+    {
+      "name": "host-line-alerting-no-since",
+      "fn": "render_host_line",
+      "item": {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "метрика",
+        "value": 30.0,
+        "unit": "%",
+        "status": "alerting",
+        "alerting_since": null
+      },
+      "expected": " • ⚠️ CPU steal: <b>30%</b>"
+    },
+    {
+      "name": "host-block-empty",
+      "fn": "render_host_block",
+      "items": [],
+      "expected": ""
+    },
+    {
+      "name": "host-block-normal-order",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:swap_used_pct",
+          "metric": "swap_used_pct",
+          "label": "метрика",
+          "value": 1.0,
+          "unit": "%",
+          "status": "ok",
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "метрика",
+          "value": 2.0,
+          "unit": "%",
+          "status": "ok",
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:conntrack_pct",
+          "metric": "conntrack_pct",
+          "label": "метрика",
+          "value": 3.0,
+          "unit": "%",
+          "status": "ok",
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:load_per_core",
+          "metric": "load_per_core",
+          "label": "метрика",
+          "value": 0.4,
+          "unit": "",
+          "status": "ok",
+          "alerting_since": null
+        }
+      ],
+      "expected": "📊 <b>Хост VPS</b>\n • CPU steal: <b>2%</b>\n • load / ядро: <b>0.4</b>\n • swap занято: <b>1%</b>\n • conntrack заполнен: <b>3%</b>"
+    },
+    {
+      "name": "host-block-alerting-extras",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "метрика",
+          "value": 25.0,
+          "unit": "%",
+          "status": "alerting",
+          "alerting_since": "2026-03-01T01:00:00+00:00"
+        },
+        {
+          "component_id": "host:psi_io",
+          "metric": "psi_io",
+          "label": "метрика",
+          "value": 40.0,
+          "unit": "%",
+          "status": "alerting",
+          "alerting_since": "2026-03-01T02:00:00+00:00"
+        },
+        {
+          "component_id": "host:oom_kills",
+          "metric": "oom_kills",
+          "label": "метрика",
+          "value": 2.0,
+          "unit": "",
+          "status": "alerting",
+          "alerting_since": "2026-03-01T03:00:00+00:00"
+        },
+        {
+          "component_id": "host:psi_cpu",
+          "metric": "psi_cpu",
+          "label": "метрика",
+          "value": 1.0,
+          "unit": "%",
+          "status": "ok",
+          "alerting_since": null
+        }
+      ],
+      "expected": "⚠️ <b>Хост VPS</b>\n • ⚠️ CPU steal: <b>25%</b> (с 06:00)\n • ⚠️ PSI io: <b>40%</b> (с 07:00)\n • ⚠️ OOM-kill: <b>2.0</b> (с 08:00)"
+    },
+    {
+      "name": "host-block-only-uncard-ok",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:psi_cpu",
+          "metric": "psi_cpu",
+          "label": "метрика",
+          "value": 1.0,
+          "unit": "%",
+          "status": "ok",
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:oom_kills",
+          "metric": "oom_kills",
+          "label": "метрика",
+          "value": 0.0,
+          "unit": "",
+          "status": "ok",
+          "alerting_since": null
+        }
+      ],
+      "expected": "📊 <b>Хост VPS</b>"
+    },
+    {
+      "name": "host-block-alerting-card-metric",
+      "fn": "render_host_block",
+      "items": [
+        {
+          "component_id": "host:disk_used_pct",
+          "metric": "disk_used_pct",
+          "label": "метрика",
+          "value": 95.0,
+          "unit": "%",
+          "status": "alerting",
+          "alerting_since": "2026-03-01T04:00:00+00:00"
+        },
+        {
+          "component_id": "host:iowait_pct",
+          "metric": "iowait_pct",
+          "label": "метрика",
+          "value": 1.0,
+          "unit": "%",
+          "status": "ok",
+          "alerting_since": null
+        }
+      ],
+      "expected": "⚠️ <b>Хост VPS</b>\n • iowait (нагрузка на диск): <b>1%</b>\n • ⚠️ диск / заполнен: <b>95%</b> (с 09:00)"
+    },
+    {
+      "name": "disk-line-hdd",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-ssd-warn",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "⚠️ SSD Disk-B\n 30°C 🙂| 56 из 256 ГБ (22%)"
+    },
+    {
+      "name": "disk-line-nvme-fail",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "N",
+        "health": "failed",
+        "temperature_c": 70.0,
+        "free_bytes": 10000000000,
+        "total_bytes": 512000000000,
+        "model": "Fast <1>",
+        "kind": "nvme"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "❌ NVMe Fast &lt;1&gt;\n 70°C 🔥| 502 из 512 ГБ (98%)"
+    },
+    {
+      "name": "disk-line-emmc",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "eMMC",
+        "health": null,
+        "temperature_c": 41.0,
+        "free_bytes": 50000000000,
+        "total_bytes": 58000000000,
+        "model": null,
+        "kind": "emmc"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "eMMC\n 41°C 🙂| 8 из 58 ГБ (14%)"
+    },
+    {
+      "name": "disk-line-emmc-no-temp",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "eMMC",
+        "health": null,
+        "temperature_c": null,
+        "free_bytes": 50000000000,
+        "total_bytes": 58000000000,
+        "model": null,
+        "kind": "emmc"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "eMMC: 8 из 58 ГБ (14%)"
+    },
+    {
+      "name": "disk-line-hdd-no-temp",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": null,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A: 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-hdd-unknown-health",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": null,
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "❔ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-hdd-no-model",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": null,
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD ?\n 38°C 🙂| 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-unmounted-total-none",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": null,
+        "total_bytes": null,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 38°C 🙂| не смонтирован"
+    },
+    {
+      "name": "disk-line-unmounted-total-zero",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 0,
+        "total_bytes": 0,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 38°C 🙂| не смонтирован"
+    },
+    {
+      "name": "disk-line-free-none",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": null,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 38°C 🙂| 320 из 320 ГБ (100%)"
+    },
+    {
+      "name": "disk-line-unknown-kind",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "tape"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 38°C 🙂| 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-full",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 0,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 38°C 🙂| 320 из 320 ГБ (100%)"
+    },
+    {
+      "name": "disk-line-cold-disk",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 24.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 24°C 🥶| 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-hot-disk",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 50.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 50°C 🥵| 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-crit-disk",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 60.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 60°C 🔥| 220 из 320 ГБ (69%)"
+    },
+    {
+      "name": "disk-line-rounding",
+      "fn": "render_disk_line",
+      "item": {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 33000000000,
+        "total_bytes": 100000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      "warn": 45.0,
+      "crit": 55.0,
+      "expected": "✅ HDD Disk-A\n 38°C 🙂| 67 из 100 ГБ (67%)"
+    },
+    {
+      "name": "downtime-empty",
+      "fn": "render_downtime",
+      "events": [],
+      "offset": 0,
+      "expected": "Нет данных об отключениях (журнал `last` пуст или недоступен)."
+    },
+    {
+      "name": "downtime-empty-next-page",
+      "fn": "render_downtime",
+      "events": [],
+      "offset": 10,
+      "expected": "Дальше отключений нет."
+    },
+    {
+      "name": "downtime-first-page",
+      "fn": "render_downtime",
+      "events": [
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-01T08:05:00+00:00",
+          "down_at": "2026-03-01T08:00:00+00:00",
+          "up_at": "2026-03-01T08:05:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-02T08:05:00+00:00",
+          "down_at": "2026-03-02T08:00:00+00:00",
+          "up_at": "2026-03-02T08:05:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-03T08:05:00+00:00",
+          "down_at": "2026-03-03T08:00:00+00:00",
+          "up_at": "2026-03-03T08:05:00+00:00",
+          "down_approx": false
+        }
+      ],
+      "offset": 0,
+      "expected": "<b>Последние отключения</b>\n\n⚡ 03/01 13:00 - 03/01 13:05 (5m)\n⚡ 03/02 13:00 - 03/02 13:05 (5m)\n⚡ 03/03 13:00 - 03/03 13:05 (5m)"
+    },
+    {
+      "name": "downtime-second-page",
+      "fn": "render_downtime",
+      "events": [
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-01T08:05:00+00:00",
+          "down_at": "2026-03-01T08:00:00+00:00",
+          "up_at": "2026-03-01T08:05:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-02T08:05:00+00:00",
+          "down_at": "2026-03-02T08:00:00+00:00",
+          "up_at": "2026-03-02T08:05:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-03T08:05:00+00:00",
+          "down_at": "2026-03-03T08:00:00+00:00",
+          "up_at": "2026-03-03T08:05:00+00:00",
+          "down_approx": false
+        }
+      ],
+      "offset": 10,
+      "expected": "<b>Отключения 11–13</b>\n\n⚡ 03/01 13:00 - 03/01 13:05 (5m)\n⚡ 03/02 13:00 - 03/02 13:05 (5m)\n⚡ 03/03 13:00 - 03/03 13:05 (5m)"
+    },
+    {
+      "name": "downtime-third-page-one",
+      "fn": "render_downtime",
+      "events": [
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-01T08:05:00+00:00",
+          "down_at": "2026-03-01T08:00:00+00:00",
+          "up_at": "2026-03-01T08:05:00+00:00",
+          "down_approx": false
+        }
+      ],
+      "offset": 20,
+      "expected": "<b>Отключения 21–21</b>\n\n⚡ 03/01 13:00 - 03/01 13:05 (5m)"
+    },
+    {
+      "name": "downtime-clean-and-unknown",
+      "fn": "render_downtime",
+      "events": [
+        {
+          "kind": "clean",
+          "boot_at": "2026-03-01T02:00:00+00:00",
+          "down_at": "2026-03-01T01:00:00+00:00",
+          "up_at": "2026-03-01T02:00:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-01T03:00:00+00:00",
+          "down_at": null,
+          "up_at": "2026-03-01T03:00:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-01T00:00:00+00:00",
+          "down_at": "2026-03-01T04:00:00+00:00",
+          "up_at": null,
+          "down_approx": false
+        }
+      ],
+      "offset": 0,
+      "expected": "<b>Последние отключения</b>\n\n🔌 03/01 06:00 - 03/01 07:00 (1h)\n⚡ ? - 03/01 08:00\n⚡ 03/01 09:00 - ?"
+    },
+    {
+      "name": "downtime-none-entries-dropped",
+      "fn": "render_downtime",
+      "events": [
+        null,
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-03-01T08:05:00+00:00",
+          "down_at": "2026-03-01T08:00:00+00:00",
+          "up_at": "2026-03-01T08:05:00+00:00",
+          "down_approx": false
+        }
+      ],
+      "offset": 0,
+      "expected": "<b>Последние отключения</b>\n\n⚡ 03/01 13:00 - 03/01 13:05 (5m)"
+    },
+    {
+      "name": "stats-no-runs",
+      "fn": "render_stats",
+      "wire": {
+        "job_counts": {},
+        "recent_runs": []
+      },
+      "expected": "Прогонов сканера ещё не было."
+    },
+    {
+      "name": "stats-no-runs-with-counts",
+      "fn": "render_stats",
+      "wire": {
+        "job_counts": {
+          "ok": 3
+        },
+        "recent_runs": []
+      },
+      "expected": "Прогонов сканера ещё не было."
+    },
+    {
+      "name": "stats-mixed",
+      "fn": "render_stats",
+      "wire": {
+        "job_counts": {
+          "ok": 5,
+          "error": 2,
+          "running": 1,
+          "queued": 4
+        },
+        "recent_runs": [
+          {
+            "id": 1,
+            "job_type": "sensor_scan",
+            "started_at": "2026-03-01T00:00:00+00:00",
+            "finished_at": null,
+            "status": "ok",
+            "error": null,
+            "metrics_json": null
+          },
+          {
+            "id": 1,
+            "job_type": "smart_scan",
+            "started_at": "2026-03-01T01:02:03+00:00",
+            "finished_at": null,
+            "status": "error",
+            "error": null,
+            "metrics_json": null
+          },
+          {
+            "id": 1,
+            "job_type": "sensor_scan",
+            "started_at": "2026-03-01T02:00:00+00:00",
+            "finished_at": null,
+            "status": "running",
+            "error": null,
+            "metrics_json": null
+          },
+          {
+            "id": 1,
+            "job_type": "x",
+            "started_at": "2026-03-01T03:00:00+00:00",
+            "finished_at": null,
+            "status": "queued",
+            "error": null,
+            "metrics_json": null
+          }
+        ]
+      },
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 12 (ok=5, error=2, running=1)\n\nПоследние:\n✅ sensor_scan @ 03-01 05:00:00\n❌ smart_scan @ 03-01 06:02:03\n⏳ sensor_scan @ 03-01 07:00:00\n• x @ 03-01 08:00:00"
+    },
+    {
+      "name": "stats-missing-counts",
+      "fn": "render_stats",
+      "wire": {
+        "job_counts": {},
+        "recent_runs": [
+          {
+            "id": 1,
+            "job_type": "job",
+            "started_at": "2026-03-01T00:00:00+00:00",
+            "finished_at": null,
+            "status": "ok",
+            "error": null,
+            "metrics_json": null
+          }
+        ]
+      },
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 0 (ok=0, error=0, running=0)\n\nПоследние:\n✅ job @ 03-01 05:00:00"
+    },
+    {
+      "name": "stats-bad-timestamp-tolerant",
+      "fn": "render_stats",
+      "wire": {
+        "job_counts": {
+          "ok": 1
+        },
+        "recent_runs": [
+          {
+            "id": 1,
+            "job_type": "job",
+            "started_at": "вчера вечером",
+            "finished_at": null,
+            "status": "ok",
+            "error": null,
+            "metrics_json": null
+          }
+        ]
+      },
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 1 (ok=1, error=0, running=0)\n\nПоследние:\n✅ job @ вчера вечером"
+    },
+    {
+      "name": "stats-late-utc-rolls-over",
+      "fn": "render_stats",
+      "wire": {
+        "job_counts": {
+          "ok": 1
+        },
+        "recent_runs": [
+          {
+            "id": 1,
+            "job_type": "job",
+            "started_at": "2026-03-31T22:30:00+00:00",
+            "finished_at": null,
+            "status": "ok",
+            "error": null,
+            "metrics_json": null
+          }
+        ]
+      },
+      "expected": "<b>Статистика сканера</b>\nВсего прогонов: 1 (ok=1, error=0, running=0)\n\nПоследние:\n✅ job @ 04-01 03:30:00"
+    }
+  ]
+}

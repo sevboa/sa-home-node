@@ -1,0 +1,781 @@
+{
+  "cases": [
+    {
+      "name": "event-started-cpu",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-cleared-cpu",
+      "fn": "render_event",
+      "type": "overheat_cleared",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 61.0,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "✅ <b>Норма</b> — CPU «CPU Package» остыл\nТемпература: <b>61.0°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-started-gpu",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "gpu:x",
+        "kind": "gpu",
+        "label": "CPU Package",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — GPU «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-cleared-gpu",
+      "fn": "render_event",
+      "type": "overheat_cleared",
+      "data": {
+        "component_id": "gpu:x",
+        "kind": "gpu",
+        "label": "CPU Package",
+        "temperature_c": 61.0,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "✅ <b>Норма</b> — GPU «CPU Package» остыл\nТемпература: <b>61.0°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-started-disk",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "disk:x",
+        "kind": "disk",
+        "label": "CPU Package",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — Диск «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-cleared-disk",
+      "fn": "render_event",
+      "type": "overheat_cleared",
+      "data": {
+        "component_id": "disk:x",
+        "kind": "disk",
+        "label": "CPU Package",
+        "temperature_c": 61.0,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "✅ <b>Норма</b> — Диск «CPU Package» остыл\nТемпература: <b>61.0°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-other-type",
+      "fn": "render_event",
+      "type": "system",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 40.0,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "ℹ️ CPU «CPU Package»: 40.0°C (15:05:09)"
+    },
+    {
+      "name": "event-unknown-kind",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "nvme:x",
+        "kind": "nvme",
+        "label": "NVMe0",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — Диск «NVMe0»\nТемпература: <b>91.5°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-escape",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "disk:x",
+        "kind": "disk",
+        "label": "Диск <A&B> «1»",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — Диск «Диск &lt;A&amp;B&gt; «1»»\nТемпература: <b>91.5°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-round-half-even",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 91.25,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.2°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-round-up",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 91.35,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.3°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-integer-temp",
+      "fn": "render_event",
+      "type": "overheat_cleared",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 70,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "✅ <b>Норма</b> — CPU «CPU Package» остыл\nТемпература: <b>70.0°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-negative-temp",
+      "fn": "render_event",
+      "type": "overheat_cleared",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": -3.04,
+        "at": "2026-03-01T10:05:09+00:00"
+      },
+      "expected": "✅ <b>Норма</b> — CPU «CPU Package» остыл\nТемпература: <b>-3.0°C</b>\nВремя: 15:05:09"
+    },
+    {
+      "name": "event-late-utc-rolls-over",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T22:59:59+00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 03:59:59"
+    },
+    {
+      "name": "event-offset-input",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T03:00:00+03:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 05:00:00"
+    },
+    {
+      "name": "event-naive-time",
+      "fn": "render_event",
+      "type": "overheat_started",
+      "data": {
+        "component_id": "cpu:x",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "temperature_c": 91.5,
+        "at": "2026-03-01T08:00:00"
+      },
+      "expected": "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 08:00:00"
+    },
+    {
+      "name": "host-degraded-hint",
+      "fn": "render_host_event",
+      "type": "host_degraded",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 21.4,
+        "unit": "%",
+        "hint": "Соседи на гипервизоре <шумят>",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "⚠️ <b>CPU steal: 21%</b> — Соседи на гипервизоре &lt;шумят&gt;\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-degraded-no-hint",
+      "fn": "render_host_event",
+      "type": "host_degraded",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 21.4,
+        "unit": "%",
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "⚠️ <b>CPU steal: 21%</b>\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-recovered",
+      "fn": "render_host_event",
+      "type": "host_recovered",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 3.0,
+        "unit": "%",
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "✅ <b>CPU steal</b> вернулся к норме (3%)\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-unit-empty",
+      "fn": "render_host_event",
+      "type": "host_degraded",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "load / ядро",
+        "value": 2.345,
+        "unit": "",
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "⚠️ <b>load / ядро: 2.3</b>\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-unit-ms",
+      "fn": "render_host_event",
+      "type": "host_degraded",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "RTT",
+        "value": 153.6,
+        "unit": "ms",
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "⚠️ <b>RTT: 154ms</b>\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-unit-none",
+      "fn": "render_host_event",
+      "type": "host_degraded",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 21.4,
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "⚠️ <b>CPU steal: 21.4</b>\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-escape-label",
+      "fn": "render_host_event",
+      "type": "host_recovered",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "a<b>&c",
+        "value": 0.5,
+        "unit": "%",
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "✅ <b>a&lt;b&gt;&amp;c</b> вернулся к норме (0%)\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-percent-rounding",
+      "fn": "render_host_event",
+      "type": "host_degraded",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 0.5,
+        "unit": "%",
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "⚠️ <b>CPU steal: 0%</b>\nВремя: 12:30:00"
+    },
+    {
+      "name": "host-other-type",
+      "fn": "render_host_event",
+      "type": "host_other",
+      "data": {
+        "component_id": "host:x",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 21.4,
+        "unit": "%",
+        "hint": "",
+        "at": "2026-03-01T07:30:00+00:00"
+      },
+      "expected": "✅ <b>CPU steal</b> вернулся к норме (21%)\nВремя: 12:30:00"
+    },
+    {
+      "name": "smart-degraded-health",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "ok",
+        "health_to": "warning",
+        "attr_changes": [],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»\nЗдоровье: норма → <b>предупреждение</b>"
+    },
+    {
+      "name": "smart-degraded-failed",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "warning",
+        "health_to": "failed",
+        "attr_changes": [
+          {
+            "attr_id": 5,
+            "name": "Reallocated_Sector_Ct",
+            "old": 3,
+            "new": 17
+          }
+        ],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»\nЗдоровье: предупреждение → <b>СБОЙ</b>\n🔺 Reallocated_Sector_Ct: 3 → <b>17</b>"
+    },
+    {
+      "name": "smart-recovered",
+      "fn": "render_smart_change",
+      "type": "smart_recovered",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "failed",
+        "health_to": "ok",
+        "attr_changes": [],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "✅ <b>SMART: улучшение</b> — диск «HDD1»\nЗдоровье: СБОЙ → <b>норма</b>"
+    },
+    {
+      "name": "smart-same-health-attrs",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "ok",
+        "health_to": "ok",
+        "attr_changes": [
+          {
+            "attr_id": 5,
+            "name": "Pending<Sectors>",
+            "old": 0,
+            "new": 4
+          },
+          {
+            "attr_id": 6,
+            "name": "CRC",
+            "old": 9,
+            "new": 2
+          }
+        ],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»\n🔺 Pending&lt;Sectors&gt;: 0 → <b>4</b>\n🔻 CRC: 9 → <b>2</b>"
+    },
+    {
+      "name": "smart-from-none",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": null,
+        "health_to": "warning",
+        "attr_changes": [],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»\nЗдоровье: н/д → <b>предупреждение</b>"
+    },
+    {
+      "name": "smart-to-none",
+      "fn": "render_smart_change",
+      "type": "smart_recovered",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "warning",
+        "health_to": null,
+        "attr_changes": [],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "✅ <b>SMART: улучшение</b> — диск «HDD1»\nЗдоровье: предупреждение → <b>н/д</b>"
+    },
+    {
+      "name": "smart-both-none",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": null,
+        "health_to": null,
+        "attr_changes": [
+          {
+            "attr_id": 5,
+            "name": "Temp",
+            "old": 30,
+            "new": 31
+          }
+        ],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»\n🔺 Temp: 30 → <b>31</b>"
+    },
+    {
+      "name": "smart-unknown-health",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "ok",
+        "health_to": "weird",
+        "attr_changes": [],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»\nЗдоровье: норма → <b>н/д</b>"
+    },
+    {
+      "name": "smart-equal-attr",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "ok",
+        "health_to": "ok",
+        "attr_changes": [
+          {
+            "attr_id": 5,
+            "name": "Same",
+            "old": 5,
+            "new": 5
+          }
+        ],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»\n🔻 Same: 5 → <b>5</b>"
+    },
+    {
+      "name": "smart-escape-label",
+      "fn": "render_smart_change",
+      "type": "smart_recovered",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "Диск <1> & «2»",
+        "health_from": "warning",
+        "health_to": "ok",
+        "attr_changes": [],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "✅ <b>SMART: улучшение</b> — диск «Диск &lt;1&gt; &amp; «2»»\nЗдоровье: предупреждение → <b>норма</b>"
+    },
+    {
+      "name": "smart-no-attrs",
+      "fn": "render_smart_change",
+      "type": "smart_degraded",
+      "data": {
+        "component_id": "disk:/dev/sda",
+        "label": "HDD1",
+        "health_from": "ok",
+        "health_to": "ok",
+        "attr_changes": [],
+        "at": "2026-03-01T12:00:00+00:00"
+      },
+      "expected": "⚠️ <b>SMART: ухудшение</b> — диск «HDD1»"
+    },
+    {
+      "name": "outage-unexpected",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/29 03:53 - 03/29 04:00 (7m)"
+    },
+    {
+      "name": "outage-clean",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "clean",
+        "boot_at": "2026-03-28T20:01:30+00:00",
+        "down_at": "2026-03-28T20:00:00+00:00",
+        "up_at": "2026-03-28T20:01:30+00:00",
+        "down_approx": false
+      },
+      "expected": "🔌 03/29 01:00 - 03/29 01:01 (1m 30s)"
+    },
+    {
+      "name": "outage-approx-flag-ignored",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": "⚡ 03/29 03:53 - 03/29 04:00 (7m)"
+    },
+    {
+      "name": "outage-down-missing",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": null,
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ ? - 03/29 04:00"
+    },
+    {
+      "name": "outage-up-missing",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": null,
+        "down_approx": false
+      },
+      "expected": "⚡ 03/29 03:53 - ?"
+    },
+    {
+      "name": "outage-both-missing",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": null,
+        "up_at": null,
+        "down_approx": false
+      },
+      "expected": "⚡ ? - ?"
+    },
+    {
+      "name": "outage-next-day-local",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T22:05:00+00:00",
+        "down_at": "2026-03-28T21:59:00+00:00",
+        "up_at": "2026-03-28T22:05:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/29 02:59 - 03/29 03:05 (6m)"
+    },
+    {
+      "name": "outage-year-border",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-12-31T19:01:00+00:00",
+        "down_at": "2026-12-31T18:59:00+00:00",
+        "up_at": "2026-12-31T19:01:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 12/31 23:59 - 01/01 00:01 (2m)"
+    },
+    {
+      "name": "outage-downtime-zero",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T00:00:00+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T00:00:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/01 05:00 (0s)"
+    },
+    {
+      "name": "outage-downtime-seconds",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T00:00:45+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T00:00:45+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/01 05:00 (45s)"
+    },
+    {
+      "name": "outage-downtime-minute",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T00:01:00+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T00:01:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/01 05:01 (1m)"
+    },
+    {
+      "name": "outage-downtime-minutes-seconds",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T00:02:05+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T00:02:05+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/01 05:02 (2m 5s)"
+    },
+    {
+      "name": "outage-downtime-hour",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T01:00:00+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T01:00:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/01 06:00 (1h)"
+    },
+    {
+      "name": "outage-downtime-hour-min-sec",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T01:01:01+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-01T01:01:01+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/01 06:01 (1h 1m 1s)"
+    },
+    {
+      "name": "outage-downtime-day",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-02T00:00:00+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-02T00:00:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/02 05:00 (1d)"
+    },
+    {
+      "name": "outage-downtime-day-hour-min-sec",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-02T01:01:01+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-02T01:01:01+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/02 06:01 (1d 1h 1m 1s)"
+    },
+    {
+      "name": "outage-downtime-many-days",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-11T02:00:00+00:00",
+        "down_at": "2026-03-01T00:00:00+00:00",
+        "up_at": "2026-03-11T02:00:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 05:00 - 03/11 07:00 (10d 2h)"
+    },
+    {
+      "name": "outage-up-before-down",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T10:00:00+00:00",
+        "down_at": "2026-03-01T10:00:05+00:00",
+        "up_at": "2026-03-01T10:00:00+00:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 15:00 - 03/01 15:00 (0s)"
+    },
+    {
+      "name": "outage-offset-times",
+      "fn": "render_outage_line",
+      "type": null,
+      "data": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T09:30:00+05:00",
+        "down_at": "2026-03-01T08:00:00+05:00",
+        "up_at": "2026-03-01T09:30:00+05:00",
+        "down_approx": false
+      },
+      "expected": "⚡ 03/01 08:00 - 03/01 09:30 (1h 30m)"
+    }
+  ]
+}

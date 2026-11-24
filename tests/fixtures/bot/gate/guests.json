@@ -1,0 +1,1907 @@
+{
+  "subs": [
+    {
+      "name": "owner",
+      "chat_id": 1001,
+      "allowed": [
+        "*"
+      ],
+      "source": "config"
+    },
+    {
+      "name": "group",
+      "chat_id": 1002,
+      "allowed": [
+        "status"
+      ],
+      "source": "config"
+    },
+    {
+      "name": "guest-a",
+      "chat_id": 2001,
+      "allowed": [
+        "status",
+        "cmd-a@plug"
+      ],
+      "source": "guest"
+    },
+    {
+      "name": "guest-b",
+      "chat_id": 2002,
+      "allowed": [],
+      "source": "guest"
+    },
+    {
+      "name": "guest-c",
+      "chat_id": 2003,
+      "allowed": [
+        "x@y"
+      ],
+      "source": "guest"
+    }
+  ],
+  "cases": [
+    {
+      "name": "revoke",
+      "ops": [
+        [
+          "revoke",
+          2001
+        ],
+        [
+          "revoke",
+          2001
+        ],
+        [
+          "revoke",
+          2002
+        ]
+      ],
+      "trace": [
+        {
+          "result": true,
+          "saves": 1,
+          "last_save": [
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": false,
+          "saves": 1,
+          "last_save": [
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": true,
+          "saves": 2,
+          "last_save": [
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "revoke-not-guest",
+      "ops": [
+        [
+          "revoke",
+          1001
+        ],
+        [
+          "revoke",
+          1002
+        ],
+        [
+          "revoke",
+          9999
+        ]
+      ],
+      "trace": [
+        {
+          "result": false,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": false,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": false,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "set-rights",
+      "ops": [
+        [
+          "set",
+          2001,
+          [
+            "a",
+            "b",
+            "c@d"
+          ]
+        ],
+        [
+          "set",
+          2002,
+          [
+            "z"
+          ]
+        ],
+        [
+          "set",
+          2003,
+          []
+        ]
+      ],
+      "trace": [
+        {
+          "result": {
+            "name": "guest-a",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "a",
+              "b",
+              "c@d"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 1,
+          "last_save": [
+            [
+              2001,
+              [
+                "a",
+                "b",
+                "c@d"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "a",
+                "b",
+                "c@d"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-b",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "z"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 2,
+          "last_save": [
+            [
+              2001,
+              [
+                "a",
+                "b",
+                "c@d"
+              ]
+            ],
+            [
+              2002,
+              [
+                "z"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "a",
+                "b",
+                "c@d"
+              ]
+            ],
+            [
+              2002,
+              [
+                "z"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-c",
+            "chat_id": 2003,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 3,
+          "last_save": [
+            [
+              2001,
+              [
+                "a",
+                "b",
+                "c@d"
+              ]
+            ],
+            [
+              2002,
+              [
+                "z"
+              ]
+            ],
+            [
+              2003,
+              []
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "a",
+                "b",
+                "c@d"
+              ]
+            ],
+            [
+              2002,
+              [
+                "z"
+              ]
+            ],
+            [
+              2003,
+              []
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "set-many-one-write",
+      "ops": [
+        [
+          "set",
+          2001,
+          [
+            "r0@svc",
+            "r1@svc",
+            "r2@svc",
+            "r3@svc",
+            "r4@svc",
+            "r5@svc",
+            "r6@svc",
+            "r7@svc"
+          ]
+        ]
+      ],
+      "trace": [
+        {
+          "result": {
+            "name": "guest-a",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "r0@svc",
+              "r1@svc",
+              "r2@svc",
+              "r3@svc",
+              "r4@svc",
+              "r5@svc",
+              "r6@svc",
+              "r7@svc"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 1,
+          "last_save": [
+            [
+              2001,
+              [
+                "r0@svc",
+                "r1@svc",
+                "r2@svc",
+                "r3@svc",
+                "r4@svc",
+                "r5@svc",
+                "r6@svc",
+                "r7@svc"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "r0@svc",
+                "r1@svc",
+                "r2@svc",
+                "r3@svc",
+                "r4@svc",
+                "r5@svc",
+                "r6@svc",
+                "r7@svc"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "set-not-guest",
+      "ops": [
+        [
+          "set",
+          1001,
+          [
+            "a"
+          ]
+        ],
+        [
+          "set",
+          1002,
+          [
+            "a"
+          ]
+        ],
+        [
+          "set",
+          9999,
+          [
+            "a"
+          ]
+        ]
+      ],
+      "trace": [
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "add-right",
+      "ops": [
+        [
+          "add",
+          2001,
+          "new@svc"
+        ],
+        [
+          "add",
+          2002,
+          "first"
+        ],
+        [
+          "add",
+          2001,
+          "other"
+        ]
+      ],
+      "trace": [
+        {
+          "result": {
+            "name": "guest-a",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "new@svc",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 1,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "new@svc",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "new@svc",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-b",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "first"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 2,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "new@svc",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "first"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "new@svc",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "first"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-a",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "new@svc",
+              "other",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 3,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "new@svc",
+                "other",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "first"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "new@svc",
+                "other",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "first"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "add-not-guest",
+      "ops": [
+        [
+          "add",
+          1001,
+          "a"
+        ],
+        [
+          "add",
+          1002,
+          "a"
+        ],
+        [
+          "add",
+          9999,
+          "a"
+        ]
+      ],
+      "trace": [
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "remove-right",
+      "ops": [
+        [
+          "remove",
+          2001,
+          "status"
+        ],
+        [
+          "remove",
+          2001,
+          "cmd-a@plug"
+        ],
+        [
+          "remove",
+          2003,
+          "x@y"
+        ]
+      ],
+      "trace": [
+        {
+          "result": {
+            "name": "guest-a",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 1,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-a",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 2,
+          "last_save": [
+            [
+              2001,
+              []
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              []
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-c",
+            "chat_id": 2003,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 3,
+          "last_save": [
+            [
+              2001,
+              []
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              []
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              []
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              []
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "remove-not-guest",
+      "ops": [
+        [
+          "remove",
+          1001,
+          "*"
+        ],
+        [
+          "remove",
+          1002,
+          "status"
+        ],
+        [
+          "remove",
+          9999,
+          "a"
+        ]
+      ],
+      "trace": [
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": null,
+          "saves": 0,
+          "last_save": null,
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              []
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mixed-sequence",
+      "ops": [
+        [
+          "add",
+          2002,
+          "a"
+        ],
+        [
+          "add",
+          2002,
+          "b"
+        ],
+        [
+          "remove",
+          2002,
+          "a"
+        ],
+        [
+          "set",
+          2002,
+          [
+            "q"
+          ]
+        ],
+        [
+          "revoke",
+          2002
+        ],
+        [
+          "add",
+          2002,
+          "late"
+        ]
+      ],
+      "trace": [
+        {
+          "result": {
+            "name": "guest-b",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "a"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 1,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "a"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "a"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-b",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "a",
+              "b"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 2,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "a",
+                "b"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "a",
+                "b"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-b",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "b"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 3,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "b"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "b"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": {
+            "name": "guest-b",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [
+              "q"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 0,
+            "invited_user": "",
+            "invited_at_fresh": null
+          },
+          "saves": 4,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "q"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2002,
+              [
+                "q"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": true,
+          "saves": 5,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        },
+        {
+          "result": null,
+          "saves": 5,
+          "last_save": [
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ],
+          "book": [
+            [
+              1001,
+              [
+                "*"
+              ]
+            ],
+            [
+              1002,
+              [
+                "status"
+              ]
+            ],
+            [
+              2001,
+              [
+                "cmd-a@plug",
+                "status"
+              ]
+            ],
+            [
+              2003,
+              [
+                "x@y"
+              ]
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

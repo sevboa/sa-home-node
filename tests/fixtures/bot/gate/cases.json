@@ -1,0 +1,2142 @@
+{
+  "alphabet": "0123456789ABCDEFGHJKMNPQRSTVWXYZ",
+  "code_length": 8,
+  "group": 4,
+  "window_s": 3600.0,
+  "normalize": [
+    [
+      null,
+      null
+    ],
+    [
+      "",
+      null
+    ],
+    [
+      "   ",
+      null
+    ],
+    [
+      "K7M4-QP2R",
+      "K7M4QP2R"
+    ],
+    [
+      "k7m4-qp2r",
+      "K7M4QP2R"
+    ],
+    [
+      "k7m4 qp2r",
+      "K7M4QP2R"
+    ],
+    [
+      "K7M4_QP2R",
+      "K7M4QP2R"
+    ],
+    [
+      "K7M4.QP2R",
+      "K7M4QP2R"
+    ],
+    [
+      " K7M4-QP2R\n",
+      "K7M4QP2R"
+    ],
+    [
+      "K7M4QP2R",
+      "K7M4QP2R"
+    ],
+    [
+      "K7-M4-QP-2R",
+      "K7M4QP2R"
+    ],
+    [
+      "ILO1ILO0",
+      "11011100"
+    ],
+    [
+      "ilo1ilo0",
+      "11011100"
+    ],
+    [
+      "K7M4-QP2U",
+      null
+    ],
+    [
+      "K7M4-QP2",
+      null
+    ],
+    [
+      "K7M4-QP2RR",
+      null
+    ],
+    [
+      "K7M4QP2R9",
+      null
+    ],
+    [
+      "К7М4-QP2R",
+      null
+    ],
+    [
+      "K7M4-QP2R          ",
+      "K7M4QP2R"
+    ],
+    [
+      "/start K7M4QP2R",
+      null
+    ],
+    [
+      "01234567",
+      "01234567"
+    ],
+    [
+      "89ABCDEF",
+      "89ABCDEF"
+    ],
+    [
+      "GHJKMNPQ",
+      "GHJKMNPQ"
+    ],
+    [
+      "RSTVWXYZ",
+      "RSTVWXYZ"
+    ],
+    [
+      "K7M4--QP2R",
+      "K7M4QP2R"
+    ],
+    [
+      "k7m4\tqp2r",
+      "K7M4QP2R"
+    ],
+    [
+      "xxxxxxxxxxxxxxxxx",
+      null
+    ],
+    [
+      "0000-0000",
+      "00000000"
+    ],
+    [
+      "OOOO-LLLL",
+      "00001111"
+    ],
+    [
+      "UUUUUUUU",
+      null
+    ],
+    [
+      "K7M4-QP2!",
+      null
+    ]
+  ],
+  "format": [
+    [
+      "K7M4QP2R",
+      "K7M4-QP2R"
+    ],
+    [
+      "ABC",
+      "ABC"
+    ],
+    [
+      "ABCDEFGHI",
+      "ABCD-EFGH-I"
+    ],
+    [
+      "",
+      ""
+    ],
+    [
+      "0123456789",
+      "0123-4567-89"
+    ]
+  ],
+  "limiter": [
+    {
+      "name": "basic",
+      "limit": 2,
+      "ops": [
+        [
+          "register",
+          "k",
+          0
+        ],
+        [
+          "exhausted",
+          "k"
+        ],
+        [
+          "register",
+          "k",
+          1
+        ],
+        [
+          "exhausted",
+          "k"
+        ],
+        [
+          "register",
+          "k",
+          2
+        ],
+        [
+          "exhausted",
+          "k"
+        ],
+        [
+          "register",
+          "k",
+          3
+        ],
+        [
+          "exhausted",
+          "k"
+        ]
+      ],
+      "out": [
+        true,
+        false,
+        true,
+        false,
+        false,
+        true,
+        false,
+        false
+      ]
+    },
+    {
+      "name": "window-slides",
+      "limit": 2,
+      "ops": [
+        [
+          "register",
+          "k",
+          0
+        ],
+        [
+          "register",
+          "k",
+          10
+        ],
+        [
+          "register",
+          "k",
+          3599.5
+        ],
+        [
+          "register",
+          "k",
+          3600
+        ],
+        [
+          "register",
+          "k",
+          3610
+        ],
+        [
+          "register",
+          "k",
+          3611
+        ]
+      ],
+      "out": [
+        true,
+        true,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "name": "keys-independent",
+      "limit": 1,
+      "ops": [
+        [
+          "register",
+          "a",
+          0
+        ],
+        [
+          "register",
+          1,
+          0
+        ],
+        [
+          "register",
+          "a",
+          1
+        ],
+        [
+          "register",
+          1,
+          1
+        ],
+        [
+          "exhausted",
+          "a"
+        ],
+        [
+          "exhausted",
+          1
+        ],
+        [
+          "exhausted",
+          "b"
+        ]
+      ],
+      "out": [
+        true,
+        true,
+        false,
+        false,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "name": "forget",
+      "limit": 1,
+      "ops": [
+        [
+          "register",
+          "a",
+          0
+        ],
+        [
+          "register",
+          "a",
+          1
+        ],
+        [
+          "exhausted",
+          "a"
+        ],
+        [
+          "forget",
+          "a"
+        ],
+        [
+          "exhausted",
+          "a"
+        ],
+        [
+          "register",
+          "a",
+          2
+        ],
+        [
+          "exhausted",
+          "a"
+        ],
+        [
+          "forget",
+          "none"
+        ]
+      ],
+      "out": [
+        true,
+        false,
+        true,
+        null,
+        false,
+        true,
+        false,
+        null
+      ]
+    }
+  ],
+  "gatekeeper": [
+    {
+      "name": "issue-open-known-revoke",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          5001,
+          null
+        ],
+        [
+          "issue",
+          1002,
+          null,
+          7200
+        ],
+        [
+          "open"
+        ],
+        [
+          "known",
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "known",
+          {
+            "ref": 0,
+            "fmt": "lower"
+          }
+        ],
+        [
+          "known",
+          {
+            "ref": 1,
+            "fmt": "spaced"
+          }
+        ],
+        [
+          "known",
+          "garbage"
+        ],
+        [
+          "known",
+          null
+        ],
+        [
+          "known",
+          "ZZZZZZZZ"
+        ],
+        [
+          "revoke",
+          0
+        ],
+        [
+          "open"
+        ],
+        [
+          "known",
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "revoke",
+          0
+        ],
+        [
+          "revoke",
+          "ZZZZZZZZ"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 7200
+        },
+        [
+          [
+            "@0",
+            1001,
+            5001
+          ],
+          [
+            "@1",
+            1002,
+            null
+          ]
+        ],
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": 5001,
+            "redeemed": false,
+            "revoked": false
+          }
+        ],
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": 5001,
+            "redeemed": false,
+            "revoked": false
+          }
+        ],
+        [
+          "@1",
+          {
+            "issued_by_chat_id": 1002,
+            "issued_by_user_id": null,
+            "redeemed": false,
+            "revoked": false
+          }
+        ],
+        null,
+        null,
+        null,
+        true,
+        [
+          [
+            "@1",
+            1002,
+            null
+          ]
+        ],
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": 5001,
+            "redeemed": false,
+            "revoked": true
+          }
+        ],
+        false,
+        false
+      ]
+    },
+    {
+      "name": "ttl-default-and-explicit",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          90
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          -5
+        ],
+        [
+          "open"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 90
+        },
+        {
+          "shape": true,
+          "ttl": -5
+        },
+        [
+          [
+            "@0",
+            1001,
+            null
+          ],
+          [
+            "@1",
+            1001,
+            null
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "admit-success",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          5001,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0,
+            "fmt": "printed"
+          },
+          {
+            "user_id": 5100,
+            "user_name": "Anna (@anna)"
+          }
+        ],
+        [
+          "known",
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "open"
+        ],
+        [
+          "admit",
+          2002,
+          {
+            "ref": 0,
+            "fmt": "printed"
+          },
+          {
+            "user_id": 5101,
+            "user_name": "Boris"
+          }
+        ],
+        [
+          "guests"
+        ],
+        [
+          "file"
+        ],
+        [
+          "sent"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "Anna (@anna)",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Anna (@anna)",
+            "invited_at_fresh": true
+          }
+        },
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": 5001,
+            "redeemed": true,
+            "revoked": false
+          }
+        ],
+        [],
+        null,
+        [
+          {
+            "name": "Anna (@anna)",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Anna (@anna)",
+            "invited_at_fresh": true
+          }
+        ],
+        "# Гостевые подписки бота — ФАЙЛ ВЕДЁТ САМ БОТ.\n#\n# Записи появляются здесь, когда кто-то гасит инвайт-код (/invite), и\n# исчезают при отзыве (/guests). Файл перезаписывается целиком, поэтому\n# ручные правки и комментарии в нём не сохранятся — владельческие подписки\n# правьте в основном пакете instances/telegram-bot.<инстанс>.toml.\n#\n# Реплицируется по рою наравне с основным пакетом (сателлит), так что гости\n# переживают переезд бота на резервную ноду.\n\n[[guest_subscriptions]]\nname = \"Anna (@anna)\"\nchat_id = 2001\nevent_types = [\"alert\"]\nallowed_commands = [\"cmd-a@plug\", \"status\"]\ninvited_by_chat_id = 1001\ninvited_at = \"<now>\"\ninvited_user = \"Anna (@anna)\"\n",
+        []
+      ]
+    },
+    {
+      "name": "admit-forms",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0,
+            "fmt": "lower"
+          }
+        ],
+        [
+          "admit",
+          2002,
+          {
+            "ref": 1,
+            "fmt": "spaced"
+          },
+          {
+            "user_name": "Cat"
+          }
+        ],
+        [
+          "admit",
+          2003,
+          {
+            "ref": 2,
+            "fmt": "confusable"
+          },
+          {
+            "user_name": "Dan"
+          }
+        ],
+        [
+          "admit",
+          2004,
+          {
+            "ref": 3,
+            "prefix": "/start "
+          }
+        ],
+        [
+          "guests"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "гость 2001",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        },
+        {
+          "invited_by": 1001,
+          "code": "@1",
+          "sub": {
+            "name": "Cat",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Cat",
+            "invited_at_fresh": true
+          }
+        },
+        {
+          "invited_by": 1001,
+          "code": "@2",
+          "sub": {
+            "name": "Dan",
+            "chat_id": 2003,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Dan",
+            "invited_at_fresh": true
+          }
+        },
+        null,
+        [
+          {
+            "name": "гость 2001",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          },
+          {
+            "name": "Cat",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Cat",
+            "invited_at_fresh": true
+          },
+          {
+            "name": "Dan",
+            "chat_id": 2003,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Dan",
+            "invited_at_fresh": true
+          }
+        ]
+      ]
+    },
+    {
+      "name": "admit-names",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          },
+          {
+            "user_name": "Анна",
+            "chat_title": "Семья"
+          }
+        ],
+        [
+          "admit",
+          2002,
+          {
+            "ref": 1
+          },
+          {
+            "user_name": "Борис"
+          }
+        ],
+        [
+          "admit",
+          2003,
+          {
+            "ref": 2
+          }
+        ],
+        [
+          "guests"
+        ],
+        [
+          "file"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "Семья",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Анна",
+            "invited_at_fresh": true
+          }
+        },
+        {
+          "invited_by": 1001,
+          "code": "@1",
+          "sub": {
+            "name": "Борис",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Борис",
+            "invited_at_fresh": true
+          }
+        },
+        {
+          "invited_by": 1001,
+          "code": "@2",
+          "sub": {
+            "name": "гость 2003",
+            "chat_id": 2003,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        },
+        [
+          {
+            "name": "Семья",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Анна",
+            "invited_at_fresh": true
+          },
+          {
+            "name": "Борис",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Борис",
+            "invited_at_fresh": true
+          },
+          {
+            "name": "гость 2003",
+            "chat_id": 2003,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        ],
+        "# Гостевые подписки бота — ФАЙЛ ВЕДЁТ САМ БОТ.\n#\n# Записи появляются здесь, когда кто-то гасит инвайт-код (/invite), и\n# исчезают при отзыве (/guests). Файл перезаписывается целиком, поэтому\n# ручные правки и комментарии в нём не сохранятся — владельческие подписки\n# правьте в основном пакете instances/telegram-bot.<инстанс>.toml.\n#\n# Реплицируется по рою наравне с основным пакетом (сателлит), так что гости\n# переживают переезд бота на резервную ноду.\n\n[[guest_subscriptions]]\nname = \"Семья\"\nchat_id = 2001\nevent_types = [\"alert\"]\nallowed_commands = [\"cmd-a@plug\", \"status\"]\ninvited_by_chat_id = 1001\ninvited_at = \"<now>\"\ninvited_user = \"Анна\"\n\n[[guest_subscriptions]]\nname = \"Борис\"\nchat_id = 2002\nevent_types = [\"alert\"]\nallowed_commands = [\"cmd-a@plug\", \"status\"]\ninvited_by_chat_id = 1001\ninvited_at = \"<now>\"\ninvited_user = \"Борис\"\n\n[[guest_subscriptions]]\nname = \"гость 2003\"\nchat_id = 2003\nevent_types = [\"alert\"]\nallowed_commands = [\"cmd-a@plug\", \"status\"]\ninvited_by_chat_id = 1001\ninvited_at = \"<now>\"\ninvited_user = \"\"\n"
+      ]
+    },
+    {
+      "name": "two-guests-sorted-file",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          3001,
+          {
+            "ref": 0
+          },
+          {
+            "user_name": "Поздний"
+          }
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 1
+          },
+          {
+            "user_name": "Ранний"
+          }
+        ],
+        [
+          "file"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "Поздний",
+            "chat_id": 3001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Поздний",
+            "invited_at_fresh": true
+          }
+        },
+        {
+          "invited_by": 1001,
+          "code": "@1",
+          "sub": {
+            "name": "Ранний",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Ранний",
+            "invited_at_fresh": true
+          }
+        },
+        "# Гостевые подписки бота — ФАЙЛ ВЕДЁТ САМ БОТ.\n#\n# Записи появляются здесь, когда кто-то гасит инвайт-код (/invite), и\n# исчезают при отзыве (/guests). Файл перезаписывается целиком, поэтому\n# ручные правки и комментарии в нём не сохранятся — владельческие подписки\n# правьте в основном пакете instances/telegram-bot.<инстанс>.toml.\n#\n# Реплицируется по рою наравне с основным пакетом (сателлит), так что гости\n# переживают переезд бота на резервную ноду.\n\n[[guest_subscriptions]]\nname = \"Ранний\"\nchat_id = 2001\nevent_types = [\"alert\"]\nallowed_commands = [\"cmd-a@plug\", \"status\"]\ninvited_by_chat_id = 1001\ninvited_at = \"<now>\"\ninvited_user = \"Ранний\"\n\n[[guest_subscriptions]]\nname = \"Поздний\"\nchat_id = 3001\nevent_types = [\"alert\"]\nallowed_commands = [\"cmd-a@plug\", \"status\"]\ninvited_by_chat_id = 1001\ninvited_at = \"<now>\"\ninvited_user = \"Поздний\"\n"
+      ]
+    },
+    {
+      "name": "redeemed-twice",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "admit",
+          2002,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "revoke",
+          0
+        ],
+        [
+          "guests"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "гость 2001",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        },
+        null,
+        null,
+        false,
+        [
+          {
+            "name": "гость 2001",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        ]
+      ]
+    },
+    {
+      "name": "expired-code",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          -5
+        ],
+        [
+          "open"
+        ],
+        [
+          "known",
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "file"
+        ],
+        [
+          "guests"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": -5
+        },
+        [],
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": null,
+            "redeemed": false,
+            "revoked": false
+          }
+        ],
+        null,
+        null,
+        []
+      ]
+    },
+    {
+      "name": "revoked-code",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "revoke",
+          0
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "guests"
+        ],
+        [
+          "file"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        true,
+        null,
+        [],
+        null
+      ]
+    },
+    {
+      "name": "unknown-and-garbage",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "привет"
+        ],
+        [
+          "admit",
+          2001,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          ""
+        ],
+        [
+          "admit",
+          2001,
+          "K7M4-QP2U"
+        ],
+        [
+          "guests"
+        ],
+        [
+          "sent"
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        [],
+        []
+      ]
+    },
+    {
+      "name": "limiter-exhaust",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "known",
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "admit",
+          2002,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "guests"
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        null,
+        [],
+        null,
+        [
+          [
+            1001,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ],
+          [
+            1003,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ]
+        ],
+        null,
+        [
+          [
+            1001,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ],
+          [
+            1003,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ]
+        ],
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        null,
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": null,
+            "redeemed": false,
+            "revoked": false
+          }
+        ],
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "гость 2002",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        },
+        [
+          {
+            "name": "гость 2002",
+            "chat_id": 2002,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        ]
+      ]
+    },
+    {
+      "name": "limiter-per-chat",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 2
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2002,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2002,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ],
+        [
+          "admit",
+          2002,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        [
+          [
+            1001,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ],
+          [
+            1003,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ]
+        ],
+        null,
+        [
+          [
+            1001,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ],
+          [
+            1003,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ],
+          [
+            1001,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2002</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ],
+          [
+            1003,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2002</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "success-forgets-failures",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        null,
+        null,
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "гость 2001",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [
+              "alert"
+            ],
+            "except_event_types": [],
+            "allowed_commands": [
+              "cmd-a@plug",
+              "status"
+            ],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "",
+            "invited_at_fresh": true
+          }
+        },
+        null,
+        null,
+        null,
+        []
+      ]
+    },
+    {
+      "name": "bad-format-not-counted",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 1
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "admit",
+          2001,
+          "a"
+        ],
+        [
+          "admit",
+          2001,
+          "bad bad"
+        ],
+        [
+          "admit",
+          2001,
+          "K7M4QP2R9"
+        ],
+        [
+          "admit",
+          2001,
+          null
+        ],
+        [
+          "sent"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ],
+        [
+          "admit",
+          2001,
+          "ZZZZZZZZ"
+        ],
+        [
+          "sent"
+        ]
+      ],
+      "trace": [
+        null,
+        null,
+        null,
+        null,
+        [],
+        null,
+        [],
+        null,
+        [
+          [
+            1001,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ],
+          [
+            1003,
+            "🚨 Подбор инвайт-кода: chat_id=<code>2001</code> исчерпал лимит попыток. Отвечать ему я не буду.",
+            {}
+          ]
+        ]
+      ]
+    },
+    {
+      "name": "disabled-by-config",
+      "cfg": {
+        "enabled": false,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "enabled"
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "known",
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "guests"
+        ],
+        [
+          "file"
+        ]
+      ],
+      "trace": [
+        false,
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        null,
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": null,
+            "redeemed": false,
+            "revoked": false
+          }
+        ],
+        [],
+        null
+      ]
+    },
+    {
+      "name": "no-guest-file",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": false,
+      "steps": [
+        [
+          "enabled"
+        ],
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "known",
+          {
+            "ref": 0
+          }
+        ],
+        [
+          "guests"
+        ],
+        [
+          "file"
+        ]
+      ],
+      "trace": [
+        false,
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        null,
+        [
+          "@0",
+          {
+            "issued_by_chat_id": 1001,
+            "issued_by_user_id": null,
+            "redeemed": false,
+            "revoked": false
+          }
+        ],
+        [],
+        null
+      ]
+    },
+    {
+      "name": "enabled",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [
+          "status",
+          "cmd-a@plug"
+        ],
+        "grant_events": [
+          "alert"
+        ],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "enabled"
+        ]
+      ],
+      "trace": [
+        true
+      ]
+    },
+    {
+      "name": "grant-empty",
+      "cfg": {
+        "enabled": true,
+        "ttl_s": 3600,
+        "grant_commands": [],
+        "grant_events": [],
+        "max_attempts_per_hour": 3
+      },
+      "guest_file": true,
+      "steps": [
+        [
+          "issue",
+          1001,
+          null,
+          null
+        ],
+        [
+          "admit",
+          2001,
+          {
+            "ref": 0
+          },
+          {
+            "user_name": "Пусто"
+          }
+        ],
+        [
+          "file"
+        ]
+      ],
+      "trace": [
+        {
+          "shape": true,
+          "ttl": 3600
+        },
+        {
+          "invited_by": 1001,
+          "code": "@0",
+          "sub": {
+            "name": "Пусто",
+            "chat_id": 2001,
+            "source": "guest",
+            "event_types": [],
+            "except_event_types": [],
+            "allowed_commands": [],
+            "broken": false,
+            "invited_by_chat_id": 1001,
+            "invited_user": "Пусто",
+            "invited_at_fresh": true
+          }
+        },
+        "# Гостевые подписки бота — ФАЙЛ ВЕДЁТ САМ БОТ.\n#\n# Записи появляются здесь, когда кто-то гасит инвайт-код (/invite), и\n# исчезают при отзыве (/guests). Файл перезаписывается целиком, поэтому\n# ручные правки и комментарии в нём не сохранятся — владельческие подписки\n# правьте в основном пакете instances/telegram-bot.<инстанс>.toml.\n#\n# Реплицируется по рою наравне с основным пакетом (сателлит), так что гости\n# переживают переезд бота на резервную ноду.\n\n[[guest_subscriptions]]\nname = \"Пусто\"\nchat_id = 2001\nevent_types = []\nallowed_commands = []\ninvited_by_chat_id = 1001\ninvited_at = \"<now>\"\ninvited_user = \"Пусто\"\n"
+      ]
+    }
+  ]
+}
