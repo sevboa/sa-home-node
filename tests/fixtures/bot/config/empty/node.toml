@@ -1,0 +1,10 @@
+[telegram]
+token = "TEST-TOKEN"
+
+[invites]
+grant_commands = ["cmd-b@plug"]
+
+[[subscriptions]]
+name = "owner-a"
+chat_id = 1001
+allowed_commands = ["*"]
