@@ -25,3 +25,18 @@ def inflate(value: Any) -> Any:
     if isinstance(value, list):
         return [inflate(item) for item in value]
     return value
+
+
+def _deref(value: Any, shared: dict[str, Any]) -> Any:
+    if isinstance(value, dict):
+        if set(value) == {"$"}:
+            return _deref(shared[value["$"]], shared)
+        return {key: _deref(item, shared) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_deref(item, shared) for item in value]
+    return value
+
+
+def load_shared(name: str) -> Any:
+    doc = load(name)
+    return _deref(doc, doc.pop("shared", {}))
