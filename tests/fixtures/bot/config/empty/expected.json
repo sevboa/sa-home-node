@@ -1,0 +1,34 @@
+{
+  "telegram": {
+    "token": "TEST-TOKEN",
+    "proxy": "",
+    "proxy_mode": "fixed",
+    "extra_proxies": [],
+    "prefer_direct": true
+  },
+  "invites": {
+    "enabled": true,
+    "ttl_s": 3600.0,
+    "grant_commands": [
+      "cmd-b@plug"
+    ],
+    "grant_events": [],
+    "max_attempts_per_hour": 5
+  },
+  "subscriptions": [
+    {
+      "name": "owner-a",
+      "chat_id": 1001,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ]
+    }
+  ],
+  "guest_subscriptions": [],
+  "shadowed": [],
+  "has_guests": false
+}

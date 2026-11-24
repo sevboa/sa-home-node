@@ -1,0 +1,205 @@
+{
+  "REQUEST_TIMEOUT_S": 10.0,
+  "defaults": {
+    "attempts": 3,
+    "delay_s": 5.0,
+    "calls": 3,
+    "sleeps": [
+      5.0,
+      5.0
+    ],
+    "result": "result"
+  },
+  "cases": [
+    {
+      "name": "first-ok",
+      "script": [
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": "result",
+      "raised": null,
+      "warnings": 0
+    },
+    {
+      "name": "net-net-ok",
+      "script": [
+        "net",
+        "net",
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 3,
+      "sleeps": [
+        5.0,
+        5.0
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 2
+    },
+    {
+      "name": "net-ok-delay",
+      "script": [
+        "net",
+        "ok"
+      ],
+      "attempts": 2,
+      "delay_s": 3.0,
+      "calls": 2,
+      "sleeps": [
+        3.0
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 1
+    },
+    {
+      "name": "net-x3",
+      "script": [
+        "net",
+        "net",
+        "net"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 3,
+      "sleeps": [
+        5.0,
+        5.0
+      ],
+      "result": null,
+      "raised": {
+        "type": "TelegramNetworkError",
+        "message": "HTTP Client says - net 3"
+      },
+      "warnings": 2
+    },
+    {
+      "name": "net-x1-attempts1",
+      "script": [
+        "net"
+      ],
+      "attempts": 1,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "raised": {
+        "type": "TelegramNetworkError",
+        "message": "HTTP Client says - net 1"
+      },
+      "warnings": 0
+    },
+    {
+      "name": "ra-ok",
+      "script": [
+        "ra:2",
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 2,
+      "sleeps": [
+        3.0
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 1
+    },
+    {
+      "name": "ra-x3",
+      "script": [
+        "ra:4",
+        "ra:4",
+        "ra:4"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 3,
+      "sleeps": [
+        5.0,
+        5.0
+      ],
+      "result": null,
+      "raised": {
+        "type": "TelegramRetryAfter",
+        "message": "Telegram server says - Flood control exceeded on method 'GetMe'. Retry in 4 seconds.\nOriginal description: flood 3\n(background on this error at: https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this)"
+      },
+      "warnings": 2
+    },
+    {
+      "name": "ra-net-ok",
+      "script": [
+        "ra:1",
+        "net",
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 1.5,
+      "calls": 3,
+      "sleeps": [
+        2.0,
+        1.5
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 2
+    },
+    {
+      "name": "bad-immediate",
+      "script": [
+        "bad"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "raised": {
+        "type": "TelegramBadRequest",
+        "message": "Telegram server says - bad 1"
+      },
+      "warnings": 0
+    },
+    {
+      "name": "forbidden-immediate",
+      "script": [
+        "net",
+        "forbidden"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 2,
+      "sleeps": [
+        5.0
+      ],
+      "result": null,
+      "raised": {
+        "type": "TelegramForbiddenError",
+        "message": "Telegram server says - forbidden 2"
+      },
+      "warnings": 1
+    },
+    {
+      "name": "runtime-immediate",
+      "script": [
+        "runtime"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "raised": {
+        "type": "RuntimeError",
+        "message": "runtime 1"
+      },
+      "warnings": 0
+    }
+  ]
+}

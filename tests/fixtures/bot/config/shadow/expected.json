@@ -1,0 +1,53 @@
+{
+  "telegram": {
+    "token": "PKG-TOKEN",
+    "proxy": "socks5://10.0.0.5:1080",
+    "proxy_mode": "auto",
+    "extra_proxies": [],
+    "prefer_direct": true
+  },
+  "invites": {
+    "enabled": false,
+    "ttl_s": 900.0,
+    "grant_commands": [
+      "cmd-a@plug"
+    ],
+    "grant_events": [],
+    "max_attempts_per_hour": 5
+  },
+  "subscriptions": [
+    {
+      "name": "owner-a",
+      "chat_id": 1001,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ]
+    }
+  ],
+  "guest_subscriptions": [
+    {
+      "name": "guest-a",
+      "chat_id": 2001,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "cmd-a@plug"
+      ],
+      "invited_by_chat_id": 0,
+      "invited_at": "",
+      "invited_user": ""
+    }
+  ],
+  "shadowed": [
+    "invites",
+    "subscriptions",
+    "telegram"
+  ],
+  "has_guests": true
+}

@@ -1,0 +1,82 @@
+{
+  "telegram": {
+    "token": "TEST-TOKEN",
+    "proxy": "socks5://10.0.0.5:1080",
+    "proxy_mode": "auto",
+    "extra_proxies": [
+      "socks5://10.0.0.6:1080",
+      "http://10.0.0.7:3128"
+    ],
+    "prefer_direct": false
+  },
+  "invites": {
+    "enabled": true,
+    "ttl_s": 1800.0,
+    "grant_commands": [
+      "cmd-a@plug",
+      "cmd-b@plug"
+    ],
+    "grant_events": [
+      "ev-a"
+    ],
+    "max_attempts_per_hour": 7
+  },
+  "subscriptions": [
+    {
+      "name": "owner-a",
+      "chat_id": 1001,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ]
+    },
+    {
+      "name": "group-a",
+      "chat_id": -100500,
+      "event_types": [
+        "alert",
+        "recovered"
+      ],
+      "except_event_types": [
+        "noise"
+      ],
+      "allowed_commands": [
+        "nodes",
+        "status"
+      ]
+    }
+  ],
+  "guest_subscriptions": [
+    {
+      "name": "guest-a",
+      "chat_id": 2001,
+      "event_types": [
+        "alert"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "cmd-a@plug"
+      ],
+      "invited_by_chat_id": 1001,
+      "invited_at": "2026-01-01T10:00:00+00:00",
+      "invited_user": "user-a"
+    },
+    {
+      "name": "guest-b",
+      "chat_id": 2002,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [],
+      "invited_by_chat_id": 0,
+      "invited_at": "",
+      "invited_user": ""
+    }
+  ],
+  "shadowed": [],
+  "has_guests": true
+}

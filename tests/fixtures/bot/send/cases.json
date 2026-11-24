@@ -1,0 +1,248 @@
+{
+  "MAX_LEN": 4096,
+  "cases": [
+    {
+      "name": "ok",
+      "script": [
+        "ok"
+      ],
+      "calls": 1,
+      "sleeps": [],
+      "result": "sent",
+      "outcome": {}
+    },
+    {
+      "name": "net-ok",
+      "script": [
+        "net",
+        "ok"
+      ],
+      "calls": 2,
+      "sleeps": [
+        0.0
+      ],
+      "result": "sent",
+      "outcome": {}
+    },
+    {
+      "name": "net-net-ok",
+      "script": [
+        "net",
+        "net",
+        "ok"
+      ],
+      "calls": 3,
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "result": "sent",
+      "outcome": {}
+    },
+    {
+      "name": "net-x3",
+      "script": [
+        "net",
+        "net",
+        "net"
+      ],
+      "calls": 3,
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "result": null,
+      "outcome": {
+        "transient": true
+      }
+    },
+    {
+      "name": "runtime-ok",
+      "script": [
+        "runtime",
+        "ok"
+      ],
+      "calls": 2,
+      "sleeps": [
+        0.0
+      ],
+      "result": "sent",
+      "outcome": {}
+    },
+    {
+      "name": "ra-ok",
+      "script": [
+        "ra:2",
+        "ok"
+      ],
+      "calls": 2,
+      "sleeps": [
+        3.0
+      ],
+      "result": "sent",
+      "outcome": {}
+    },
+    {
+      "name": "ra-x3",
+      "script": [
+        "ra:2",
+        "ra:3",
+        "ra:4"
+      ],
+      "calls": 3,
+      "sleeps": [
+        3.0,
+        4.0,
+        5.0
+      ],
+      "result": null,
+      "outcome": {
+        "transient": true
+      }
+    },
+    {
+      "name": "ra-net-ra",
+      "script": [
+        "ra:1",
+        "net",
+        "ra:1"
+      ],
+      "calls": 3,
+      "sleeps": [
+        2.0,
+        2.0,
+        2.0
+      ],
+      "result": null,
+      "outcome": {
+        "transient": true
+      }
+    },
+    {
+      "name": "ra-net-ok",
+      "script": [
+        "ra:1",
+        "net",
+        "ok"
+      ],
+      "calls": 3,
+      "sleeps": [
+        2.0,
+        2.0
+      ],
+      "result": "sent",
+      "outcome": {}
+    },
+    {
+      "name": "bad",
+      "script": [
+        "bad"
+      ],
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "outcome": {}
+    },
+    {
+      "name": "forbidden",
+      "script": [
+        "forbidden"
+      ],
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "outcome": {}
+    },
+    {
+      "name": "notfound",
+      "script": [
+        "notfound"
+      ],
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "outcome": {}
+    },
+    {
+      "name": "bad-parse",
+      "script": [
+        "bad_parse"
+      ],
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "outcome": {
+        "parse_error": true
+      }
+    },
+    {
+      "name": "net-bad",
+      "script": [
+        "net",
+        "bad"
+      ],
+      "calls": 2,
+      "sleeps": [
+        0.0
+      ],
+      "result": null,
+      "outcome": {}
+    },
+    {
+      "name": "net-forbidden",
+      "script": [
+        "net",
+        "forbidden"
+      ],
+      "calls": 2,
+      "sleeps": [
+        0.0
+      ],
+      "result": null,
+      "outcome": {}
+    }
+  ],
+  "without_outcome": {
+    "result": "sent",
+    "sleeps": [
+      0.0
+    ]
+  },
+  "errors": [
+    {
+      "token": "net",
+      "parse_error": false,
+      "permanent": false
+    },
+    {
+      "token": "ra:1",
+      "parse_error": false,
+      "permanent": false
+    },
+    {
+      "token": "bad",
+      "parse_error": false,
+      "permanent": true
+    },
+    {
+      "token": "bad_parse",
+      "parse_error": true,
+      "permanent": true
+    },
+    {
+      "token": "forbidden",
+      "parse_error": false,
+      "permanent": true
+    },
+    {
+      "token": "notfound",
+      "parse_error": false,
+      "permanent": true
+    },
+    {
+      "token": "runtime",
+      "parse_error": false,
+      "permanent": false
+    }
+  ]
+}

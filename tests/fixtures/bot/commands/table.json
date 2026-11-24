@@ -1,0 +1,790 @@
+{
+  "core": [
+    {
+      "name": "ping",
+      "description": "проверка живости (pong)",
+      "universal": true,
+      "menu": false,
+      "right": null,
+      "required_right": "ping",
+      "is_universal": true,
+      "is_control": false
+    },
+    {
+      "name": "swarm",
+      "description": "сводка роя",
+      "universal": false,
+      "menu": false,
+      "right": "nodes",
+      "required_right": "nodes",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "nodes",
+      "description": "сводка роя (алиас /swarm)",
+      "universal": false,
+      "menu": false,
+      "right": null,
+      "required_right": "nodes",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "status",
+      "description": "карточка локальной ноды",
+      "universal": false,
+      "menu": false,
+      "right": null,
+      "required_right": "status",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "status_full",
+      "description": "подробный статус компонентов",
+      "universal": false,
+      "menu": false,
+      "right": null,
+      "required_right": "status_full",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "stats",
+      "description": "статистика прогонов сканера",
+      "universal": false,
+      "menu": false,
+      "right": null,
+      "required_right": "stats",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "scan_now",
+      "description": "форс-скан датчиков и дисков",
+      "universal": false,
+      "menu": false,
+      "right": null,
+      "required_right": "scan_now",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "downtime",
+      "description": "последние отключения машины",
+      "universal": false,
+      "menu": false,
+      "right": null,
+      "required_right": "downtime",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "wake",
+      "description": "разбудить домашний ПК (Wake-on-LAN)",
+      "universal": false,
+      "menu": false,
+      "right": null,
+      "required_right": "wake",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "invite",
+      "description": "выпустить код приглашения",
+      "universal": false,
+      "menu": false,
+      "right": "invite",
+      "required_right": "invite",
+      "is_universal": false,
+      "is_control": true
+    },
+    {
+      "name": "guests",
+      "description": "приглашённые и открытые коды",
+      "universal": false,
+      "menu": false,
+      "right": "invite",
+      "required_right": "invite",
+      "is_universal": false,
+      "is_control": true
+    }
+  ],
+  "unknown": {
+    "name": "no_such",
+    "required_right": "no_such",
+    "is_universal": false,
+    "is_control": false
+  },
+  "constants": {
+    "ACTION_CALLBACK_PREFIX": "act",
+    "CALLBACK_PREFIX": "st",
+    "CODE_REVOKE_CODE": "g_code_off",
+    "DOWNTIME_PAGE_CODE": "downtime_page",
+    "GUESTS_LIST_CODE": "g_list",
+    "GUEST_CARD_CODE": "g_card",
+    "GUEST_GROUP_ADD_CODE": "g_gon",
+    "GUEST_GROUP_OFF_CODE": "g_goff",
+    "GUEST_KICK_CONFIRM_CODE": "g_kick_ask",
+    "GUEST_PERMS_CODE": "g_perms",
+    "GUEST_PERM_ADD_CODE": "g_pon",
+    "GUEST_PERM_ADD_LIST_CODE": "g_padd",
+    "GUEST_PERM_OFF_CODE": "g_poff",
+    "GUEST_REVOKE_CODE": "g_kick",
+    "GUEST_STATS_CODE": "g_stats",
+    "NODES_CODE": "nodes",
+    "NODE_CARD_CODE": "nodecard",
+    "OPEN_CODES_LIST_CODE": "g_codes",
+    "SERVICE_CARD_CODE": "svc",
+    "SWARM_NODES_CODE": "sw_nodes",
+    "SWARM_NODE_CODE": "sw_node",
+    "SWARM_PANEL_CODE": "sw_panel",
+    "SWARM_SKILLS_CODE": "sw_skills",
+    "SWARM_SKILL_CODE": "sw_skill",
+    "SWARM_SVCS_CODE": "sw_svcs",
+    "SWARM_SVC_CODE": "sw_svc",
+    "SWARM_UPDATE_CODE": "sw_update",
+    "WAKE_CODE": "wake"
+  },
+  "code_map": {
+    "full": "status_full",
+    "stats": "stats",
+    "downtime": "downtime",
+    "downtime_page": "downtime",
+    "g_list": "guests",
+    "g_codes": "guests",
+    "g_card": "guests",
+    "g_kick_ask": "guests",
+    "g_kick": "guests",
+    "g_code_off": "guests",
+    "g_stats": "guests",
+    "g_perms": "guests",
+    "g_poff": "guests",
+    "g_padd": "guests",
+    "g_pon": "guests",
+    "g_gon": "guests",
+    "g_goff": "guests",
+    "nodes": "nodes",
+    "nodecard": "status",
+    "svc": "nodes",
+    "wake": "wake",
+    "sw_panel": "swarm",
+    "sw_skills": "swarm",
+    "sw_skill": "swarm",
+    "sw_nodes": "swarm",
+    "sw_node": "status",
+    "sw_svcs": "nodes",
+    "sw_svc": "nodes",
+    "sw_update": "swarm"
+  },
+  "callback_for": [
+    {
+      "data": "st:full",
+      "command": "status_full"
+    },
+    {
+      "data": "st:stats",
+      "command": "stats"
+    },
+    {
+      "data": "st:downtime",
+      "command": "downtime"
+    },
+    {
+      "data": "st:downtime_page",
+      "command": "downtime"
+    },
+    {
+      "data": "st:g_list",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_codes",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_card",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_kick_ask",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_kick",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_code_off",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_stats",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_perms",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_poff",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_padd",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_pon",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_gon",
+      "command": "guests"
+    },
+    {
+      "data": "st:g_goff",
+      "command": "guests"
+    },
+    {
+      "data": "st:nodes",
+      "command": "nodes"
+    },
+    {
+      "data": "st:nodecard",
+      "command": "status"
+    },
+    {
+      "data": "st:svc",
+      "command": "nodes"
+    },
+    {
+      "data": "st:wake",
+      "command": "wake"
+    },
+    {
+      "data": "st:sw_panel",
+      "command": "swarm"
+    },
+    {
+      "data": "st:sw_skills",
+      "command": "swarm"
+    },
+    {
+      "data": "st:sw_skill",
+      "command": "swarm"
+    },
+    {
+      "data": "st:sw_nodes",
+      "command": "swarm"
+    },
+    {
+      "data": "st:sw_node",
+      "command": "status"
+    },
+    {
+      "data": "st:sw_svcs",
+      "command": "nodes"
+    },
+    {
+      "data": "st:sw_svc",
+      "command": "nodes"
+    },
+    {
+      "data": "st:sw_update",
+      "command": "swarm"
+    },
+    {
+      "data": "st:unknown",
+      "command": null
+    },
+    {
+      "data": "st",
+      "command": null
+    },
+    {
+      "data": "",
+      "command": null
+    },
+    {
+      "data": null,
+      "command": null
+    },
+    {
+      "data": "act:node:x",
+      "command": null
+    },
+    {
+      "data": "st:t_list",
+      "command": "torrents"
+    },
+    {
+      "data": "st:full:extra",
+      "command": "status_full"
+    },
+    {
+      "data": "xx:nodes",
+      "command": null
+    }
+  ],
+  "plugin": {
+    "command": {
+      "name": "torrents",
+      "description": "plugin",
+      "universal": false,
+      "menu": true,
+      "right": "list@torrents"
+    },
+    "codes": [
+      "t_app",
+      "t_card",
+      "t_list",
+      "t_speed",
+      "t_toggle"
+    ]
+  },
+  "menu_sample": {
+    "commands": [
+      {
+        "name": "alpha",
+        "description": "d",
+        "universal": false,
+        "menu": true,
+        "right": "r@x"
+      },
+      {
+        "name": "beta",
+        "description": "d",
+        "universal": false,
+        "menu": true,
+        "right": null
+      },
+      {
+        "name": "gamma",
+        "description": "d",
+        "universal": true,
+        "menu": true,
+        "right": null
+      },
+      {
+        "name": "delta",
+        "description": "d",
+        "universal": false,
+        "menu": false,
+        "right": null
+      }
+    ],
+    "subs": {
+      "none": null,
+      "owner": [
+        "*"
+      ],
+      "alpha-right": [
+        "r@x"
+      ],
+      "alpha-name": [
+        "alpha"
+      ],
+      "beta-name": [
+        "beta"
+      ],
+      "both": [
+        "r@x",
+        "beta"
+      ],
+      "nothing": []
+    },
+    "out": {
+      "none": [],
+      "owner": [
+        "alpha",
+        "beta"
+      ],
+      "alpha-right": [
+        "alpha"
+      ],
+      "alpha-name": [],
+      "beta-name": [
+        "beta"
+      ],
+      "both": [
+        "alpha",
+        "beta"
+      ],
+      "nothing": []
+    }
+  },
+  "can_run_action": [
+    {
+      "sub": "none",
+      "allowed": null,
+      "action": "act1",
+      "service": "svc",
+      "out": false
+    },
+    {
+      "sub": "none",
+      "allowed": null,
+      "action": "act1",
+      "service": "other",
+      "out": false
+    },
+    {
+      "sub": "none",
+      "allowed": null,
+      "action": "act2",
+      "service": "svc",
+      "out": false
+    },
+    {
+      "sub": "owner",
+      "allowed": [
+        "*"
+      ],
+      "action": "act1",
+      "service": "svc",
+      "out": true
+    },
+    {
+      "sub": "owner",
+      "allowed": [
+        "*"
+      ],
+      "action": "act1",
+      "service": "other",
+      "out": true
+    },
+    {
+      "sub": "owner",
+      "allowed": [
+        "*"
+      ],
+      "action": "act2",
+      "service": "svc",
+      "out": true
+    },
+    {
+      "sub": "svc-wild",
+      "allowed": [
+        "*@svc"
+      ],
+      "action": "act1",
+      "service": "svc",
+      "out": true
+    },
+    {
+      "sub": "svc-wild",
+      "allowed": [
+        "*@svc"
+      ],
+      "action": "act1",
+      "service": "other",
+      "out": false
+    },
+    {
+      "sub": "svc-wild",
+      "allowed": [
+        "*@svc"
+      ],
+      "action": "act2",
+      "service": "svc",
+      "out": true
+    },
+    {
+      "sub": "bound",
+      "allowed": [
+        "act1@svc"
+      ],
+      "action": "act1",
+      "service": "svc",
+      "out": true
+    },
+    {
+      "sub": "bound",
+      "allowed": [
+        "act1@svc"
+      ],
+      "action": "act1",
+      "service": "other",
+      "out": false
+    },
+    {
+      "sub": "bound",
+      "allowed": [
+        "act1@svc"
+      ],
+      "action": "act2",
+      "service": "svc",
+      "out": false
+    },
+    {
+      "sub": "bare",
+      "allowed": [
+        "act1"
+      ],
+      "action": "act1",
+      "service": "svc",
+      "out": true
+    },
+    {
+      "sub": "bare",
+      "allowed": [
+        "act1"
+      ],
+      "action": "act1",
+      "service": "other",
+      "out": true
+    },
+    {
+      "sub": "bare",
+      "allowed": [
+        "act1"
+      ],
+      "action": "act2",
+      "service": "svc",
+      "out": false
+    },
+    {
+      "sub": "other",
+      "allowed": [
+        "x"
+      ],
+      "action": "act1",
+      "service": "svc",
+      "out": false
+    },
+    {
+      "sub": "other",
+      "allowed": [
+        "x"
+      ],
+      "action": "act1",
+      "service": "other",
+      "out": false
+    },
+    {
+      "sub": "other",
+      "allowed": [
+        "x"
+      ],
+      "action": "act2",
+      "service": "svc",
+      "out": false
+    }
+  ],
+  "formats": {
+    "panel": [
+      {
+        "args": [
+          "nodes"
+        ],
+        "out": "st:nodes"
+      },
+      {
+        "args": [
+          "nodecard",
+          "n1"
+        ],
+        "out": "st:nodecard:n1"
+      },
+      {
+        "args": [
+          "downtime_page",
+          10
+        ],
+        "out": "st:downtime_page:10"
+      },
+      {
+        "args": [
+          "g_card",
+          2001,
+          "x"
+        ],
+        "out": "st:g_card:2001:x"
+      }
+    ],
+    "action": [
+      {
+        "args": [
+          "restart"
+        ],
+        "out": "act:node:restart"
+      },
+      {
+        "args": [
+          "restart",
+          "v"
+        ],
+        "out": "act:node:restart:v"
+      },
+      {
+        "args": [
+          "restart",
+          null,
+          "n1"
+        ],
+        "out": "act:node:restart::n1"
+      },
+      {
+        "args": [
+          "restart",
+          "v",
+          "n1"
+        ],
+        "out": "act:node:restart:v:n1"
+      },
+      {
+        "args": [
+          "restart",
+          "",
+          "n1",
+          "svc"
+        ],
+        "out": "act:svc:restart::n1"
+      },
+      {
+        "args": [
+          "scan",
+          "1",
+          null,
+          "monitor"
+        ],
+        "out": "act:monitor:scan:1"
+      },
+      {
+        "args": [
+          "a",
+          null,
+          null,
+          "apps"
+        ],
+        "out": "act:apps:a"
+      }
+    ],
+    "wake": [
+      {
+        "arg": null,
+        "out": "st:wake"
+      },
+      {
+        "arg": "n1",
+        "out": "st:wake:n1"
+      },
+      {
+        "arg": "",
+        "out": "st:wake"
+      }
+    ],
+    "parse_wake": [
+      {
+        "data": "st:wake",
+        "out": null
+      },
+      {
+        "data": "st:wake:n1",
+        "out": "n1"
+      },
+      {
+        "data": "st:wake:",
+        "out": null
+      },
+      {
+        "data": "st:nodes:n1",
+        "out": null
+      },
+      {
+        "data": "act:wake:n1",
+        "out": null
+      },
+      {
+        "data": "",
+        "out": null
+      },
+      {
+        "data": null,
+        "out": null
+      },
+      {
+        "data": "st",
+        "out": null
+      }
+    ],
+    "parse_action": [
+      {
+        "data": "act:node:restart",
+        "out": [
+          "node",
+          "restart",
+          null,
+          null
+        ]
+      },
+      {
+        "data": "act:node:restart:v",
+        "out": [
+          "node",
+          "restart",
+          "v",
+          null
+        ]
+      },
+      {
+        "data": "act:node:restart::n1",
+        "out": [
+          "node",
+          "restart",
+          null,
+          "n1"
+        ]
+      },
+      {
+        "data": "act:node:restart:v:n1",
+        "out": [
+          "node",
+          "restart",
+          "v",
+          "n1"
+        ]
+      },
+      {
+        "data": "act:node:restart:v:n1:extra",
+        "out": [
+          "node",
+          "restart",
+          "v",
+          "n1"
+        ]
+      },
+      {
+        "data": "act:node",
+        "out": null
+      },
+      {
+        "data": "act::x",
+        "out": null
+      },
+      {
+        "data": "act:node:",
+        "out": null
+      },
+      {
+        "data": "st:node:x",
+        "out": null
+      },
+      {
+        "data": "",
+        "out": null
+      },
+      {
+        "data": null,
+        "out": null
+      }
+    ]
+  },
+  "status_actions": {
+    "full": "status_full",
+    "stats": "stats",
+    "downtime": "downtime"
+  }
+}
