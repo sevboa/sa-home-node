@@ -1,0 +1,14 @@
+SERVICE_NAME = "tasks"
+
+ACTION_CREATE = "create"
+ACTION_TIMER = "timer"
+ACTION_FIRE_NOW = "fire_now"
+ACTION_MATCH_EVENT = "match_event"
+
+EVENT_TASK_PREWAKE = "task_prewake"
+EVENT_TASK_RESULT = "task_result"
+
+PREWAKE_LEAD_S = 600.0
+POLL_INTERVAL_S = 30.0
+FIRE_GRACE_S = 300.0
+FIRE_RETRY_INTERVAL_S = 30.0

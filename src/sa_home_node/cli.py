@@ -4,6 +4,8 @@ import logging
 import sys
 from pathlib import Path
 
+from sa_home_node.backup.cli import add_backup_parser
+from sa_home_node.backup.cli import run as run_backup
 from sa_home_node.config import ConfigError
 from sa_home_node.content import ContentError
 from sa_home_node.fixups.runner import fix_command
@@ -27,6 +29,7 @@ def main(argv: list[str] | None = None) -> int:
     fix_parser.add_argument("--dry-run", action="store_true", help="только проверить, ничего не применять")
     fix_parser.add_argument("--only", default="", help="id фиксапов через запятую")
     subparsers.add_parser("plugins", help="список установленных плагинов")
+    add_backup_parser(subparsers)
     args = parser.parse_args(argv)
     if args.command is None:
         parser.print_help()
@@ -39,6 +42,8 @@ def main(argv: list[str] | None = None) -> int:
             for name in names:
                 print(name)
         return 0
+    if args.command == "backup":
+        return run_backup(args)
     if args.command == "fix":
         only = tuple(fid for fid in args.only.split(",") if fid)
         return fix_command(args.config, dry_run=args.dry_run, only=only, list_only=args.list_only)

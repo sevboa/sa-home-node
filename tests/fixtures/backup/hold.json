@@ -1,0 +1,39 @@
+{
+  "constants": {
+    "PUBLISH_MARKER": "backup-publish.ok"
+  },
+  "HOLD_HINT": "публикация бэкапа приостановлена: нет маркера backup-publish.ok. После пересборки сервера восстановите данные (`sa-home-bot backup restore <нода> --apply` на node-a), для нового сервера или первого деплоя — `nodectl backup-release`",
+  "HOLD_HINT_host_word_replaced": true,
+  "marker_path": "state/backup-publish.ok",
+  "initial_allowed": false,
+  "allow": {
+    "returned": "state/backup-publish.ok",
+    "allowed_after": true,
+    "content": "2026-03-01T10:00:00+00:00 первый запуск\n",
+    "mode": "0o600"
+  },
+  "rewrite_shorter": {
+    "content": "2026-03-02T11:30:15.250000+00:00 second\n"
+  },
+  "empty_reason": {
+    "content": "2026-03-03T00:00:00+00:00 \n"
+  },
+  "allowed_after_unlink": false,
+  "preexisting_wide_mode_kept": {
+    "content": "2026-03-04T00:00:00+00:00 x\n",
+    "mode": "0o644"
+  },
+  "creates_parents": {
+    "returned": "deep/er/dir/backup-publish.ok",
+    "content": "2026-03-04T00:00:00+00:00 multi\nline reason\n"
+  },
+  "relative_marker": "state/backup-publish.ok",
+  "bare_marker": "backup-publish.ok",
+  "marker_is_directory": {
+    "allowed": true,
+    "allow_result": {
+      "error": "IsADirectoryError",
+      "message": "[Errno 21] Is a directory: '<dir>/dirstate/backup-publish.ok'"
+    }
+  }
+}

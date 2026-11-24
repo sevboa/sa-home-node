@@ -44,6 +44,80 @@ active_interval_s = 15.0         # по умолчанию 15.0
 
 ["служба-1"]
 # любые поля — секция читается плагином через cfg.section()
+
+[monitor]
+socket = "./data/monitor.sock"
+db_path = "./data/monitor.sqlite"
+
+[schedule]
+scan_cron = "*/1 * * * *"
+smart_cron = "0 * * * *"
+housekeeping_cron = "0 3 * * *"
+
+[sensors.cpu]
+enabled = true
+warn_c = 80.0
+crit_c = 90.0
+hysteresis_delta_c = 5.0
+consecutive_to_alert = 3
+consecutive_to_clear = 3
+mode = "fixed"
+baseline_window = 240
+baseline_min_samples = 30
+baseline_k_sigma = 4.0
+baseline_min_std_c = 3.0
+
+[sensors.gpu]
+enabled = false
+warn_c = 80.0
+crit_c = 90.0
+hysteresis_delta_c = 5.0
+consecutive_to_alert = 3
+consecutive_to_clear = 3
+mode = "fixed"
+baseline_window = 240
+baseline_min_samples = 30
+baseline_k_sigma = 4.0
+baseline_min_std_c = 3.0
+
+[sensors.disks]
+enabled = true
+warn_c = 55.0
+crit_c = 65.0
+hysteresis_delta_c = 5.0
+consecutive_to_alert = 2
+consecutive_to_clear = 2
+devices = []
+mode = "fixed"
+baseline_window = 240
+baseline_min_samples = 30
+baseline_k_sigma = 4.0
+baseline_min_std_c = 3.0
+
+[sensors.host]
+enabled = false
+sample_window_s = 10.0
+consecutive_to_alert = 3
+consecutive_to_clear = 3
+thresholds = {}
+
+[metrics]
+export = false
+exporter_port = 9100
+
+[backup]
+recipient_public_key = ""
+private_key_file = ""
+partner = ""
+snapshot_interval_s = 600.0
+snapshot_debounce_s = 15.0
+snapshot_poll_s = 300.0
+
+[tasks]
+socket = "./data/tasks.sock"
+db_path = "./data/tasks.sqlite"
+default_timeout_s = 240.0
+warmup_timeout_s = 360.0
 ```
 
 ## Поля `[node]` для роя
@@ -78,6 +152,29 @@ active_interval_s = 15.0         # по умолчанию 15.0
 - `replication_poll_interval_s` — период опроса соседей на новые ревизии пакетов настроек.
 
 Что они значат — [services](services.md).
+
+## Поля `[backup]`
+
+Бэкап identity и снапшотов БД на напарнике. Без `partner` бэкапа нет.
+Подробнее — [backup](backup.md).
+
+- `recipient_public_key` — публичный ключ получателя (base64); без него нода не публикует копии;
+- `private_key_file` — путь к приватному ключу (0600), нужен только там, где расшифровывают бандл восстановления;
+- `partner` — id ноды-напарника: источник копий для этой ноды и их хранитель;
+- `snapshot_interval_s` (600) — как часто пересобирать снапшот, если ничего не менялось;
+- `snapshot_debounce_s` (15) — задержка внеочередной пересборки после изменяющей команды (`trigger_actions`);
+- `snapshot_poll_s` (300) — период опроса источника приёмником снапшотов.
+
+Остальные ключи секции разрешены (`extra="allow"`) — их читает плагин.
+
+## Поля `[tasks]`
+
+Встроенная служба отложенных задач (`tasks/plugin.py`). Подробнее — [tasks](tasks.md).
+
+- `socket` ("./data/tasks.sock") — unix-сокет службы;
+- `db_path` ("./data/tasks.sqlite") — SQLite-файл задач;
+- `default_timeout_s` (240) — бюджет исполнения задачи без своего `timeout_s`;
+- `warmup_timeout_s` (360) — потолок прогрева цели перед срабатыванием.
 
 ## Правила путей
 

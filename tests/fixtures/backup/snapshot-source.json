@@ -1,0 +1,283 @@
+[
+  {
+    "name": "first_build",
+    "now": 0.0,
+    "snapshot": {
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 1,
+        "hash": "sha256:133fda0f755b6d8d65d27b56b9ea78859d34876816506ab214a1e64d177bbad5",
+        "taken_at": "2026-01-01T00:00:01+00:00",
+        "rows": {
+          "tbl_a": 2,
+          "tbl_b": 1,
+          "tbl_a_active": 1
+        }
+      },
+      "sealed": "U0FIQjE89QzpYE7jmNlpr4WPCdKcDNcGWNeRqD0lrXHOUtktFZ4/FWMk1C8OpLb0/Lf5Vp+Hg5ZhxgZqE6p00eUJ3AkN3HjSHVwyLh0G2Q5pXdNLqj/VCnGYvgEDpnLZ5r/bG86B/yKAxBuW6+BitJojTlDRzioXbOzkuK8NcDmy7nwsdC4YV+vJSItPtzpxf0hRbjC8f5/10++QJq3lsZQ+6G4BT/g9WYDO2vflu58UiqOrdpa7ZIj6C3xvrO1Bexro6SScGOWF7OU5ZW9W7Q4=",
+      "sealed_len": 209
+    }
+  },
+  {
+    "name": "not_due_same_object",
+    "now": 5.0,
+    "snapshot": {
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 1,
+        "hash": "sha256:133fda0f755b6d8d65d27b56b9ea78859d34876816506ab214a1e64d177bbad5",
+        "taken_at": "2026-01-01T00:00:01+00:00",
+        "rows": {
+          "tbl_a": 2,
+          "tbl_b": 1,
+          "tbl_a_active": 1
+        }
+      },
+      "sealed": "U0FIQjE89QzpYE7jmNlpr4WPCdKcDNcGWNeRqD0lrXHOUtktFZ4/FWMk1C8OpLb0/Lf5Vp+Hg5ZhxgZqE6p00eUJ3AkN3HjSHVwyLh0G2Q5pXdNLqj/VCnGYvgEDpnLZ5r/bG86B/yKAxBuW6+BitJojTlDRzioXbOzkuK8NcDmy7nwsdC4YV+vJSItPtzpxf0hRbjC8f5/10++QJq3lsZQ+6G4BT/g9WYDO2vflu58UiqOrdpa7ZIj6C3xvrO1Bexro6SScGOWF7OU5ZW9W7Q4=",
+      "sealed_len": 209
+    },
+    "same_object": true
+  },
+  {
+    "name": "interval_passed_data_unchanged_same_hash",
+    "now": 700.0,
+    "snapshot": {
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 1,
+        "hash": "sha256:133fda0f755b6d8d65d27b56b9ea78859d34876816506ab214a1e64d177bbad5",
+        "taken_at": "2026-01-01T00:00:01+00:00",
+        "rows": {
+          "tbl_a": 2,
+          "tbl_b": 1,
+          "tbl_a_active": 1
+        }
+      },
+      "sealed": "U0FIQjE89QzpYE7jmNlpr4WPCdKcDNcGWNeRqD0lrXHOUtktFZ4/FWMk1C8OpLb0/Lf5Vp+Hg5ZhxgZqE6p00eUJ3AkN3HjSHVwyLh0G2Q5pXdNLqj/VCnGYvgEDpnLZ5r/bG86B/yKAxBuW6+BitJojTlDRzioXbOzkuK8NcDmy7nwsdC4YV+vJSItPtzpxf0hRbjC8f5/10++QJq3lsZQ+6G4BT/g9WYDO2vflu58UiqOrdpa7ZIj6C3xvrO1Bexro6SScGOWF7OU5ZW9W7Q4=",
+      "sealed_len": 209
+    },
+    "same_object": true
+  },
+  {
+    "name": "data_changed_but_not_dirty_not_due",
+    "now": 710.0,
+    "snapshot": {
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 1,
+        "hash": "sha256:133fda0f755b6d8d65d27b56b9ea78859d34876816506ab214a1e64d177bbad5",
+        "taken_at": "2026-01-01T00:00:01+00:00",
+        "rows": {
+          "tbl_a": 2,
+          "tbl_b": 1,
+          "tbl_a_active": 1
+        }
+      },
+      "sealed": "U0FIQjE89QzpYE7jmNlpr4WPCdKcDNcGWNeRqD0lrXHOUtktFZ4/FWMk1C8OpLb0/Lf5Vp+Hg5ZhxgZqE6p00eUJ3AkN3HjSHVwyLh0G2Q5pXdNLqj/VCnGYvgEDpnLZ5r/bG86B/yKAxBuW6+BitJojTlDRzioXbOzkuK8NcDmy7nwsdC4YV+vJSItPtzpxf0hRbjC8f5/10++QJq3lsZQ+6G4BT/g9WYDO2vflu58UiqOrdpa7ZIj6C3xvrO1Bexro6SScGOWF7OU5ZW9W7Q4=",
+      "sealed_len": 209
+    }
+  },
+  {
+    "name": "touch_flush_rebuild",
+    "now": 720.0,
+    "snapshot": {
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 2,
+        "hash": "sha256:95ae4c2223677d1d69b8e4f51abc1034b6f9a3c1b0ca9d3053d390ffc42c2fee",
+        "taken_at": "2026-01-01T00:00:02+00:00",
+        "rows": {
+          "tbl_a": 3,
+          "tbl_b": 1,
+          "tbl_a_active": 2
+        }
+      },
+      "sealed": "U0FIQjFpDVX9MUtLREOiUVbC/x2kkDIOQeEZ9p0VXhia2Keqc3R0weftkpr1gP5m5OgeGPAoXejTElhvoA9TMQtSowNQntrHmupJNrhV+HEpTPVDIC0E5d9K3RREk4OmRJNcoiKYZaD1/aaqSlHye3yIbctw0Y+LMPP/TDOaLsp6p/pnimxSoqvnp7KBcQ/OccHIZvJjPEGDgPC9uPNODY+oXZTAX/oalaTb9NCI+7qIn6RnbvdDtKTFsFks7sBLsztnvTfNu/XRbDTvEJnJXyWJLYTs",
+      "sealed_len": 213
+    },
+    "notified": [
+      720.0
+    ],
+    "sleeps": [
+      15.0
+    ]
+  },
+  {
+    "name": "touch_within_debounce_not_rebuilt",
+    "now": 725.0,
+    "rev": 2,
+    "notified": [
+      720.0,
+      725.0
+    ],
+    "sleeps": [
+      15.0,
+      15.0
+    ]
+  },
+  {
+    "name": "interval_passed_data_changed_new_rev",
+    "now": 1400.0,
+    "snapshot": {
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 3,
+        "hash": "sha256:49ee42a633947bd85deaaa520c0a7a9d0d92ef44dad7ab702103785f37235f30",
+        "taken_at": "2026-01-01T00:00:03+00:00",
+        "rows": {
+          "tbl_a": 4,
+          "tbl_b": 1,
+          "tbl_a_active": 3
+        }
+      },
+      "sealed": "U0FIQjHDev0hEN/1aJXSYgyl0ZHJWq+5x6wyKbFaoDwiqh7iGvO6nkCOBvz8I0DghtPCM9S9VqzzSlBTZevItdz1UVnCOp1ZaehlVy2nxgsxoys6DImSilmhw7o3gDUopuZXh9KeX5rSIaC4337Z0zVAj7/yxY6iirMa30rimbsxWr9A/hunPtrSnF0XVK5Q/yc6dtgS2XqEj17Cd7ZnOpHGAHz+t4XDi7KlNP8ZuBRv95v4s6aPGV+rJ5TVPk4XU7fcYm4ReVQpR9xtbgX9/0y56F7egiqyQBQ=",
+      "sealed_len": 218
+    }
+  },
+  {
+    "name": "get_without_marker",
+    "args": {},
+    "error": {
+      "type": "SnapshotError",
+      "message": "публикация бэкапа приостановлена: нет маркера backup-publish.ok. После пересборки сервера восстановите данные (`sa-home-bot backup restore <нода> --apply` на node-a), для нового сервера или первого деплоя — `nodectl backup-release`"
+    }
+  },
+  {
+    "name": "get_ok",
+    "args": {},
+    "result": {
+      "hash": "sha256:49ee42a633947bd85deaaa520c0a7a9d0d92ef44dad7ab702103785f37235f30",
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 3,
+        "hash": "sha256:49ee42a633947bd85deaaa520c0a7a9d0d92ef44dad7ab702103785f37235f30",
+        "taken_at": "2026-01-01T00:00:03+00:00",
+        "rows": {
+          "tbl_a": 4,
+          "tbl_b": 1,
+          "tbl_a_active": 3
+        }
+      },
+      "sealed": "U0FIQjHDev0hEN/1aJXSYgyl0ZHJWq+5x6wyKbFaoDwiqh7iGvO6nkCOBvz8I0DghtPCM9S9VqzzSlBTZevItdz1UVnCOp1ZaehlVy2nxgsxoys6DImSilmhw7o3gDUopuZXh9KeX5rSIaC4337Z0zVAj7/yxY6iirMa30rimbsxWr9A/hunPtrSnF0XVK5Q/yc6dtgS2XqEj17Cd7ZnOpHGAHz+t4XDi7KlNP8ZuBRv95v4s6aPGV+rJ5TVPk4XU7fcYm4ReVQpR9xtbgX9/0y56F7egiqyQBQ="
+    }
+  },
+  {
+    "name": "get_same_hash",
+    "args": {
+      "have_hash": "sha256:49ee42a633947bd85deaaa520c0a7a9d0d92ef44dad7ab702103785f37235f30"
+    },
+    "result": {
+      "unchanged": true,
+      "hash": "sha256:49ee42a633947bd85deaaa520c0a7a9d0d92ef44dad7ab702103785f37235f30"
+    }
+  },
+  {
+    "name": "get_other_hash",
+    "args": {
+      "have_hash": "sha256:other"
+    },
+    "result": {
+      "hash": "sha256:49ee42a633947bd85deaaa520c0a7a9d0d92ef44dad7ab702103785f37235f30",
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 3,
+        "hash": "sha256:49ee42a633947bd85deaaa520c0a7a9d0d92ef44dad7ab702103785f37235f30",
+        "taken_at": "2026-01-01T00:00:03+00:00",
+        "rows": {
+          "tbl_a": 4,
+          "tbl_b": 1,
+          "tbl_a_active": 3
+        }
+      },
+      "sealed": "U0FIQjHDev0hEN/1aJXSYgyl0ZHJWq+5x6wyKbFaoDwiqh7iGvO6nkCOBvz8I0DghtPCM9S9VqzzSlBTZevItdz1UVnCOp1ZaehlVy2nxgsxoys6DImSilmhw7o3gDUopuZXh9KeX5rSIaC4337Z0zVAj7/yxY6iirMa30rimbsxWr9A/hunPtrSnF0XVK5Q/yc6dtgS2XqEj17Cd7ZnOpHGAHz+t4XDi7KlNP8ZuBRv95v4s6aPGV+rJ5TVPk4XU7fcYm4ReVQpR9xtbgX9/0y56F7egiqyQBQ="
+    }
+  },
+  {
+    "name": "rebuild_error_no_cache",
+    "snapshot": null,
+    "error": {
+      "type": "SnapshotError",
+      "message": "снапшот ещё не собран"
+    }
+  },
+  {
+    "name": "oversize_no_cache",
+    "limit": 100,
+    "snapshot": null,
+    "error": {
+      "type": "SnapshotError",
+      "message": "снапшот ещё не собран"
+    }
+  },
+  {
+    "name": "oversize_second_call_still_none",
+    "snapshot": null
+  },
+  {
+    "name": "empty_database_new_rev",
+    "now": 2101.0,
+    "snapshot": {
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 4,
+        "hash": "sha256:83b19bc407885498ca672fd72461c06ddcfdae27806a7ee78f1e224c4106dfbe",
+        "taken_at": "2026-01-01T00:00:05+00:00",
+        "rows": {
+          "tbl_a": 0,
+          "tbl_b": 0,
+          "tbl_a_active": 0
+        }
+      },
+      "sealed": "U0FIQjGUo5AtEwAv3wln8ddEghpyGIGRQogyRb/hOWJLP9cTEG1gBWQ9J5JHD9hjndlPc92ohPjQIZr/gd8ws7msK193C474brOfjl6ZoVOqrZ3In6K51EXVnSHDHZrOqWRj/xrvZ3tuYfZXFZnl3E+xftIeNxFKwFy0e4u7jDy6PzQMEzHORf4jOB2jWSPaSNPrDngMA9kgxOPjAbbT5BwvYi5AweLUMFY9/RBvw3XTYqZJnQ==",
+      "sealed_len": 181
+    }
+  },
+  {
+    "name": "limits",
+    "max_sealed_bytes": 655360,
+    "max_plaintext_bytes": 67108864
+  },
+  {
+    "name": "constructor_keys",
+    "cases": [
+      {
+        "name": "empty_key",
+        "error": {
+          "type": "SealedError",
+          "message": "ключ должен быть 32 байт, а не 0"
+        }
+      },
+      {
+        "name": "bad_key",
+        "error": {
+          "type": "SealedError",
+          "message": "ключ не является корректным base64"
+        }
+      },
+      {
+        "name": "short_key",
+        "error": {
+          "type": "SealedError",
+          "message": "ключ должен быть 32 байт, а не 5"
+        }
+      }
+    ]
+  },
+  {
+    "name": "snapshot_enabled",
+    "cases": {
+      "both": true,
+      "no_partner": false,
+      "no_key": false
+    }
+  }
+]

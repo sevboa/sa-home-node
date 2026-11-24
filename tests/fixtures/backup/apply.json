@@ -1,0 +1,597 @@
+[
+  {
+    "name": "sudo_io",
+    "cases": [
+      {
+        "name": "read_existing",
+        "result": "existing\n",
+        "calls": [
+          [
+            "read_text_if_exists",
+            "/etc/svc/a.conf"
+          ]
+        ]
+      },
+      {
+        "name": "read_missing",
+        "result": null,
+        "calls": [
+          [
+            "read_text_if_exists",
+            "/etc/svc/none.conf"
+          ]
+        ]
+      },
+      {
+        "name": "write_root",
+        "result": null,
+        "calls": [
+          [
+            "temp_file",
+            "text\n",
+            ".restore"
+          ],
+          [
+            "install_from",
+            "/tmp/restore.tmp",
+            "/etc/svc/b.conf",
+            "0600",
+            true
+          ]
+        ]
+      },
+      {
+        "name": "unit_active_system",
+        "result": true,
+        "calls": [
+          [
+            "unit_is_active",
+            "unit-a",
+            false
+          ]
+        ]
+      },
+      {
+        "name": "unit_active_user",
+        "result": false,
+        "calls": [
+          [
+            "unit_is_active",
+            "unit-c",
+            true
+          ]
+        ]
+      },
+      {
+        "name": "restart_system",
+        "result": null,
+        "calls": [
+          [
+            "run_sudo",
+            [
+              "systemctl",
+              "restart",
+              "unit-a"
+            ]
+          ]
+        ]
+      },
+      {
+        "name": "restart_user",
+        "result": null,
+        "calls": [
+          [
+            "run_user",
+            [
+              "systemctl",
+              "--user",
+              "restart",
+              "unit-b"
+            ]
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "check_bundle",
+    "cases": [
+      {
+        "name": "ok",
+        "result": null
+      },
+      {
+        "name": "other_node",
+        "error": {
+          "type": "ApplyError",
+          "message": "бандл для ноды 'node-c', а здесь [node].id = 'node-a'"
+        }
+      },
+      {
+        "name": "no_identity",
+        "error": {
+          "type": "ApplyError",
+          "message": "в бандле нет identity"
+        }
+      },
+      {
+        "name": "no_identity_key",
+        "error": {
+          "type": "ApplyError",
+          "message": "в бандле нет identity"
+        }
+      },
+      {
+        "name": "identity_without_format",
+        "error": {
+          "type": "ApplyError",
+          "message": "в бандле нет identity"
+        }
+      }
+    ]
+  },
+  {
+    "name": "import_snapshot",
+    "skip_tables": [
+      "tbl_b"
+    ],
+    "tables": [
+      "tbl_a",
+      "tbl_b"
+    ],
+    "cases": [
+      {
+        "name": "merge",
+        "wipe": false,
+        "result": {
+          "tbl_a": 3
+        },
+        "tbl_a": [
+          [
+            1,
+            "a",
+            "active"
+          ],
+          [
+            2,
+            "b2",
+            "revoked"
+          ],
+          [
+            7,
+            "g",
+            "active"
+          ],
+          [
+            9,
+            "keep",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "wipe",
+        "wipe": true,
+        "result": {
+          "tbl_a": 3
+        },
+        "tbl_a": [
+          [
+            1,
+            "a",
+            "active"
+          ],
+          [
+            2,
+            "b2",
+            "revoked"
+          ],
+          [
+            7,
+            "g",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "db_without_table_a",
+        "wipe": false,
+        "result": {},
+        "tbl_a": null,
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "snapshot_without_table_a",
+        "wipe": true,
+        "result": {},
+        "tbl_a": [
+          [
+            2,
+            "old",
+            "active"
+          ],
+          [
+            9,
+            "keep",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "snapshot_only_skipped_table",
+        "wipe": false,
+        "result": {},
+        "tbl_a": [
+          [
+            2,
+            "old",
+            "active"
+          ],
+          [
+            9,
+            "keep",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "no_tables_key",
+        "wipe": true,
+        "result": {},
+        "tbl_a": [
+          [
+            2,
+            "old",
+            "active"
+          ],
+          [
+            9,
+            "keep",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "column_order_and_subset",
+        "wipe": false,
+        "result": {
+          "tbl_a": 2
+        },
+        "tbl_a": [
+          [
+            2,
+            "old",
+            "active"
+          ],
+          [
+            5,
+            null,
+            "active"
+          ],
+          [
+            6,
+            null,
+            "revoked"
+          ],
+          [
+            9,
+            "keep",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "empty_rows_wipe",
+        "wipe": true,
+        "result": {
+          "tbl_a": 0
+        },
+        "tbl_a": [],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "ids_preserved",
+        "wipe": true,
+        "result": {
+          "tbl_a": 2
+        },
+        "tbl_a": [
+          [
+            41,
+            "x",
+            "active"
+          ],
+          [
+            42,
+            "y",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "name": "apply_flow",
+    "cases": [
+      {
+        "name": "happy_path",
+        "wipe_db": false,
+        "log": [
+          "config: [svc]/[svc.sub] восстановлены в <root>/apply/config.toml",
+          "БД: tbl_a=2",
+          "маркер публикации бэкапа: <root>/apply/state/backup-publish.ok"
+        ],
+        "io_calls": [],
+        "config": "[node]\nid = \"node-a\"\n\n[other]\nx = 1\n\n[svc]\nendpoint_host = \"host-a.example\"\nmtu = 1380\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\n\n[svc.side]\ninterface = \"if1\"\nport = 51821\n\n[svc.sub]\ninbound_tag = \"in-a\"\nserver_public_key = \"pub-a\"\n\n[svc.sub.deep]\nflag = true\n",
+        "pre_restore": "[node]\nid = \"node-a\"\n\n[svc]\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\nmtu = 1280\n\n[svc.sub]\ninbound_tag = \"old\"\n\n[other]\nx = 1\n",
+        "marker": {
+          "text": "2026-01-01T00:00:01+00:00 restore из бандла latest\n",
+          "mode": "0o600"
+        },
+        "tbl_a": [
+          [
+            1,
+            "a",
+            "active"
+          ],
+          [
+            2,
+            "b",
+            "revoked"
+          ]
+        ],
+        "tbl_b": []
+      },
+      {
+        "name": "existing_rows_refused",
+        "wipe_db": false,
+        "error": {
+          "type": "ApplyError",
+          "message": "в /state/svc.db уже 2 пиров — не затираю. Если это пересобранная нода с тестовыми данными, повторите с --wipe-db"
+        },
+        "log": [],
+        "io_calls": [],
+        "config": "[node]\nid = \"node-a\"\n\n[svc]\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\nmtu = 1280\n\n[svc.sub]\ninbound_tag = \"old\"\n\n[other]\nx = 1\n",
+        "pre_restore": null,
+        "marker": null,
+        "tbl_a": [
+          [
+            2,
+            "old",
+            "active"
+          ],
+          [
+            9,
+            "keep",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "existing_rows_wipe_db",
+        "wipe_db": true,
+        "log": [
+          "config: [svc]/[svc.sub] восстановлены в <root>/apply/config.toml",
+          "БД: tbl_a=2",
+          "маркер публикации бэкапа: <root>/apply/state/backup-publish.ok"
+        ],
+        "io_calls": [],
+        "config": "[node]\nid = \"node-a\"\n\n[other]\nx = 1\n\n[svc]\nendpoint_host = \"host-a.example\"\nmtu = 1380\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\n\n[svc.side]\ninterface = \"if1\"\nport = 51821\n\n[svc.sub]\ninbound_tag = \"in-a\"\nserver_public_key = \"pub-a\"\n\n[svc.sub.deep]\nflag = true\n",
+        "pre_restore": "[node]\nid = \"node-a\"\n\n[svc]\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\nmtu = 1280\n\n[svc.sub]\ninbound_tag = \"old\"\n\n[other]\nx = 1\n",
+        "marker": {
+          "text": "2026-01-01T00:00:02+00:00 restore из бандла latest\n",
+          "mode": "0o600"
+        },
+        "tbl_a": [
+          [
+            1,
+            "a",
+            "active"
+          ],
+          [
+            2,
+            "b",
+            "revoked"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "without_snapshot_keeps_rows",
+        "wipe_db": false,
+        "log": [
+          "config: [svc]/[svc.sub] восстановлены в <root>/apply/config.toml",
+          "маркер публикации бэкапа: <root>/apply/state/backup-publish.ok"
+        ],
+        "io_calls": [],
+        "config": "[node]\nid = \"node-a\"\n\n[other]\nx = 1\n\n[svc]\nendpoint_host = \"host-a.example\"\nmtu = 1380\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\n\n[svc.side]\ninterface = \"if1\"\nport = 51821\n\n[svc.sub]\ninbound_tag = \"in-a\"\nserver_public_key = \"pub-a\"\n\n[svc.sub.deep]\nflag = true\n",
+        "pre_restore": "[node]\nid = \"node-a\"\n\n[svc]\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\nmtu = 1280\n\n[svc.sub]\ninbound_tag = \"old\"\n\n[other]\nx = 1\n",
+        "marker": {
+          "text": "2026-01-01T00:00:03+00:00 restore из бандла latest\n",
+          "mode": "0o600"
+        },
+        "tbl_a": [
+          [
+            2,
+            "old",
+            "active"
+          ],
+          [
+            9,
+            "keep",
+            "active"
+          ]
+        ],
+        "tbl_b": [
+          [
+            "k9",
+            1
+          ]
+        ]
+      },
+      {
+        "name": "empty_config_text",
+        "wipe_db": false,
+        "log": [
+          "config: [svc]/[svc.sub] восстановлены в <root>/apply/config.toml",
+          "БД: tbl_a=2",
+          "маркер публикации бэкапа: <root>/apply/state/backup-publish.ok"
+        ],
+        "io_calls": [],
+        "config": "[svc]\nendpoint_host = \"host-a.example\"\nmtu = 1380\n\n[svc.side]\ninterface = \"if1\"\nport = 51821\n\n[svc.sub]\ninbound_tag = \"in-a\"\nserver_public_key = \"pub-a\"\n\n[svc.sub.deep]\nflag = true\n",
+        "pre_restore": "",
+        "marker": {
+          "text": "2026-01-01T00:00:04+00:00 restore из бандла latest\n",
+          "mode": "0o600"
+        },
+        "tbl_a": [
+          [
+            1,
+            "a",
+            "active"
+          ],
+          [
+            2,
+            "b",
+            "revoked"
+          ]
+        ],
+        "tbl_b": []
+      },
+      {
+        "name": "config_missing",
+        "wipe_db": false,
+        "error": {
+          "type": "ApplyError",
+          "message": "нет конфига ноды <root>/apply/config.toml"
+        },
+        "log": [],
+        "io_calls": [],
+        "config": null,
+        "pre_restore": null,
+        "marker": null,
+        "tbl_a": [],
+        "tbl_b": []
+      },
+      {
+        "name": "other_node",
+        "wipe_db": false,
+        "error": {
+          "type": "ApplyError",
+          "message": "бандл для ноды 'node-c', а здесь [node].id = 'node-a'"
+        },
+        "log": [],
+        "io_calls": [],
+        "config": "[node]\nid = \"node-a\"\n\n[svc]\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\nmtu = 1280\n\n[svc.sub]\ninbound_tag = \"old\"\n\n[other]\nx = 1\n",
+        "pre_restore": null,
+        "marker": null,
+        "tbl_a": [],
+        "tbl_b": []
+      },
+      {
+        "name": "snapshot_skips_table",
+        "wipe_db": false,
+        "log": [
+          "config: [svc]/[svc.sub] восстановлены в <root>/apply/config.toml",
+          "БД: tbl_a=2",
+          "маркер публикации бэкапа: <root>/apply/state/backup-publish.ok"
+        ],
+        "io_calls": [],
+        "config": "[node]\nid = \"node-a\"\n\n[other]\nx = 1\n\n[svc]\nendpoint_host = \"host-a.example\"\nmtu = 1380\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\n\n[svc.side]\ninterface = \"if1\"\nport = 51821\n\n[svc.sub]\ninbound_tag = \"in-a\"\nserver_public_key = \"pub-a\"\n\n[svc.sub.deep]\nflag = true\n",
+        "pre_restore": "[node]\nid = \"node-a\"\n\n[svc]\nsocket = \"/run/local.sock\"\ndb_path = \"/state/local.db\"\nmtu = 1280\n\n[svc.sub]\ninbound_tag = \"old\"\n\n[other]\nx = 1\n",
+        "marker": {
+          "text": "2026-01-01T00:00:05+00:00 restore из бандла latest\n",
+          "mode": "0o600"
+        },
+        "tbl_a": [
+          [
+            1,
+            "a",
+            "active"
+          ],
+          [
+            2,
+            "b",
+            "revoked"
+          ]
+        ],
+        "tbl_b": []
+      }
+    ]
+  },
+  {
+    "name": "apply_idempotent",
+    "first_log": [
+      "config: [svc]/[svc.sub] восстановлены в <root>/apply/config.toml",
+      "маркер публикации бэкапа: <root>/apply/state/backup-publish.ok"
+    ],
+    "second_log": [
+      "маркер публикации бэкапа: <root>/apply/state/backup-publish.ok"
+    ],
+    "second_pre_restore": null,
+    "second_config_equal": true
+  }
+]

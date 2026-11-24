@@ -1,0 +1,924 @@
+[
+  {
+    "case": "create: пустой due_at",
+    "action": "create",
+    "args": {
+      "due_at": "",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do"
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "due_at/dst_node/dst_service/action обязательны и должны быть непустыми строками"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: нет action",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": null
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "due_at/dst_node/dst_service/action обязательны и должны быть непустыми строками"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: dst_node не строка",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": 5,
+      "dst_service": "svc",
+      "action": "do"
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "due_at/dst_node/dst_service/action обязательны и должны быть непустыми строками"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: due_at без пояса, не ISO",
+    "action": "create",
+    "args": {
+      "due_at": "завтра",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do"
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "due_at не в формате ISO 8601: Invalid isoformat string: 'завтра'"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: args не объект",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "args": [
+        1
+      ]
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "args должен быть объектом"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: meta не объект",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "meta": "x"
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "meta должен быть объектом"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: timeout_s не число",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "timeout_s": "10"
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "timeout_s должен быть числом"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: await_event не объект",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "await_event": "e"
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "await_event должен быть {node: str, event_type: str}"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: await_event без event_type",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "await_event": {
+        "node": "node-b"
+      }
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "await_event должен быть {node: str, event_type: str}"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: await_event с пустым node",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "await_event": {
+        "node": "",
+        "event_type": "e"
+      }
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "await_event должен быть {node: str, event_type: str}"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "create: due_at без пояса — локальный",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T18:00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do"
+    },
+    "reply": {
+      "task_id": 1
+    },
+    "trace": [],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "case": "create: due_at с поясом",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:00:00+03:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "args": {
+        "x": 1
+      },
+      "meta": {
+        "kind": "k1",
+        "ref": 7
+      },
+      "timeout_s": 12
+    },
+    "reply": {
+      "task_id": 2
+    },
+    "trace": [],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 12.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T09:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "case": "create: timeout_s 0 — умолчание",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "timeout_s": 0,
+      "meta": {
+        "сообщение": "привет"
+      }
+    },
+    "reply": {
+      "task_id": 3
+    },
+    "trace": [],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 12.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T09:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 3,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"сообщение\": \"привет\"}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "case": "create: с await_event",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T12:30:00+00:00",
+      "dst_node": "node-b",
+      "dst_service": "svc",
+      "action": "do",
+      "await_event": {
+        "node": "node-b",
+        "event_type": "applied"
+      }
+    },
+    "reply": {
+      "task_id": 4
+    },
+    "trace": [],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 12.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T09:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 3,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"сообщение\": \"привет\"}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 4,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": [
+        {
+          "task_id": 4,
+          "node": "node-b",
+          "event_type": "applied",
+          "created_at": "2030-01-01T12:00:00+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "case": "create: timer",
+    "action": "create",
+    "args": {
+      "due_at": "2030-01-01T13:00:00+00:00",
+      "dst_node": "node-a",
+      "dst_service": "tasks",
+      "action": "timer"
+    },
+    "reply": {
+      "task_id": 5
+    },
+    "trace": [],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 12.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T09:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 3,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"сообщение\": \"привет\"}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 4,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 5,
+          "dst_node": "node-a",
+          "dst_service": "tasks",
+          "action": "timer",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": [
+        {
+          "task_id": 4,
+          "node": "node-b",
+          "event_type": "applied",
+          "created_at": "2030-01-01T12:00:00+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "case": "fire_now: нет task_id",
+    "action": "fire_now",
+    "args": {},
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "task_id обязателен и должен быть числом"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "fire_now: task_id строка",
+    "action": "fire_now",
+    "args": {
+      "task_id": "1"
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "task_id обязателен и должен быть числом"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "fire_now: нет такой задачи",
+    "action": "fire_now",
+    "args": {
+      "task_id": 999
+    },
+    "reply": {
+      "fired": false,
+      "reason": "нет такой задачи или уже сработала"
+    },
+    "trace": []
+  },
+  {
+    "case": "fire_now: сработала",
+    "action": "fire_now",
+    "args": {
+      "task_id": 2
+    },
+    "reply": {
+      "fired": true
+    },
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "do",
+        "args": {
+          "x": 1
+        },
+        "dst": "node-b/svc",
+        "timeout": 12.0
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 2,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "done": true
+          }
+        }
+      }
+    ],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 12.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T09:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:00+00:00",
+          "prewake_done": 0
+        },
+        {
+          "id": 3,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"сообщение\": \"привет\"}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 4,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 5,
+          "dst_node": "node-a",
+          "dst_service": "tasks",
+          "action": "timer",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": [
+        {
+          "task_id": 4,
+          "node": "node-b",
+          "event_type": "applied",
+          "created_at": "2030-01-01T12:00:00+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "case": "fire_now: повторно",
+    "action": "fire_now",
+    "args": {
+      "task_id": 2
+    },
+    "reply": {
+      "fired": false,
+      "reason": "нет такой задачи или уже сработала"
+    },
+    "trace": [],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 12.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T09:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:00+00:00",
+          "prewake_done": 0
+        },
+        {
+          "id": 3,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"сообщение\": \"привет\"}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 4,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 5,
+          "dst_node": "node-a",
+          "dst_service": "tasks",
+          "action": "timer",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": [
+        {
+          "task_id": 4,
+          "node": "node-b",
+          "event_type": "applied",
+          "created_at": "2030-01-01T12:00:00+00:00"
+        }
+      ]
+    }
+  },
+  {
+    "case": "match_event: нет аргументов",
+    "action": "match_event",
+    "args": {},
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "node и event_type обязательны"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "match_event: пустой event_type",
+    "action": "match_event",
+    "args": {
+      "node": "node-b",
+      "event_type": ""
+    },
+    "reply": {
+      "error": {
+        "code": "bad_request",
+        "message": "node и event_type обязательны"
+      }
+    },
+    "trace": []
+  },
+  {
+    "case": "match_event: без ожидателя",
+    "action": "match_event",
+    "args": {
+      "node": "node-b",
+      "event_type": "other"
+    },
+    "reply": {
+      "matched": false
+    },
+    "trace": []
+  },
+  {
+    "case": "match_event: чужая нода",
+    "action": "match_event",
+    "args": {
+      "node": "node-c",
+      "event_type": "applied"
+    },
+    "reply": {
+      "matched": false
+    },
+    "trace": []
+  },
+  {
+    "case": "match_event: сработал",
+    "action": "match_event",
+    "args": {
+      "node": "node-b",
+      "event_type": "applied"
+    },
+    "reply": {
+      "matched": true,
+      "task_id": 4
+    },
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "do",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 240.0
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 4,
+          "meta": {},
+          "ok": true,
+          "result": {
+            "done": true
+          }
+        }
+      }
+    ],
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 12.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T09:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:00+00:00",
+          "prewake_done": 0
+        },
+        {
+          "id": 3,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"сообщение\": \"привет\"}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        },
+        {
+          "id": 4,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T12:30:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:00+00:00",
+          "prewake_done": 0
+        },
+        {
+          "id": 5,
+          "dst_node": "node-a",
+          "dst_service": "tasks",
+          "action": "timer",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "case": "match_event: повторно",
+    "action": "match_event",
+    "args": {
+      "node": "node-b",
+      "event_type": "applied"
+    },
+    "reply": {
+      "matched": false
+    },
+    "trace": []
+  },
+  {
+    "case": "неизвестное действие",
+    "action": "bogus",
+    "args": {},
+    "reply": {
+      "value_error": "необъявленное действие: bogus"
+    },
+    "trace": []
+  }
+]

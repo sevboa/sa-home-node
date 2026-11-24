@@ -1,0 +1,1175 @@
+{
+  "constants": {
+    "SNAPSHOT_FORMAT": "sa-home-bot/svc-snapshot/1",
+    "SNAPSHOT_TABLES": [
+      "tbl_a",
+      "tbl_b",
+      "tbl_c",
+      "tbl_d",
+      "tbl_missing"
+    ],
+    "MAX_SEALED_BYTES": 655360,
+    "MAX_PLAINTEXT_BYTES": 67108864,
+    "ACTION_GET_SNAPSHOT": "backup_snapshot_get",
+    "ACTION_SNAPSHOT_POKE": "backup_snapshot_poke"
+  },
+  "dump_tables": [
+    {
+      "name": "full",
+      "statements": [
+        "CREATE TABLE tbl_a (id INTEGER PRIMARY KEY, name TEXT, status TEXT, score REAL, note TEXT)",
+        "CREATE TABLE tbl_b (x TEXT, y INTEGER)",
+        "CREATE TABLE tbl_c (a INTEGER, b INTEGER, v TEXT, PRIMARY KEY (b, a))",
+        "CREATE TABLE tbl_d (id INTEGER PRIMARY KEY, v TEXT)",
+        "CREATE TABLE tbl_e (id INTEGER PRIMARY KEY)",
+        "INSERT INTO tbl_a VALUES (3, 'три', 'active', 1.5, NULL)",
+        "INSERT INTO tbl_a VALUES (1, 'one', 'revoked', 0.0, 'n')",
+        "INSERT INTO tbl_a VALUES (2, 'two ☃', 'active', -2.25, '\"q\"')",
+        "INSERT INTO tbl_b VALUES ('z', 1)",
+        "INSERT INTO tbl_b VALUES ('a', NULL)",
+        "INSERT INTO tbl_b VALUES ('m', 3)",
+        "INSERT INTO tbl_c VALUES (2, 1, 'b1a2')",
+        "INSERT INTO tbl_c VALUES (1, 2, 'b2a1')",
+        "INSERT INTO tbl_c VALUES (1, 1, 'b1a1')",
+        "INSERT INTO tbl_c VALUES (2, 2, 'b2a2')",
+        "INSERT INTO tbl_e VALUES (1)"
+      ],
+      "result": {
+        "tbl_a": {
+          "columns": [
+            "id",
+            "name",
+            "status",
+            "score",
+            "note"
+          ],
+          "rows": [
+            [
+              1,
+              "one",
+              "revoked",
+              0.0,
+              "n"
+            ],
+            [
+              2,
+              "two ☃",
+              "active",
+              -2.25,
+              "\"q\""
+            ],
+            [
+              3,
+              "три",
+              "active",
+              1.5,
+              null
+            ]
+          ]
+        },
+        "tbl_b": {
+          "columns": [
+            "x",
+            "y"
+          ],
+          "rows": [
+            [
+              "z",
+              1
+            ],
+            [
+              "a",
+              null
+            ],
+            [
+              "m",
+              3
+            ]
+          ]
+        },
+        "tbl_c": {
+          "columns": [
+            "a",
+            "b",
+            "v"
+          ],
+          "rows": [
+            [
+              1,
+              1,
+              "b1a1"
+            ],
+            [
+              2,
+              1,
+              "b1a2"
+            ],
+            [
+              1,
+              2,
+              "b2a1"
+            ],
+            [
+              2,
+              2,
+              "b2a2"
+            ]
+          ]
+        },
+        "tbl_d": {
+          "columns": [
+            "id",
+            "v"
+          ],
+          "rows": []
+        }
+      }
+    },
+    {
+      "name": "no_tables",
+      "statements": [],
+      "result": {}
+    },
+    {
+      "name": "only_empty_table",
+      "statements": [
+        "CREATE TABLE tbl_d (id INTEGER PRIMARY KEY, v TEXT)"
+      ],
+      "result": {
+        "tbl_d": {
+          "columns": [
+            "id",
+            "v"
+          ],
+          "rows": []
+        }
+      }
+    },
+    {
+      "name": "only_unlisted",
+      "statements": [
+        "CREATE TABLE tbl_e (id INTEGER PRIMARY KEY)",
+        "INSERT INTO tbl_e VALUES (1)"
+      ],
+      "result": {}
+    },
+    {
+      "name": "text_pk",
+      "statements": [
+        "CREATE TABLE tbl_a (k TEXT PRIMARY KEY, v)",
+        "INSERT INTO tbl_a VALUES ('b', 2)",
+        "INSERT INTO tbl_a VALUES ('a', 1)",
+        "INSERT INTO tbl_a VALUES ('B', 3)"
+      ],
+      "result": {
+        "tbl_a": {
+          "columns": [
+            "k",
+            "v"
+          ],
+          "rows": [
+            [
+              "B",
+              3
+            ],
+            [
+              "a",
+              1
+            ],
+            [
+              "b",
+              2
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "mixed_types",
+      "statements": [
+        "CREATE TABLE tbl_b (v)",
+        "INSERT INTO tbl_b VALUES (1)",
+        "INSERT INTO tbl_b VALUES (1.0)",
+        "INSERT INTO tbl_b VALUES ('1')",
+        "INSERT INTO tbl_b VALUES (NULL)",
+        "INSERT INTO tbl_b VALUES (9007199254740993)",
+        "INSERT INTO tbl_b VALUES (1e-7)"
+      ],
+      "result": {
+        "tbl_b": {
+          "columns": [
+            "v"
+          ],
+          "rows": [
+            [
+              1
+            ],
+            [
+              1.0
+            ],
+            [
+              "1"
+            ],
+            [
+              null
+            ],
+            [
+              9007199254740993
+            ],
+            [
+              1e-07
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "pk_desc",
+      "statements": [
+        "CREATE TABLE tbl_b (k INTEGER PRIMARY KEY DESC, v)",
+        "INSERT INTO tbl_b VALUES (5, 'five')",
+        "INSERT INTO tbl_b VALUES (2, 'two')",
+        "INSERT INTO tbl_b VALUES (9, 'nine')"
+      ],
+      "result": {
+        "tbl_b": {
+          "columns": [
+            "k",
+            "v"
+          ],
+          "rows": [
+            [
+              2,
+              "two"
+            ],
+            [
+              5,
+              "five"
+            ],
+            [
+              9,
+              "nine"
+            ]
+          ]
+        }
+      }
+    }
+  ],
+  "build_document": [
+    {
+      "node": "node-a",
+      "tables": {
+        "tbl_a": {
+          "columns": [
+            "id",
+            "name",
+            "status",
+            "score",
+            "note"
+          ],
+          "rows": [
+            [
+              1,
+              "one",
+              "revoked",
+              0.0,
+              "n"
+            ],
+            [
+              2,
+              "two ☃",
+              "active",
+              -2.25,
+              "\"q\""
+            ],
+            [
+              3,
+              "три",
+              "active",
+              1.5,
+              null
+            ]
+          ]
+        },
+        "tbl_b": {
+          "columns": [
+            "x",
+            "y"
+          ],
+          "rows": [
+            [
+              "z",
+              1
+            ],
+            [
+              "a",
+              null
+            ],
+            [
+              "m",
+              3
+            ]
+          ]
+        },
+        "tbl_c": {
+          "columns": [
+            "a",
+            "b",
+            "v"
+          ],
+          "rows": [
+            [
+              1,
+              1,
+              "b1a1"
+            ],
+            [
+              2,
+              1,
+              "b1a2"
+            ],
+            [
+              1,
+              2,
+              "b2a1"
+            ],
+            [
+              2,
+              2,
+              "b2a2"
+            ]
+          ]
+        },
+        "tbl_d": {
+          "columns": [
+            "id",
+            "v"
+          ],
+          "rows": []
+        }
+      },
+      "result": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status",
+              "score",
+              "note"
+            ],
+            "rows": [
+              [
+                1,
+                "one",
+                "revoked",
+                0.0,
+                "n"
+              ],
+              [
+                2,
+                "two ☃",
+                "active",
+                -2.25,
+                "\"q\""
+              ],
+              [
+                3,
+                "три",
+                "active",
+                1.5,
+                null
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "x",
+              "y"
+            ],
+            "rows": [
+              [
+                "z",
+                1
+              ],
+              [
+                "a",
+                null
+              ],
+              [
+                "m",
+                3
+              ]
+            ]
+          },
+          "tbl_c": {
+            "columns": [
+              "a",
+              "b",
+              "v"
+            ],
+            "rows": [
+              [
+                1,
+                1,
+                "b1a1"
+              ],
+              [
+                2,
+                1,
+                "b1a2"
+              ],
+              [
+                1,
+                2,
+                "b2a1"
+              ],
+              [
+                2,
+                2,
+                "b2a2"
+              ]
+            ]
+          },
+          "tbl_d": {
+            "columns": [
+              "id",
+              "v"
+            ],
+            "rows": []
+          }
+        }
+      }
+    },
+    {
+      "node": "",
+      "tables": {},
+      "result": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "",
+        "tables": {}
+      }
+    },
+    {
+      "node": "нода",
+      "tables": {
+        "tbl_d": {
+          "columns": [
+            "id",
+            "v"
+          ],
+          "rows": []
+        }
+      },
+      "result": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "нода",
+        "tables": {
+          "tbl_d": {
+            "columns": [
+              "id",
+              "v"
+            ],
+            "rows": []
+          }
+        }
+      }
+    }
+  ],
+  "summarize": [
+    {
+      "name": "full",
+      "doc": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status",
+              "score",
+              "note"
+            ],
+            "rows": [
+              [
+                1,
+                "one",
+                "revoked",
+                0.0,
+                "n"
+              ],
+              [
+                2,
+                "two ☃",
+                "active",
+                -2.25,
+                "\"q\""
+              ],
+              [
+                3,
+                "три",
+                "active",
+                1.5,
+                null
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "x",
+              "y"
+            ],
+            "rows": [
+              [
+                "z",
+                1
+              ],
+              [
+                "a",
+                null
+              ],
+              [
+                "m",
+                3
+              ]
+            ]
+          },
+          "tbl_c": {
+            "columns": [
+              "a",
+              "b",
+              "v"
+            ],
+            "rows": [
+              [
+                1,
+                1,
+                "b1a1"
+              ],
+              [
+                2,
+                1,
+                "b1a2"
+              ],
+              [
+                1,
+                2,
+                "b2a1"
+              ],
+              [
+                2,
+                2,
+                "b2a2"
+              ]
+            ]
+          },
+          "tbl_d": {
+            "columns": [
+              "id",
+              "v"
+            ],
+            "rows": []
+          }
+        }
+      },
+      "result": {
+        "ok": {
+          "tbl_a": 3,
+          "tbl_b": 3,
+          "tbl_c": 4,
+          "tbl_d": 0,
+          "tbl_a_active": 2
+        }
+      }
+    },
+    {
+      "name": "no_tbl_a",
+      "doc": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {}
+      },
+      "result": {
+        "ok": {}
+      }
+    },
+    {
+      "name": "empty_tbl_a",
+      "doc": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "status"
+            ],
+            "rows": []
+          }
+        }
+      },
+      "result": {
+        "ok": {
+          "tbl_a": 0,
+          "tbl_a_active": 0
+        }
+      }
+    },
+    {
+      "name": "tbl_a_without_status",
+      "doc": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id"
+            ],
+            "rows": [
+              [
+                1
+              ],
+              [
+                2
+              ]
+            ]
+          }
+        }
+      },
+      "result": {
+        "ok": {
+          "tbl_a": 2
+        }
+      }
+    },
+    {
+      "name": "status_case_sensitive",
+      "doc": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "status"
+            ],
+            "rows": [
+              [
+                "Active"
+              ],
+              [
+                "active"
+              ],
+              [
+                null
+              ]
+            ]
+          }
+        }
+      },
+      "result": {
+        "ok": {
+          "tbl_a": 3,
+          "tbl_a_active": 1
+        }
+      }
+    },
+    {
+      "name": "two_tables",
+      "doc": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "status"
+            ],
+            "rows": [
+              [
+                1,
+                "active"
+              ],
+              [
+                2,
+                "x"
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "x"
+            ],
+            "rows": [
+              [
+                1
+              ],
+              [
+                2
+              ],
+              [
+                3
+              ]
+            ]
+          }
+        }
+      },
+      "result": {
+        "ok": {
+          "tbl_a": 2,
+          "tbl_b": 3,
+          "tbl_a_active": 1
+        }
+      }
+    },
+    {
+      "name": "no_tables_key",
+      "doc": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a"
+      },
+      "result": {
+        "ok": {}
+      }
+    },
+    {
+      "name": "bad_table_shape",
+      "doc": {
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "status"
+            ]
+          }
+        }
+      },
+      "result": {
+        "error": "KeyError",
+        "message": "'rows'"
+      }
+    }
+  ],
+  "seal_document": {
+    "stream": "core-1/snapdoc",
+    "recipient_private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+    "doc": {
+      "format": "sa-home-bot/svc-snapshot/1",
+      "node": "node-a",
+      "tables": {
+        "tbl_a": {
+          "columns": [
+            "id",
+            "name",
+            "status",
+            "score",
+            "note"
+          ],
+          "rows": [
+            [
+              1,
+              "one",
+              "revoked",
+              0.0,
+              "n"
+            ],
+            [
+              2,
+              "two ☃",
+              "active",
+              -2.25,
+              "\"q\""
+            ],
+            [
+              3,
+              "три",
+              "active",
+              1.5,
+              null
+            ]
+          ]
+        },
+        "tbl_b": {
+          "columns": [
+            "x",
+            "y"
+          ],
+          "rows": [
+            [
+              "z",
+              1
+            ],
+            [
+              "a",
+              null
+            ],
+            [
+              "m",
+              3
+            ]
+          ]
+        },
+        "tbl_c": {
+          "columns": [
+            "a",
+            "b",
+            "v"
+          ],
+          "rows": [
+            [
+              1,
+              1,
+              "b1a1"
+            ],
+            [
+              2,
+              1,
+              "b1a2"
+            ],
+            [
+              1,
+              2,
+              "b2a1"
+            ],
+            [
+              2,
+              2,
+              "b2a2"
+            ]
+          ]
+        },
+        "tbl_d": {
+          "columns": [
+            "id",
+            "v"
+          ],
+          "rows": []
+        }
+      }
+    },
+    "plaintext_hex": "7b22666f726d6174223a2273612d686f6d652d626f742f7376632d736e617073686f742f31222c226e6f6465223a226e6f64652d61222c227461626c6573223a7b2274626c5f61223a7b22636f6c756d6e73223a5b226964222c226e616d65222c22737461747573222c2273636f7265222c226e6f7465225d2c22726f7773223a5b5b312c226f6e65222c227265766f6b6564222c302e302c226e225d2c5b322c2274776f20e29883222c22616374697665222c2d322e32352c225c22715c22225d2c5b332c22d182d180d0b8222c22616374697665222c312e352c6e756c6c5d5d7d2c2274626c5f62223a7b22636f6c756d6e73223a5b2278222c2279225d2c22726f7773223a5b5b227a222c315d2c5b2261222c6e756c6c5d2c5b226d222c335d5d7d2c2274626c5f63223a7b22636f6c756d6e73223a5b2261222c2262222c2276225d2c22726f7773223a5b5b312c312c2262316131225d2c5b322c312c2262316132225d2c5b312c322c2262326131225d2c5b322c322c2262326132225d5d7d2c2274626c5f64223a7b22636f6c756d6e73223a5b226964222c2276225d2c22726f7773223a5b5d7d7d7d",
+    "plain_hash": "sha256:1743c4aab6006a202c961c7c3ed045e69f827bb4ae98b8c53c828bfa1d645938",
+    "blob_hex": "5341484231eec4db62608ae1ffced3e0ffdd9206adb5c9ced88df592eb199138b5ba86ed074af20e1f10053fbd24c6de16deba05f292ed92316c1998d26814d5f167b331e16e1b68c1db07b42ca9655a62773c20d8d7ab6891c8dcafbba1b0119faeed69328ebe732a02da9c2778e3af39fb97368bae07512cca0a2c7360ab4a6a3c438ee06f40f8a8df63d0258928563e6b50a04c3a55e3422f668daff0ab6779bb05adb595d5e628038621c57061a659974416b8aa331b4f6ff71cea93ac3b19f17b3921dd0ff2b195729a0680e0b11f7f2d33eedebb3dedc6fe2e2669b116159c12a54de952645bf012b294450e398af3988e1d22b6d4b6045a83c815329546e19fd5a493b5dbc23edf32f69d3af03c29a922cf1682bcf45d715cbae8e5a978997f5a5010cd2293050e465b7c065ff17b3987d4932d66fae8af336361",
+    "blob_len": 318,
+    "inner_is_zlib_level_9": true,
+    "opened": {
+      "ok": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-a",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status",
+              "score",
+              "note"
+            ],
+            "rows": [
+              [
+                1,
+                "one",
+                "revoked",
+                0.0,
+                "n"
+              ],
+              [
+                2,
+                "two ☃",
+                "active",
+                -2.25,
+                "\"q\""
+              ],
+              [
+                3,
+                "три",
+                "active",
+                1.5,
+                null
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "x",
+              "y"
+            ],
+            "rows": [
+              [
+                "z",
+                1
+              ],
+              [
+                "a",
+                null
+              ],
+              [
+                "m",
+                3
+              ]
+            ]
+          },
+          "tbl_c": {
+            "columns": [
+              "a",
+              "b",
+              "v"
+            ],
+            "rows": [
+              [
+                1,
+                1,
+                "b1a1"
+              ],
+              [
+                2,
+                1,
+                "b1a2"
+              ],
+              [
+                1,
+                2,
+                "b2a1"
+              ],
+              [
+                2,
+                2,
+                "b2a2"
+              ]
+            ]
+          },
+          "tbl_d": {
+            "columns": [
+              "id",
+              "v"
+            ],
+            "rows": []
+          }
+        }
+      }
+    }
+  },
+  "open_snapshot": [
+    {
+      "name": "wrong_key",
+      "private_hex": "8bc53f9f3bcc5002e42a379a6f1d2123947f2f93b2b108805976e300f2acb19c",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: не удалось расшифровать: чужой ключ или данные повреждены"
+      },
+      "blob_hex": "5341484231eec4db62608ae1ffced3e0ffdd9206adb5c9ced88df592eb199138b5ba86ed074af20e1f10053fbd24c6de16deba05f292ed92316c1998d26814d5f167b331e16e1b68c1db07b42ca9655a62773c20d8d7ab6891c8dcafbba1b0119faeed69328ebe732a02da9c2778e3af39fb97368bae07512cca0a2c7360ab4a6a3c438ee06f40f8a8df63d0258928563e6b50a04c3a55e3422f668daff0ab6779bb05adb595d5e628038621c57061a659974416b8aa331b4f6ff71cea93ac3b19f17b3921dd0ff2b195729a0680e0b11f7f2d33eedebb3dedc6fe2e2669b116159c12a54de952645bf012b294450e398af3988e1d22b6d4b6045a83c815329546e19fd5a493b5dbc23edf32f69d3af03c29a922cf1682bcf45d715cbae8e5a978997f5a5010cd2293050e465b7c065ff17b3987d4932d66fae8af336361"
+    },
+    {
+      "name": "garbage",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: это не бэкап sa-home-bot (неверная магия)"
+      },
+      "blob_hex": "6a756e6b"
+    },
+    {
+      "name": "empty",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: это не бэкап sa-home-bot (неверная магия)"
+      },
+      "blob_hex": ""
+    },
+    {
+      "name": "sealed_not_zlib",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: Error -3 while decompressing data: incorrect header check"
+      },
+      "blob_hex": "5341484231b3725b98ad7a1122c887dd97bdab2378fe5740f0f10c7c2e8f007e7015b2822d94a204f5b5d05bd52484c61d314eebec8098ddf13697a7009289896dd5690852e3e2db2a30ab216c0655955beb41f03c7d"
+    },
+    {
+      "name": "zlib_not_json",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: Expecting value: line 1 column 1 (char 0)"
+      },
+      "blob_hex": "5341484231bd21498d5b2c813a80e79186187cafbae42c5f19197c38cb391ebe137315de3b6139b3701644c58d6a65ee5abaa575b11a01e876dc5beb7211993cc9eeba346378b32eab745e42e6"
+    },
+    {
+      "name": "zlib_bad_utf8",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: Expecting value: line 1 column 1 (char 0)"
+      },
+      "blob_hex": "5341484231779667d792254c3cb0a9dbd01566fb0db66b07bc19e698443665b95b2937a23255dbd7eeb90e7a2fde1b00d478a7c06e7472618057075ad1860c3cf5d5b46c5c6a0a6e630052"
+    },
+    {
+      "name": "wrong_format",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "неизвестный формат снапшота: 'other'"
+      },
+      "blob_hex": "534148423159616ea827f63317cb9fb632c224c03b6de6ef50d5ddc76487dea417d9f0bd1f101db2d90070c84b4aab6104c7e03224458f355aa3ccf3fb15df5e94fd1c95afc741e7aff51e0f93e777464cdde31c81cabae0ca9e8ba3"
+    },
+    {
+      "name": "missing_format",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "неизвестный формат снапшота: None"
+      },
+      "blob_hex": "5341484231f5c00f49f2e0725d51b3a017d73b2510af99805bb38ec223edaad89ebf50dd28a4b208ac99600edf513376d2840903bbb577952bad1562e7359384ef7688c6613fa4488af0c34e75e90ebef58830f6d2c0"
+    },
+    {
+      "name": "format_ok_minimal",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "ok": {
+          "format": "sa-home-bot/svc-snapshot/1"
+        }
+      },
+      "blob_hex": "5341484231c6d00549c333ffe5e82f111f2d2a17ff994587d5a738ef714198c9809203576e54b42fe2915d7ba1ee5a100362af171196b4ba32986762a3dedfb7e7e7ad176200c1ee7105ff64d385a96cead066eb81ad96ea32f76abe0fb6cf03445410677a358aa715349dcd0ae161"
+    },
+    {
+      "name": "json_list",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "AttributeError",
+        "message": "'list' object has no attribute 'get'"
+      },
+      "blob_hex": "53414842319ec706d1b395e1b0ab6214436a5d2cfa94cf5b240265e39e95f23d60adae7d48dee8d72e4e28678bd7bb26da18d848e90a64664f77a0227440c84f5b9274365d042f9315156d"
+    },
+    {
+      "name": "json_null",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "AttributeError",
+        "message": "'NoneType' object has no attribute 'get'"
+      },
+      "blob_hex": "534148423113efd38110c37c2f6066ae5d3cf86e163de5b097fd0ee22d8a5305f15e1e594eb6106e2e427e66be1c882ed9368b05703c5e56cc32f32a8c23178a69b0273b4c75edf2e2d1a79720"
+    },
+    {
+      "name": "oversize_plaintext",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: Expecting value: line 1 column 67108865 (char 67108864)"
+      },
+      "blob_len": 65306,
+      "blob_sha256": "2354af31eae578f85a0bb6540257e3af06dac89fb4f5ef3a0edb50b4dee3ba8b"
+    },
+    {
+      "name": "zlib_truncated",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "error": "SnapshotError",
+        "message": "не удалось расшифровать снапшот: Expecting ',' delimiter: line 1 column 426 (char 425)"
+      },
+      "blob_hex": "5341484231dfc98dd792222b2b8029e3817cfd1896c550e566e788bce0d587bf53b8cba8071dea36bb018b352189909edfec2d94ceab6990f92701403228bfece608833a1c776e45bbcaae26a404a8e50c7ec8234df44a331860f4ee9dfbd1e20114e2e14e269d54297a3aca00773007c2ccbe4c2a2a2a869fd5cc8574a1928e25c77f1fc6f857dd16918ccdf0cc9b2886b75b5f0749100c4d900181ffb8bc1872f15afc42e97a95917016c944bb3f17ec8c300e0831e9f0e58f1c08d6fb7f838c2b148664929d27de6f5aaa1c37b1cd59c74e5667a2acf12d139bef79ce8e10949dadf44124d787bae0e225a9ead4f82b81060b230cd7b2ffa39febd97decc3b36d2248cb828d96c9fafac46e99719f791d271165b9ad7f2e52d4587d09dc14e0a8737438cb094d60d63e5c9e8871901a1f20f8da5b231c"
+    },
+    {
+      "name": "zlib_trailing_garbage",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "result": {
+        "ok": {
+          "format": "sa-home-bot/svc-snapshot/1",
+          "node": "node-a",
+          "tables": {
+            "tbl_a": {
+              "columns": [
+                "id",
+                "name",
+                "status",
+                "score",
+                "note"
+              ],
+              "rows": [
+                [
+                  1,
+                  "one",
+                  "revoked",
+                  0.0,
+                  "n"
+                ],
+                [
+                  2,
+                  "two ☃",
+                  "active",
+                  -2.25,
+                  "\"q\""
+                ],
+                [
+                  3,
+                  "три",
+                  "active",
+                  1.5,
+                  null
+                ]
+              ]
+            },
+            "tbl_b": {
+              "columns": [
+                "x",
+                "y"
+              ],
+              "rows": [
+                [
+                  "z",
+                  1
+                ],
+                [
+                  "a",
+                  null
+                ],
+                [
+                  "m",
+                  3
+                ]
+              ]
+            },
+            "tbl_c": {
+              "columns": [
+                "a",
+                "b",
+                "v"
+              ],
+              "rows": [
+                [
+                  1,
+                  1,
+                  "b1a1"
+                ],
+                [
+                  2,
+                  1,
+                  "b1a2"
+                ],
+                [
+                  1,
+                  2,
+                  "b2a1"
+                ],
+                [
+                  2,
+                  2,
+                  "b2a2"
+                ]
+              ]
+            },
+            "tbl_d": {
+              "columns": [
+                "id",
+                "v"
+              ],
+              "rows": []
+            }
+          }
+        }
+      },
+      "blob_hex": "5341484231a885678fdfbb0f6d0c92dae37c1c6f2d66e57e59c7d0bd4a4ed41058e6b7e24e4cf74ce7bc8ba5fb13304bbd7700aa748d4262e2407efb61e05fe1c1b0365419fb0ef57d58299de3a76994bd17fada7b2fa3f19cd96429124a816503a654094b1a81a0444b4ae5b9f0c24dc1a03ddecaa8afdafbcdfb4a4e41a9ebab7e44776a3f739ca61250a181e37c6e5a55a5da36646d8a7958c873e6e2bd11ee24bd9ebaae1b9cbed9e2cd4360caf9ff16d9c03be891fdba7ccd2f7e9a423549bc7d7e5c69ae7f3b8871b3cbfd6cc39c976779ded63825f17d477659aaccaf422b9dd2ed2174a2a258ab7963e596583ec7ed29c705ab2500544f1e6968be01c7f7c9fd6a16ad2a0d025dcb960567d08f0c9d1e26d253be75433792b154abbbc6af459c896a07fe470c81e315c2b93598464aac020f96228084dd7f65962cb8afb1"
+    }
+  ]
+}

@@ -16,7 +16,51 @@
   видны в `describe` и вызываются с других нод через `command` на службу `node`;
 - `power_blockers` — кортеж асинхронных функций `() -> list[str]`: что мешает выключить машину (см. ниже);
 - `replication_hooks` — `ReplicationHooks` или `None` (см. ниже);
-- `fixups` — фабрика фиксапов хоста `Callable[[FixupContext], Sequence[Fixup]]` или `None` (см. ниже).
+- `fixups` — фабрика фиксапов хоста `Callable[[FixupContext], Sequence[Fixup]]` или `None` (см. ниже);
+- `backup` — `BackupSpec` или `None`: что плагин отдаёт в бэкап (identity, снапшот БД, применение при восстановлении),
+  см. [backup](backup.md) и `BackupSpec` ниже;
+- `task_kinds` — кортеж `TaskKind`: виды отложенных задач, которые исполняет служба `tasks` (к ним добавляется
+  встроенный `timer`), см. [tasks](tasks.md) и `TaskKind` ниже.
+- `sections` — кортеж пар `(имя_секции, модель)`: дополнительные секции конфига, которые плагин хочет получать
+  в `ServiceContext.sections`. Ядро валидирует их при создании контекста и кладёт по имени.
+- `sensor_providers` — кортеж фабрик `Callable[[ServiceContext], SensorProvider]`: поставщики датчиков для
+  плагина `monitor` (см. [monitor](monitor.md)). Ядро не использует их напрямую, плагин `monitor` собирает их
+  из всех плагинов и выбирает по платформе хоста.
+
+Плагин `monitor` встроен и всегда идёт первым, затем `tasks`; имена `monitor` или `tasks` в `[node].plugins` —
+ошибка «Повтор имени плагина».
+
+### `BackupSpec`
+
+Описывает, что именно плагин кладёт в бэкап и как это восстанавливается (`sa_home_node.backup.spec.BackupSpec`):
+
+- `service` — имя службы с БД, снапшот которой бэкапится;
+- `identity_service` — имя службы пакетов identity;
+- `identity_format`, `snapshot_format`, `bundle_format` — строки форматов (версионирование при смене структуры);
+- `tables` — кортеж имён таблиц, которые выгружаются в снапшот;
+- `skip_tables` — таблицы, которые есть в снапшоте, но не применяются при восстановлении (например, служебные);
+- `primary_table` — таблица, по наличию строк в которой снапшот считается непустым;
+- `trigger_actions` — действия службы, после которых снапшот пересобирается вне очереди;
+- `collect_identity(BackupContext) -> dict` — асинхронно собирает identity (ключи, настройки) для публикации;
+- `apply(ApplyContext)` — асинхронно применяет бандл на целевой ноде (привилегированные операции через `PrivilegedIO`);
+- `summarize(bundle) -> list[str]` — строки сводки для CLI (`backup restore`);
+- `rows_extra(tables) -> dict[str, int]` — дополнительные счётчики строк для метаданных снапшота.
+
+Подробнее: [backup](backup.md).
+
+### `TaskKind`
+
+Вид отложенной задачи, который служба `tasks` исполняет особым образом (`sa_home_node.tasks.kinds.TaskKind`):
+
+- `action` — имя действия, под которым заказчик ставит задачу;
+- `execute(TaskCall) -> dict` — асинхронное исполнение; `TaskCall` несёт `task_id`, адрес цели, `args`, `meta`,
+  `timeout_s`, общий `deadline`, `link` (протокол) и `emit` (события в рой);
+- `wait_ready` (по умолчанию `False`) — перед исполнением дождаться готовности цели (будить и прогреть);
+- `prewake` (по умолчанию `True`) — начинать прогрев цели за `PREWAKE_LEAD_S` до срока;
+- `retry(exc) -> bool` — стоит ли повторить после этой ошибки (по умолчанию никогда).
+
+Встроенный вид `TIMER` (`timer`) — на сроке сразу отдаёт `{"ok": true, "result": {}}`, цель не будит.
+Плагины объявляют свои виды в `Plugin.task_kinds`. Подробнее: [tasks](tasks.md).
 
 ### `ServiceSpec`
 
@@ -51,7 +95,16 @@
 - `instance` — имя экземпляра из назначения (пусто, если без инстанса);
 - `package_path` — путь пакета экземпляра в `instances/` рядом с конфигом (`None` без инстанса). Ядро только
   отдаёт путь, разбор пакета — дело службы. Конфиг службе неизменяем: чтобы применить новый пакет, ядро
-  перезапускает слот.
+  перезапускает слот;
+- `node_kind` — `config.node.kind` (`workstation`, `vps`, …);
+- `sections` — словарь секций конфига, объявленных плагином через `Plugin.sections`: `{имя: валидированная модель}`;
+- `plugins` — кортеж всех загруженных `Plugin` (ядро + плагины), в порядке загрузки;
+- `broadcast` — `Callable[[str, dict], Awaitable[int]] | None`: отправить событие подписчикам через протокол роя;
+  заполнено для процессных служб с `handler` (см. [services](services.md));
+- `handler` — `ServiceHandler | None`: обработчик протокола службы, если есть `ServiceSpec.handler`;
+- `node_socket` — путь сокета службы `node` этой ноды (`config.socket_path`): через него процессная служба говорит с
+  роем;
+- `swarm_token` — токен роя из секции `[swarm]`, для клиентов протокола.
 
 ### Вытеснение: `ServiceFenced`
 
@@ -59,6 +112,21 @@
 Встроенная служба остановится без перезапуска; процессная завершится с кодом 11. В обоих случаях слот не
 перезапускается, шлётся событие `service_fenced`, а аренда молчит по этому слоту `FENCED_HOLDOFF_S` (300 с), чтобы
 два экземпляра не дрались.
+
+### `SensorProvider`
+
+Протокол поставщика датчиков для платформы (определяет `platform: str` — имя из `host.current().name`). Плагины
+объявляют фабрики в `Plugin.sensor_providers`; плагин `monitor` выбирает поставщика по платформе хоста и
+использует его методы. В ядре встроенный поставщик для Linux (psutil, `sensors -j`, `smartctl`, `nvidia-smi`,
+`/proc`); для Windows в ядре поставщика нет — без плагина CPU/диски пусты, host-метрики и история отключений
+не снимаются.
+
+- `read_cpu(now: datetime) -> list[SensorReading]` — показания температур CPU;
+- `read_disks(now: datetime) -> list[SensorReading]` — показания температур дисков;
+- `read_disk_summaries() -> list[DiskSummary]` — сводки SMART (здоровье, атрибуты);
+- `problem() -> dict | None` — проблема поставщика (отсутствие программы/прав), для `requirements` в `get_state`.
+
+Модели `SensorReading`, `DiskSummary` — см. [monitor](monitor.md).
 
 ### Блокеры выключения (`power_blockers`)
 
@@ -120,8 +188,9 @@ PLUGIN = Plugin(name="svc", fixups=svc_fixups)
 
 - `available()` — точки входа группы `ENTRY_POINT_GROUP` через
   `importlib.metadata.entry_points(group=...)`; ключ — имя точки входа.
-- `load_plugins(names)` — первым идёт встроенный плагин `monitor`, затем плагины в порядке `names`
-  (имя `monitor` в `names` — повтор, `PluginError`); `available()` вызывается один раз.
+- `load_plugins(names)` — встроенные плагины всегда идут первыми: `monitor`, затем `tasks`; далее плагины
+  в порядке `names` (имена `monitor` или `tasks` в `names` — повтор, `PluginError`); `available()` вызывается
+  один раз.
 
 Ошибки `PluginError` (наследник `RuntimeError`, текст на русском) при:
 

@@ -11,7 +11,7 @@ import pytest
 from world import golden_bytes, golden_json
 
 import sa_home_node
-from sa_home_node.fixups import node, power, privileged, registry
+from sa_home_node.fixups import needs, node, power, privileged, registry
 from sa_home_node.fixups.runner import fix_command
 
 CORE = registry.CORE_FIXUPS
@@ -124,6 +124,7 @@ def env(tmp_path, monkeypatch) -> Env:
     monkeypatch.setattr(power, "POLKIT_RULE_FILE", e.rules)
     monkeypatch.setattr(power, "getuser", lambda: USER)
     monkeypatch.setattr(registry, "CORE_FIXUPS", CORE)
+    monkeypatch.setattr(needs, "wakeable", lambda ctx: False)
     for name in STUB_NAMES:
         assert shutil.which(name) == str(e.bin / name)
         assert privileged.find_executable(name) == str(e.bin / name)
@@ -195,7 +196,7 @@ def test_list_without_stubs(env) -> None:
         check=False,
     )
     assert result.returncode == 0, result.stderr
-    ids = [line.split("\t")[0] for line in result.stdout.splitlines()]
+    ids = [line.split("\t")[0] for line in result.stdout.splitlines() if not line.startswith("wol-enable")]
     assert ids == ["node-linger", "node-unit-command", "power-control-polkit"]
     assert env.calls() == []
 

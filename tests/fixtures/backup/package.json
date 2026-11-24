@@ -1,0 +1,525 @@
+{
+  "constants": {
+    "IDENTITY_FORMAT": "sa-home-bot/svc-identity/1",
+    "SRC_SUFFIX": ".src.json"
+  },
+  "canonical": [
+    {
+      "name": "empty",
+      "doc": {},
+      "bytes_hex": "7b7d",
+      "text": "{}",
+      "plain_hash": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+    },
+    {
+      "name": "flat",
+      "doc": {
+        "b": 1,
+        "a": 2
+      },
+      "bytes_hex": "7b2261223a322c2262223a317d",
+      "text": "{\"a\":2,\"b\":1}",
+      "plain_hash": "sha256:d3626ac30a87e6f7a6428233b3c68299976865fa5508e4267c5415c76af7a772"
+    },
+    {
+      "name": "key_order",
+      "doc": {
+        "z": 1,
+        "a": {
+          "y": 1,
+          "b": 2
+        },
+        "m": [
+          3,
+          1,
+          2
+        ]
+      },
+      "bytes_hex": "7b2261223a7b2262223a322c2279223a317d2c226d223a5b332c312c325d2c227a223a317d",
+      "text": "{\"a\":{\"b\":2,\"y\":1},\"m\":[3,1,2],\"z\":1}",
+      "plain_hash": "sha256:c313c2ee94f656b67f793987578fef9b6527808e6cc1a2a24c530acbb559c477"
+    },
+    {
+      "name": "unicode",
+      "doc": {
+        "имя": "значение ☃",
+        "emoji": "🔑"
+      },
+      "bytes_hex": "7b22656d6f6a69223a22f09f9491222c22d0b8d0bcd18f223a22d0b7d0bdd0b0d187d0b5d0bdd0b8d0b520e29883227d",
+      "text": "{\"emoji\":\"🔑\",\"имя\":\"значение ☃\"}",
+      "plain_hash": "sha256:c4a18f107549ac5dce998960d5e632348aacc5ae966e7426be54f7cb4d7584ec"
+    },
+    {
+      "name": "none_bool_float",
+      "doc": {
+        "n": null,
+        "t": true,
+        "f": false,
+        "x": 1.5,
+        "i": 0,
+        "neg": -3
+      },
+      "bytes_hex": "7b2266223a66616c73652c2269223a302c226e223a6e756c6c2c226e6567223a2d332c2274223a747275652c2278223a312e357d",
+      "text": "{\"f\":false,\"i\":0,\"n\":null,\"neg\":-3,\"t\":true,\"x\":1.5}",
+      "plain_hash": "sha256:8270acc1198d47ea8812e3b888c321ce68c07dfbbc1a7c08ee2e90cf1f40852a"
+    },
+    {
+      "name": "nested_three",
+      "doc": {
+        "l1": {
+          "l2": {
+            "l3": {
+              "leaf": "v"
+            }
+          }
+        }
+      },
+      "bytes_hex": "7b226c31223a7b226c32223a7b226c33223a7b226c656166223a2276227d7d7d7d",
+      "text": "{\"l1\":{\"l2\":{\"l3\":{\"leaf\":\"v\"}}}}",
+      "plain_hash": "sha256:b7a6d215be99847db14f7b6c3febf7741836741a372ebdb26ac393606fa4f62d"
+    },
+    {
+      "name": "list_of_objects",
+      "doc": {
+        "rows": [
+          {
+            "b": 1,
+            "a": 2
+          },
+          {
+            "a": 0
+          }
+        ]
+      },
+      "bytes_hex": "7b22726f7773223a5b7b2261223a322c2262223a317d2c7b2261223a307d5d7d",
+      "text": "{\"rows\":[{\"a\":2,\"b\":1},{\"a\":0}]}",
+      "plain_hash": "sha256:5b53ba6b642ce2045e1d91c343fd34b0295b19dea712f6eb120612157d6072e6"
+    },
+    {
+      "name": "quotes_and_controls",
+      "doc": {
+        "q": "a\"b\\c",
+        "nl": "x\ny\t\u0001",
+        "sep": " "
+      },
+      "bytes_hex": "7b226e6c223a22785c6e795c745c7530303031222c2271223a22615c22625c5c63222c22736570223a22e280a8227d",
+      "text": "{\"nl\":\"x\\ny\\t\\u0001\",\"q\":\"a\\\"b\\\\c\",\"sep\":\" \"}",
+      "plain_hash": "sha256:4098fd12779ab595c266f398c820d7a4f1a1b200629b338a9acff08cabe1c428"
+    },
+    {
+      "name": "ascii_escape_off",
+      "doc": {
+        "k": "я"
+      },
+      "bytes_hex": "7b226b223a22d18f227d",
+      "text": "{\"k\":\"я\"}",
+      "plain_hash": "sha256:13a6182bfd0f492b13019e65290285004f7e652bf7486623e0b2bdf4e413da5a"
+    }
+  ],
+  "plain_hash": [
+    {
+      "data_hex": "",
+      "result": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "data_hex": "61",
+      "result": "sha256:ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
+    },
+    {
+      "data_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+      "result": "sha256:40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880"
+    }
+  ],
+  "canonical_errors": [
+    {
+      "name": "mixed_key_types",
+      "result": {
+        "error": "TypeError",
+        "message": "'<' not supported between instances of 'str' and 'int'"
+      }
+    },
+    {
+      "name": "int_keys",
+      "result": {
+        "ok": "{\"1\":\"b\",\"2\":\"a\"}"
+      }
+    },
+    {
+      "name": "bytes_value",
+      "result": {
+        "error": "TypeError",
+        "message": "Object of type bytes is not JSON serializable"
+      }
+    },
+    {
+      "name": "nan",
+      "result": {
+        "ok": "{\"k\":NaN}"
+      }
+    }
+  ],
+  "render": [
+    {
+      "source": "node-a",
+      "blob_hex": "616263",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"YWJj\"\n",
+      "parsed": {
+        "ok": [
+          "node-a",
+          "616263"
+        ]
+      }
+    },
+    {
+      "source": "",
+      "blob_hex": "616263",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"\"\nsealed = \"YWJj\"\n",
+      "parsed": {
+        "ok": [
+          "",
+          "616263"
+        ]
+      }
+    },
+    {
+      "source": "no\"de",
+      "blob_hex": "616263",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"no\\\"de\"\nsealed = \"YWJj\"\n",
+      "parsed": {
+        "ok": [
+          "no\"de",
+          "616263"
+        ]
+      }
+    },
+    {
+      "source": "нода",
+      "blob_hex": "616263",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"\\u043d\\u043e\\u0434\\u0430\"\nsealed = \"YWJj\"\n",
+      "parsed": {
+        "ok": [
+          "нода",
+          "616263"
+        ]
+      }
+    },
+    {
+      "source": "a\nb",
+      "blob_hex": "616263",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"a\\nb\"\nsealed = \"YWJj\"\n",
+      "parsed": {
+        "ok": [
+          "a\nb",
+          "616263"
+        ]
+      }
+    },
+    {
+      "source": "a\\b",
+      "blob_hex": "616263",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"a\\\\b\"\nsealed = \"YWJj\"\n",
+      "parsed": {
+        "ok": [
+          "a\\b",
+          "616263"
+        ]
+      }
+    },
+    {
+      "source": "node-a",
+      "blob_name": "empty",
+      "blob_hex": "",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"\"\n",
+      "parsed": {
+        "ok": [
+          "node-a",
+          ""
+        ]
+      }
+    },
+    {
+      "source": "node-a",
+      "blob_name": "short",
+      "blob_hex": "616263",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"YWJj\"\n",
+      "parsed": {
+        "ok": [
+          "node-a",
+          "616263"
+        ]
+      }
+    },
+    {
+      "source": "node-a",
+      "blob_name": "binary",
+      "blob_hex": "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8gISIjJCUmJygpKissLS4vMDEyMzQ1Njc4OTo7PD0+P0BBQkNERUZHSElKS0xNTk9QUVJTVFVWV1hZWltcXV5fYGFiY2RlZmdoaWprbG1ub3BxcnN0dXZ3eHl6e3x9fn+AgYKDhIWGh4iJiouMjY6PkJGSk5SVlpeYmZqbnJ2en6ChoqOkpaanqKmqq6ytrq+wsbKztLW2t7i5uru8vb6/wMHCw8TFxsfIycrLzM3Oz9DR0tPU1dbX2Nna29zd3t/g4eLj5OXm5+jp6uvs7e7v8PHy8/T19vf4+fr7/P3+/w==\"\n",
+      "parsed": {
+        "ok": [
+          "node-a",
+          "000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff"
+        ]
+      }
+    },
+    {
+      "source": "node-a",
+      "blob_name": "sealed_like",
+      "blob_hex": "5341484231000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+      "package_text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"U0FIQjEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=\"\n",
+      "parsed": {
+        "ok": [
+          "node-a",
+          "5341484231000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ]
+      }
+    }
+  ],
+  "parse": [
+    {
+      "name": "ok",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e6f64652d61220a7365616c6564203d202259574a6a220a",
+      "result": {
+        "ok": [
+          "node-a",
+          "616263"
+        ]
+      }
+    },
+    {
+      "name": "ok_reordered_with_comment",
+      "data_hex": "2320630a7365616c6564203d202259574a6a220a736f75726365203d20226e6f64652d61220a666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a",
+      "result": {
+        "ok": [
+          "node-a",
+          "616263"
+        ]
+      }
+    },
+    {
+      "name": "extra_keys",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a7365616c6564203d202259574a6a220a6578747261203d20310a",
+      "result": {
+        "ok": [
+          "n",
+          "616263"
+        ]
+      }
+    },
+    {
+      "name": "not_utf8",
+      "data_hex": "fffe00",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+      }
+    },
+    {
+      "name": "bad_toml",
+      "data_hex": "666f726d6174203d203d2031",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: Invalid value (at line 1, column 10)"
+      }
+    },
+    {
+      "name": "empty",
+      "data_hex": "",
+      "result": {
+        "error": "IdentityError",
+        "message": "неизвестный формат пакета: None"
+      }
+    },
+    {
+      "name": "wrong_format",
+      "data_hex": "666f726d6174203d20226f74686572220a736f75726365203d20226e220a7365616c6564203d202259574a6a220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "неизвестный формат пакета: 'other'"
+      }
+    },
+    {
+      "name": "missing_format",
+      "data_hex": "736f75726365203d20226e220a7365616c6564203d202259574a6a220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "неизвестный формат пакета: None"
+      }
+    },
+    {
+      "name": "missing_source",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a7365616c6564203d202259574a6a220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: 'source'"
+      }
+    },
+    {
+      "name": "missing_sealed",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: 'sealed'"
+      }
+    },
+    {
+      "name": "bad_base64",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a7365616c6564203d20222a2a2a220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: Only base64 data is allowed"
+      }
+    },
+    {
+      "name": "base64_bad_padding",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a7365616c6564203d202259574a6a3d220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: Excess padding not allowed"
+      }
+    },
+    {
+      "name": "base64_with_newline",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a7365616c6564203d202259575c6e4a6a220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: Only base64 data is allowed"
+      }
+    },
+    {
+      "name": "source_int",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20350a7365616c6564203d202259574a6a220a",
+      "result": {
+        "ok": [
+          "5",
+          "616263"
+        ]
+      }
+    },
+    {
+      "name": "sealed_int",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a7365616c6564203d20350a",
+      "result": {
+        "error": "TypeError",
+        "message": "argument should be a bytes-like object or ASCII string, not 'int'"
+      }
+    },
+    {
+      "name": "sealed_empty",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a7365616c6564203d2022220a",
+      "result": {
+        "ok": [
+          "n",
+          ""
+        ]
+      }
+    },
+    {
+      "name": "bom",
+      "data_hex": "efbbbf666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220a736f75726365203d20226e220a7365616c6564203d202259574a6a220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "пакет identity повреждён: Invalid statement (at line 1, column 1)"
+      }
+    },
+    {
+      "name": "crlf",
+      "data_hex": "666f726d6174203d202273612d686f6d652d626f742f7376632d6964656e746974792f31220d0a736f75726365203d20226e220d0a7365616c6564203d202259574a6a220d0a",
+      "result": {
+        "ok": [
+          "n",
+          "616263"
+        ]
+      }
+    },
+    {
+      "name": "format_not_string",
+      "data_hex": "666f726d6174203d20310a736f75726365203d20226e220a7365616c6564203d202259574a6a220a",
+      "result": {
+        "error": "IdentityError",
+        "message": "неизвестный формат пакета: 1"
+      }
+    }
+  ],
+  "open_identity": [
+    {
+      "name": "ok",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "blob_hex": "5341484231456e3884908fcb20455565da96305db1adbf3343a6b49f8f18a82670e7c51f6a8b2cd4d1d8d350686d0533917d9167bba83c3154cf190ba77e8bc1d0acce49a7f7450656907fb0a26aeac3d7d9147c1f334a5f7119a50881fb1ec9a591d2a96228f0989d871b35778e16667b5578d32cdb7fc139368748c1",
+      "result": {
+        "ok": {
+          "format": "sa-home-bot/svc-identity/1",
+          "k": "v",
+          "n": [
+            1,
+            null
+          ]
+        }
+      }
+    },
+    {
+      "name": "wrong_key",
+      "private_hex": "8bc53f9f3bcc5002e42a379a6f1d2123947f2f93b2b108805976e300f2acb19c",
+      "blob_hex": "5341484231456e3884908fcb20455565da96305db1adbf3343a6b49f8f18a82670e7c51f6a8b2cd4d1d8d350686d0533917d9167bba83c3154cf190ba77e8bc1d0acce49a7f7450656907fb0a26aeac3d7d9147c1f334a5f7119a50881fb1ec9a591d2a96228f0989d871b35778e16667b5578d32cdb7fc139368748c1",
+      "result": {
+        "error": "IdentityError",
+        "message": "не удалось расшифровать identity: не удалось расшифровать: чужой ключ или данные повреждены"
+      }
+    },
+    {
+      "name": "not_a_blob",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "blob_hex": "6a756e6b",
+      "result": {
+        "error": "IdentityError",
+        "message": "не удалось расшифровать identity: это не бэкап sa-home-bot (неверная магия)"
+      }
+    },
+    {
+      "name": "not_json",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "blob_hex": "5341484231ce4803d8d55eca94a552365f65b3bbd848ac41899e5ae06fd4d1d115eae9a277458e7448ab2b01ed178d7ad272112666a845e9709ee3f698699f7f0e03e7e06ced834777",
+      "result": {
+        "error": "IdentityError",
+        "message": "не удалось расшифровать identity: Expecting value: line 1 column 1 (char 0)"
+      }
+    },
+    {
+      "name": "bad_utf8",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "blob_hex": "53414842313dbf1b2d76a773db34294af84d02b0ed846f0a42dab2dc2de4d1e5a752d0235878bde9c1e71f8413b8e8594fddf63ad1e03ddee90a963afe88f50947ba03",
+      "result": {
+        "error": "IdentityError",
+        "message": "не удалось расшифровать identity: Expecting value: line 1 column 1 (char 0)"
+      }
+    },
+    {
+      "name": "json_list",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "blob_hex": "534148423144b444637556a8fee57a353c86c6303b1755d60c3e0da8d734b5bae0ea923b68da503af45ff033edaebf915e395ac91846cb4a4ecd7c24e6c20f7ef55a70c7188b",
+      "result": {
+        "ok": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "empty_plaintext",
+      "private_hex": "56a1818f6947e49c1ef8d9b736bb438c07be7baa7367db5deaa64e9b9ea9722f",
+      "blob_hex": "5341484231df1dce745f4ec64a7de27f8513c6b56fdd982032b8d930d19e0767a6bebb2052ee6d8b482d396218dc69b38996bd9f37dc02994a93e8abe32fb24257",
+      "result": {
+        "error": "IdentityError",
+        "message": "не удалось расшифровать identity: Expecting value: line 1 column 1 (char 0)"
+      }
+    },
+    {
+      "name": "short_private",
+      "private_hex": "56a181",
+      "blob_hex": "5341484231456e3884908fcb20455565da96305db1adbf3343a6b49f8f18a82670e7c51f6a8b2cd4d1d8d350686d0533917d9167bba83c3154cf190ba77e8bc1d0acce49a7f7450656907fb0a26aeac3d7d9147c1f334a5f7119a50881fb1ec9a591d2a96228f0989d871b35778e16667b5578d32cdb7fc139368748c1",
+      "result": {
+        "error": "IdentityError",
+        "message": "не удалось расшифровать identity: некорректный приватный ключ"
+      }
+    }
+  ]
+}

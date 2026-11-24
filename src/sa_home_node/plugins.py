@@ -7,6 +7,7 @@ from pathlib import Path
 
 from pydantic import BaseModel
 
+from sa_home_node.backup.spec import BackupSpec
 from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
 from sa_home_node.fixups.core import Fixup, FixupContext
@@ -14,7 +15,9 @@ from sa_home_node.monitor.providers import SensorProvider
 from sa_home_node.proto.actions import NodeAction
 from sa_home_node.proto.server import ServiceHandler
 from sa_home_node.services.instances import InstanceMeta
+from sa_home_node.swarm.config import swarm_section
 from sa_home_node.swarm.node import SwarmApi
+from sa_home_node.tasks.kinds import TaskKind
 
 ENTRY_POINT_GROUP = "sa_home_node.plugins"
 
@@ -41,6 +44,8 @@ class ServiceContext:
     plugins: tuple[Plugin, ...] = ()
     broadcast: Callable[[str, dict], Awaitable[int]] | None = None
     handler: ServiceHandler | None = None
+    node_socket: str = ""
+    swarm_token: str = ""
 
 
 @dataclass(frozen=True)
@@ -76,6 +81,8 @@ class Plugin:
     fixups: Callable[[FixupContext], Sequence[Fixup]] | None = None
     sections: tuple[tuple[str, type[BaseModel]], ...] = ()
     sensor_providers: tuple[Callable[[ServiceContext], SensorProvider], ...] = ()
+    backup: BackupSpec | None = None
+    task_kinds: tuple[TaskKind, ...] = ()
 
 
 def available() -> dict[str, EntryPoint]:
@@ -84,9 +91,10 @@ def available() -> dict[str, EntryPoint]:
 
 def load_plugins(names: Iterable[str]) -> list[Plugin]:
     from sa_home_node.monitor.plugin import PLUGIN as MONITOR
+    from sa_home_node.tasks.plugin import PLUGIN as TASKS
 
     names = list(names)
-    seen: set[str] = {MONITOR.name}
+    seen: set[str] = {MONITOR.name, TASKS.name}
     for name in names:
         if name in seen:
             raise PluginError(f"Повтор имени плагина: {name}")
@@ -98,7 +106,7 @@ def load_plugins(names: Iterable[str]) -> list[Plugin]:
         raise PluginError(
             f"Плагины не установлены: {', '.join(unknown)}; установлены: {installed}"
         )
-    result = [MONITOR]
+    result = [MONITOR, TASKS]
     for name in names:
         ep = eps[name]
         plugin = ep.load()
@@ -130,4 +138,6 @@ def make_context(
         node_kind=config.node.kind,
         sections={name: config.section(name, model) for name, model in plugin.sections},
         plugins=tuple(plugins),
+        node_socket=str(config.socket_path),
+        swarm_token=swarm_section(config).token,
     )

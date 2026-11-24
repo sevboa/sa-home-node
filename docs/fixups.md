@@ -104,8 +104,12 @@
 
 `collect(ctx, plugins)` строит список в таком порядке:
 
-1. фабрики ядра (`CORE_FIXUPS`): `node-linger`, `node-unit-command`, `node-autoupdate-task` (только Windows),
-   `power-control-polkit`;
+1. фабрики ядра (`CORE_FIXUPS`) в порядке определения:
+   - `node_fixups` — `node-linger`, `node-unit-command`, `node-autoupdate-task` (только Windows);
+   - `autoupdate_fixups` — автообновление (Windows);
+   - `monitor_fixups` — фиксапы монитора (см. ниже);
+   - `power_fixups` — `power-control-polkit`;
+   - `wol_fixups` — `wol-enable` (Wake-on-LAN на проводном интерфейсе, Linux; `needed` — `needs.wakeable`);
 2. фабрики плагинов в порядке `[node].plugins` (`Plugin.fixups`, см. [plugins](plugins.md)); внутри плагина —
    порядок, в котором фабрика вернула фиксапы;
 3. фильтр: платформа хоста входит в `platforms` и `needed(ctx)` истинен.
@@ -134,10 +138,22 @@
 - `node-autoupdate-task` (Windows) — скрипт автообновления рядом с `config.toml` и задача планировщика
   `sa-home-node-autoupdate` (ежедневно, от SYSTEM), которые ставят пакет `sa-home-node`. `check`: скрипт равен
   отрисованному шаблону и задача зарегистрирована.
+- `monitor_fixups` (Linux; `needed` — назначен `monitor` и датчики дисков включены, или назначен `monitor` для
+  `journalctl-group`) — фиксапы плагина `monitor` (`fixups/monitor.py`), подробности — [monitor](monitor.md):
+  - `install-smartmontools` — пакет `smartmontools` (`smartctl` в PATH);
+  - `smartctl-sudoers` — sudoers-снипет `50-sa-home-node-smartctl` + обёртка `~/.local/bin/smartctl`
+    (`exec sudo -n <реальный smartctl>`);
+  - `node-unit-smartctl-path` — в юните ноды первым в `PATH` стоит `~/.local/bin` (нет юнита — истинно);
+    применение переписывает строку и перезапускает юнит;
+  - `journalctl-group` — пользователь в группе `systemd-journal`.
 - `power-control-polkit` (Linux; `needed` — `power_controllable`) — polkit-правило
   `/etc/polkit-1/rules.d/50-sa-home-node-power.rules`, разрешающее пользователю ноды выключать, перезагружать и
   усыплять машину без `sudo`. `check`: файл существует. `apply`: пакет `polkitd`, если каталога `rules.d` нет;
   `sudo install -d -m 0755`; файл 0644 root.
+- `wol_fixups` (Linux; `needed` — `needs.wakeable`) — единственный фиксап `wol-enable`: пакет `ethtool`,
+  включение WOL (magic packet) на проводном интерфейсе по умолчанию; юнит
+  `/etc/systemd/system/sa-home-wol.service` (oneshot `ethtool -s <iface> wol g`), `daemon-reload`,
+  `enable --now`. Подробности — [wake](wake.md).
 
 ## Идемпотентность
 

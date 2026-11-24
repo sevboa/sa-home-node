@@ -1,0 +1,27 @@
+{
+  "format": "sa-home-bot/svc-restore/1",
+  "identity_label": "latest",
+  "identity_meta": {
+    "hash": "sha256:2",
+    "rev": 2,
+    "source": "node-b",
+    "stored_at": "2026-01-01T00:00:08+00:00",
+    "updated_at": "2026-01-02T00:00:00+00:00"
+  },
+  "node": "node-b",
+  "snapshot_label": "latest",
+  "snapshot_meta": {
+    "empty": false,
+    "format": "sa-home-bot/svc-snapshot/1",
+    "hash": "sha256:d8d6bb23406428f9b4b22d71869b8b20f37bbbae9c2ac12532c843c1a85c7dc1",
+    "rev": 1,
+    "rows": {
+      "tbl_a": 1,
+      "tbl_a_active": 1,
+      "tbl_b": 1
+    },
+    "source": "node-b",
+    "stored_at": "2026-01-01T00:00:09+00:00",
+    "taken_at": "2026-01-01T12:00:00+00:00"
+  }
+}

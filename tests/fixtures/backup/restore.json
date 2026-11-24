@@ -1,0 +1,861 @@
+[
+  {
+    "name": "pick_latest_nonempty_no_request",
+    "requested": null,
+    "labels": [
+      "latest",
+      "last_nonempty",
+      "snapshot.2026-01-01T00_00_01+00_00"
+    ],
+    "result": "latest"
+  },
+  {
+    "name": "pick_latest_empty_with_last_nonempty",
+    "requested": null,
+    "labels": [
+      "latest",
+      "last_nonempty",
+      "snapshot.2026-01-01T00_00_01+00_00"
+    ],
+    "error": {
+      "type": "RestoreError",
+      "message": "снапшот latest пустой (без пиров), а последний непустой есть (пиров: 2). Выберите явно: --snapshot last_nonempty или --snapshot latest, если пустая БД — это то, что нужно"
+    }
+  },
+  {
+    "name": "pick_latest_empty_without_last_nonempty",
+    "requested": null,
+    "labels": [
+      "latest",
+      "snapshot.2026-01-01T00_00_01+00_00"
+    ],
+    "result": "latest"
+  },
+  {
+    "name": "pick_no_latest",
+    "requested": null,
+    "labels": [
+      "last_nonempty",
+      "snapshot.2026-01-01T00_00_01+00_00"
+    ],
+    "result": null
+  },
+  {
+    "name": "pick_no_versions",
+    "requested": null,
+    "labels": [],
+    "result": null
+  },
+  {
+    "name": "pick_requested_latest",
+    "requested": "latest",
+    "labels": [
+      "latest",
+      "last_nonempty",
+      "snapshot.2026-01-01T00_00_01+00_00"
+    ],
+    "result": "latest"
+  },
+  {
+    "name": "pick_requested_last_nonempty",
+    "requested": "last_nonempty",
+    "labels": [
+      "latest",
+      "last_nonempty",
+      "snapshot.2026-01-01T00_00_01+00_00"
+    ],
+    "result": "last_nonempty"
+  },
+  {
+    "name": "pick_requested_missing",
+    "requested": "nope",
+    "labels": [
+      "latest",
+      "last_nonempty",
+      "snapshot.2026-01-01T00_00_01+00_00"
+    ],
+    "error": {
+      "type": "RestoreError",
+      "message": "нет снапшота 'nope' (есть: latest, last_nonempty, snapshot.2026-01-01T00_00_01+00_00)"
+    }
+  },
+  {
+    "name": "pick_requested_with_no_versions",
+    "requested": "latest",
+    "labels": [],
+    "error": {
+      "type": "RestoreError",
+      "message": "нет снапшота 'latest' (есть: нет)"
+    }
+  },
+  {
+    "name": "list_versions",
+    "result": {
+      "node": "node-b",
+      "identity": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "rev": 3,
+            "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+            "updated_at": "2026-01-03T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:03+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_02_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 2,
+            "hash": "sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89",
+            "updated_at": "2026-01-02T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:02+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_01_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 1,
+            "hash": "sha256:06279107752c5f8d561c2526bb635f4436ddb5a0b2b558d82becd2a1bc1b3113",
+            "updated_at": "2026-01-01T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:01+00:00"
+          }
+        }
+      ],
+      "snapshot": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 3,
+            "hash": "sha256:9026e8f8d31945dc231305e58e97d1eb2a59676f1053057cdcb4037f1af1da5c",
+            "taken_at": "2026-01-03T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 0,
+              "tbl_b": 0,
+              "tbl_a_active": 0
+            },
+            "stored_at": "2026-01-01T00:00:06+00:00",
+            "empty": true
+          }
+        },
+        {
+          "label": "last_nonempty",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_05_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_04_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 1,
+            "hash": "sha256:0daf6595082ac015e3c249de127319046c22d7eaf91298b518ffef7b0f94fb36",
+            "taken_at": "2026-01-01T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 2,
+              "tbl_b": 1,
+              "tbl_a_active": 1
+            },
+            "stored_at": "2026-01-01T00:00:04+00:00",
+            "empty": false
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "list_versions_foreign_node",
+    "error": {
+      "type": "ServeError",
+      "message": "эта нода хранит копию только напарника 'node-b', а не 'node-c'"
+    }
+  },
+  {
+    "name": "fetch_default_latest_empty_refused",
+    "kwargs": {},
+    "error": {
+      "type": "RestoreError",
+      "message": "снапшот latest пустой (без пиров), а последний непустой есть (пиров: 3). Выберите явно: --snapshot last_nonempty или --snapshot latest, если пустая БД — это то, что нужно"
+    }
+  },
+  {
+    "name": "fetch_last_nonempty",
+    "kwargs": {
+      "snapshot_label": "last_nonempty"
+    },
+    "result": {
+      "format": "sa-home-bot/svc-restore/1",
+      "node": "node-b",
+      "identity_label": "latest",
+      "snapshot_label": "last_nonempty",
+      "identity_meta": {
+        "source": "node-b",
+        "rev": 3,
+        "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+        "updated_at": "2026-01-03T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:03+00:00"
+      },
+      "snapshot_meta": {
+        "source": "node-b",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 2,
+        "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+        "taken_at": "2026-01-02T12:00:00+00:00",
+        "rows": {
+          "tbl_a": 3,
+          "tbl_b": 1,
+          "tbl_a_active": 2
+        },
+        "stored_at": "2026-01-01T00:00:05+00:00",
+        "empty": false
+      },
+      "identity": {
+        "config": {
+          "svc": {
+            "db_path": "/state/svc.db",
+            "endpoint_host": "host-a.example",
+            "mtu": 1380,
+            "side": {
+              "interface": "if1",
+              "port": 51821
+            },
+            "socket": "/run/svc.sock"
+          },
+          "svc_sub": {
+            "deep": {
+              "flag": true
+            },
+            "inbound_tag": "in-a",
+            "server_public_key": "pub-a"
+          }
+        },
+        "format": "sa-home-bot/svc-identity/1",
+        "secret": "secret-3"
+      },
+      "snapshot": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-b",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status"
+            ],
+            "rows": [
+              [
+                1,
+                "a",
+                "active"
+              ],
+              [
+                2,
+                "b",
+                "revoked"
+              ],
+              [
+                3,
+                "c",
+                "active"
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "k",
+              "v"
+            ],
+            "rows": [
+              [
+                "k1",
+                6
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "fetch_explicit_latest_empty",
+    "kwargs": {
+      "snapshot_label": "latest"
+    },
+    "result": {
+      "format": "sa-home-bot/svc-restore/1",
+      "node": "node-b",
+      "identity_label": "latest",
+      "snapshot_label": "latest",
+      "identity_meta": {
+        "source": "node-b",
+        "rev": 3,
+        "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+        "updated_at": "2026-01-03T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:03+00:00"
+      },
+      "snapshot_meta": {
+        "source": "node-b",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 3,
+        "hash": "sha256:9026e8f8d31945dc231305e58e97d1eb2a59676f1053057cdcb4037f1af1da5c",
+        "taken_at": "2026-01-03T12:00:00+00:00",
+        "rows": {
+          "tbl_a": 0,
+          "tbl_b": 0,
+          "tbl_a_active": 0
+        },
+        "stored_at": "2026-01-01T00:00:06+00:00",
+        "empty": true
+      },
+      "identity": {
+        "config": {
+          "svc": {
+            "db_path": "/state/svc.db",
+            "endpoint_host": "host-a.example",
+            "mtu": 1380,
+            "side": {
+              "interface": "if1",
+              "port": 51821
+            },
+            "socket": "/run/svc.sock"
+          },
+          "svc_sub": {
+            "deep": {
+              "flag": true
+            },
+            "inbound_tag": "in-a",
+            "server_public_key": "pub-a"
+          }
+        },
+        "format": "sa-home-bot/svc-identity/1",
+        "secret": "secret-3"
+      },
+      "snapshot": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-b",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status"
+            ],
+            "rows": []
+          },
+          "tbl_b": {
+            "columns": [
+              "k",
+              "v"
+            ],
+            "rows": []
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "fetch_snapshot_label_missing",
+    "kwargs": {
+      "snapshot_label": "nope"
+    },
+    "error": {
+      "type": "RestoreError",
+      "message": "нет снапшота 'nope' (есть: latest, last_nonempty, 2026-01-01T00_00_05_00_00, 2026-01-01T00_00_04_00_00)"
+    }
+  },
+  {
+    "name": "fetch_without_snapshot",
+    "kwargs": {
+      "with_snapshot": false
+    },
+    "result": {
+      "format": "sa-home-bot/svc-restore/1",
+      "node": "node-b",
+      "identity_label": "latest",
+      "snapshot_label": null,
+      "identity_meta": {
+        "source": "node-b",
+        "rev": 3,
+        "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+        "updated_at": "2026-01-03T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:03+00:00"
+      },
+      "snapshot_meta": null,
+      "identity": {
+        "config": {
+          "svc": {
+            "db_path": "/state/svc.db",
+            "endpoint_host": "host-a.example",
+            "mtu": 1380,
+            "side": {
+              "interface": "if1",
+              "port": 51821
+            },
+            "socket": "/run/svc.sock"
+          },
+          "svc_sub": {
+            "deep": {
+              "flag": true
+            },
+            "inbound_tag": "in-a",
+            "server_public_key": "pub-a"
+          }
+        },
+        "format": "sa-home-bot/svc-identity/1",
+        "secret": "secret-3"
+      },
+      "snapshot": null
+    }
+  },
+  {
+    "name": "fetch_identity_history",
+    "kwargs": {
+      "identity_label": "2026-01-01T00_00_02_00_00",
+      "snapshot_label": "last_nonempty"
+    },
+    "result": {
+      "format": "sa-home-bot/svc-restore/1",
+      "node": "node-b",
+      "identity_label": "2026-01-01T00_00_02_00_00",
+      "snapshot_label": "last_nonempty",
+      "identity_meta": {
+        "source": "node-b",
+        "rev": 2,
+        "hash": "sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89",
+        "updated_at": "2026-01-02T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      },
+      "snapshot_meta": {
+        "source": "node-b",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 2,
+        "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+        "taken_at": "2026-01-02T12:00:00+00:00",
+        "rows": {
+          "tbl_a": 3,
+          "tbl_b": 1,
+          "tbl_a_active": 2
+        },
+        "stored_at": "2026-01-01T00:00:05+00:00",
+        "empty": false
+      },
+      "identity": {
+        "config": {
+          "svc": {
+            "db_path": "/state/svc.db",
+            "endpoint_host": "host-a.example",
+            "mtu": 1380,
+            "side": {
+              "interface": "if1",
+              "port": 51821
+            },
+            "socket": "/run/svc.sock"
+          },
+          "svc_sub": {
+            "deep": {
+              "flag": true
+            },
+            "inbound_tag": "in-a",
+            "server_public_key": "pub-a"
+          }
+        },
+        "format": "sa-home-bot/svc-identity/1",
+        "secret": "secret-2"
+      },
+      "snapshot": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-b",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status"
+            ],
+            "rows": [
+              [
+                1,
+                "a",
+                "active"
+              ],
+              [
+                2,
+                "b",
+                "revoked"
+              ],
+              [
+                3,
+                "c",
+                "active"
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "k",
+              "v"
+            ],
+            "rows": [
+              [
+                "k1",
+                6
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "fetch_identity_label_missing",
+    "kwargs": {
+      "identity_label": "nope"
+    },
+    "error": {
+      "type": "RestoreError",
+      "message": "у хранителя нет identity 'nope' для node-b"
+    }
+  },
+  {
+    "name": "fetch_default_latest_nonempty",
+    "kwargs": {},
+    "result": {
+      "format": "sa-home-bot/svc-restore/1",
+      "node": "node-b",
+      "identity_label": "latest",
+      "snapshot_label": "latest",
+      "identity_meta": {
+        "source": "node-b",
+        "rev": 2,
+        "hash": "sha256:2",
+        "updated_at": "2026-01-02T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:08+00:00"
+      },
+      "snapshot_meta": {
+        "source": "node-b",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 1,
+        "hash": "sha256:d8d6bb23406428f9b4b22d71869b8b20f37bbbae9c2ac12532c843c1a85c7dc1",
+        "taken_at": "2026-01-01T12:00:00+00:00",
+        "rows": {
+          "tbl_a": 1,
+          "tbl_b": 1,
+          "tbl_a_active": 1
+        },
+        "stored_at": "2026-01-01T00:00:09+00:00",
+        "empty": false
+      },
+      "identity": {
+        "config": {
+          "svc": {
+            "db_path": "/state/svc.db",
+            "endpoint_host": "host-a.example",
+            "mtu": 1380,
+            "side": {
+              "interface": "if1",
+              "port": 51821
+            },
+            "socket": "/run/svc.sock"
+          },
+          "svc_sub": {
+            "deep": {
+              "flag": true
+            },
+            "inbound_tag": "in-a",
+            "server_public_key": "pub-a"
+          }
+        },
+        "format": "sa-home-bot/svc-identity/1",
+        "secret": "secret-2"
+      },
+      "snapshot": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-b",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status"
+            ],
+            "rows": [
+              [
+                1,
+                "a",
+                "active"
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "k",
+              "v"
+            ],
+            "rows": [
+              [
+                "k1",
+                1
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "fetch_wrong_private_key",
+    "kwargs": {},
+    "error": {
+      "type": "RestoreError",
+      "message": "не удалось расшифровать identity: не удалось расшифровать: чужой ключ или данные повреждены"
+    }
+  },
+  {
+    "name": "fetch_snapshot_of_other_node",
+    "kwargs": {
+      "snapshot_label": "latest"
+    },
+    "error": {
+      "type": "RestoreError",
+      "message": "снапшот принадлежит ноде 'node-c', а не 'node-b'"
+    }
+  },
+  {
+    "name": "fetch_peer_answer_without_sealed",
+    "kwargs": {},
+    "error": {
+      "type": "RestoreError",
+      "message": "ответ хранителя повреждён: 'sealed'"
+    }
+  },
+  {
+    "name": "fetch_peer_answer_bad_base64",
+    "kwargs": {},
+    "error": {
+      "type": "RestoreError",
+      "message": "ответ хранителя повреждён: Only base64 data is allowed"
+    }
+  },
+  {
+    "name": "fetch_peer_answer_without_meta",
+    "kwargs": {},
+    "result": {
+      "format": "sa-home-bot/svc-restore/1",
+      "node": "node-b",
+      "identity_label": "latest",
+      "snapshot_label": "latest",
+      "identity_meta": {},
+      "snapshot_meta": {},
+      "identity": {
+        "config": {
+          "svc": {
+            "db_path": "/state/svc.db",
+            "endpoint_host": "host-a.example",
+            "mtu": 1380,
+            "side": {
+              "interface": "if1",
+              "port": 51821
+            },
+            "socket": "/run/svc.sock"
+          },
+          "svc_sub": {
+            "deep": {
+              "flag": true
+            },
+            "inbound_tag": "in-a",
+            "server_public_key": "pub-a"
+          }
+        },
+        "format": "sa-home-bot/svc-identity/1",
+        "secret": "secret-2"
+      },
+      "snapshot": {
+        "format": "sa-home-bot/svc-snapshot/1",
+        "node": "node-b",
+        "tables": {
+          "tbl_a": {
+            "columns": [
+              "id",
+              "name",
+              "status"
+            ],
+            "rows": [
+              [
+                1,
+                "a",
+                "active"
+              ]
+            ]
+          },
+          "tbl_b": {
+            "columns": [
+              "k",
+              "v"
+            ],
+            "rows": [
+              [
+                "k1",
+                1
+              ]
+            ]
+          }
+        }
+      }
+    }
+  },
+  {
+    "name": "summarize",
+    "text": "Нода: node-b\nIdentity: latest\n  собрана источником: 2026-01-02T00:00:00+00:00\n  endpoint: host-a.example\nСнапшот БД: latest (снят 2026-01-01T12:00:00+00:00), пиров 1 (активных 1), допусков 0\n  по таблицам: {'tbl_a': 1, 'tbl_b': 1}; не переносятся: tbl_b"
+  },
+  {
+    "name": "summarize_without_snapshot",
+    "text": "Нода: node-b\nIdentity: latest\n  собрана источником: 2026-01-03T00:00:00+00:00\n  endpoint: host-a.example\nСнапшот БД: нет (будет восстановлена только identity)"
+  },
+  {
+    "name": "summarize_empty_snapshot",
+    "text": "Нода: node-b\nIdentity: latest\n  собрана источником: 2026-01-03T00:00:00+00:00\n  endpoint: host-a.example\nСнапшот БД: latest (снят 2026-01-03T12:00:00+00:00), пиров 0 (активных 0), допусков 0\n  ВНИМАНИЕ: снапшот пустой — гостей не вернуть\n  по таблицам: {'tbl_a': 0, 'tbl_b': 0}; не переносятся: tbl_b"
+  },
+  {
+    "name": "bundle_to_bytes",
+    "text": "{\n  \"format\": \"sa-home-bot/svc-restore/1\",\n  \"identity\": {\n    \"config\": {\n      \"svc\": {\n        \"db_path\": \"/state/svc.db\",\n        \"endpoint_host\": \"host-a.example\",\n        \"mtu\": 1380,\n        \"side\": {\n          \"interface\": \"if1\",\n          \"port\": 51821\n        },\n        \"socket\": \"/run/svc.sock\"\n      },\n      \"svc_sub\": {\n        \"deep\": {\n          \"flag\": true\n        },\n        \"inbound_tag\": \"in-a\",\n        \"server_public_key\": \"pub-a\"\n      }\n    },\n    \"format\": \"sa-home-bot/svc-identity/1\",\n    \"secret\": \"secret-2\"\n  },\n  \"identity_label\": \"latest\",\n  \"identity_meta\": {\n    \"hash\": \"sha256:2\",\n    \"rev\": 2,\n    \"source\": \"node-b\",\n    \"stored_at\": \"2026-01-01T00:00:08+00:00\",\n    \"updated_at\": \"2026-01-02T00:00:00+00:00\"\n  },\n  \"node\": \"node-b\",\n  \"snapshot\": {\n    \"format\": \"sa-home-bot/svc-snapshot/1\",\n    \"node\": \"node-b\",\n    \"tables\": {\n      \"tbl_a\": {\n        \"columns\": [\n          \"id\",\n          \"name\",\n          \"status\"\n        ],\n        \"rows\": [\n          [\n            1,\n            \"a\",\n            \"active\"\n          ]\n        ]\n      },\n      \"tbl_b\": {\n        \"columns\": [\n          \"k\",\n          \"v\"\n        ],\n        \"rows\": [\n          [\n            \"k1\",\n            1\n          ]\n        ]\n      }\n    }\n  },\n  \"snapshot_label\": \"latest\",\n  \"snapshot_meta\": {\n    \"empty\": false,\n    \"format\": \"sa-home-bot/svc-snapshot/1\",\n    \"hash\": \"sha256:d8d6bb23406428f9b4b22d71869b8b20f37bbbae9c2ac12532c843c1a85c7dc1\",\n    \"rev\": 1,\n    \"rows\": {\n      \"tbl_a\": 1,\n      \"tbl_a_active\": 1,\n      \"tbl_b\": 1\n    },\n    \"source\": \"node-b\",\n    \"stored_at\": \"2026-01-01T00:00:09+00:00\",\n    \"taken_at\": \"2026-01-01T12:00:00+00:00\"\n  }\n}"
+  },
+  {
+    "name": "constants",
+    "bundle_format": "sa-home-bot/svc-restore/1",
+    "remote_nodectl": "~/.local/bin/nodectl"
+  },
+  {
+    "name": "ssh",
+    "cases": [
+      {
+        "name": "stage_ok",
+        "result": null,
+        "calls": [
+          {
+            "args": [
+              "ssh",
+              "host-a",
+              "~/.local/bin/nodectl restore-stage"
+            ],
+            "input": "cGF5bG9hZA==",
+            "capture_output": true
+          }
+        ]
+      },
+      {
+        "name": "stage_custom_nodectl",
+        "result": null,
+        "calls": [
+          {
+            "args": [
+              "ssh",
+              "host-a",
+              "/opt/bin/ctl restore-stage"
+            ],
+            "input": "cGF5bG9hZA==",
+            "capture_output": true
+          }
+        ]
+      },
+      {
+        "name": "stage_failed",
+        "error": {
+          "type": "RestoreError",
+          "message": "ssh host-a: restore-stage завершился кодом 3: сбой"
+        },
+        "calls": [
+          {
+            "args": [
+              "ssh",
+              "host-a",
+              "~/.local/bin/nodectl restore-stage"
+            ],
+            "input": "cGF5bG9hZA==",
+            "capture_output": true
+          }
+        ]
+      },
+      {
+        "name": "apply_ok",
+        "result": 0,
+        "calls": [
+          {
+            "args": [
+              "ssh",
+              "-t",
+              "host-a",
+              "~/.local/bin/nodectl restore-apply --yes"
+            ],
+            "input": null,
+            "capture_output": null
+          }
+        ]
+      },
+      {
+        "name": "apply_extra",
+        "result": 0,
+        "calls": [
+          {
+            "args": [
+              "ssh",
+              "-t",
+              "host-a",
+              "~/.local/bin/nodectl restore-apply --yes --wipe-db"
+            ],
+            "input": null,
+            "capture_output": null
+          }
+        ]
+      },
+      {
+        "name": "apply_custom_nodectl",
+        "result": 7,
+        "calls": [
+          {
+            "args": [
+              "ssh",
+              "-t",
+              "host-a",
+              "/opt/bin/ctl restore-apply --yes"
+            ],
+            "input": null,
+            "capture_output": null
+          }
+        ]
+      }
+    ]
+  }
+]

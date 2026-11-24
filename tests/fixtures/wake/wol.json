@@ -1,0 +1,501 @@
+{
+  "default_route_ip": {
+    "calls": [
+      [
+        "socket",
+        2,
+        2
+      ],
+      [
+        "connect",
+        [
+          "8.8.8.8",
+          80
+        ]
+      ],
+      [
+        "close"
+      ]
+    ],
+    "value": "192.0.2.10"
+  },
+  "default_route_ip_none": null,
+  "detect": [
+    {
+      "iface": "eth0",
+      "info": {
+        "broadcast": "192.0.2.255",
+        "ip": "192.0.2.10",
+        "mac": "02:00:00:00:00:0a"
+      },
+      "name": "ethernet",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": "eth0",
+      "info": {
+        "broadcast": "192.0.2.255",
+        "ip": "192.0.2.10",
+        "mac": "02:00:00:00:00:0a"
+      },
+      "name": "ethernet_dashed_mac",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": "eth0",
+      "info": {
+        "broadcast": "192.0.3.255",
+        "ip": "192.0.2.10",
+        "mac": "02:00:00:00:00:0a"
+      },
+      "name": "ethernet_slash22",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": null,
+      "info": null,
+      "name": "wifi_by_flag",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": null,
+      "info": null,
+      "name": "virtual_tun",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": null,
+      "info": null,
+      "name": "virtual_docker",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": null,
+      "info": null,
+      "name": "virtual_wg",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": null,
+      "info": null,
+      "name": "virtual_br",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": null,
+      "info": null,
+      "name": "no_route",
+      "route_ip": null
+    },
+    {
+      "iface": null,
+      "info": null,
+      "name": "ip_not_on_any_iface",
+      "route_ip": "192.0.2.99"
+    },
+    {
+      "iface": "eth0",
+      "info": null,
+      "name": "no_mac",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": "eth0",
+      "info": null,
+      "name": "empty_mac",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": "eth0",
+      "info": null,
+      "name": "no_netmask",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": "eth0",
+      "info": null,
+      "name": "bad_mac",
+      "route_ip": "192.0.2.10"
+    },
+    {
+      "iface": "eth0",
+      "info": {
+        "broadcast": "192.0.2.255",
+        "ip": "192.0.2.10",
+        "mac": "02:00:00:00:00:0a"
+      },
+      "name": "two_ifaces",
+      "route_ip": "192.0.2.10"
+    }
+  ],
+  "magic_packet": {
+    "hex": "ffffffffffffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeff",
+    "length": 102
+  },
+  "magic_packet_error": {
+    "error": "ValueError",
+    "message": "Некорректный MAC-адрес: 'zz'"
+  },
+  "normalize_mac": [
+    {
+      "input": "aa:bb:cc:dd:ee:ff",
+      "value": "aa:bb:cc:dd:ee:ff"
+    },
+    {
+      "input": "AA:BB:CC:DD:EE:FF",
+      "value": "aa:bb:cc:dd:ee:ff"
+    },
+    {
+      "input": "aa-bb-cc-dd-ee-ff",
+      "value": "aa:bb:cc:dd:ee:ff"
+    },
+    {
+      "input": "aabb.ccdd.eeff",
+      "value": "aa:bb:cc:dd:ee:ff"
+    },
+    {
+      "input": "aabbccddeeff",
+      "value": "aa:bb:cc:dd:ee:ff"
+    },
+    {
+      "input": "  AA-bb-CC-dd-EE-ff  ",
+      "value": "aa:bb:cc:dd:ee:ff"
+    },
+    {
+      "error": "ValueError",
+      "input": "",
+      "message": "Некорректный MAC-адрес: ''"
+    },
+    {
+      "error": "ValueError",
+      "input": "aa:bb:cc",
+      "message": "Некорректный MAC-адрес: 'aa:bb:cc'"
+    },
+    {
+      "error": "ValueError",
+      "input": "aa:bb:cc:dd:ee:fg",
+      "message": "Некорректный MAC-адрес: 'aa:bb:cc:dd:ee:fg'"
+    },
+    {
+      "error": "ValueError",
+      "input": "слово",
+      "message": "Некорректный MAC-адрес: 'слово'"
+    },
+    {
+      "error": "ValueError",
+      "input": "aabbccddeeff00",
+      "message": "Некорректный MAC-адрес: 'aabbccddeeff00'"
+    }
+  ],
+  "ping_host": [
+    {
+      "alive": true,
+      "calls": [
+        {
+          "argv": [
+            "ping",
+            "-c",
+            "1",
+            "-W",
+            "1",
+            "192.0.2.1"
+          ],
+          "kwargs": [
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "code": 0
+    },
+    {
+      "alive": false,
+      "calls": [
+        {
+          "argv": [
+            "ping",
+            "-c",
+            "1",
+            "-W",
+            "1",
+            "192.0.2.1"
+          ],
+          "kwargs": [
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "code": 1
+    },
+    {
+      "alive": false,
+      "calls": [
+        {
+          "argv": [
+            "ping",
+            "-c",
+            "1",
+            "-W",
+            "1",
+            "192.0.2.1"
+          ],
+          "kwargs": [
+            "stderr",
+            "stdout"
+          ]
+        }
+      ],
+      "code": 2
+    }
+  ],
+  "send_magic_packet": {
+    "bind": [
+      [
+        "socket",
+        2,
+        2
+      ],
+      [
+        "setsockopt",
+        1,
+        6,
+        1
+      ],
+      [
+        "bind",
+        [
+          "192.0.2.10",
+          0
+        ]
+      ],
+      [
+        "sendto",
+        "ffffffffffffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeff",
+        [
+          "192.0.2.255",
+          7
+        ]
+      ],
+      [
+        "sendto",
+        "ffffffffffffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeff",
+        [
+          "192.0.2.255",
+          7
+        ]
+      ],
+      [
+        "close"
+      ]
+    ],
+    "defaults": [
+      [
+        "socket",
+        2,
+        2
+      ],
+      [
+        "setsockopt",
+        1,
+        6,
+        1
+      ],
+      [
+        "sendto",
+        "ffffffffffffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeff",
+        [
+          "255.255.255.255",
+          9
+        ]
+      ],
+      [
+        "sendto",
+        "ffffffffffffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeff",
+        [
+          "255.255.255.255",
+          9
+        ]
+      ],
+      [
+        "sendto",
+        "ffffffffffffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeffaabbccddeeff",
+        [
+          "255.255.255.255",
+          9
+        ]
+      ],
+      [
+        "close"
+      ]
+    ]
+  },
+  "wait_host_up": [
+    {
+      "elapsed": 0.0,
+      "interval_s": 3.0,
+      "journal": [
+        [
+          "ping",
+          "192.0.2.1",
+          true,
+          0.0
+        ]
+      ],
+      "name": "immediate",
+      "timeout_s": 10
+    },
+    {
+      "elapsed": 6.0,
+      "interval_s": 3.0,
+      "journal": [
+        [
+          "ping",
+          "192.0.2.1",
+          false,
+          0.0
+        ],
+        [
+          "sleep",
+          3.0
+        ],
+        [
+          "ping",
+          "192.0.2.1",
+          false,
+          3.0
+        ],
+        [
+          "sleep",
+          3.0
+        ],
+        [
+          "ping",
+          "192.0.2.1",
+          true,
+          6.0
+        ]
+      ],
+      "name": "third",
+      "timeout_s": 30
+    },
+    {
+      "elapsed": null,
+      "interval_s": 3.0,
+      "journal": [
+        [
+          "ping",
+          "192.0.2.1",
+          false,
+          0.0
+        ],
+        [
+          "sleep",
+          3.0
+        ],
+        [
+          "ping",
+          "192.0.2.1",
+          false,
+          3.0
+        ],
+        [
+          "sleep",
+          3.0
+        ],
+        [
+          "ping",
+          "192.0.2.1",
+          false,
+          6.0
+        ],
+        [
+          "sleep",
+          3.0
+        ]
+      ],
+      "name": "never",
+      "timeout_s": 7
+    },
+    {
+      "elapsed": 0.5,
+      "interval_s": 0.5,
+      "journal": [
+        [
+          "ping",
+          "192.0.2.1",
+          false,
+          0.0
+        ],
+        [
+          "sleep",
+          0.5
+        ],
+        [
+          "ping",
+          "192.0.2.1",
+          true,
+          0.5
+        ]
+      ],
+      "name": "custom_interval",
+      "timeout_s": 10
+    }
+  ],
+  "wireless": [
+    {
+      "marker": false,
+      "name": "wlan0",
+      "sys_dir": false,
+      "wireless": true
+    },
+    {
+      "marker": false,
+      "name": "Wi-Fi",
+      "sys_dir": false,
+      "wireless": true
+    },
+    {
+      "marker": false,
+      "name": "Wireless Network",
+      "sys_dir": false,
+      "wireless": true
+    },
+    {
+      "marker": false,
+      "name": "WiFi",
+      "sys_dir": false,
+      "wireless": true
+    },
+    {
+      "marker": false,
+      "name": "eth0",
+      "sys_dir": false,
+      "wireless": false
+    },
+    {
+      "marker": false,
+      "name": "enp1s0",
+      "sys_dir": false,
+      "wireless": false
+    },
+    {
+      "marker": false,
+      "name": "wlp2s0",
+      "sys_dir": false,
+      "wireless": false
+    },
+    {
+      "marker": false,
+      "name": "eth0",
+      "sys_dir": true,
+      "wireless": false
+    },
+    {
+      "marker": true,
+      "name": "wlp2s0",
+      "sys_dir": true,
+      "wireless": true
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "format": "sa-home-bot/svc-snapshot/1",
+  "node": "node-b",
+  "tables": {
+    "tbl_a": {
+      "columns": [
+        "id",
+        "name",
+        "status"
+      ],
+      "rows": [
+        [
+          1,
+          "a",
+          "active"
+        ]
+      ]
+    },
+    "tbl_b": {
+      "columns": [
+        "k",
+        "v"
+      ],
+      "rows": [
+        [
+          "k1",
+          1
+        ]
+      ]
+    }
+  }
+}

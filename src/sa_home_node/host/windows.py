@@ -86,5 +86,8 @@ class WindowsHost:
     def package_install_argv(self, package: str) -> list[str] | None:
         return None
 
+    def ping_argv(self, ip: str) -> list[str]:
+        return ["ping", "-n", "1", "-w", "1000", ip]
+
     def node_unit(self, config_path: Path) -> NodeUnit:
         return NodeUnit("winsw", Path(config_path).parent / "service" / "sa-home-node.xml", None)

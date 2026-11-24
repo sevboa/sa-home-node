@@ -58,6 +58,8 @@ class Host(Protocol):
 
     def node_unit(self, config_path: Path) -> NodeUnit: ...
 
+    def ping_argv(self, ip: str) -> list[str]: ...
+
 
 def install_stop_handlers(
     loop: asyncio.AbstractEventLoop, signals: tuple[int, ...], callback: Callable[[], None]

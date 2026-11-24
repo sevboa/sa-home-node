@@ -90,6 +90,9 @@ class LinuxHost:
                 return [*argv, package]
         return None
 
+    def ping_argv(self, ip: str) -> list[str]:
+        return ["ping", "-c", "1", "-W", "1", ip]
+
     def node_unit(self, config_path: Path) -> NodeUnit:
         return NodeUnit(
             "systemd-user",

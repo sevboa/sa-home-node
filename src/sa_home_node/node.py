@@ -5,6 +5,7 @@ import logging
 from collections.abc import Callable
 from pathlib import Path
 
+from sa_home_node.backup.hooks import backup_hooks
 from sa_home_node.config import NodeConfig, load_config
 from sa_home_node.content import ContentStore
 from sa_home_node.host import current
@@ -28,6 +29,7 @@ from sa_home_node.services.supervisor import SlotFactory, Supervisor, process_ar
 from sa_home_node.swarm.config import swarm_section
 from sa_home_node.swarm.node import Swarm, SwarmApi
 from sa_home_node.swarm.state import NodeState
+from sa_home_node.wake.actions import register_wake
 
 SHUTDOWN_BUDGET_S = 20.0
 HARD_EXIT_MARGIN_S = 15.0
@@ -129,7 +131,10 @@ async def run_node(
     tuning = swarm.swarm
     replicator = ConfigReplicator(
         cfg.node.id, store, supervisor, table, router=router, emit=swarm.emit, subscribe=swarm.subscribe,
-        hooks=[p.replication_hooks for p in plugins if p.replication_hooks is not None],
+        hooks=[
+            *(p.replication_hooks for p in plugins if p.replication_hooks is not None),
+            *backup_hooks(cfg, plugins, store, {a.service for a in parse_valid(assignments)}),
+        ],
         poll_interval_s=tuning.replication_poll_interval_s,
     )
     lease = LeaseManager(
@@ -145,6 +150,7 @@ async def run_node(
         node_service, kind=cfg.node.kind, power_controllable=cfg.node.power_controllable,
         request_restart=request_restart, router=router, blockers=[b for p in plugins for b in p.power_blockers],
     )
+    register_wake(node_service)
     register_update(node_service, repo=origin_repo_url(), emit=swarm.emit)
 
     try:
@@ -206,9 +212,15 @@ async def run_service(
         remove = install_stop_handlers(asyncio.get_running_loop(), current().stop_signals(), stop.set)
     server = None
     if spec.handler is not None and spec.endpoint is not None:
-        handler = spec.handler(ctx)
+        servers: list[ProtoServer] = []
+
+        async def broadcast(event_type: str, data: dict) -> int:
+            return await servers[0].broadcast_event(event_type, data) if servers else 0
+
+        handler = spec.handler(dataclasses.replace(ctx, broadcast=broadcast))
         server = ProtoServer(spec.endpoint(ctx.config), handler, token=swarm_section(cfg).token)
-        ctx = dataclasses.replace(ctx, handler=handler, broadcast=server.broadcast_event)
+        servers.append(server)
+        ctx = dataclasses.replace(ctx, handler=handler, broadcast=broadcast)
     pending: list[asyncio.Task] = []
     try:
         if server is not None:

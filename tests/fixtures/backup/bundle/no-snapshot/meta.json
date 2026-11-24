@@ -1,0 +1,14 @@
+{
+  "format": "sa-home-bot/svc-restore/1",
+  "identity_label": "latest",
+  "identity_meta": {
+    "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+    "rev": 3,
+    "source": "node-b",
+    "stored_at": "2026-01-01T00:00:03+00:00",
+    "updated_at": "2026-01-03T00:00:00+00:00"
+  },
+  "node": "node-b",
+  "snapshot_label": null,
+  "snapshot_meta": null
+}

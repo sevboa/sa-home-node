@@ -1,0 +1,273 @@
+[
+  {
+    "name": "hold_without_marker",
+    "result": false,
+    "files": {
+      "package": null,
+      "sidecar": null
+    }
+  },
+  {
+    "name": "first_publish",
+    "result": true,
+    "files": {
+      "package": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"U0FIQjE89QzpYE7jmNlpr4WPCdKcDNcGWNeRqD0lrXHOUtktFZ4/FWMk1C8OpLb0/LQBaH6k73xG6Ln+ww8xpszu3z74LPa2Oe9On2kzFKCG1Q1aEPA8Fbs8n9VjAgH98114QymoFEa+gBVeNWBLG890GJZx4/z701YCKw2EpxqzgjproNCdaTSzdMqY3S35k8g32KGE3ledGIKocKFgltIRjCKdfO6oaseEbeDhd4Mvh0WbB+sh/Uw92q8dPJsuXG+iTnKlT9+UDt13MNls5+6E7qmUwib+cVgBuhyyx3l3PTBgQbjNN0CI9eL8t+dj1q6SAHN+YwPA0VDcbrA8LNypyltD5MmvIZTQwBcjvvvunC+S6v8Zw64QsvWFLYGXiXOk1epfwWSWMri1T3h6HXIC+I3bbNcRm1bCz8/PSIkcF+BSPd5YtzUVNlbn7MxE08CXbJ0LvM59QsTPQJCmzQHAEzYNS63W\"\n",
+      "sidecar": "{\"plain_hash\": \"sha256:06279107752c5f8d561c2526bb635f4436ddb5a0b2b558d82becd2a1bc1b3113\"}"
+    }
+  },
+  {
+    "name": "unchanged_not_republished",
+    "result": false,
+    "files": {
+      "package": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"U0FIQjE89QzpYE7jmNlpr4WPCdKcDNcGWNeRqD0lrXHOUtktFZ4/FWMk1C8OpLb0/LQBaH6k73xG6Ln+ww8xpszu3z74LPa2Oe9On2kzFKCG1Q1aEPA8Fbs8n9VjAgH98114QymoFEa+gBVeNWBLG890GJZx4/z701YCKw2EpxqzgjproNCdaTSzdMqY3S35k8g32KGE3ledGIKocKFgltIRjCKdfO6oaseEbeDhd4Mvh0WbB+sh/Uw92q8dPJsuXG+iTnKlT9+UDt13MNls5+6E7qmUwib+cVgBuhyyx3l3PTBgQbjNN0CI9eL8t+dj1q6SAHN+YwPA0VDcbrA8LNypyltD5MmvIZTQwBcjvvvunC+S6v8Zw64QsvWFLYGXiXOk1epfwWSWMri1T3h6HXIC+I3bbNcRm1bCz8/PSIkcF+BSPd5YtzUVNlbn7MxE08CXbJ0LvM59QsTPQJCmzQHAEzYNS63W\"\n",
+      "sidecar": "{\"plain_hash\": \"sha256:06279107752c5f8d561c2526bb635f4436ddb5a0b2b558d82becd2a1bc1b3113\"}"
+    }
+  },
+  {
+    "name": "changed_republished",
+    "result": true,
+    "files": {
+      "package": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"U0FIQjFpDVX9MUtLREOiUVbC/x2kkDIOQeEZ9p0VXhia2Keqc3R0weftkpr1gP5m5OvmJtH9NQKEPJ6DGW9w5sOqdwFgxUSi89wLeFB2Ju0oF9S74yWKSPawxn3M2ccs53/rTOD7ExlRxP2RfUfqTPw8pgOdJ5ZP7TMzFLHXdfdTsIarD0W9850v3f5TNWdOAZkmJTmtlBLs1hc9zFRqgxCEsD49exYXH1Ij5BbiMBTZxhVXwvC4Mp1yS+jjAFFY/3s51m48v/xyN29T2a1IiAUQ1IIVDUgcqrXOzmfz5VpsxonChxW8Yr/fTVl4nvatf3D/Q/YxXpGFSNDIAXs5S1gnTuZRzDEaVfK7AYyB/7lzzIYo8TjiM8WVYI/c4k3llzrlk5Zub+GBoO+QTXlbe5Ka/p+OXzoIopls/utjw00//tMf9VY14CTL93AOMtKVBrPAimedUmacqDYhxWo/hqJL6CmUwfvA\"\n",
+      "sidecar": "{\"plain_hash\": \"sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89\"}"
+    }
+  },
+  {
+    "name": "sidecar_missing_republished",
+    "result": true,
+    "files": {
+      "package": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"U0FIQjHDev0hEN/1aJXSYgyl0ZHJWq+5x6wyKbFaoDwiqh7iGvO6nkCOBvz8I0DghtA6DfWaPkakZJbj24Xrokc/P/+Mf7N8DL0YfP6EGI9//47B5Uk8CnpKGZzVysGe/vUojd/UpRDxyC0PexarrKDc5+3JrN0Mi+Q/0l+qgAv8IbM0pLDK5cYIVfYyJd6MOCOnnInJAMfQaEFiEIqE9HF5JQgLnb2rbN91R7cUGEKCymzpd6JbkFaPMOgpFjjN21pZu+B9wDNBOHRR4mv9qcLAlQSUJr/EQbPClc0p5PhFipPlNB35s5lmFvUCx4aEckg398wHMP//NB8c5y6UDLS/n344zcJzhNKKM61WsDvxrulmbUCM+0kzGl5crq23fvp+F/F2raqU8Xe+RbQ14/MbPPYrX36YOx0oVzxBItPjZg+4X2iQYoCoXi+roDBjeBCElNUFabVKWDT1pHAkdueLPJ1q0Jyl\"\n",
+      "sidecar": "{\"plain_hash\": \"sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89\"}"
+    }
+  },
+  {
+    "name": "package_missing_republished",
+    "result": true,
+    "files": {
+      "package": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"U0FIQjHTiwbzS8U8OZmFsUKIOXtIUX7kJMncyperglu+6Dr2IHmfKj9gTYCRb1dA/ZjjhbTBO+iQxvwmc87ZjPm2OZ5OCq+SY0idYuJn8y/0TfBfdVry93X9FIjC6EKzJ2OtI9fMrbUm4c4w/ndgzXB/wjIYPsuZ+55ICSrCHyTPHqcn9lUveLd3ZQ8IBTi9d2oqo/VQUPyqkLLnwbPDMmRXnnhhVtd0kxlqCBRThYxdvtBwiZi/Gy8TnMZ7HsEuyi4gyIlt+3TLKMkNuaetOqaVZpbPKlnDS2jGdt5vqk/MQjqOdiPjL7+rJzLjjG//ppd/1gldQEHEXQCi4WM1hgOOuo0hwzRs0q5dQyidv8xHZGDgHWZ/lByObsI4D0+W5r3+kd3QDQt31yyDDn//EBi6ZJyxFJUUjf8N+ndzP7s52tk2HPzN9GXpcTSA8lh0tfCHmBs/lwb+j1aVLvgo0OmTsPJXzDAm\"\n",
+      "sidecar": "{\"plain_hash\": \"sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89\"}"
+    }
+  },
+  {
+    "name": "collect_error_keeps_files",
+    "result": false,
+    "files": {
+      "package": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-a\"\nsealed = \"U0FIQjHTiwbzS8U8OZmFsUKIOXtIUX7kJMncyperglu+6Dr2IHmfKj9gTYCRb1dA/ZjjhbTBO+iQxvwmc87ZjPm2OZ5OCq+SY0idYuJn8y/0TfBfdVry93X9FIjC6EKzJ2OtI9fMrbUm4c4w/ndgzXB/wjIYPsuZ+55ICSrCHyTPHqcn9lUveLd3ZQ8IBTi9d2oqo/VQUPyqkLLnwbPDMmRXnnhhVtd0kxlqCBRThYxdvtBwiZi/Gy8TnMZ7HsEuyi4gyIlt+3TLKMkNuaetOqaVZpbPKlnDS2jGdt5vqk/MQjqOdiPjL7+rJzLjjG//ppd/1gldQEHEXQCi4WM1hgOOuo0hwzRs0q5dQyidv8xHZGDgHWZ/lByObsI4D0+W5r3+kd3QDQt31yyDDn//EBi6ZJyxFJUUjf8N+ndzP7s52tk2HPzN9GXpcTSA8lh0tfCHmBs/lwb+j1aVLvgo0OmTsPJXzDAm\"\n",
+      "sidecar": "{\"plain_hash\": \"sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89\"}"
+    }
+  },
+  {
+    "name": "no_package_path",
+    "result": false
+  },
+  {
+    "name": "constants",
+    "service": "svc-identity",
+    "format": "sa-home-bot/svc-identity/1",
+    "src_suffix": ".src.json"
+  },
+  {
+    "name": "hooks_no_partner",
+    "keys": []
+  },
+  {
+    "name": "hooks_partner_not_assigned",
+    "keys": [
+      "on_applied",
+      "passive"
+    ],
+    "passive": {
+      "same_service_partner": true,
+      "same_service_other": false,
+      "other_service_partner": false
+    }
+  },
+  {
+    "name": "hooks_partner_assigned",
+    "keys": [
+      "before_announce",
+      "on_applied",
+      "passive"
+    ],
+    "passive": {
+      "same_service_partner": true,
+      "same_service_other": false,
+      "other_service_partner": false
+    }
+  },
+  {
+    "name": "hooks_partner_assigned_bad_key",
+    "keys": [
+      "on_applied",
+      "passive"
+    ],
+    "passive": {
+      "same_service_partner": true,
+      "same_service_other": false,
+      "other_service_partner": false
+    }
+  },
+  {
+    "name": "hooks_partner_assigned_no_key",
+    "keys": [
+      "on_applied",
+      "passive"
+    ],
+    "passive": {
+      "same_service_partner": true,
+      "same_service_other": false,
+      "other_service_partner": false
+    }
+  },
+  {
+    "name": "on_applied_applied_ok",
+    "result": null,
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_other_service_ignored",
+    "result": null,
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_other_instance_ignored",
+    "result": null,
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_source_mismatch",
+    "error": {
+      "type": "IdentityError",
+      "message": "пакет node-b заявляет источник node-c"
+    },
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_garbage_package",
+    "error": {
+      "type": "IdentityError",
+      "message": "пакет identity повреждён: Expected '=' after a key in a key/value pair (at line 1, column 5)"
+    },
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_wrong_format",
+    "error": {
+      "type": "IdentityError",
+      "message": "неизвестный формат пакета: 'x/1'"
+    },
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_missing_key",
+    "error": {
+      "type": "IdentityError",
+      "message": "пакет identity повреждён: 'sealed'"
+    },
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_bad_base64",
+    "error": {
+      "type": "IdentityError",
+      "message": "пакет identity повреждён: Only base64 data is allowed"
+    },
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "on_applied_not_utf8",
+    "error": {
+      "type": "IdentityError",
+      "message": "пакет identity повреждён: 'utf-8' codec can't decode byte 0xff in position 0: invalid start byte"
+    },
+    "stored": {
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ",
+      "meta": {
+        "source": "node-b",
+        "rev": 4,
+        "hash": "sha256:h",
+        "updated_at": "2026-01-04T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      }
+    }
+  },
+  {
+    "name": "parse_package_roundtrip",
+    "text": "format = \"sa-home-bot/svc-identity/1\"\nsource = \"node-b\"\nsealed = \"U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ\"\n",
+    "parsed": [
+      "node-b",
+      "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesPeIaXK9Com6igwDzXAJy5/DiagkOyYhEEQ85ZOTlhIQ737GXS9k8mVDb6bCNL2g8ZqkLWf3UZ2Sde5ra0Pq4OIm1H263hrA6aH+9zRvQvmng3q4WwnIexMjCdI64mwLU0EbJXVbkhRhpDnqWt1DiKyq4YaL7zmYrsfOe7DEo0vD0ez5lz+KJFQf69ujps58iuQdPH/bxbojmJmNpT8Y4bgojUc5HZrc/b0gnO896XCnYUsrz+dactTOsP+zw94LUWz7STzxAa/jgyR/A1nWNpBS76zw3qoj/ab6TXJ3UgKHyW/eOWY+Sw9Iy/yK+Q2EXVHMsX6dmSmvKC7mxd+bJTaYqNWyCBhztwiOiMrgePEj18Ko4ldsKslwxBhMBjd5akl35Ap1B2FLXjM+7RdqbNZ9ivxTzDZ"
+    ]
+  }
+]

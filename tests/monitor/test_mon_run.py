@@ -104,7 +104,7 @@ async def test_bad_cron_fails_at_start(tmp_path):
 
 
 def test_load_plugins_has_monitor_first():
-    assert load_plugins([]) == [PLUGIN]
+    assert load_plugins([])[0] == PLUGIN
     assert isinstance(PLUGIN, Plugin)
 
 

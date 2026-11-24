@@ -1,0 +1,23 @@
+{
+  "config": {
+    "svc": {
+      "db_path": "/state/svc.db",
+      "endpoint_host": "host-a.example",
+      "mtu": 1380,
+      "side": {
+        "interface": "if1",
+        "port": 51821
+      },
+      "socket": "/run/svc.sock"
+    },
+    "svc_sub": {
+      "deep": {
+        "flag": true
+      },
+      "inbound_tag": "in-a",
+      "server_public_key": "pub-a"
+    }
+  },
+  "format": "sa-home-bot/svc-identity/1",
+  "secret": "secret-2"
+}

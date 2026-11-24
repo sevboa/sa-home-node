@@ -1,0 +1,3333 @@
+{
+  "asleep_warmup_ready": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "asleep_warmup_refused": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "commands": {
+        "warmup": [
+          {
+            "proto": [
+              "internal",
+              "модель не загрузилась"
+            ]
+          }
+        ]
+      },
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      }
+    },
+    "value": "warmup_failed"
+  },
+  "asleep_warmup_timeout": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        42.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "warmup_timeout_s": 42.0
+      },
+      "call": "ensure",
+      "commands": {
+        "warmup": [
+          "timeout"
+        ]
+      },
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      }
+    },
+    "value": "warmup_failed"
+  },
+  "asleep_warmup_unavailable": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "commands": {
+        "warmup": [
+          "unavail"
+        ]
+      },
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      }
+    },
+    "value": "warmup_failed"
+  },
+  "asleep_warmup_unknown_action": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "commands": {},
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "cold_cached_wake_info": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "woken",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "cache": {
+        "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+      },
+      "call": "ensure",
+      "own": {
+        "node": "node-a",
+        "peers": [],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "reveal": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "cold_guard_blocks": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "guard": "причина-a",
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "cold_guard_not_for_warm": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "guard": "причина-a",
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "cold_no_wake_info": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": null
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "cold_no_waker_in_segment": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ],
+        "wake": {
+          "broadcast": "203.0.113.255",
+          "ip": "203.0.113.12",
+          "mac": "02:00:00:00:00:0c"
+        }
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "cold_own_node_unavailable": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "own": "unavail",
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "cold_unknown_node": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "own": {
+        "node": "node-a",
+        "peers": [],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "cold_via_neighbour_waker": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-d": "{\"mac\": \"02:00:00:00:00:0d\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "woken",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "reveal": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "cold_wake_default_timeouts_phase_order": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "woken",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "wake_poll_interval_s": 1.0
+      },
+      "call": "ensure",
+      "reveal": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "cold_wake_never_up": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 12.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        3.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        6.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        9.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        12.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "wake_poll_interval_s": 3.0,
+        "wake_timeout_s": 10.0
+      },
+      "call": "ensure",
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "cold_wake_ready_after_polls": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 6.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        3.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        6.0
+      ],
+      [
+        "phase",
+        "woken",
+        6.0
+      ],
+      [
+        "phase",
+        "warming",
+        6.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        6.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "reveal": {
+        "node-b:svc": [
+          "unavail",
+          "unavail",
+          {
+            "asleep": true
+          }
+        ]
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail",
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "cold_wake_warmup_failed": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "woken",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "commands": {
+        "send_wol": [
+          {
+            "sent": true
+          }
+        ],
+        "warmup": [
+          {
+            "proto": [
+              "bad_request",
+              "плохо"
+            ]
+          }
+        ]
+      },
+      "reveal": {
+        "node-b:svc": [
+          {
+            "asleep": true
+          }
+        ]
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "warmup_failed"
+  },
+  "cold_wake_warmup_unknown_action": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "phase",
+        "woken",
+        0.0
+      ],
+      [
+        "phase",
+        "warming",
+        0.0
+      ],
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "commands": {
+        "send_wol": [
+          {
+            "sent": true
+          }
+        ]
+      },
+      "reveal": {
+        "node-b:svc": [
+          {
+            "asleep": false
+          }
+        ]
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "cold_waker_proto_error": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "commands": {
+        "send_wol": [
+          {
+            "proto": [
+              "internal",
+              "не удалось отправить magic packet: сеть недоступна"
+            ]
+          }
+        ]
+      },
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "cold_waker_unavailable": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-d": "{\"mac\": \"02:00:00:00:00:0d\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "commands": {
+        "send_wol": [
+          "unavail"
+        ]
+      },
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "collect_peer_state_missing": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "collect"
+    },
+    "value": [
+      {
+        "alive": true,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-a",
+        "state": {
+          "node": "node-a",
+          "peers": [
+            {
+              "alive": false,
+              "id": "node-b",
+              "wake": {
+                "broadcast": "192.0.2.255",
+                "ip": "192.0.2.11",
+                "mac": "02:00:00:00:00:0b"
+              }
+            },
+            {
+              "alive": true,
+              "id": "node-c",
+              "wake": {
+                "broadcast": "203.0.113.255",
+                "ip": "203.0.113.12",
+                "mac": "02:00:00:00:00:0c"
+              }
+            }
+          ],
+          "wake": {
+            "broadcast": "192.0.2.255",
+            "ip": "192.0.2.10",
+            "mac": "02:00:00:00:00:0a"
+          }
+        }
+      },
+      {
+        "alive": false,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-b",
+        "state": null
+      },
+      {
+        "alive": true,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-c",
+        "state": null
+      }
+    ]
+  },
+  "collect_plain": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "collect",
+      "states": {
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": [
+      {
+        "alive": true,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-a",
+        "state": {
+          "node": "node-a",
+          "peers": [
+            {
+              "alive": false,
+              "id": "node-b",
+              "wake": {
+                "broadcast": "192.0.2.255",
+                "ip": "192.0.2.11",
+                "mac": "02:00:00:00:00:0b"
+              }
+            },
+            {
+              "alive": true,
+              "id": "node-c",
+              "wake": {
+                "broadcast": "203.0.113.255",
+                "ip": "203.0.113.12",
+                "mac": "02:00:00:00:00:0c"
+              }
+            }
+          ],
+          "wake": {
+            "broadcast": "192.0.2.255",
+            "ip": "192.0.2.10",
+            "mac": "02:00:00:00:00:0a"
+          }
+        }
+      },
+      {
+        "alive": false,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-b",
+        "state": null
+      },
+      {
+        "alive": true,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-c",
+        "state": {
+          "node": "node-c",
+          "wake": {
+            "broadcast": "203.0.113.255",
+            "ip": "203.0.113.12",
+            "mac": "02:00:00:00:00:0c"
+          }
+        }
+      }
+    ]
+  },
+  "collect_with_monitor": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-a:monitor",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:monitor",
+        0.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "with_monitor": true
+      },
+      "call": "collect",
+      "states": {
+        "node-c:monitor": [
+          {
+            "checks": 1
+          }
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": [
+      {
+        "alive": true,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-a",
+        "state": {
+          "node": "node-a",
+          "peers": [
+            {
+              "alive": false,
+              "id": "node-b",
+              "wake": {
+                "broadcast": "192.0.2.255",
+                "ip": "192.0.2.11",
+                "mac": "02:00:00:00:00:0b"
+              }
+            },
+            {
+              "alive": true,
+              "id": "node-c",
+              "wake": {
+                "broadcast": "203.0.113.255",
+                "ip": "203.0.113.12",
+                "mac": "02:00:00:00:00:0c"
+              }
+            }
+          ],
+          "wake": {
+            "broadcast": "192.0.2.255",
+            "ip": "192.0.2.10",
+            "mac": "02:00:00:00:00:0a"
+          }
+        }
+      },
+      {
+        "alive": false,
+        "kind": "",
+        "left": false,
+        "monitor": null,
+        "node_id": "node-b",
+        "state": null
+      },
+      {
+        "alive": true,
+        "kind": "",
+        "left": false,
+        "monitor": {
+          "checks": 1
+        },
+        "node_id": "node-c",
+        "state": {
+          "node": "node-c",
+          "wake": {
+            "broadcast": "203.0.113.255",
+            "ip": "203.0.113.12",
+            "mac": "02:00:00:00:00:0c"
+          }
+        }
+      }
+    ]
+  },
+  "fetch_ok": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "fetch",
+      "dst": {
+        "node": "node-b",
+        "service": "svc"
+      },
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": false
+          }
+        ]
+      }
+    },
+    "value": {
+      "asleep": false
+    }
+  },
+  "fetch_own": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "fetch",
+      "dst": null
+    },
+    "value": {
+      "node": "node-a",
+      "peers": [
+        {
+          "alive": false,
+          "id": "node-b",
+          "wake": {
+            "broadcast": "192.0.2.255",
+            "ip": "192.0.2.11",
+            "mac": "02:00:00:00:00:0b"
+          }
+        },
+        {
+          "alive": true,
+          "id": "node-c",
+          "wake": {
+            "broadcast": "203.0.113.255",
+            "ip": "203.0.113.12",
+            "mac": "02:00:00:00:00:0c"
+          }
+        }
+      ],
+      "wake": {
+        "broadcast": "192.0.2.255",
+        "ip": "192.0.2.10",
+        "mac": "02:00:00:00:00:0a"
+      }
+    }
+  },
+  "fetch_proto_error": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "fetch",
+      "dst": {
+        "node": "node-b",
+        "service": "svc"
+      },
+      "states": {
+        "node-b:svc": [
+          {
+            "proto": [
+              "internal",
+              "сбой"
+            ]
+          }
+        ]
+      }
+    },
+    "value": null
+  },
+  "fetch_timeout": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "fetch",
+      "dst": {
+        "node": "node-b",
+        "service": "svc"
+      },
+      "states": {
+        "node-b:svc": [
+          "timeout"
+        ]
+      }
+    },
+    "value": null
+  },
+  "fetch_unavailable": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "fetch",
+      "dst": {
+        "node": "node-b",
+        "service": "svc"
+      }
+    },
+    "value": null
+  },
+  "node_alive_node_service_itself": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 6.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "phase",
+        "waking",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        3.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        6.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "wake_timeout_s": 6.0
+      },
+      "call": "ensure",
+      "service": "node",
+      "states": {
+        "node-b:node": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "unreachable"
+  },
+  "node_alive_service_down": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "states": {
+        "node-b:node": [
+          {
+            "node": "node-b"
+          }
+        ],
+        "node-b:svc": [
+          "unavail"
+        ],
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": "crashed"
+  },
+  "resolve_cache_corrupt": {
+    "cache": {
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "cache": {
+        "wake_info:node-b": "{не json"
+      },
+      "call": "resolve"
+    },
+    "value": {
+      "broadcast": "192.0.2.255",
+      "ip": "192.0.2.11",
+      "mac": "02:00:00:00:00:0b"
+    }
+  },
+  "resolve_cache_without_mac": {
+    "cache": {
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "cache": {
+        "wake_info:node-b": "{\"ip\": \"x\"}"
+      },
+      "call": "resolve"
+    },
+    "value": {
+      "broadcast": "192.0.2.255",
+      "ip": "192.0.2.11",
+      "mac": "02:00:00:00:00:0b"
+    }
+  },
+  "resolve_cached": {
+    "cache": {
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [],
+    "spec": {
+      "cache": {
+        "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+      },
+      "call": "resolve",
+      "own": {
+        "node": "node-a",
+        "peers": [],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      }
+    },
+    "value": {
+      "broadcast": "192.0.2.255",
+      "ip": "192.0.2.11",
+      "mac": "02:00:00:00:00:0b"
+    }
+  },
+  "resolve_from_swarm": {
+    "cache": {
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "resolve"
+    },
+    "value": {
+      "broadcast": "192.0.2.255",
+      "ip": "192.0.2.11",
+      "mac": "02:00:00:00:00:0b"
+    }
+  },
+  "resolve_own_proto_error": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "resolve",
+      "own": {
+        "proto": [
+          "internal",
+          "сбой"
+        ]
+      }
+    },
+    "value": null
+  },
+  "resolve_own_unavailable": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "resolve",
+      "own": "unavail"
+    },
+    "value": null
+  },
+  "resolve_peer_without_ethernet": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "resolve",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "id": "node-b",
+            "wake": null
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      }
+    },
+    "value": null
+  },
+  "resolve_unknown_node": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "resolve",
+      "target": "node-z"
+    },
+    "value": null
+  },
+  "wait_immediate": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "timeout_s": 7.0
+      },
+      "call": "wait",
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": false
+          }
+        ]
+      }
+    },
+    "value": true
+  },
+  "wait_never": {
+    "cache": {},
+    "elapsed": 9.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        3.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        6.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        9.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "interval_s": 3.0,
+        "timeout_s": 7.0
+      },
+      "call": "wait"
+    },
+    "value": false
+  },
+  "wait_third_poll": {
+    "cache": {},
+    "elapsed": 6.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        3.0
+      ],
+      [
+        "sleep",
+        3.0
+      ],
+      [
+        "get_state",
+        "node-b:svc",
+        6.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "timeout_s": 30.0
+      },
+      "call": "wait",
+      "states": {
+        "node-b:svc": [
+          "unavail",
+          "unavail",
+          {
+            "asleep": false
+          }
+        ]
+      }
+    },
+    "value": true
+  },
+  "wake_core_force_through_guard": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-d": "{\"mac\": \"02:00:00:00:00:0d\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "force": true
+      },
+      "call": "wake",
+      "guard": "причина-a",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": {
+      "detail": "🔌 Magic packet для «node-b» (<code>02:00:00:00:00:0b</code>) отправлен через ноду «node-a». Появится в /nodes, как поднимется.",
+      "ok": true
+    }
+  },
+  "wake_core_guard": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [],
+    "spec": {
+      "call": "wake",
+      "guard": "причина-a",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": {
+      "detail": "<guard>:node-b",
+      "ok": false
+    }
+  },
+  "wake_core_no_info": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "wake",
+      "own": {
+        "node": "node-a",
+        "peers": [],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      }
+    },
+    "value": {
+      "detail": "⚙️ Нет данных о MAC «node-b» — нода ещё ни разу не была видна в рое.",
+      "ok": false
+    }
+  },
+  "wake_core_no_waker": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "wake",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ],
+        "wake": {
+          "broadcast": "203.0.113.255",
+          "ip": "203.0.113.12",
+          "mac": "02:00:00:00:00:0c"
+        }
+      },
+      "states": {
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": {
+      "detail": "⚠️ Некому отправить сигнал: нет живой ноды в той же сети, что «node-b».",
+      "ok": false
+    }
+  },
+  "wake_core_ok": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-d": "{\"mac\": \"02:00:00:00:00:0d\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "wake",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": {
+      "detail": "🔌 Magic packet для «node-b» (<code>02:00:00:00:00:0b</code>) отправлен через ноду «node-a». Появится в /nodes, как поднимется.",
+      "ok": true
+    }
+  },
+  "wake_core_waker_proto_error": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-d": "{\"mac\": \"02:00:00:00:00:0d\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "wake",
+      "commands": {
+        "send_wol": [
+          {
+            "proto": [
+              "bad_request",
+              "Некорректный MAC-адрес: 'x'"
+            ]
+          }
+        ]
+      },
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": {
+      "detail": "❌ node-a: Некорректный MAC-адрес: 'x'",
+      "ok": false
+    }
+  },
+  "wake_core_waker_unavailable": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-d": "{\"mac\": \"02:00:00:00:00:0d\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ],
+      [
+        "command",
+        "send_wol",
+        {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "node-a:node",
+        null,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "wake",
+      "commands": {
+        "send_wol": [
+          "unavail"
+        ]
+      },
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": {
+      "detail": "⚠️ Нода «node-a» перестала отвечать во время отправки.",
+      "ok": false
+    }
+  },
+  "waker_found": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-d": "{\"mac\": \"02:00:00:00:00:0d\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-d:node",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-e:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "waker",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": false,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-d",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          },
+          {
+            "alive": true,
+            "id": "node-e",
+            "kind": "server"
+          }
+        ],
+        "wake": {
+          "broadcast": "192.0.2.255",
+          "ip": "192.0.2.10",
+          "mac": "02:00:00:00:00:0a"
+        }
+      },
+      "states": {
+        "node-d:node": [
+          {
+            "node": "node-d",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0d"
+            }
+          }
+        ],
+        "node-e:node": [
+          {
+            "node": "node-e"
+          }
+        ]
+      }
+    },
+    "value": "node-a"
+  },
+  "waker_other_segment": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0a\", \"ip\": \"192.0.2.10\", \"broadcast\": \"192.0.2.255\"}",
+      "wake_info:node-c": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-c:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "broadcast": "198.18.1.255"
+      },
+      "call": "waker",
+      "states": {
+        "node-c:node": [
+          {
+            "node": "node-c",
+            "wake": {
+              "broadcast": "203.0.113.255",
+              "ip": "203.0.113.12",
+              "mac": "02:00:00:00:00:0c"
+            }
+          }
+        ]
+      }
+    },
+    "value": null
+  },
+  "waker_own_unavailable": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "waker",
+      "own": "unavail"
+    },
+    "value": null
+  },
+  "waker_target_itself_excluded": {
+    "cache": {
+      "wake_info:node-a": "{\"mac\": \"02:00:00:00:00:0c\", \"ip\": \"203.0.113.12\", \"broadcast\": \"203.0.113.255\"}",
+      "wake_info:node-b": "{\"mac\": \"02:00:00:00:00:0b\", \"ip\": \"192.0.2.11\", \"broadcast\": \"192.0.2.255\"}"
+    },
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "own",
+        0.0
+      ],
+      [
+        "get_state",
+        "node-b:node",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "waker",
+      "own": {
+        "node": "node-a",
+        "peers": [
+          {
+            "alive": true,
+            "id": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          }
+        ],
+        "wake": {
+          "broadcast": "203.0.113.255",
+          "ip": "203.0.113.12",
+          "mac": "02:00:00:00:00:0c"
+        }
+      },
+      "states": {
+        "node-b:node": [
+          {
+            "node": "node-b",
+            "wake": {
+              "broadcast": "192.0.2.255",
+              "ip": "192.0.2.11",
+              "mac": "02:00:00:00:00:0b"
+            }
+          }
+        ]
+      }
+    },
+    "value": null
+  },
+  "warm_target": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": false
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "warm_target_without_phase_hook": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "get_state",
+        "node-b:svc",
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "ensure",
+      "phases": false,
+      "states": {
+        "node-b:svc": [
+          {
+            "asleep": false
+          }
+        ]
+      }
+    },
+    "value": "ready"
+  },
+  "warmup_explicit_timeout": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        12.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "args": {
+        "pos": [
+          12.0
+        ]
+      },
+      "call": "warmup",
+      "commands": {
+        "warmup": [
+          {
+            "asleep": false
+          }
+        ]
+      }
+    },
+    "value": true
+  },
+  "warmup_ok": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "warmup",
+      "commands": {
+        "warmup": [
+          {
+            "asleep": false
+          }
+        ]
+      }
+    },
+    "value": true
+  },
+  "warmup_other_proto_error": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "warmup",
+      "commands": {
+        "warmup": [
+          {
+            "proto": [
+              "internal",
+              "плохо"
+            ]
+          }
+        ]
+      }
+    },
+    "value": false
+  },
+  "warmup_timeout": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "warmup",
+      "commands": {
+        "warmup": [
+          "timeout"
+        ]
+      }
+    },
+    "value": false
+  },
+  "warmup_unavailable": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "warmup",
+      "commands": {
+        "warmup": [
+          "unavail"
+        ]
+      }
+    },
+    "value": false
+  },
+  "warmup_unknown_action": {
+    "cache": {},
+    "elapsed": 0.0,
+    "journal": [
+      [
+        "command",
+        "warmup",
+        {},
+        "node-b:svc",
+        360.0,
+        0.0
+      ]
+    ],
+    "spec": {
+      "call": "warmup",
+      "commands": {}
+    },
+    "value": true
+  }
+}

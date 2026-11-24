@@ -1,0 +1,102 @@
+{
+  "describe": {
+    "node": "node-a",
+    "service": "tasks",
+    "version": "1.0.0",
+    "node_kind": "",
+    "wake": null,
+    "endpoints": [],
+    "proto": 0,
+    "capabilities": [],
+    "actions": [
+      {
+        "id": "create",
+        "title": "Поставить отложенную задачу",
+        "params": [
+          {
+            "name": "due_at",
+            "type": "string",
+            "required": true,
+            "title": "Когда (ISO 8601)"
+          },
+          {
+            "name": "dst_node",
+            "type": "string",
+            "required": true,
+            "title": "Нода-адресат"
+          },
+          {
+            "name": "dst_service",
+            "type": "string",
+            "required": true,
+            "title": "Служба-адресат"
+          },
+          {
+            "name": "action",
+            "type": "string",
+            "required": true,
+            "title": "Действие (или chat_loop — см. protocol.py)"
+          },
+          {
+            "name": "args",
+            "type": "string",
+            "required": false,
+            "title": "Аргументы действия"
+          },
+          {
+            "name": "timeout_s",
+            "type": "float",
+            "required": false,
+            "title": "Таймаут исполнения (сек)"
+          },
+          {
+            "name": "meta",
+            "type": "string",
+            "required": false,
+            "title": "Непрозрачные метаданные заказчика"
+          },
+          {
+            "name": "await_event",
+            "type": "string",
+            "required": false,
+            "title": "Ждать событие {node, event_type} раньше due_at"
+          }
+        ]
+      },
+      {
+        "id": "fire_now",
+        "title": "Разбудить задачу немедленно",
+        "params": [
+          {
+            "name": "task_id",
+            "type": "int",
+            "required": true,
+            "title": "Id задачи"
+          }
+        ]
+      },
+      {
+        "id": "match_event",
+        "title": "Сверить событие роя с ожидающими задачами",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Нода"
+          },
+          {
+            "name": "event_type",
+            "type": "string",
+            "required": true,
+            "title": "Тип события"
+          }
+        ]
+      }
+    ]
+  },
+  "get_state": {
+    "node": "node-a",
+    "service": "tasks"
+  }
+}

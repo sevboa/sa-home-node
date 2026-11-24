@@ -118,6 +118,7 @@
 | `report_ready` | `name` — слот, `ready` — bool | `{name, ready}` | всегда |
 | `list_instances` | `service` | `{service, instances: [meta]}` | есть каталог пакетов |
 | `get_instance_config` | `service`, `instance` | `{meta, content}`, `content` — текст пакета UTF-8 | есть каталог пакетов |
+| `send_wol` | `mac` — строка (обязательный) | `{sent: true, mac: ...}` | есть проводной интерфейс с WoL (`wake` в `hello`) |
 | `poweroff`, `reboot`, `suspend` | нет (у `poweroff` допустим `if_idle: true`) | `{scheduled, delay_s: 1.0}`; `poweroff` с `if_idle` — `{done, blockers}` | `[node].power_controllable` или тип ноды |
 | `restart_node` | нет (допустим `force: true`) | `{scheduled: "restart_node", delay_s: 1.0}` или `{deferred, max_wait_s, message}` | всегда |
 | `check_update` | нет | `{repo, running, installed, latest}` | есть источник обновления |
@@ -146,6 +147,37 @@
 - `instances` — список `meta` пакетов настроек: `{service, instance, rev, hash, updated_at, origin_node}`;
 - `singletons` — `{слот: {role, running, claiming, ready, rank: [роль, приоритет, нода], fenced}}`;
 - `update` — `{running, installed, restart_required, last}` (только при источнике обновления).
+
+### Служба бэкапа (хранитель копий)
+
+Действия объявляются только при заданном `[backup].partner` (см. [backup](backup.md)).
+
+| действие | параметры | ответ |
+|---|---|---|
+| `backup_store_list` | `node` — id ноды | `{node, identity: [{label, meta}], snapshot: [{label, meta}]}` |
+| `backup_store_get` | `node`, `kind=identity\|snapshot`, `label=latest\|МЕТКА` | `{kind, label, meta, sealed}` (base64) |
+| `backup_snapshot_get` | `have_hash` — хеш открытого текста, который есть у приёмника | `{unchanged, hash}` или `{hash, meta, sealed}` |
+| `backup_snapshot_poke` | (нет) | `{ok: true}` — уведомление, что новый снапшот готов |
+
+Звать может любой участник роя с токеном. Блобы запечатаны, в открытом виде только метаданные;
+отдаётся лишь копия заданного напарника. Ошибки — `bad_request` / `internal`.
+
+### Служба `tasks` (`tasks/protocol.py`, `tasks/service.py`)
+
+Процессная служба на `[tasks].socket`. Действия:
+
+| действие | параметры | ответ |
+|---|---|---|
+| `create` | `due_at` (ISO 8601, обязат.), `dst_node`, `dst_service`, `action` (обязат.), `args` (объект), `meta` (объект), `timeout_s` (число), `await_event` (`{node, event_type}`) | `{task_id: int}` |
+| `fire_now` | `task_id` (int, обязат.) | `{fired: bool, reason?}` |
+| `match_event` | `node`, `event_type` (оба обязат.) | `{matched: bool, task_id?}` |
+| `timer` | (нет; действие-будильник для встроенного вида `TIMER`) | `{}` |
+
+События (через `broadcast`):
+- `task_prewake {task_id, meta, status}` — `status`: `waking` (идёт подъём цели) или `ready`;
+- `task_result {task_id, meta, ok, result?, error?}` — итог исполнения на сроке.
+
+Подробнее — [tasks](tasks.md).
 
 ### События
 

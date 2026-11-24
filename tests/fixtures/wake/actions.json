@@ -1,0 +1,148 @@
+{
+  "constants": {
+    "action": "send_wol",
+    "title": "📡 Отправить Wake-on-LAN"
+  },
+  "info_payload": {
+    "with_wake": {
+      "endpoints": [],
+      "node": "node-a",
+      "node_kind": "",
+      "proto": 0,
+      "service": "node",
+      "version": "1.0",
+      "wake": {
+        "broadcast": "192.0.2.255",
+        "ip": "192.0.2.10",
+        "mac": "02:00:00:00:00:0a"
+      }
+    },
+    "without_wake": {
+      "endpoints": [],
+      "node": "node-a",
+      "node_kind": "",
+      "proto": 0,
+      "service": "node",
+      "version": "1.0",
+      "wake": null
+    }
+  },
+  "local_wake_payload": [
+    {
+      "name": "wired",
+      "payload": {
+        "broadcast": "192.0.2.255",
+        "ip": "192.0.2.10",
+        "mac": "02:00:00:00:00:0a"
+      }
+    },
+    {
+      "name": "none",
+      "payload": null
+    }
+  ],
+  "send_wol": [
+    {
+      "args": {
+        "mac": "AA-BB-CC-DD-EE-FF"
+      },
+      "log": [],
+      "name": "ok_with_iface",
+      "sends": [
+        {
+          "args": [],
+          "kwargs": {
+            "bind_ip": "192.0.2.10"
+          },
+          "mac": "aa:bb:cc:dd:ee:ff"
+        }
+      ],
+      "value": {
+        "mac": "aa:bb:cc:dd:ee:ff",
+        "sent": true
+      }
+    },
+    {
+      "args": {
+        "mac": "aa:bb:cc:dd:ee:ff"
+      },
+      "log": [],
+      "name": "ok_without_iface",
+      "sends": [
+        {
+          "args": [],
+          "kwargs": {
+            "bind_ip": ""
+          },
+          "mac": "aa:bb:cc:dd:ee:ff"
+        }
+      ],
+      "value": {
+        "mac": "aa:bb:cc:dd:ee:ff",
+        "sent": true
+      }
+    },
+    {
+      "args": {},
+      "code": "bad_request",
+      "error": "ProtoError",
+      "log": [],
+      "message": "Некорректный MAC-адрес: ''",
+      "name": "missing_mac",
+      "sends": []
+    },
+    {
+      "args": {
+        "mac": "zz"
+      },
+      "code": "bad_request",
+      "error": "ProtoError",
+      "log": [],
+      "message": "Некорректный MAC-адрес: 'zz'",
+      "name": "bad_mac",
+      "sends": []
+    },
+    {
+      "args": {
+        "mac": 12345
+      },
+      "code": "bad_request",
+      "error": "ProtoError",
+      "log": [],
+      "message": "Некорректный MAC-адрес: '12345'",
+      "name": "non_string_mac",
+      "sends": []
+    },
+    {
+      "args": {
+        "mac": "aa:bb:cc:dd:ee:ff"
+      },
+      "code": "internal",
+      "error": "ProtoError",
+      "log": [],
+      "message": "не удалось отправить magic packet: сеть недоступна",
+      "name": "send_error",
+      "sends": [
+        {
+          "args": [],
+          "kwargs": {
+            "bind_ip": "192.0.2.10"
+          },
+          "mac": "aa:bb:cc:dd:ee:ff"
+        }
+      ]
+    }
+  ],
+  "send_wol_spec": {
+    "id": "send_wol",
+    "params": [
+      {
+        "name": "mac",
+        "required": true,
+        "title": "MAC цели",
+        "type": "string"
+      }
+    ],
+    "title": "📡 Отправить Wake-on-LAN"
+  }
+}

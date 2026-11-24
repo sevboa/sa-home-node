@@ -1,0 +1,441 @@
+[
+  {
+    "name": "empty_text",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "foreign_sections_kept",
+    "text": "[node]\nid = \"node-a\"\n\n# comment\n[other]\nx = 1\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[node]\nid = \"node-a\"\n\n# comment\n[other]\nx = 1\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "old_local_keys_kept",
+    "text": "[svc]\nsocket = \"/local.sock\"\ndb_path = \"/local.db\"\napk_cache_dir = \"/local/apk\"\nmtu = 1\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\nsocket = \"/local.sock\"\ndb_path = \"/local.db\"\napk_cache_dir = \"/local/apk\"\n"
+  },
+  {
+    "name": "old_without_local_keys_drops_source_ones",
+    "text": "[svc]\nmtu = 1\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "sub_table",
+    "text": "[svc.sub]\nold = true\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": {
+          "inbound_tag": "in-a",
+          "server_public_key": "pub-a"
+        }
+      }
+    },
+    "result": "[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n\n[svc.sub]\ninbound_tag = \"in-a\"\nserver_public_key = \"pub-a\"\n"
+  },
+  {
+    "name": "sub_and_deep",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": {
+          "inbound_tag": "in-a",
+          "deep": {
+            "flag": true,
+            "n": 2
+          }
+        }
+      }
+    },
+    "result": "[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n\n[svc.sub]\ninbound_tag = \"in-a\"\n\n[svc.sub.deep]\nflag = true\nn = 2\n"
+  },
+  {
+    "name": "side_table",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk",
+          "side": {
+            "interface": "if1",
+            "port": 51821
+          }
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n\n[svc.side]\ninterface = \"if1\"\nport = 51821\n"
+  },
+  {
+    "name": "deep_without_scalars",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "side": {
+            "interface": "if1"
+          }
+        },
+        "svc_sub": {
+          "deep": {
+            "flag": false
+          }
+        }
+      }
+    },
+    "result": "[svc]\n\n[svc.side]\ninterface = \"if1\"\n\n[svc.sub]\n\n[svc.sub.deep]\nflag = false\n"
+  },
+  {
+    "name": "header_with_comment",
+    "text": "[svc] # managed\nmtu = 1\n\n[svc.sub] # sub\nold = 1\n\n[other]\ny = 2\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[other]\ny = 2\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "header_with_spaces",
+    "text": "[ svc ]\nmtu = 1\n\n[ svc.sub ]\nold = 1\n[other]\ny = 2\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[other]\ny = 2\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "array_of_tables_kept",
+    "text": "[[arr]]\nname = \"a\"\n\n[[arr]]\nname = \"b\"\n\n[svc]\nmtu = 1\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[[arr]]\nname = \"a\"\n\n[[arr]]\nname = \"b\"\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "array_of_tables_under_svc_removed",
+    "text": "[[svc.items]]\nname = \"a\"\n\n[other]\ny = 2\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[other]\ny = 2\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "similar_names_kept",
+    "text": "[svcx]\na = 1\n\n[svc_other]\nb = 2\n\n[svc]\nmtu = 1\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svcx]\na = 1\n\n[svc_other]\nb = 2\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "text_without_trailing_newline",
+    "text": "[other]\ny = 2",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[other]\ny = 2\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "blank_lines_and_comments_between",
+    "text": "# top\n\n\n[other]\n# inside\ny = 2\n\n\n",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "# top\n\n\n[other]\n# inside\ny = 2\n\n[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "none_values_dropped",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "a": null,
+          "b": 1,
+          "c": null
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nb = 1\n"
+  },
+  {
+    "name": "scalar_types",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "flag": true,
+          "off": false,
+          "int": 7,
+          "float": 1.5,
+          "text": "t"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nflag = true\noff = false\nint = 7\nfloat = 1.5\ntext = \"t\"\n"
+  },
+  {
+    "name": "lists",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "names": [
+            "a",
+            "b"
+          ],
+          "nums": [
+            1,
+            2.5
+          ],
+          "mixed": [
+            "a",
+            1,
+            true
+          ],
+          "nested": [
+            [
+              1,
+              2
+            ],
+            [
+              "x"
+            ]
+          ],
+          "empty": []
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nnames = [\"a\", \"b\"]\nnums = [1, 2.5]\nmixed = [\"a\", 1, true]\nnested = [[1, 2], [\"x\"]]\nempty = []\n"
+  },
+  {
+    "name": "unicode_and_quotes",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "title": "Привет \"мир\"",
+          "path": "C:\\dir\\file",
+          "line": "a\nb"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\ntitle = \"Привет \\\"мир\\\"\"\npath = \"C:\\\\dir\\\\file\"\nline = \"a\\nb\"\n"
+  },
+  {
+    "name": "list_of_dicts",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "items": [
+            {
+              "a": 1
+            },
+            {
+              "b": 2
+            }
+          ]
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nitems = [\"{'a': 1}\", \"{'b': 2}\"]\n"
+  },
+  {
+    "name": "sub_none",
+    "text": "",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "result": "[svc]\nmtu = 1380\nendpoint_host = \"host-a.example\"\n"
+  },
+  {
+    "name": "config_empty",
+    "text": "",
+    "identity": {
+      "config": {}
+    },
+    "result": "[svc]\n"
+  },
+  {
+    "name": "no_config",
+    "text": "",
+    "identity": {},
+    "result": "[svc]\n"
+  },
+  {
+    "name": "config_none",
+    "text": "",
+    "identity": {
+      "config": null
+    },
+    "result": "[svc]\n"
+  },
+  {
+    "name": "invalid_old_text",
+    "text": "[svc\nbroken",
+    "identity": {
+      "config": {
+        "svc": {
+          "mtu": 1380,
+          "endpoint_host": "host-a.example",
+          "socket": "/from/source.sock",
+          "db_path": "/from/source.db",
+          "apk_cache_dir": "/from/source/apk"
+        },
+        "svc_sub": null
+      }
+    },
+    "error": {
+      "type": "TOMLDecodeError",
+      "message": "Expected ']' at the end of a table declaration (at line 1, column 5)"
+    }
+  },
+  {
+    "name": "local_keys",
+    "keys": [
+      "socket",
+      "db_path",
+      "apk_cache_dir"
+    ]
+  }
+]

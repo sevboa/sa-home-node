@@ -1,0 +1,2534 @@
+[
+  {
+    "scenario": "timer",
+    "title": "таймер: без прогрева, результат пустой, цель не трогается",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:02:00+00:00",
+            "dst_node": "node-a",
+            "dst_service": "tasks",
+            "action": "timer",
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          120
+        ]
+      },
+      {
+        "t": 120.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 120.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 120.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {}
+        }
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-a",
+          "dst_service": "tasks",
+          "action": "timer",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:02:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:02:00+00:00",
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "forward-ok",
+    "title": "пересылка команды: тёплая цель, прогрев молчит, результат ok",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:05:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "do",
+            "args": {
+              "x": 1
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            },
+            "timeout_s": 15
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          300
+        ]
+      },
+      {
+        "t": 300.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 300.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 300.0,
+        "kind": "link.command",
+        "action": "do",
+        "args": {
+          "x": 1
+        },
+        "dst": "node-b/svc",
+        "timeout": 15.0
+      },
+      {
+        "t": 300.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "done": true
+          }
+        }
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{\"x\": 1}",
+          "timeout_s": 15.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:05:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:05:00+00:00",
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "forward-errors",
+    "title": "пересылка: ошибка протокола и недоступность дают ok=false со str(exc)",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:00:10+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "boom",
+            "meta": {
+              "n": 1
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:00:10+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "gone",
+            "meta": {
+              "n": 2
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 2
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          10
+        ]
+      },
+      {
+        "t": 10.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 10.0,
+        "kind": "link.command",
+        "action": "boom",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 240.0
+      },
+      {
+        "t": 10.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "n": 1
+          },
+          "ok": false,
+          "error": "bad_request: отказ"
+        }
+      },
+      {
+        "t": 10.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 10.0,
+        "kind": "link.command",
+        "action": "gone",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 240.0
+      },
+      {
+        "t": 10.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 2,
+          "meta": {
+            "n": 2
+          },
+          "ok": false,
+          "error": "нет связи"
+        }
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "boom",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"n\": 1}",
+          "due_at": "2030-01-01T12:00:10+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:10+00:00",
+          "prewake_done": 0
+        },
+        {
+          "id": 2,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "gone",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"n\": 2}",
+          "due_at": "2030-01-01T12:00:10+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:10+00:00",
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "await-event",
+    "title": "ожидание события: match_event будит раньше срока, срок потом не повторяет",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T13:00:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "do",
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            },
+            "await_event": {
+              "node": "node-b",
+              "event_type": "applied"
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "match_event",
+        "args": [
+          "node-b",
+          "applied"
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "match_event",
+        "reply": {
+          "matched": true,
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "do",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 240.0
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "done": true
+          }
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          3600
+        ]
+      },
+      {
+        "t": 3600.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 3600.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:00+00:00",
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "fire-now",
+    "title": "fire_now: срабатывает сразу, срок потом не повторяет",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T13:00:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "do",
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "fire_now",
+        "args": [
+          1
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "fire_now",
+        "reply": {
+          "fired": true
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "do",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 240.0
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "done": true
+          }
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "fire_now",
+        "args": [
+          1
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "fire_now",
+        "reply": {
+          "fired": false,
+          "reason": "нет такой задачи или уже сработала"
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          3600
+        ]
+      },
+      {
+        "t": 3600.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 3600.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T13:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:00+00:00",
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "cold-prewake",
+    "title": "холодная цель: прогрев будит по WoL, waking один раз, затем ready; на сроке пересылка",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:05:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "do",
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "waking"
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "send_wol",
+        "args": {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "dst": "node-a/node",
+        "timeout": null
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "sleep",
+        "seconds": 3.0
+      },
+      {
+        "t": 3.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 3.0,
+        "kind": "link.command",
+        "action": "warmup",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 360.0
+      },
+      {
+        "t": 3.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "ready"
+        }
+      },
+      {
+        "t": 3.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          300
+        ]
+      },
+      {
+        "t": 303.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 303.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 303.0,
+        "kind": "link.command",
+        "action": "do",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 240.0
+      },
+      {
+        "t": 303.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "done": true
+          }
+        }
+      }
+    ],
+    "waking_per_task": {
+      "1": 1
+    },
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:05:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:05:03+00:00",
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "prewake-unreachable",
+    "title": "провал прогрева: цель не поднялась, событие failed не эмитится, на сроке пересылка пробует снова",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 6.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:05:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "do",
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "waking"
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "send_wol",
+        "args": {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "dst": "node-a/node",
+        "timeout": null
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "sleep",
+        "seconds": 3.0
+      },
+      {
+        "t": 3.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 3.0,
+        "kind": "sleep",
+        "seconds": 3.0
+      },
+      {
+        "t": 6.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 6.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          300
+        ]
+      },
+      {
+        "t": 306.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 306.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 306.0,
+        "kind": "link.command",
+        "action": "do",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 240.0
+      },
+      {
+        "t": 306.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": false,
+          "error": "цель спит"
+        }
+      }
+    ],
+    "waking_per_task": {
+      "1": 1
+    },
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:05:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:05:06+00:00",
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "prewake-warmup-failed",
+    "title": "провал прогрева: служба поднялась, но прогрев отказал; failed не эмитится",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 6.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:05:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "do",
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "waking"
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "send_wol",
+        "args": {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "dst": "node-a/node",
+        "timeout": null
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "sleep",
+        "seconds": 3.0
+      },
+      {
+        "t": 3.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 3.0,
+        "kind": "link.command",
+        "action": "warmup",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 360.0
+      }
+    ],
+    "waking_per_task": {
+      "1": 1
+    },
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "do",
+          "args_json": "{}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:05:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": null,
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "chat-warm",
+    "title": "chat_loop: тёплая цель, один запрос, результат response",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:01:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "chat_loop",
+            "args": {
+              "messages": [
+                {
+                  "role": "user",
+                  "content": "привет"
+                }
+              ],
+              "reason": "off"
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            },
+            "timeout_s": 33
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          60
+        ]
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 60.0,
+        "kind": "chat_loop",
+        "timeout": 33.0,
+        "messages": [
+          {
+            "role": "user",
+            "content": "привет"
+          }
+        ],
+        "reason": "off"
+      },
+      {
+        "t": 60.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "response": "ответ"
+          }
+        }
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "chat_loop",
+          "args_json": "{\"messages\": [{\"role\": \"user\", \"content\": \"привет\"}], \"reason\": \"off\"}",
+          "timeout_s": 33.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:01:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:01:00+00:00",
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "chat-cold-prewake",
+    "title": "chat_loop: холодная цель прогрета заранее, на сроке готова, waking ровно один раз",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:05:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "chat_loop",
+            "args": {
+              "messages": []
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "waking"
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "send_wol",
+        "args": {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "dst": "node-a/node",
+        "timeout": null
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "sleep",
+        "seconds": 3.0
+      },
+      {
+        "t": 3.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 3.0,
+        "kind": "link.command",
+        "action": "warmup",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 360.0
+      },
+      {
+        "t": 3.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "ready"
+        }
+      },
+      {
+        "t": 3.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          300
+        ]
+      },
+      {
+        "t": 303.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 303.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 303.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 303.0,
+        "kind": "link.command",
+        "action": "warmup",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 300.0
+      },
+      {
+        "t": 303.0,
+        "kind": "chat_loop",
+        "timeout": 240.0,
+        "messages": [],
+        "reason": "high"
+      },
+      {
+        "t": 303.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "response": "ответ"
+          }
+        }
+      }
+    ],
+    "waking_per_task": {
+      "1": 1
+    },
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "chat_loop",
+          "args_json": "{\"messages\": []}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:05:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:05:03+00:00",
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "chat-retry-until-grace",
+    "title": "chat_loop: цель не готова, повторы каждые FIRE_RETRY_INTERVAL_S до FIRE_GRACE_S, waking один раз, итог ok=false",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:01:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "chat_loop",
+            "args": {
+              "messages": []
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          60
+        ]
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 60.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "waking"
+        }
+      },
+      {
+        "t": 60.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 90.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 90.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 90.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 90.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 120.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 120.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 120.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 120.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 150.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 150.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 150.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 150.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 180.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 180.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 180.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 180.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 210.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 210.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 210.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 210.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 240.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 240.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 240.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 240.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 270.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 270.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 270.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 270.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 300.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 300.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 300.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 300.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 330.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 330.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 330.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 330.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": false,
+          "error": "цель недоступна/не прогрета к моменту срабатывания"
+        }
+      }
+    ],
+    "waking_per_task": {
+      "1": 1
+    },
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "chat_loop",
+          "args_json": "{\"messages\": []}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:01:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:01:00+00:00",
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "chat-target-appears",
+    "title": "chat_loop: цель появляется на третьей попытке, запрос уходит, waking один раз",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:01:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "chat_loop",
+            "args": {
+              "messages": []
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          60
+        ]
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 60.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "waking"
+        }
+      },
+      {
+        "t": 60.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 90.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 90.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 90.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 90.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 120.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 120.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 120.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 120.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 150.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 150.0,
+        "kind": "chat_loop",
+        "timeout": 240.0,
+        "messages": [],
+        "reason": "high"
+      },
+      {
+        "t": 150.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "response": "ответ"
+          }
+        }
+      }
+    ],
+    "waking_per_task": {
+      "1": 1
+    },
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "chat_loop",
+          "args_json": "{\"messages\": []}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:01:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:01:00+00:00",
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "chat-retry-unavailable",
+    "title": "chat_loop: запрос дважды недоступен, затем успех",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:01:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "chat_loop",
+            "args": {
+              "messages": []
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          60
+        ]
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 60.0,
+        "kind": "chat_loop",
+        "attempt": 1
+      },
+      {
+        "t": 60.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 90.0,
+        "kind": "chat_loop",
+        "attempt": 2
+      },
+      {
+        "t": 90.0,
+        "kind": "sleep",
+        "seconds": 30.0
+      },
+      {
+        "t": 120.0,
+        "kind": "chat_loop",
+        "attempt": 3
+      },
+      {
+        "t": 120.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "response": "ответ"
+          }
+        }
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "chat_loop",
+          "args_json": "{\"messages\": []}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:01:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:01:00+00:00",
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "chat-bad-request",
+    "title": "chat_loop: детерминированная ошибка не повторяется",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:01:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "chat_loop",
+            "args": {
+              "messages": []
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "advance",
+        "args": [
+          60
+        ]
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 60.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 60.0,
+        "kind": "chat_loop",
+        "attempt": 1
+      },
+      {
+        "t": 60.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": false,
+          "error": "bad_request: плохой запрос"
+        }
+      }
+    ],
+    "waking_per_task": {},
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "chat_loop",
+          "args_json": "{\"messages\": []}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:01:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:01:00+00:00",
+          "prewake_done": 0
+        }
+      ],
+      "event_waiters": []
+    }
+  },
+  {
+    "scenario": "chat-waits-inflight-prewake",
+    "title": "срок наступил при идущем прогреве: исполнение ждёт прогрев, затем отвечает",
+    "constants": {
+      "PREWAKE_LEAD_S": 600.0,
+      "POLL_INTERVAL_S": 30.0,
+      "FIRE_GRACE_S": 300.0,
+      "FIRE_RETRY_INTERVAL_S": 30.0,
+      "WAKE_POLL_TIMEOUT_S": 180.0
+    },
+    "base": "2030-01-01T12:00:00+00:00",
+    "trace": [
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "create",
+        "args": [
+          {
+            "due_at": "2030-01-01T12:00:00+00:00",
+            "dst_node": "node-b",
+            "dst_service": "svc",
+            "action": "chat_loop",
+            "args": {
+              "messages": []
+            },
+            "meta": {
+              "kind": "k1",
+              "ref": 7
+            }
+          }
+        ]
+      },
+      {
+        "t": 0.0,
+        "kind": "reply",
+        "action": "create",
+        "reply": {
+          "task_id": 1
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "prewake_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "fire_due",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "waking"
+        }
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/node",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "step",
+        "op": "drain",
+        "args": []
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": null,
+        "ok": true
+      },
+      {
+        "t": 0.0,
+        "kind": "link.command",
+        "action": "send_wol",
+        "args": {
+          "mac": "02:00:00:00:00:0b"
+        },
+        "dst": "node-a/node",
+        "timeout": null
+      },
+      {
+        "t": 0.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": false
+      },
+      {
+        "t": 0.0,
+        "kind": "sleep",
+        "seconds": 3.0
+      },
+      {
+        "t": 3.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 3.0,
+        "kind": "link.command",
+        "action": "warmup",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 360.0
+      },
+      {
+        "t": 3.0,
+        "kind": "event",
+        "event": "task_prewake",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "status": "ready"
+        }
+      },
+      {
+        "t": 3.0,
+        "kind": "link.get_state",
+        "dst": "node-b/svc",
+        "ok": true
+      },
+      {
+        "t": 3.0,
+        "kind": "link.command",
+        "action": "warmup",
+        "args": {},
+        "dst": "node-b/svc",
+        "timeout": 300.0
+      },
+      {
+        "t": 3.0,
+        "kind": "chat_loop",
+        "timeout": 240.0,
+        "messages": [],
+        "reason": "high"
+      },
+      {
+        "t": 3.0,
+        "kind": "event",
+        "event": "task_result",
+        "data": {
+          "task_id": 1,
+          "meta": {
+            "kind": "k1",
+            "ref": 7
+          },
+          "ok": true,
+          "result": {
+            "response": "ответ"
+          }
+        }
+      }
+    ],
+    "waking_per_task": {
+      "1": 1
+    },
+    "db": {
+      "tasks": [
+        {
+          "id": 1,
+          "dst_node": "node-b",
+          "dst_service": "svc",
+          "action": "chat_loop",
+          "args_json": "{\"messages\": []}",
+          "timeout_s": 240.0,
+          "meta_json": "{\"kind\": \"k1\", \"ref\": 7}",
+          "due_at": "2030-01-01T12:00:00+00:00",
+          "created_at": "2030-01-01T12:00:00+00:00",
+          "fired_at": "2030-01-01T12:00:00+00:00",
+          "prewake_done": 1
+        }
+      ],
+      "event_waiters": []
+    }
+  }
+]

@@ -1,0 +1,525 @@
+[
+  {
+    "name": "build_no_partner",
+    "built": false,
+    "source": false,
+    "receiver": false,
+    "store": false,
+    "partner": null,
+    "specs": null
+  },
+  {
+    "name": "build_full",
+    "built": true,
+    "source": true,
+    "receiver": true,
+    "store": true,
+    "partner": "node-b",
+    "specs": [
+      {
+        "id": "backup_snapshot_get",
+        "title": "💾 Запечатанный снапшот БД",
+        "params": [
+          {
+            "name": "have_hash",
+            "type": "string",
+            "required": false,
+            "title": "Хеш у запросившего"
+          }
+        ]
+      },
+      {
+        "id": "backup_snapshot_poke",
+        "title": "💾 Есть новый снапшот",
+        "params": []
+      },
+      {
+        "id": "backup_store_list",
+        "title": "💾 Список хранимых бэкапов",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          }
+        ]
+      },
+      {
+        "id": "backup_store_get",
+        "title": "💾 Выдать запечатанную копию",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          },
+          {
+            "name": "kind",
+            "type": "string",
+            "required": true,
+            "title": "Что",
+            "choices": [
+              "identity",
+              "snapshot"
+            ]
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "title": "Версия"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "build_no_key",
+    "built": true,
+    "source": false,
+    "receiver": true,
+    "store": true,
+    "partner": "node-b",
+    "specs": [
+      {
+        "id": "backup_snapshot_poke",
+        "title": "💾 Есть новый снапшот",
+        "params": []
+      },
+      {
+        "id": "backup_store_list",
+        "title": "💾 Список хранимых бэкапов",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          }
+        ]
+      },
+      {
+        "id": "backup_store_get",
+        "title": "💾 Выдать запечатанную копию",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          },
+          {
+            "name": "kind",
+            "type": "string",
+            "required": true,
+            "title": "Что",
+            "choices": [
+              "identity",
+              "snapshot"
+            ]
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "title": "Версия"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "build_bad_key",
+    "built": true,
+    "source": false,
+    "receiver": true,
+    "store": true,
+    "partner": "node-b",
+    "specs": [
+      {
+        "id": "backup_snapshot_poke",
+        "title": "💾 Есть новый снапшот",
+        "params": []
+      },
+      {
+        "id": "backup_store_list",
+        "title": "💾 Список хранимых бэкапов",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          }
+        ]
+      },
+      {
+        "id": "backup_store_get",
+        "title": "💾 Выдать запечатанную копию",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          },
+          {
+            "name": "kind",
+            "type": "string",
+            "required": true,
+            "title": "Что",
+            "choices": [
+              "identity",
+              "snapshot"
+            ]
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "title": "Версия"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "specs_bare",
+    "specs": []
+  },
+  {
+    "name": "specs_source_only",
+    "specs": [
+      {
+        "id": "backup_snapshot_get",
+        "title": "💾 Запечатанный снапшот БД",
+        "params": [
+          {
+            "name": "have_hash",
+            "type": "string",
+            "required": false,
+            "title": "Хеш у запросившего"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "specs_receiver_only",
+    "specs": [
+      {
+        "id": "backup_snapshot_poke",
+        "title": "💾 Есть новый снапшот",
+        "params": []
+      }
+    ]
+  },
+  {
+    "name": "specs_store_only",
+    "specs": [
+      {
+        "id": "backup_store_list",
+        "title": "💾 Список хранимых бэкапов",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          }
+        ]
+      },
+      {
+        "id": "backup_store_get",
+        "title": "💾 Выдать запечатанную копию",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          },
+          {
+            "name": "kind",
+            "type": "string",
+            "required": true,
+            "title": "Что",
+            "choices": [
+              "identity",
+              "snapshot"
+            ]
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "title": "Версия"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "snapshot_get_without_marker",
+    "action": "backup_snapshot_get",
+    "args": {},
+    "error": {
+      "type": "ProtoError",
+      "code": "bad_request",
+      "message": "публикация бэкапа приостановлена: нет маркера backup-publish.ok. После пересборки сервера восстановите данные (`sa-home-bot backup restore <нода> --apply` на node-a), для нового сервера или первого деплоя — `nodectl backup-release`"
+    }
+  },
+  {
+    "name": "marker_allowed"
+  },
+  {
+    "name": "snapshot_get",
+    "action": "backup_snapshot_get",
+    "args": {},
+    "result": {
+      "hash": "sha256:cee048c3114e3c3ac7a1c2ff18fc8cfcf7c7f611f2e1fd349a8a5b33eb191dfd",
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 1,
+        "hash": "sha256:cee048c3114e3c3ac7a1c2ff18fc8cfcf7c7f611f2e1fd349a8a5b33eb191dfd",
+        "taken_at": "2026-01-01T00:00:08+00:00",
+        "rows": {
+          "tbl_a": 1,
+          "tbl_b": 1,
+          "tbl_a_active": 1
+        }
+      },
+      "sealed": "U0FIQjGUo5AtEwAv3wln8ddEghpyGIGRQogyRb/hOWJLP9cTEG1gBWQ9J5JHD9hjndlPc9hUgLjQIRrf1l7vdLebcNslqJV8QTNVCndOVTf6UDgvT0yDw7za/y87qwT+yMDv/AXPS5IFKFDfYHhidRTLz5UnhcoC5Rue1seXaeu9LKdN59Ed1M8wVTp1liKLKTLy0JSWAm364+KC2ljzYfaX/JLSIHx7tqIVC/v5kfYUIKlXrTHAXCVejpEbqhTLE+wP/089+g=="
+    }
+  },
+  {
+    "name": "snapshot_get_same_hash",
+    "action": "backup_snapshot_get",
+    "args": {
+      "have_hash": "sha256:cee048c3114e3c3ac7a1c2ff18fc8cfcf7c7f611f2e1fd349a8a5b33eb191dfd"
+    },
+    "result": {
+      "unchanged": true,
+      "hash": "sha256:cee048c3114e3c3ac7a1c2ff18fc8cfcf7c7f611f2e1fd349a8a5b33eb191dfd"
+    }
+  },
+  {
+    "name": "snapshot_get_other_hash",
+    "action": "backup_snapshot_get",
+    "args": {
+      "have_hash": "sha256:other"
+    },
+    "result": {
+      "hash": "sha256:cee048c3114e3c3ac7a1c2ff18fc8cfcf7c7f611f2e1fd349a8a5b33eb191dfd",
+      "meta": {
+        "source": "node-a",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 1,
+        "hash": "sha256:cee048c3114e3c3ac7a1c2ff18fc8cfcf7c7f611f2e1fd349a8a5b33eb191dfd",
+        "taken_at": "2026-01-01T00:00:08+00:00",
+        "rows": {
+          "tbl_a": 1,
+          "tbl_b": 1,
+          "tbl_a_active": 1
+        }
+      },
+      "sealed": "U0FIQjGUo5AtEwAv3wln8ddEghpyGIGRQogyRb/hOWJLP9cTEG1gBWQ9J5JHD9hjndlPc9hUgLjQIRrf1l7vdLebcNslqJV8QTNVCndOVTf6UDgvT0yDw7za/y87qwT+yMDv/AXPS5IFKFDfYHhidRTLz5UnhcoC5Rue1seXaeu9LKdN59Ed1M8wVTp1liKLKTLy0JSWAm364+KC2ljzYfaX/JLSIHx7tqIVC/v5kfYUIKlXrTHAXCVejpEbqhTLE+wP/089+g=="
+    }
+  },
+  {
+    "name": "snapshot_poke",
+    "action": "backup_snapshot_poke",
+    "args": {},
+    "result": {
+      "ok": true
+    }
+  },
+  {
+    "name": "store_list",
+    "action": "backup_store_list",
+    "args": {
+      "node": "node-b"
+    },
+    "result": {
+      "node": "node-b",
+      "identity": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "rev": 3,
+            "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+            "updated_at": "2026-01-03T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:03+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_02_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 2,
+            "hash": "sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89",
+            "updated_at": "2026-01-02T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:02+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_01_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 1,
+            "hash": "sha256:06279107752c5f8d561c2526bb635f4436ddb5a0b2b558d82becd2a1bc1b3113",
+            "updated_at": "2026-01-01T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:01+00:00"
+          }
+        }
+      ],
+      "snapshot": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 3,
+            "hash": "sha256:9026e8f8d31945dc231305e58e97d1eb2a59676f1053057cdcb4037f1af1da5c",
+            "taken_at": "2026-01-03T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 0,
+              "tbl_b": 0,
+              "tbl_a_active": 0
+            },
+            "stored_at": "2026-01-01T00:00:06+00:00",
+            "empty": true
+          }
+        },
+        {
+          "label": "last_nonempty",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_05_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_04_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 1,
+            "hash": "sha256:0daf6595082ac015e3c249de127319046c22d7eaf91298b518ffef7b0f94fb36",
+            "taken_at": "2026-01-01T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 2,
+              "tbl_b": 1,
+              "tbl_a_active": 1
+            },
+            "stored_at": "2026-01-01T00:00:04+00:00",
+            "empty": false
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "store_list_foreign",
+    "action": "backup_store_list",
+    "args": {
+      "node": "node-c"
+    },
+    "error": {
+      "type": "ProtoError",
+      "code": "bad_request",
+      "message": "эта нода хранит копию только напарника 'node-b', а не 'node-c'"
+    }
+  },
+  {
+    "name": "store_get_identity",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "identity"
+    },
+    "result": {
+      "kind": "identity",
+      "label": "latest",
+      "meta": {
+        "source": "node-b",
+        "rev": 3,
+        "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+        "updated_at": "2026-01-03T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:03+00:00"
+      },
+      "sealed": "U0FIQjHDev0hEN/1aJXSYgyl0ZHJWq+5x6wyKbFaoDwiqh7iGvO6nkCOBvz8I0DghtA6DfWaPkakZJbj24Xrokc/P/+Mf7N8DL0YfP6EGI9//47B5Uk8CnpKGZzVysGe/vUojd/UpRDxyC0PexarrKDc5+3JrN0Mi+Q/0l+qgAv8IbM0pLDK5cYIVfYyJd6MOCOnnInJAMfQaEFiEIqE9HF5JQgLnb2rbN91R7cUGEKCymzpd6JbkFaPMOgpFjjN21pZu+B9wDNBOHRR4mv9qcLAlQSUJr/EQbPClc0p5PhFipPlNB35s5lmFvUCx4aEckg398wHMP//NB8c5y6UDLS/n344zcJzhNKKM61WsDvxrulmbUCM+0kzGl5crq23fvp+F/F2raqU8Xe+RbQ14/MbPPYrX36YOx0oVzxBItPjZg+4X2iQYoCoXi+roDBjeBCElNUEabX94vGyxOCA5YihaxHWseQ/"
+    }
+  },
+  {
+    "name": "store_get_bad_kind",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "x"
+    },
+    "error": {
+      "type": "ProtoError",
+      "code": "bad_request",
+      "message": "неизвестный вид копии 'x' (identity|snapshot)"
+    }
+  },
+  {
+    "name": "store_get_missing",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "snapshot",
+      "label": "nope"
+    },
+    "error": {
+      "type": "ProtoError",
+      "code": "bad_request",
+      "message": "у этой ноды нет snapshot 'nope' для node-b"
+    }
+  },
+  {
+    "name": "unknown_action",
+    "action": "other_action",
+    "args": {},
+    "result": null
+  },
+  {
+    "name": "poke_sets_wake",
+    "wake": true
+  },
+  {
+    "name": "no_source_snapshot_get",
+    "result": null
+  }
+]

@@ -1,0 +1,235 @@
+{
+  "tasks": {
+    "table_info": [
+      [
+        0,
+        "id",
+        "INTEGER",
+        0,
+        null,
+        1
+      ],
+      [
+        1,
+        "dst_node",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        2,
+        "dst_service",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        3,
+        "action",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        4,
+        "args_json",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        5,
+        "timeout_s",
+        "REAL",
+        1,
+        null,
+        0
+      ],
+      [
+        6,
+        "meta_json",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        7,
+        "due_at",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        8,
+        "created_at",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        9,
+        "fired_at",
+        "TEXT",
+        0,
+        null,
+        0
+      ],
+      [
+        10,
+        "prewake_done",
+        "INTEGER",
+        1,
+        "0",
+        0
+      ]
+    ],
+    "index_list": [
+      [
+        0,
+        "idx_tasks_due",
+        0,
+        "c",
+        1
+      ]
+    ],
+    "index_info": {
+      "idx_tasks_due": [
+        [
+          0,
+          7,
+          "due_at"
+        ]
+      ]
+    },
+    "ddl": [
+      [
+        "idx_tasks_due",
+        "CREATE INDEX idx_tasks_due ON tasks(due_at) WHERE fired_at IS NULL"
+      ],
+      [
+        "tasks",
+        "CREATE TABLE tasks (\n    id           INTEGER PRIMARY KEY AUTOINCREMENT,\n    dst_node     TEXT NOT NULL,\n    dst_service  TEXT NOT NULL,\n    action       TEXT NOT NULL,\n    args_json    TEXT NOT NULL,\n    timeout_s    REAL NOT NULL,\n    meta_json    TEXT NOT NULL,\n    due_at       TEXT NOT NULL,\n    created_at   TEXT NOT NULL,\n    fired_at     TEXT,\n    prewake_done INTEGER NOT NULL DEFAULT 0\n)"
+      ]
+    ]
+  },
+  "event_waiters": {
+    "table_info": [
+      [
+        0,
+        "task_id",
+        "INTEGER",
+        0,
+        null,
+        1
+      ],
+      [
+        1,
+        "node",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        2,
+        "event_type",
+        "TEXT",
+        1,
+        null,
+        0
+      ],
+      [
+        3,
+        "created_at",
+        "TEXT",
+        1,
+        null,
+        0
+      ]
+    ],
+    "index_list": [
+      [
+        0,
+        "idx_event_waiters_match",
+        0,
+        "c",
+        0
+      ]
+    ],
+    "index_info": {
+      "idx_event_waiters_match": [
+        [
+          0,
+          1,
+          "node"
+        ],
+        [
+          1,
+          2,
+          "event_type"
+        ]
+      ]
+    },
+    "ddl": [
+      [
+        "event_waiters",
+        "CREATE TABLE event_waiters (\n    task_id     INTEGER PRIMARY KEY,\n    node        TEXT NOT NULL,\n    event_type  TEXT NOT NULL,\n    created_at  TEXT NOT NULL\n)"
+      ],
+      [
+        "idx_event_waiters_match",
+        "CREATE INDEX idx_event_waiters_match ON event_waiters(node, event_type)"
+      ]
+    ]
+  },
+  "app_state": {
+    "table_info": [
+      [
+        0,
+        "key",
+        "TEXT",
+        0,
+        null,
+        1
+      ],
+      [
+        1,
+        "value",
+        "TEXT",
+        1,
+        null,
+        0
+      ]
+    ],
+    "index_list": [
+      [
+        0,
+        "sqlite_autoindex_app_state_1",
+        1,
+        "pk",
+        0
+      ]
+    ],
+    "index_info": {
+      "sqlite_autoindex_app_state_1": [
+        [
+          0,
+          0,
+          "key"
+        ]
+      ]
+    },
+    "ddl": [
+      [
+        "app_state",
+        "CREATE TABLE app_state (\n    key   TEXT PRIMARY KEY,\n    value TEXT NOT NULL\n)"
+      ]
+    ]
+  }
+}

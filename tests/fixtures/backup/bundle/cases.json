@@ -1,0 +1,62 @@
+{
+  "written_order": [
+    "identity.json",
+    "snapshot.json",
+    "meta.json",
+    "summary.txt"
+  ],
+  "dir_mode": "0o700",
+  "file_modes": {
+    "identity.json": "0o600",
+    "meta.json": "0o600",
+    "snapshot.json": "0o600",
+    "summary.txt": "0o600"
+  },
+  "load_dir_equals_bundle": true,
+  "no_snapshot_written": [
+    "identity.json",
+    "meta.json",
+    "summary.txt"
+  ],
+  "no_snapshot_loaded_snapshot": null,
+  "write_dir_not_empty": {
+    "error": {
+      "type": "RestoreError",
+      "message": "каталог <root>/bundle-dir не пуст — укажите новый или пустой"
+    }
+  },
+  "write_dir_existing_empty_mode": "0o700",
+  "write_dir_creates_parents": [
+    "identity.json",
+    "meta.json",
+    "snapshot.json",
+    "summary.txt"
+  ],
+  "load_file_equals_bundle": true,
+  "load_errors": {
+    "missing": {
+      "error": {
+        "type": "RestoreError",
+        "message": "не удалось прочитать бандл <root>/nope.json: [Errno 2] No such file or directory: <root>/nope.json'"
+      }
+    },
+    "wrong_format": {
+      "error": {
+        "type": "RestoreError",
+        "message": "неизвестный формат бандла: 'x/1'"
+      }
+    },
+    "broken_json": {
+      "error": {
+        "type": "RestoreError",
+        "message": "не удалось прочитать бандл <root>/broken.json: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+      }
+    },
+    "dir_without_identity": {
+      "error": {
+        "type": "RestoreError",
+        "message": "не удалось прочитать бандл <root>/partial-dir: [Errno 2] No such file or directory: <root>/partial-dir/identity.json'"
+      }
+    }
+  }
+}

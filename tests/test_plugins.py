@@ -63,7 +63,7 @@ def test_plugin_with_fixups(monkeypatch: pytest.MonkeyPatch) -> None:
 def test_load_order(monkeypatch: pytest.MonkeyPatch) -> None:
     eps = {n: FakeEP(n, Plugin(name=n)) for n in ("a", "b")}
     patch_eps(monkeypatch, eps)
-    assert [p.name for p in load_plugins(["b", "a"])] == ["monitor", "b", "a"]
+    assert [p.name for p in load_plugins(["b", "a"])] == ["monitor", "tasks", "b", "a"]
 
 
 @pytest.mark.parametrize(
@@ -71,6 +71,7 @@ def test_load_order(monkeypatch: pytest.MonkeyPatch) -> None:
     [
         ({"a": Plugin(name="a")}, ["x", "y"], "x, y.*установлены: a"),
         ({"a": Plugin(name="a")}, ["a", "a"], "Повтор"),
+        ({"tasks": Plugin(name="tasks")}, ["tasks"], "Повтор"),
         ({"a": object()}, ["a"], "не вернула Plugin"),
         ({"a": Plugin(name="b")}, ["a"], "не совпадает"),
     ],

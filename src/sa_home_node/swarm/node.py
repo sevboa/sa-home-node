@@ -27,6 +27,7 @@ from sa_home_node.swarm.relay import EventHandler, EventRelay, announce_version
 from sa_home_node.swarm.router import NodeRouter
 from sa_home_node.swarm.service import NodeService
 from sa_home_node.swarm.state import NodeState
+from sa_home_node.wake.actions import local_wake_payload
 
 log = logging.getLogger(__name__)
 
@@ -188,6 +189,7 @@ class Swarm:
             make_peer_link=make_peer_link,
             emit=self.emit,
             swarm_token=self.swarm.token,
+            wake=local_wake_payload,
         )
         self.node_service = node_service
         self.server = ProtoServer(

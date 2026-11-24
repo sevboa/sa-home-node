@@ -1,0 +1,560 @@
+[
+  {
+    "name": "list",
+    "partner": "node-b",
+    "action": "backup_store_list",
+    "args": {
+      "node": "node-b"
+    },
+    "result": {
+      "node": "node-b",
+      "identity": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "rev": 3,
+            "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+            "updated_at": "2026-01-03T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:03+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_02_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 2,
+            "hash": "sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89",
+            "updated_at": "2026-01-02T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:02+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_01_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 1,
+            "hash": "sha256:06279107752c5f8d561c2526bb635f4436ddb5a0b2b558d82becd2a1bc1b3113",
+            "updated_at": "2026-01-01T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:01+00:00"
+          }
+        }
+      ],
+      "snapshot": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 3,
+            "hash": "sha256:9026e8f8d31945dc231305e58e97d1eb2a59676f1053057cdcb4037f1af1da5c",
+            "taken_at": "2026-01-03T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 0,
+              "tbl_b": 0,
+              "tbl_a_active": 0
+            },
+            "stored_at": "2026-01-01T00:00:06+00:00",
+            "empty": true
+          }
+        },
+        {
+          "label": "last_nonempty",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_05_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_04_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 1,
+            "hash": "sha256:0daf6595082ac015e3c249de127319046c22d7eaf91298b518ffef7b0f94fb36",
+            "taken_at": "2026-01-01T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 2,
+              "tbl_b": 1,
+              "tbl_a_active": 1
+            },
+            "stored_at": "2026-01-01T00:00:04+00:00",
+            "empty": false
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "list_node_stripped",
+    "partner": "node-b",
+    "action": "backup_store_list",
+    "args": {
+      "node": "  node-b "
+    },
+    "result": {
+      "node": "node-b",
+      "identity": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "rev": 3,
+            "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+            "updated_at": "2026-01-03T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:03+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_02_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 2,
+            "hash": "sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89",
+            "updated_at": "2026-01-02T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:02+00:00"
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_01_00_00",
+          "meta": {
+            "source": "node-b",
+            "rev": 1,
+            "hash": "sha256:06279107752c5f8d561c2526bb635f4436ddb5a0b2b558d82becd2a1bc1b3113",
+            "updated_at": "2026-01-01T00:00:00+00:00",
+            "stored_at": "2026-01-01T00:00:01+00:00"
+          }
+        }
+      ],
+      "snapshot": [
+        {
+          "label": "latest",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 3,
+            "hash": "sha256:9026e8f8d31945dc231305e58e97d1eb2a59676f1053057cdcb4037f1af1da5c",
+            "taken_at": "2026-01-03T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 0,
+              "tbl_b": 0,
+              "tbl_a_active": 0
+            },
+            "stored_at": "2026-01-01T00:00:06+00:00",
+            "empty": true
+          }
+        },
+        {
+          "label": "last_nonempty",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_05_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 2,
+            "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+            "taken_at": "2026-01-02T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 3,
+              "tbl_b": 1,
+              "tbl_a_active": 2
+            },
+            "stored_at": "2026-01-01T00:00:05+00:00",
+            "empty": false
+          }
+        },
+        {
+          "label": "2026-01-01T00_00_04_00_00",
+          "meta": {
+            "source": "node-b",
+            "format": "sa-home-bot/svc-snapshot/1",
+            "rev": 1,
+            "hash": "sha256:0daf6595082ac015e3c249de127319046c22d7eaf91298b518ffef7b0f94fb36",
+            "taken_at": "2026-01-01T12:00:00+00:00",
+            "rows": {
+              "tbl_a": 2,
+              "tbl_b": 1,
+              "tbl_a_active": 1
+            },
+            "stored_at": "2026-01-01T00:00:04+00:00",
+            "empty": false
+          }
+        }
+      ]
+    }
+  },
+  {
+    "name": "list_foreign_node",
+    "partner": "node-b",
+    "action": "backup_store_list",
+    "args": {
+      "node": "node-c"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "эта нода хранит копию только напарника 'node-b', а не 'node-c'"
+    }
+  },
+  {
+    "name": "list_no_node",
+    "partner": "node-b",
+    "action": "backup_store_list",
+    "args": {},
+    "error": {
+      "type": "ServeError",
+      "message": "эта нода хранит копию только напарника 'node-b', а не ''"
+    }
+  },
+  {
+    "name": "list_no_partner",
+    "partner": "",
+    "action": "backup_store_list",
+    "args": {
+      "node": "node-b"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "эта нода хранит копию только напарника '', а не 'node-b'"
+    }
+  },
+  {
+    "name": "list_partner_without_data",
+    "partner": "node-c",
+    "action": "backup_store_list",
+    "args": {
+      "node": "node-c"
+    },
+    "result": {
+      "node": "node-c",
+      "identity": [],
+      "snapshot": []
+    }
+  },
+  {
+    "name": "get_identity_latest",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "identity"
+    },
+    "result": {
+      "kind": "identity",
+      "label": "latest",
+      "meta": {
+        "source": "node-b",
+        "rev": 3,
+        "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+        "updated_at": "2026-01-03T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:03+00:00"
+      },
+      "sealed": "U0FIQjHDev0hEN/1aJXSYgyl0ZHJWq+5x6wyKbFaoDwiqh7iGvO6nkCOBvz8I0DghtA6DfWaPkakZJbj24Xrokc/P/+Mf7N8DL0YfP6EGI9//47B5Uk8CnpKGZzVysGe/vUojd/UpRDxyC0PexarrKDc5+3JrN0Mi+Q/0l+qgAv8IbM0pLDK5cYIVfYyJd6MOCOnnInJAMfQaEFiEIqE9HF5JQgLnb2rbN91R7cUGEKCymzpd6JbkFaPMOgpFjjN21pZu+B9wDNBOHRR4mv9qcLAlQSUJr/EQbPClc0p5PhFipPlNB35s5lmFvUCx4aEckg398wHMP//NB8c5y6UDLS/n344zcJzhNKKM61WsDvxrulmbUCM+0kzGl5crq23fvp+F/F2raqU8Xe+RbQ14/MbPPYrX36YOx0oVzxBItPjZg+4X2iQYoCoXi+roDBjeBCElNUEabX94vGyxOCA5YihaxHWseQ/"
+    }
+  },
+  {
+    "name": "get_identity_empty_label",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "identity",
+      "label": ""
+    },
+    "result": {
+      "kind": "identity",
+      "label": "latest",
+      "meta": {
+        "source": "node-b",
+        "rev": 3,
+        "hash": "sha256:d962f26f46fcecad4b48a203105722829a32e74c07ddba75362821b509213718",
+        "updated_at": "2026-01-03T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:03+00:00"
+      },
+      "sealed": "U0FIQjHDev0hEN/1aJXSYgyl0ZHJWq+5x6wyKbFaoDwiqh7iGvO6nkCOBvz8I0DghtA6DfWaPkakZJbj24Xrokc/P/+Mf7N8DL0YfP6EGI9//47B5Uk8CnpKGZzVysGe/vUojd/UpRDxyC0PexarrKDc5+3JrN0Mi+Q/0l+qgAv8IbM0pLDK5cYIVfYyJd6MOCOnnInJAMfQaEFiEIqE9HF5JQgLnb2rbN91R7cUGEKCymzpd6JbkFaPMOgpFjjN21pZu+B9wDNBOHRR4mv9qcLAlQSUJr/EQbPClc0p5PhFipPlNB35s5lmFvUCx4aEckg398wHMP//NB8c5y6UDLS/n344zcJzhNKKM61WsDvxrulmbUCM+0kzGl5crq23fvp+F/F2raqU8Xe+RbQ14/MbPPYrX36YOx0oVzxBItPjZg+4X2iQYoCoXi+roDBjeBCElNUEabX94vGyxOCA5YihaxHWseQ/"
+    }
+  },
+  {
+    "name": "get_identity_history",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "identity",
+      "label": "2026-01-01T00_00_02_00_00"
+    },
+    "result": {
+      "kind": "identity",
+      "label": "2026-01-01T00_00_02_00_00",
+      "meta": {
+        "source": "node-b",
+        "rev": 2,
+        "hash": "sha256:e4baa8cc705c0a0b8bb3b7e49dd0d9f8d5ed2e502bcbe74503ddbc5c7e288e89",
+        "updated_at": "2026-01-02T00:00:00+00:00",
+        "stored_at": "2026-01-01T00:00:02+00:00"
+      },
+      "sealed": "U0FIQjFpDVX9MUtLREOiUVbC/x2kkDIOQeEZ9p0VXhia2Keqc3R0weftkpr1gP5m5OvmJtH9NQKEPJ6DGW9w5sOqdwFgxUSi89wLeFB2Ju0oF9S74yWKSPawxn3M2ccs53/rTOD7ExlRxP2RfUfqTPw8pgOdJ5ZP7TMzFLHXdfdTsIarD0W9850v3f5TNWdOAZkmJTmtlBLs1hc9zFRqgxCEsD49exYXH1Ij5BbiMBTZxhVXwvC4Mp1yS+jjAFFY/3s51m48v/xyN29T2a1IiAUQ1IIVDUgcqrXOzmfz5VpsxonChxW8Yr/fTVl4nvatf3D/Q/YxXpGFSNDIAXs5S1gnTuZRzDEaVfK7AYyB/7lzzIYo8TjiM8WVYI/c4k3llzrlk5Zub+GBoO+QTXlbe5Ka/p+OXzoIopls/utjw00//tMf9VY14CTL93AOMtKVBrPAimedUmacqDYhxWo/hqJL6CmUwfvA"
+    }
+  },
+  {
+    "name": "get_identity_unknown_label",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "identity",
+      "label": "nope"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "у этой ноды нет identity 'nope' для node-b"
+    }
+  },
+  {
+    "name": "get_snapshot_latest",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "snapshot",
+      "label": "latest"
+    },
+    "result": {
+      "kind": "snapshot",
+      "label": "latest",
+      "meta": {
+        "source": "node-b",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 3,
+        "hash": "sha256:9026e8f8d31945dc231305e58e97d1eb2a59676f1053057cdcb4037f1af1da5c",
+        "taken_at": "2026-01-03T12:00:00+00:00",
+        "rows": {
+          "tbl_a": 0,
+          "tbl_b": 0,
+          "tbl_a_active": 0
+        },
+        "stored_at": "2026-01-01T00:00:06+00:00",
+        "empty": true
+      },
+      "sealed": "U0FIQjGN/PWPpNNW7Cw2d9bvEOzANf0iegdpOzHGGNEgraxsbSrEVKwa9ASqMQMG4CzbhQzva2dojzgcPWKDcEtlzg/aD1XVTcS50bDFqWZ+Y2miGjucdFpyc8ZoDg8IrXT/gEcObqpJGJIqL0A5E61WxnyPFSU3UoF2UfbQ+DMyFVyQ9LzDWOyla+r4yFeilOMvuPw4ix3Z2nZaZmBSoWWlRWucJtQa7/2o+C6mQsZjQpRfcw=="
+    }
+  },
+  {
+    "name": "get_snapshot_last_nonempty",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "snapshot",
+      "label": "last_nonempty"
+    },
+    "result": {
+      "kind": "snapshot",
+      "label": "last_nonempty",
+      "meta": {
+        "source": "node-b",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 2,
+        "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+        "taken_at": "2026-01-02T12:00:00+00:00",
+        "rows": {
+          "tbl_a": 3,
+          "tbl_b": 1,
+          "tbl_a_active": 2
+        },
+        "stored_at": "2026-01-01T00:00:05+00:00",
+        "empty": false
+      },
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesAmH4QfnMBxxO7ctlXj8F5CCwFlOLpGpSUqsD9i6VST8WB0UtgIh9kBo8eVb7y52FDBx79WyqdHbNlS/y/mB2r7gH/FsBhcZN3gRP3nCWFHzsm1n/RuDGbPYR5OlQku7c8a2hMLtnPTpdOVR+CsYc5FJsIEHDxeA+REBic28W/t9ici/1FoyGwCkXbwJgnxeFzFs8e8gicfcfko+Nsh+F/9vx4/KQ=="
+    }
+  },
+  {
+    "name": "get_snapshot_history",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "snapshot",
+      "label": "2026-01-01T00_00_05_00_00"
+    },
+    "result": {
+      "kind": "snapshot",
+      "label": "2026-01-01T00_00_05_00_00",
+      "meta": {
+        "source": "node-b",
+        "format": "sa-home-bot/svc-snapshot/1",
+        "rev": 2,
+        "hash": "sha256:4033d66b53940cb2bb9e657247e4969e540af1747ca42e7cd10268376fb32a7e",
+        "taken_at": "2026-01-02T12:00:00+00:00",
+        "rows": {
+          "tbl_a": 3,
+          "tbl_b": 1,
+          "tbl_a_active": 2
+        },
+        "stored_at": "2026-01-01T00:00:05+00:00",
+        "empty": false
+      },
+      "sealed": "U0FIQjH6g4AWQDFSzS6nOTyHAozRLIKRzZk+V+NVhcA/a1ESTLYp7WbH9FVK+WKiesAmH4QfnMBxxO7ctlXj8F5CCwFlOLpGpSUqsD9i6VST8WB0UtgIh9kBo8eVb7y52FDBx79WyqdHbNlS/y/mB2r7gH/FsBhcZN3gRP3nCWFHzsm1n/RuDGbPYR5OlQku7c8a2hMLtnPTpdOVR+CsYc5FJsIEHDxeA+REBic28W/t9ici/1FoyGwCkXbwJgnxeFzFs8e8gicfcfko+Nsh+F/9vx4/KQ=="
+    }
+  },
+  {
+    "name": "get_snapshot_unknown_label",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "snapshot",
+      "label": "nope"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "у этой ноды нет snapshot 'nope' для node-b"
+    }
+  },
+  {
+    "name": "get_unknown_kind",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b",
+      "kind": "other"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "неизвестный вид копии 'other' (identity|snapshot)"
+    }
+  },
+  {
+    "name": "get_no_kind",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-b"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "неизвестный вид копии '' (identity|snapshot)"
+    }
+  },
+  {
+    "name": "get_foreign_node",
+    "partner": "node-b",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-c",
+      "kind": "identity"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "эта нода хранит копию только напарника 'node-b', а не 'node-c'"
+    }
+  },
+  {
+    "name": "get_partner_without_data",
+    "partner": "node-c",
+    "action": "backup_store_get",
+    "args": {
+      "node": "node-c",
+      "kind": "identity"
+    },
+    "error": {
+      "type": "ServeError",
+      "message": "у этой ноды нет identity 'latest' для node-c"
+    }
+  },
+  {
+    "name": "unknown_action",
+    "partner": "node-b",
+    "action": "other_action",
+    "args": {
+      "node": "node-b"
+    },
+    "result": null
+  },
+  {
+    "name": "action_specs",
+    "specs": [
+      {
+        "id": "backup_store_list",
+        "title": "💾 Список хранимых бэкапов",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          }
+        ]
+      },
+      {
+        "id": "backup_store_get",
+        "title": "💾 Выдать запечатанную копию",
+        "params": [
+          {
+            "name": "node",
+            "type": "string",
+            "required": true,
+            "title": "Чья копия"
+          },
+          {
+            "name": "kind",
+            "type": "string",
+            "required": true,
+            "title": "Что",
+            "choices": [
+              "identity",
+              "snapshot"
+            ]
+          },
+          {
+            "name": "label",
+            "type": "string",
+            "required": false,
+            "title": "Версия"
+          }
+        ]
+      }
+    ]
+  }
+]

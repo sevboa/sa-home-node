@@ -1,0 +1,706 @@
+{
+  "toml_value": [
+    {
+      "name": "true",
+      "repr": "True",
+      "result": {
+        "ok": "true"
+      }
+    },
+    {
+      "name": "false",
+      "repr": "False",
+      "result": {
+        "ok": "false"
+      }
+    },
+    {
+      "name": "int_zero",
+      "repr": "0",
+      "result": {
+        "ok": "0"
+      }
+    },
+    {
+      "name": "int_neg",
+      "repr": "-7",
+      "result": {
+        "ok": "-7"
+      }
+    },
+    {
+      "name": "int_big",
+      "repr": "1180591620717411303424",
+      "result": {
+        "ok": "1180591620717411303424"
+      }
+    },
+    {
+      "name": "float",
+      "repr": "1.5",
+      "result": {
+        "ok": "1.5"
+      }
+    },
+    {
+      "name": "float_int_like",
+      "repr": "2.0",
+      "result": {
+        "ok": "2.0"
+      }
+    },
+    {
+      "name": "float_small",
+      "repr": "1e-07",
+      "result": {
+        "ok": "1e-07"
+      }
+    },
+    {
+      "name": "float_big",
+      "repr": "1e+22",
+      "result": {
+        "ok": "1e+22"
+      }
+    },
+    {
+      "name": "float_neg_zero",
+      "repr": "-0.0",
+      "result": {
+        "ok": "-0.0"
+      }
+    },
+    {
+      "name": "float_inf",
+      "repr": "inf",
+      "result": {
+        "ok": "inf"
+      }
+    },
+    {
+      "name": "float_nan",
+      "repr": "nan",
+      "result": {
+        "ok": "nan"
+      }
+    },
+    {
+      "name": "str_plain",
+      "repr": "'abc'",
+      "result": {
+        "ok": "\"abc\""
+      }
+    },
+    {
+      "name": "str_empty",
+      "repr": "''",
+      "result": {
+        "ok": "\"\""
+      }
+    },
+    {
+      "name": "str_quote",
+      "repr": "'a\"b'",
+      "result": {
+        "ok": "\"a\\\"b\""
+      }
+    },
+    {
+      "name": "str_backslash",
+      "repr": "'a\\\\b'",
+      "result": {
+        "ok": "\"a\\\\b\""
+      }
+    },
+    {
+      "name": "str_newline",
+      "repr": "'a\\nb'",
+      "result": {
+        "ok": "\"a\\nb\""
+      }
+    },
+    {
+      "name": "str_tab",
+      "repr": "'a\\tb'",
+      "result": {
+        "ok": "\"a\\tb\""
+      }
+    },
+    {
+      "name": "str_control",
+      "repr": "'a\\x01b'",
+      "result": {
+        "ok": "\"a\\u0001b\""
+      }
+    },
+    {
+      "name": "str_del",
+      "repr": "'a\\x7fb'",
+      "result": {
+        "ok": "\"ab\""
+      }
+    },
+    {
+      "name": "str_unicode",
+      "repr": "'привет ☃ 🔑'",
+      "result": {
+        "ok": "\"привет ☃ 🔑\""
+      }
+    },
+    {
+      "name": "str_line_sep",
+      "repr": "'a\\u2028b'",
+      "result": {
+        "ok": "\"a b\""
+      }
+    },
+    {
+      "name": "str_emoji",
+      "repr": "'😀'",
+      "result": {
+        "ok": "\"😀\""
+      }
+    },
+    {
+      "name": "list_empty",
+      "repr": "[]",
+      "result": {
+        "ok": "[]"
+      }
+    },
+    {
+      "name": "list_ints",
+      "repr": "[1, 2, 3]",
+      "result": {
+        "ok": "[1, 2, 3]"
+      }
+    },
+    {
+      "name": "list_mixed",
+      "repr": "[1, 'a', True, None, 1.5]",
+      "result": {
+        "ok": "[1, \"a\", true, \"None\", 1.5]"
+      }
+    },
+    {
+      "name": "list_nested",
+      "repr": "[[1, 2], [3, [4]]]",
+      "result": {
+        "ok": "[[1, 2], [3, [4]]]"
+      }
+    },
+    {
+      "name": "list_of_dict",
+      "repr": "[{'a': 1}]",
+      "result": {
+        "ok": "[\"{'a': 1}\"]"
+      }
+    },
+    {
+      "name": "list_with_unicode",
+      "repr": "['я', 'b']",
+      "result": {
+        "ok": "[\"я\", \"b\"]"
+      }
+    },
+    {
+      "name": "none",
+      "repr": "None",
+      "result": {
+        "ok": "\"None\""
+      }
+    },
+    {
+      "name": "dict_empty",
+      "repr": "{}",
+      "result": {
+        "ok": "\"{}\""
+      }
+    },
+    {
+      "name": "dict_flat",
+      "repr": "{'a': 1}",
+      "result": {
+        "ok": "\"{'a': 1}\""
+      }
+    },
+    {
+      "name": "tuple",
+      "repr": "(1, 2)",
+      "result": {
+        "ok": "\"(1, 2)\""
+      }
+    },
+    {
+      "name": "set_single",
+      "repr": "{1}",
+      "result": {
+        "ok": "\"{1}\""
+      }
+    },
+    {
+      "name": "bytes",
+      "repr": "b'xy'",
+      "result": {
+        "ok": "\"b'xy'\""
+      }
+    },
+    {
+      "name": "bool_in_list",
+      "repr": "[True, False]",
+      "result": {
+        "ok": "[true, false]"
+      }
+    }
+  ],
+  "toml_string": [
+    {
+      "input": "",
+      "result": {
+        "ok": "\"\""
+      }
+    },
+    {
+      "input": "a",
+      "result": {
+        "ok": "\"a\""
+      }
+    },
+    {
+      "input": "q\"",
+      "result": {
+        "ok": "\"q\\\"\""
+      }
+    },
+    {
+      "input": "ключ",
+      "result": {
+        "ok": "\"ключ\""
+      }
+    },
+    {
+      "input": "\n",
+      "result": {
+        "ok": "\"\\n\""
+      }
+    },
+    {
+      "input": "\\",
+      "result": {
+        "ok": "\"\\\\\""
+      }
+    },
+    {
+      "input": " ",
+      "result": {
+        "ok": "\" \""
+      }
+    },
+    {
+      "input": "\u0000",
+      "result": {
+        "ok": "\"\\u0000\""
+      }
+    },
+    {
+      "input_repr": "1",
+      "result": {
+        "ok": "1"
+      }
+    },
+    {
+      "input_repr": "None",
+      "result": {
+        "ok": "null"
+      }
+    },
+    {
+      "input_repr": "True",
+      "result": {
+        "ok": "true"
+      }
+    },
+    {
+      "input_repr": "1.5",
+      "result": {
+        "ok": "1.5"
+      }
+    },
+    {
+      "input_repr": "['a']",
+      "result": {
+        "ok": "[\"a\"]"
+      }
+    },
+    {
+      "input_repr": "{'a': 1}",
+      "result": {
+        "ok": "{\"a\": 1}"
+      }
+    }
+  ],
+  "toml_table": [
+    {
+      "name": "empty",
+      "table": "svc",
+      "values": {},
+      "result": {
+        "ok": "[svc]\n"
+      }
+    },
+    {
+      "name": "scalars",
+      "table": "svc",
+      "values": {
+        "a": 1,
+        "b": "x",
+        "c": true,
+        "d": 1.5
+      },
+      "result": {
+        "ok": "[svc]\na = 1\nb = \"x\"\nc = true\nd = 1.5\n"
+      }
+    },
+    {
+      "name": "none_skipped",
+      "table": "svc",
+      "values": {
+        "a": null,
+        "b": 1,
+        "c": null
+      },
+      "result": {
+        "ok": "[svc]\nb = 1\n"
+      }
+    },
+    {
+      "name": "all_none",
+      "table": "svc",
+      "values": {
+        "a": null
+      },
+      "result": {
+        "ok": "[svc]\n"
+      }
+    },
+    {
+      "name": "key_order_kept",
+      "table": "svc",
+      "values": {
+        "z": 1,
+        "a": 2,
+        "m": 3
+      },
+      "result": {
+        "ok": "[svc]\nz = 1\na = 2\nm = 3\n"
+      }
+    },
+    {
+      "name": "dotted_name",
+      "table": "svc.sub.deep",
+      "values": {
+        "k": "v"
+      },
+      "result": {
+        "ok": "[svc.sub.deep]\nk = \"v\"\n"
+      }
+    },
+    {
+      "name": "weird_keys_unquoted",
+      "table": "svc",
+      "values": {
+        "has space": 1,
+        "dot.key": 2,
+        "": 3,
+        "ключ": 4,
+        "q\"": 5
+      },
+      "result": {
+        "ok": "[svc]\nhas space = 1\ndot.key = 2\n = 3\nключ = 4\nq\" = 5\n"
+      }
+    },
+    {
+      "name": "nested_dict_becomes_string",
+      "table": "svc",
+      "values": {
+        "sub": {
+          "a": 1,
+          "b": {
+            "c": 2
+          }
+        }
+      },
+      "result": {
+        "ok": "[svc]\nsub = \"{'a': 1, 'b': {'c': 2}}\"\n"
+      }
+    },
+    {
+      "name": "list_of_dict_becomes_string",
+      "table": "svc",
+      "values": {
+        "items": [
+          {
+            "a": 1
+          },
+          {
+            "b": 2
+          }
+        ]
+      },
+      "result": {
+        "ok": "[svc]\nitems = [\"{'a': 1}\", \"{'b': 2}\"]\n"
+      }
+    },
+    {
+      "name": "unicode_and_quotes",
+      "table": "svc",
+      "values": {
+        "s": "он сказал \"да\"\n",
+        "u": "☃"
+      },
+      "result": {
+        "ok": "[svc]\ns = \"он сказал \\\"да\\\"\\n\"\nu = \"☃\"\n"
+      }
+    },
+    {
+      "name": "empty_name",
+      "table": "",
+      "values": {
+        "a": 1
+      },
+      "result": {
+        "ok": "[]\na = 1\n"
+      }
+    },
+    {
+      "name": "special_name",
+      "table": "a b.c",
+      "values": {
+        "a": 1
+      },
+      "result": {
+        "ok": "[a b.c]\na = 1\n"
+      }
+    }
+  ],
+  "toml_tables_nested": [
+    {
+      "name": "scalars_only",
+      "table": "svc",
+      "values": {
+        "a": 1,
+        "b": "x"
+      },
+      "result": {
+        "ok": [
+          "[svc]\na = 1\nb = \"x\"\n"
+        ]
+      },
+      "joined": "[svc]\na = 1\nb = \"x\"\n"
+    },
+    {
+      "name": "empty",
+      "table": "svc",
+      "values": {},
+      "result": {
+        "ok": [
+          "[svc]\n"
+        ]
+      },
+      "joined": "[svc]\n"
+    },
+    {
+      "name": "one_level",
+      "table": "svc",
+      "values": {
+        "a": 1,
+        "sub": {
+          "b": 2
+        }
+      },
+      "result": {
+        "ok": [
+          "[svc]\na = 1\n",
+          "[svc.sub]\nb = 2\n"
+        ]
+      },
+      "joined": "[svc]\na = 1\n\n[svc.sub]\nb = 2\n"
+    },
+    {
+      "name": "three_levels",
+      "table": "svc",
+      "values": {
+        "a": 1,
+        "sub": {
+          "b": 2,
+          "deep": {
+            "c": 3,
+            "deeper": {
+              "d": 4
+            }
+          }
+        }
+      },
+      "result": {
+        "ok": [
+          "[svc]\na = 1\n",
+          "[svc.sub]\nb = 2\n",
+          "[svc.sub.deep]\nc = 3\n",
+          "[svc.sub.deep.deeper]\nd = 4\n"
+        ]
+      },
+      "joined": "[svc]\na = 1\n\n[svc.sub]\nb = 2\n\n[svc.sub.deep]\nc = 3\n\n[svc.sub.deep.deeper]\nd = 4\n"
+    },
+    {
+      "name": "only_nested",
+      "table": "svc",
+      "values": {
+        "sub": {
+          "deep": {
+            "c": 3
+          }
+        }
+      },
+      "result": {
+        "ok": [
+          "[svc]\n",
+          "[svc.sub]\n",
+          "[svc.sub.deep]\nc = 3\n"
+        ]
+      },
+      "joined": "[svc]\n\n[svc.sub]\n\n[svc.sub.deep]\nc = 3\n"
+    },
+    {
+      "name": "sibling_subtables",
+      "table": "svc",
+      "values": {
+        "s1": {
+          "a": 1
+        },
+        "s2": {
+          "b": 2
+        },
+        "x": "y"
+      },
+      "result": {
+        "ok": [
+          "[svc]\nx = \"y\"\n",
+          "[svc.s1]\na = 1\n",
+          "[svc.s2]\nb = 2\n"
+        ]
+      },
+      "joined": "[svc]\nx = \"y\"\n\n[svc.s1]\na = 1\n\n[svc.s2]\nb = 2\n"
+    },
+    {
+      "name": "scalar_after_dict",
+      "table": "svc",
+      "values": {
+        "s1": {
+          "a": 1
+        },
+        "after": 5
+      },
+      "result": {
+        "ok": [
+          "[svc]\nafter = 5\n",
+          "[svc.s1]\na = 1\n"
+        ]
+      },
+      "joined": "[svc]\nafter = 5\n\n[svc.s1]\na = 1\n"
+    },
+    {
+      "name": "empty_subdict",
+      "table": "svc",
+      "values": {
+        "sub": {},
+        "a": 1
+      },
+      "result": {
+        "ok": [
+          "[svc]\na = 1\n",
+          "[svc.sub]\n"
+        ]
+      },
+      "joined": "[svc]\na = 1\n\n[svc.sub]\n"
+    },
+    {
+      "name": "none_inside_nested",
+      "table": "svc",
+      "values": {
+        "sub": {
+          "a": null,
+          "b": 1
+        }
+      },
+      "result": {
+        "ok": [
+          "[svc]\n",
+          "[svc.sub]\nb = 1\n"
+        ]
+      },
+      "joined": "[svc]\n\n[svc.sub]\nb = 1\n"
+    },
+    {
+      "name": "list_inside_nested",
+      "table": "svc",
+      "values": {
+        "sub": {
+          "l": [
+            1,
+            2
+          ],
+          "deep": {
+            "l2": [
+              "a"
+            ]
+          }
+        }
+      },
+      "result": {
+        "ok": [
+          "[svc]\n",
+          "[svc.sub]\nl = [1, 2]\n",
+          "[svc.sub.deep]\nl2 = [\"a\"]\n"
+        ]
+      },
+      "joined": "[svc]\n\n[svc.sub]\nl = [1, 2]\n\n[svc.sub.deep]\nl2 = [\"a\"]\n"
+    },
+    {
+      "name": "unicode_nested",
+      "table": "svc",
+      "values": {
+        "sub": {
+          "имя": "значение",
+          "deep": {
+            "u": "☃"
+          }
+        }
+      },
+      "result": {
+        "ok": [
+          "[svc]\n",
+          "[svc.sub]\nимя = \"значение\"\n",
+          "[svc.sub.deep]\nu = \"☃\"\n"
+        ]
+      },
+      "joined": "[svc]\n\n[svc.sub]\nимя = \"значение\"\n\n[svc.sub.deep]\nu = \"☃\"\n"
+    },
+    {
+      "name": "list_of_dict",
+      "table": "svc",
+      "values": {
+        "items": [
+          {
+            "a": 1
+          }
+        ]
+      },
+      "result": {
+        "ok": [
+          "[svc]\nitems = [\"{'a': 1}\"]\n"
+        ]
+      },
+      "joined": "[svc]\nitems = [\"{'a': 1}\"]\n"
+    }
+  ]
+}

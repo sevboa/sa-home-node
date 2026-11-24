@@ -7,11 +7,12 @@ from sa_home_node.fixups.core import Fixup, FixupContext
 from sa_home_node.fixups.monitor import monitor_fixups
 from sa_home_node.fixups.node import node_fixups
 from sa_home_node.fixups.power import power_fixups
+from sa_home_node.fixups.wol import wol_fixups
 from sa_home_node.plugins import Plugin, PluginError
 
 Factory = Callable[[FixupContext], Sequence[Fixup]]
 
-CORE_FIXUPS: tuple[Factory, ...] = (node_fixups, autoupdate_fixups, monitor_fixups, power_fixups)
+CORE_FIXUPS: tuple[Factory, ...] = (node_fixups, autoupdate_fixups, monitor_fixups, power_fixups, wol_fixups)
 
 CORE_OWNER = "core"
 

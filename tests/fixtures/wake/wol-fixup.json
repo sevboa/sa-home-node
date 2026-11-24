@@ -1,0 +1,207 @@
+{
+  "constants": {
+    "fixup_id": "wol-enable",
+    "title": "Включить Wake-on-LAN (magic packet) на проводном интерфейсе",
+    "unit_file": "/etc/systemd/system/sa-home-wol.service",
+    "unit_name": "sa-home-wol.service"
+  },
+  "needed": {
+    "server": false,
+    "vps": false,
+    "workstation": true
+  },
+  "scenarios": [
+    {
+      "calls": [
+        [
+          "sudo",
+          "install",
+          "-m",
+          "0644",
+          "-o",
+          "root",
+          "-g",
+          "root",
+          "<tmp>",
+          "/etc/systemd/system/sa-home-wol.service"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "daemon-reload"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "enable",
+          "--now",
+          "sa-home-wol.service"
+        ]
+      ],
+      "installed": {
+        "/etc/systemd/system/sa-home-wol.service": "[Unit]\nDescription=sa-home-bot: включить Wake-on-LAN (magic packet)\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/sbin/ethtool -s eth0 wol g\n\n[Install]\nWantedBy=multi-user.target\n"
+      },
+      "name": "apply_ethtool_found"
+    },
+    {
+      "calls": [
+        [
+          "sudo",
+          "apt-get",
+          "install",
+          "-y",
+          "ethtool"
+        ],
+        [
+          "sudo",
+          "install",
+          "-m",
+          "0644",
+          "-o",
+          "root",
+          "-g",
+          "root",
+          "<tmp>",
+          "/etc/systemd/system/sa-home-wol.service"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "daemon-reload"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "enable",
+          "--now",
+          "sa-home-wol.service"
+        ]
+      ],
+      "installed": {
+        "/etc/systemd/system/sa-home-wol.service": "[Unit]\nDescription=sa-home-bot: включить Wake-on-LAN (magic packet)\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/sbin/ethtool -s eth0 wol g\n\n[Install]\nWantedBy=multi-user.target\n"
+      },
+      "name": "apply_ethtool_installed"
+    },
+    {
+      "calls": [
+        [
+          "sudo",
+          "dnf",
+          "install",
+          "-y",
+          "ethtool"
+        ],
+        [
+          "sudo",
+          "install",
+          "-m",
+          "0644",
+          "-o",
+          "root",
+          "-g",
+          "root",
+          "<tmp>",
+          "/etc/systemd/system/sa-home-wol.service"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "daemon-reload"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "enable",
+          "--now",
+          "sa-home-wol.service"
+        ]
+      ],
+      "installed": {
+        "/etc/systemd/system/sa-home-wol.service": "[Unit]\nDescription=sa-home-bot: включить Wake-on-LAN (magic packet)\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/sbin/ethtool -s eth0 wol g\n\n[Install]\nWantedBy=multi-user.target\n"
+      },
+      "name": "apply_ethtool_installed_dnf"
+    },
+    {
+      "calls": [
+        [
+          "sudo",
+          "apt-get",
+          "install",
+          "-y",
+          "ethtool"
+        ]
+      ],
+      "error": "ethtool не нашёлся после установки",
+      "installed": {},
+      "name": "apply_ethtool_still_missing"
+    },
+    {
+      "calls": [],
+      "error": "ethtool не найден и неизвестен пакетный менеджер для установки",
+      "installed": {},
+      "name": "apply_no_package_manager"
+    },
+    {
+      "calls": [],
+      "error": "не нашёл проводной Ethernet-интерфейс по умолчанию — WoL настраивать не на чем",
+      "installed": {},
+      "name": "apply_no_iface"
+    },
+    {
+      "calls": [
+        [
+          "sudo",
+          "install",
+          "-m",
+          "0644",
+          "-o",
+          "root",
+          "-g",
+          "root",
+          "<tmp>",
+          "/etc/systemd/system/sa-home-wol.service"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "daemon-reload"
+        ],
+        [
+          "sudo",
+          "systemctl",
+          "enable",
+          "--now",
+          "sa-home-wol.service"
+        ]
+      ],
+      "installed": {
+        "/etc/systemd/system/sa-home-wol.service": "[Unit]\nDescription=sa-home-bot: включить Wake-on-LAN (magic packet)\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/sbin/ethtool -s enp1s0 wol g\n\n[Install]\nWantedBy=multi-user.target\n"
+      },
+      "name": "apply_other_iface"
+    },
+    {
+      "calls": [],
+      "installed": {},
+      "name": "check_absent",
+      "result": false
+    },
+    {
+      "calls": [],
+      "installed": {},
+      "name": "check_present",
+      "result": true
+    }
+  ],
+  "unit_content": [
+    {
+      "content": "[Unit]\nDescription=sa-home-bot: включить Wake-on-LAN (magic packet)\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/usr/sbin/ethtool -s eth0 wol g\n\n[Install]\nWantedBy=multi-user.target\n",
+      "ethtool": "/usr/sbin/ethtool",
+      "iface": "eth0"
+    },
+    {
+      "content": "[Unit]\nDescription=sa-home-bot: включить Wake-on-LAN (magic packet)\nAfter=network-online.target\nWants=network-online.target\n\n[Service]\nType=oneshot\nExecStart=/sbin/ethtool -s enp1s0 wol g\n\n[Install]\nWantedBy=multi-user.target\n",
+      "ethtool": "/sbin/ethtool",
+      "iface": "enp1s0"
+    }
+  ]
+}
