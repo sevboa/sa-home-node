@@ -1,0 +1,81 @@
+{
+  "config": {
+    "data_dir": "/var/lib/metrics-data",
+    "retention": "90d",
+    "vm_port": 8429,
+    "scrape_interval": "15s",
+    "grafana_port": 3100,
+    "runtime_dir": "/var/lib/metrics-hub",
+    "hub": true,
+    "overlay_unit": "overlay.service"
+  },
+  "hub": [
+    {
+      "id": "install-victoria-metrics",
+      "title": "Установить victoria-metrics (хранилище метрик хаба)",
+      "platforms": [
+        "linux"
+      ]
+    },
+    {
+      "id": "metrics-runtime-dir",
+      "title": "Создать каталог целей и дашбордов метрик /var/lib/metrics-hub (владелец — пользователь ноды)",
+      "platforms": [
+        "linux"
+      ]
+    },
+    {
+      "id": "victoria-metrics-config",
+      "title": "Настроить victoria-metrics (данные /var/lib/metrics-data)",
+      "platforms": [
+        "linux"
+      ]
+    },
+    {
+      "id": "grafana-repo",
+      "title": "Подключить репозиторий apt.grafana.com",
+      "platforms": [
+        "linux"
+      ]
+    },
+    {
+      "id": "install-grafana",
+      "title": "Установить grafana",
+      "platforms": [
+        "linux"
+      ]
+    },
+    {
+      "id": "grafana-config",
+      "title": "Настроить grafana (слушает только оверлейный адрес, анонимный вход выключен)",
+      "platforms": [
+        "linux"
+      ]
+    },
+    {
+      "id": "grafana-provisioning",
+      "title": "Выложить источник данных и провайдер дашбордов grafana",
+      "platforms": [
+        "linux"
+      ]
+    }
+  ],
+  "hub_needed": [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true
+  ],
+  "no_hub_needed": [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ]
+}

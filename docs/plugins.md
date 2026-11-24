@@ -268,3 +268,6 @@ async def hello(ctx: ServiceContext) -> None:
 Службу `echo` назначают действием `assign` (`echo`), после чего к ней можно обращаться командой `echo` с любой ноды
 роя (`command` на службу `echo`). Запуск: `sa-home-node run --config config.toml` (см.
 [architecture](architecture.md)).
+
+Плагин `metrics` (встроен) объявляет `Plugin.scrape_jobs` и `Plugin.dashboards` для расширения скрейпа VictoriaMetrics
+и набора дашбордов Grafana; формат `ScrapeJobSpec` и `DashboardSpec`, хелперы панелей — см. [metrics](metrics.md).

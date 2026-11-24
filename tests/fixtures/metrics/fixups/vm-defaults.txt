@@ -1,0 +1,1 @@
+ARGS="-storageDataPath=/srv/metrics -retentionPeriod=90d -httpListenAddr=127.0.0.1:8429 -promscrape.config=/etc/victoria-metrics/scrape.yml -promscrape.configCheckInterval=1m -promscrape.fileSDCheckInterval=30s"

@@ -155,6 +155,11 @@
   `/etc/systemd/system/sa-home-wol.service` (oneshot `ethtool -s <iface> wol g`), `daemon-reload`,
   `enable --now`. Подробности — [wake](wake.md).
 
+Плагин `metrics` (встроен) поставляет семь фиксапов при `[metrics].hub = true`:
+`install-victoria-metrics`, `metrics-runtime-dir`, `victoria-metrics-config`,
+`grafana-repo`, `install-grafana`, `grafana-config`, `grafana-provisioning`.
+Порядок, id и что делает каждый — см. [metrics](metrics.md).
+
 ## Идемпотентность
 
 Маркер «применено» — сам `check()`: версии фиксапа и журнала применённых нет. Повторный запуск после успеха

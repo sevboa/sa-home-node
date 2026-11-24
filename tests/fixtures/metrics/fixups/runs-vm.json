@@ -1,0 +1,316 @@
+{
+  "config": {
+    "data_dir": "/var/lib/metrics-data",
+    "retention": "90d",
+    "vm_port": 8429,
+    "scrape_interval": "15s",
+    "grafana_port": 3100,
+    "runtime_dir": "/var/lib/metrics-hub",
+    "hub": true,
+    "overlay_unit": "overlay.service"
+  },
+  "fixups": [
+    {
+      "id": "install-victoria-metrics",
+      "title": "Установить victoria-metrics (хранилище метрик хаба)",
+      "scenarios": [
+        {
+          "name": "absent",
+          "setup": {
+            "missing_tools": [
+              "victoria-metrics",
+              "apt-get",
+              "pacman",
+              "dnf",
+              "zypper",
+              "apk",
+              "brew",
+              "yum"
+            ]
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "apt-get",
+                "install",
+                "-y",
+                "victoria-metrics"
+              ]
+            ],
+            "downloads": [],
+            "installed": {},
+            "check_after": false
+          }
+        },
+        {
+          "name": "present",
+          "setup": {
+            "missing_tools": []
+          },
+          "expect": {
+            "check_before": true
+          }
+        },
+        {
+          "name": "no-manager",
+          "setup": {
+            "missing_tools": [
+              "victoria-metrics",
+              "apt",
+              "apt-get",
+              "pacman",
+              "dnf",
+              "zypper",
+              "apk",
+              "brew",
+              "yum"
+            ]
+          },
+          "expect": {
+            "check_before": false,
+            "error": "неизвестен пакетный менеджер для victoria-metrics"
+          }
+        }
+      ]
+    },
+    {
+      "id": "metrics-runtime-dir",
+      "title": "Создать каталог целей и дашбордов метрик /var/lib/metrics-hub (владелец — пользователь ноды)",
+      "scenarios": [
+        {
+          "name": "absent",
+          "setup": {},
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-d",
+                "-m",
+                "0755",
+                "-o",
+                "user-a",
+                "-g",
+                "user-a",
+                "/var/lib/metrics-hub"
+              ],
+              [
+                "install",
+                "-d",
+                "-m",
+                "0755",
+                "-o",
+                "user-a",
+                "-g",
+                "user-a",
+                "/var/lib/metrics-hub/targets",
+                "/var/lib/metrics-hub/dashboards"
+              ]
+            ],
+            "downloads": [],
+            "installed": {},
+            "check_after": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "victoria-metrics-config",
+      "title": "Настроить victoria-metrics (данные /var/lib/metrics-data)",
+      "scenarios": [
+        {
+          "name": "fresh",
+          "setup": {},
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-d",
+                "-m",
+                "0750",
+                "-o",
+                "_victoria-metrics",
+                "-g",
+                "_victoria-metrics",
+                "/var/lib/metrics-data"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/victoria-metrics/scrape.yml"
+              ],
+              [
+                "install",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/default/victoria-metrics"
+              ],
+              [
+                "systemctl",
+                "enable",
+                "--now",
+                "victoria-metrics.service"
+              ],
+              [
+                "systemctl",
+                "restart",
+                "victoria-metrics.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/victoria-metrics/scrape.yml": "global:\n  scrape_interval: \"15s\"\nscrape_configs:\n  - job_name: \"sa-home-nodes\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/nodes.json\"]\n  - job_name: \"sa-home-extra\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/extra.json\"]\n",
+              "/etc/default/victoria-metrics": "ARGS=\"-storageDataPath=/var/lib/metrics-data -retentionPeriod=90d -httpListenAddr=127.0.0.1:8429 -promscrape.config=/etc/victoria-metrics/scrape.yml -promscrape.configCheckInterval=1m -promscrape.fileSDCheckInterval=30s\"\n"
+            },
+            "check_after": false
+          }
+        },
+        {
+          "name": "defaults-unchanged",
+          "setup": {
+            "dirs": [
+              "/var/lib/metrics-data"
+            ],
+            "files": {
+              "/etc/default/victoria-metrics": "ARGS=\"-storageDataPath=/var/lib/metrics-data -retentionPeriod=90d -httpListenAddr=127.0.0.1:8429 -promscrape.config=/etc/victoria-metrics/scrape.yml -promscrape.configCheckInterval=1m -promscrape.fileSDCheckInterval=30s\"\n",
+              "/etc/victoria-metrics/scrape.yml": "stale\n"
+            }
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-d",
+                "-m",
+                "0750",
+                "-o",
+                "_victoria-metrics",
+                "-g",
+                "_victoria-metrics",
+                "/var/lib/metrics-data"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/victoria-metrics/scrape.yml"
+              ],
+              [
+                "cat",
+                "/etc/default/victoria-metrics"
+              ],
+              [
+                "systemctl",
+                "enable",
+                "--now",
+                "victoria-metrics.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/victoria-metrics/scrape.yml": "global:\n  scrape_interval: \"15s\"\nscrape_configs:\n  - job_name: \"sa-home-nodes\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/nodes.json\"]\n  - job_name: \"sa-home-extra\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/extra.json\"]\n"
+            },
+            "check_after": false
+          }
+        },
+        {
+          "name": "converged",
+          "setup": {
+            "dirs": [
+              "/var/lib/metrics-data"
+            ],
+            "files": {
+              "/etc/default/victoria-metrics": "ARGS=\"-storageDataPath=/var/lib/metrics-data -retentionPeriod=90d -httpListenAddr=127.0.0.1:8429 -promscrape.config=/etc/victoria-metrics/scrape.yml -promscrape.configCheckInterval=1m -promscrape.fileSDCheckInterval=30s\"\n",
+              "/etc/victoria-metrics/scrape.yml": "global:\n  scrape_interval: \"15s\"\nscrape_configs:\n  - job_name: \"sa-home-nodes\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/nodes.json\"]\n  - job_name: \"sa-home-extra\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/extra.json\"]\n"
+            },
+            "active_units": [
+              "victoria-metrics.service"
+            ]
+          },
+          "expect": {
+            "check_before": true
+          }
+        },
+        {
+          "name": "scrape-stale",
+          "setup": {
+            "dirs": [
+              "/var/lib/metrics-data"
+            ],
+            "files": {
+              "/etc/default/victoria-metrics": "ARGS=\"-storageDataPath=/var/lib/metrics-data -retentionPeriod=90d -httpListenAddr=127.0.0.1:8429 -promscrape.config=/etc/victoria-metrics/scrape.yml -promscrape.configCheckInterval=1m -promscrape.fileSDCheckInterval=30s\"\n",
+              "/etc/victoria-metrics/scrape.yml": "stale\n"
+            },
+            "active_units": [
+              "victoria-metrics.service"
+            ]
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-d",
+                "-m",
+                "0750",
+                "-o",
+                "_victoria-metrics",
+                "-g",
+                "_victoria-metrics",
+                "/var/lib/metrics-data"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/victoria-metrics/scrape.yml"
+              ],
+              [
+                "cat",
+                "/etc/default/victoria-metrics"
+              ],
+              [
+                "systemctl",
+                "enable",
+                "--now",
+                "victoria-metrics.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/victoria-metrics/scrape.yml": "global:\n  scrape_interval: \"15s\"\nscrape_configs:\n  - job_name: \"sa-home-nodes\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/nodes.json\"]\n  - job_name: \"sa-home-extra\"\n    metrics_path: \"/metrics\"\n    file_sd_configs:\n      - files: [\"/var/lib/metrics-hub/targets/extra.json\"]\n"
+            },
+            "check_after": true
+          }
+        }
+      ]
+    }
+  ]
+}

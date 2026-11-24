@@ -1,4 +1,5 @@
-from sa_home_node.monitor.config import MetricsConfig, MonitorConfig, ScheduleConfig, SensorsConfig
+from sa_home_node.metrics.config import MetricsConfig
+from sa_home_node.monitor.config import MonitorConfig, ScheduleConfig, SensorsConfig
 from sa_home_node.monitor.run import make_handler, run_monitor
 from sa_home_node.plugins import Plugin, ServiceSpec
 

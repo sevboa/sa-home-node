@@ -1,0 +1,188 @@
+{
+  "config": {
+    "data_dir": "/var/lib/metrics-data",
+    "retention": "90d",
+    "vm_port": 8429,
+    "scrape_interval": "15s",
+    "grafana_port": 3100,
+    "runtime_dir": "/var/lib/metrics-hub",
+    "hub": true,
+    "overlay_unit": "overlay.service"
+  },
+  "fixups": [
+    {
+      "id": "grafana-config",
+      "title": "Настроить grafana (слушает только оверлейный адрес, анонимный вход выключен)",
+      "scenarios": [
+        {
+          "name": "fresh",
+          "setup": {
+            "overlay_address": "100.64.0.1",
+            "files": {
+              "/etc/grafana/grafana.ini": "[paths]\n;data = /var/lib/grafana\n\n[server]\n;http_addr =\nhttp_port = 3000\ndomain = localhost\n\n[analytics]\n#reporting_enabled = true\ncheck_for_updates = true\n\n[auth.anonymous]\nenabled = true\norg_name = Main\n"
+            }
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "cat",
+                "/etc/grafana/grafana.ini"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0640",
+                "-o",
+                "root",
+                "-g",
+                "grafana",
+                "<tmp>",
+                "/etc/grafana/grafana.ini"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/systemd/system/grafana-server.service.d/50-sa-home-overlay.conf"
+              ],
+              [
+                "systemctl",
+                "daemon-reload"
+              ],
+              [
+                "systemctl",
+                "enable",
+                "--now",
+                "grafana-server.service"
+              ],
+              [
+                "systemctl",
+                "restart",
+                "grafana-server.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/grafana/grafana.ini": "[paths]\n;data = /var/lib/grafana\n\n[server]\nhttp_addr = 100.64.0.1\nhttp_port = 3100\ndomain = localhost\n\n[analytics]\ncheck_for_plugin_updates = false\nreporting_enabled = false\ncheck_for_updates = false\n\n[auth.anonymous]\nenabled = false\norg_name = Main\n\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n",
+              "/etc/systemd/system/grafana-server.service.d/50-sa-home-overlay.conf": "[Unit]\nAfter=overlay.service\nWants=overlay.service\nStartLimitIntervalSec=0\n\n[Service]\nRestart=on-failure\nRestartSec=5\n"
+            },
+            "check_after": false
+          }
+        },
+        {
+          "name": "converged",
+          "setup": {
+            "overlay_address": "100.64.0.1",
+            "files": {
+              "/etc/grafana/grafana.ini": "[paths]\n;data = /var/lib/grafana\n\n[server]\nhttp_addr = 100.64.0.1\nhttp_port = 3100\ndomain = localhost\n\n[analytics]\ncheck_for_plugin_updates = false\nreporting_enabled = false\ncheck_for_updates = false\n\n[auth.anonymous]\nenabled = false\norg_name = Main\n\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n",
+              "/etc/systemd/system/grafana-server.service.d/50-sa-home-overlay.conf": "[Unit]\nAfter=overlay.service\nWants=overlay.service\nStartLimitIntervalSec=0\n\n[Service]\nRestart=on-failure\nRestartSec=5\n"
+            },
+            "active_units": [
+              "grafana-server.service"
+            ]
+          },
+          "expect": {
+            "check_before": true
+          }
+        },
+        {
+          "name": "ini-stale",
+          "setup": {
+            "overlay_address": "100.64.0.1",
+            "files": {
+              "/etc/grafana/grafana.ini": "[paths]\n;data = /var/lib/grafana\n\n[server]\n;http_addr =\nhttp_port = 3000\ndomain = localhost\n\n[analytics]\n#reporting_enabled = true\ncheck_for_updates = true\n\n[auth.anonymous]\nenabled = true\norg_name = Main\n",
+              "/etc/systemd/system/grafana-server.service.d/50-sa-home-overlay.conf": "[Unit]\nAfter=overlay.service\nWants=overlay.service\nStartLimitIntervalSec=0\n\n[Service]\nRestart=on-failure\nRestartSec=5\n"
+            },
+            "active_units": [
+              "grafana-server.service"
+            ]
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "cat",
+                "/etc/grafana/grafana.ini"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0640",
+                "-o",
+                "root",
+                "-g",
+                "grafana",
+                "<tmp>",
+                "/etc/grafana/grafana.ini"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/systemd/system/grafana-server.service.d/50-sa-home-overlay.conf"
+              ],
+              [
+                "systemctl",
+                "daemon-reload"
+              ],
+              [
+                "systemctl",
+                "enable",
+                "--now",
+                "grafana-server.service"
+              ],
+              [
+                "systemctl",
+                "restart",
+                "grafana-server.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/grafana/grafana.ini": "[paths]\n;data = /var/lib/grafana\n\n[server]\nhttp_addr = 100.64.0.1\nhttp_port = 3100\ndomain = localhost\n\n[analytics]\ncheck_for_plugin_updates = false\nreporting_enabled = false\ncheck_for_updates = false\n\n[auth.anonymous]\nenabled = false\norg_name = Main\n\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n",
+              "/etc/systemd/system/grafana-server.service.d/50-sa-home-overlay.conf": "[Unit]\nAfter=overlay.service\nWants=overlay.service\nStartLimitIntervalSec=0\n\n[Service]\nRestart=on-failure\nRestartSec=5\n"
+            },
+            "check_after": true
+          }
+        },
+        {
+          "name": "no-address",
+          "setup": {
+            "overlay_address": null,
+            "files": {
+              "/etc/grafana/grafana.ini": "[paths]\n;data = /var/lib/grafana\n\n[server]\n;http_addr =\nhttp_port = 3000\ndomain = localhost\n\n[analytics]\n#reporting_enabled = true\ncheck_for_updates = true\n\n[auth.anonymous]\nenabled = true\norg_name = Main\n"
+            }
+          },
+          "expect": {
+            "error": "у ноды нет адреса оверлейной сети — поднимите оверлейную сеть"
+          }
+        },
+        {
+          "name": "no-ini",
+          "setup": {
+            "overlay_address": "100.64.0.1"
+          },
+          "expect": {
+            "check_before": false,
+            "error": "/etc/grafana/grafana.ini нет — сначала install-grafana"
+          }
+        }
+      ]
+    }
+  ]
+}

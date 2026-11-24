@@ -61,13 +61,6 @@ class HostSensorConfig(BaseModel):
     thresholds: dict[str, HostMetricThreshold] = Field(default_factory=dict)
 
 
-class MetricsConfig(BaseModel):
-    model_config = ConfigDict(extra="allow")
-
-    export: bool = False
-    exporter_port: int = Field(default=9100, ge=1, le=65535)
-
-
 class SensorsConfig(BaseModel):
     model_config = ConfigDict(extra="allow")
 

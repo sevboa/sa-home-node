@@ -1,0 +1,875 @@
+{
+  "uid": "sa-home-nodes",
+  "title": "Ноды",
+  "tags": [
+    "sa-home"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "refresh": "30s",
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "templating": {
+    "list": [
+      {
+        "name": "node",
+        "label": "Нода",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "query": {
+          "query": "label_values(up{job=\"sa-home-nodes\"}, node)",
+          "refId": "node"
+        },
+        "refresh": 2,
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        }
+      }
+    ]
+  },
+  "panels": [
+    {
+      "type": "table",
+      "title": "Сводка по нодам",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 0,
+        "w": 24,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPU %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RAM занято %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "диск макс %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "steal %"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percent"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "аптайм"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "s"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "t макс, °C"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "celsius"
+              }
+            ]
+          }
+        ]
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "up{job=\"sa-home-nodes\",node=~\"$node\"}",
+          "legendFormat": "",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_cpu_busy_pct{node=~\"$node\"}",
+          "legendFormat": "",
+          "refId": "B",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_mem_used_pct{node=~\"$node\"}",
+          "legendFormat": "",
+          "refId": "C",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "max by (node) (sa_host_disk_pct{node=~\"$node\"})",
+          "legendFormat": "",
+          "refId": "D",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_steal_pct{node=~\"$node\"}",
+          "legendFormat": "",
+          "refId": "E",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_uptime_s{node=~\"$node\"}",
+          "legendFormat": "",
+          "refId": "F",
+          "format": "table",
+          "instant": true
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "max by (node) (sa_temperature_celsius{node=~\"$node\"})",
+          "legendFormat": "",
+          "refId": "G",
+          "format": "table",
+          "instant": true
+        }
+      ],
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "job": true,
+              "instance": true
+            },
+            "renameByName": {
+              "node": "Нода",
+              "Value #A": "up",
+              "Value #B": "CPU %",
+              "Value #C": "RAM занято %",
+              "Value #D": "диск макс %",
+              "Value #E": "steal %",
+              "Value #F": "аптайм",
+              "Value #G": "t макс, °C"
+            }
+          }
+        }
+      ],
+      "id": 1
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU загрузка, %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_cpu_busy_pct{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 2
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU steal, %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 8,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_steal_pct{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 3
+    },
+    {
+      "type": "timeseries",
+      "title": "CPU iowait, %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 16,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_iowait_pct{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 4
+    },
+    {
+      "type": "timeseries",
+      "title": "Load на ядро",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 16,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_load_per_core{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 5
+    },
+    {
+      "type": "timeseries",
+      "title": "Load average",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 24,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_load1{node=~\"$node\"}",
+          "legendFormat": "{{node}} 1м",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_load5{node=~\"$node\"}",
+          "legendFormat": "{{node}} 5м",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_load15{node=~\"$node\"}",
+          "legendFormat": "{{node}} 15м",
+          "refId": "C"
+        }
+      ],
+      "id": 6
+    },
+    {
+      "type": "timeseries",
+      "title": "RAM занято, %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 24,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_mem_used_pct{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 7
+    },
+    {
+      "type": "timeseries",
+      "title": "RAM доступно, байт",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 32,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_mem_available_bytes{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 8
+    },
+    {
+      "type": "timeseries",
+      "title": "Swap занято, %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 32,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_swap_used_pct{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 9
+    },
+    {
+      "type": "timeseries",
+      "title": "Диски по точкам монтирования, %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 40,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_disk_pct{node=~\"$node\"}",
+          "legendFormat": "{{node}} {{mount}}",
+          "refId": "A"
+        }
+      ],
+      "id": 10
+    },
+    {
+      "type": "timeseries",
+      "title": "Сеть: приём, байт/с",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 40,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_net_rx_bps{node=~\"$node\"}",
+          "legendFormat": "{{node}} {{iface}}",
+          "refId": "A"
+        }
+      ],
+      "id": 11
+    },
+    {
+      "type": "timeseries",
+      "title": "Сеть: отдача, байт/с",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 48,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_net_tx_bps{node=~\"$node\"}",
+          "legendFormat": "{{node}} {{iface}}",
+          "refId": "A"
+        }
+      ],
+      "id": 12
+    },
+    {
+      "type": "timeseries",
+      "title": "Аптайм",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 48,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_uptime_s{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 13
+    },
+    {
+      "type": "timeseries",
+      "title": "Процессов",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 56,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_procs{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 14
+    },
+    {
+      "type": "timeseries",
+      "title": "PSI (давление), %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 56,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_psi_cpu{node=~\"$node\"}",
+          "legendFormat": "{{node}} cpu",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_psi_memory{node=~\"$node\"}",
+          "legendFormat": "{{node}} mem",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_psi_io{node=~\"$node\"}",
+          "legendFormat": "{{node}} io",
+          "refId": "C"
+        }
+      ],
+      "id": 15
+    },
+    {
+      "type": "timeseries",
+      "title": "conntrack, %",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 64,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "min": 0,
+          "max": 100
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_conntrack_pct{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 16
+    },
+    {
+      "type": "timeseries",
+      "title": "Ошибки NIC, в минуту",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 64,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_net_err_rate{node=~\"$node\"}",
+          "legendFormat": "{{node}}",
+          "refId": "A"
+        }
+      ],
+      "id": 17
+    },
+    {
+      "type": "timeseries",
+      "title": "OOM-kill и стойла ядра",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 0,
+        "y": 72,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_oom_kills{node=~\"$node\"}",
+          "legendFormat": "{{node}} oom",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_host_kernel_stall_events{node=~\"$node\"}",
+          "legendFormat": "{{node}} стойла",
+          "refId": "B"
+        }
+      ],
+      "id": 18
+    },
+    {
+      "type": "timeseries",
+      "title": "Температуры, °C",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "gridPos": {
+        "x": 12,
+        "y": 72,
+        "w": 12,
+        "h": 8
+      },
+      "fieldConfig": {
+        "defaults": {
+          "unit": "celsius"
+        },
+        "overrides": []
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "vm"
+          },
+          "expr": "sa_temperature_celsius{node=~\"$node\"}",
+          "legendFormat": "{{node}} {{component}}",
+          "refId": "A"
+        }
+      ],
+      "id": 19
+    }
+  ]
+}

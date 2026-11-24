@@ -21,8 +21,9 @@ def fix_command(
 ) -> int:
     try:
         config = load_config(config_path)
-        ctx = FixupContext.build(config, current())
-        fixups = collect(ctx, load_plugins(config.node.plugins))
+        plugins = load_plugins(config.node.plugins)
+        ctx = FixupContext.build(config, current(), plugins)
+        fixups = collect(ctx, plugins)
         if only:
             fixups = select(fixups, only)
     except (ConfigError, PluginError) as exc:

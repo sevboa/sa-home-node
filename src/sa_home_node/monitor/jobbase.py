@@ -6,7 +6,7 @@ import logging
 from dataclasses import asdict, dataclass, field
 from typing import TYPE_CHECKING, Protocol, runtime_checkable
 
-from sa_home_node.monitor.config import MetricsConfig
+from sa_home_node.metrics.config import MetricsConfig
 from sa_home_node.services.slot import utc_now
 
 if TYPE_CHECKING:

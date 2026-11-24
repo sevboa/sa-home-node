@@ -1,0 +1,373 @@
+{
+  "datasource": {
+    "type": "prometheus",
+    "uid": "vm"
+  },
+  "target": [
+    {
+      "expr": "up",
+      "legend": "up",
+      "ref": "A",
+      "table": false,
+      "result": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "expr": "up",
+        "legendFormat": "up",
+        "refId": "A"
+      }
+    },
+    {
+      "expr": "sa_host_cpu_busy_pct{node=~\"$node\"}",
+      "legend": "{{node}}",
+      "ref": "B",
+      "table": false,
+      "result": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "expr": "sa_host_cpu_busy_pct{node=~\"$node\"}",
+        "legendFormat": "{{node}}",
+        "refId": "B"
+      }
+    },
+    {
+      "expr": "up",
+      "legend": "",
+      "ref": "C",
+      "table": true,
+      "result": {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "expr": "up",
+        "legendFormat": "",
+        "refId": "C",
+        "format": "table",
+        "instant": true
+      }
+    }
+  ],
+  "query_variable": [
+    {
+      "name": "node",
+      "label": "Нода",
+      "query": "label_values(up, node)",
+      "result": {
+        "name": "node",
+        "label": "Нода",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "query": {
+          "query": "label_values(up, node)",
+          "refId": "node"
+        },
+        "refresh": 2,
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        }
+      }
+    },
+    {
+      "name": "mount",
+      "label": "Диск",
+      "query": "label_values(sa_host_disk_pct, mount)",
+      "result": {
+        "name": "mount",
+        "label": "Диск",
+        "type": "query",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "query": {
+          "query": "label_values(sa_host_disk_pct, mount)",
+          "refId": "mount"
+        },
+        "refresh": 2,
+        "multi": true,
+        "includeAll": true,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
+        }
+      }
+    }
+  ],
+  "number_panels": [
+    {
+      "panels": [],
+      "result": []
+    },
+    {
+      "panels": [
+        {
+          "title": "a"
+        }
+      ],
+      "result": [
+        {
+          "title": "a",
+          "id": 1
+        }
+      ]
+    },
+    {
+      "panels": [
+        {
+          "title": "a"
+        },
+        {
+          "title": "b",
+          "id": 99
+        },
+        {
+          "title": "c"
+        }
+      ],
+      "result": [
+        {
+          "title": "a",
+          "id": 1
+        },
+        {
+          "title": "b",
+          "id": 2
+        },
+        {
+          "title": "c",
+          "id": 3
+        }
+      ]
+    }
+  ],
+  "timeseries": [
+    {
+      "title": "CPU, %",
+      "series": [
+        [
+          "sa_host_cpu_busy_pct",
+          "{{node}}"
+        ]
+      ],
+      "position": [
+        0,
+        8
+      ],
+      "percent": true,
+      "result": {
+        "type": "timeseries",
+        "title": "CPU, %",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "gridPos": {
+          "x": 0,
+          "y": 8,
+          "w": 12,
+          "h": 8
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "percent",
+            "min": 0,
+            "max": 100
+          },
+          "overrides": []
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "vm"
+            },
+            "expr": "sa_host_cpu_busy_pct",
+            "legendFormat": "{{node}}",
+            "refId": "A"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Load average",
+      "series": [
+        [
+          "a",
+          "{{node}} 1m"
+        ],
+        [
+          "b",
+          "{{node}} 5m"
+        ],
+        [
+          "c",
+          "{{node}} 15m"
+        ]
+      ],
+      "position": [
+        12,
+        16
+      ],
+      "result": {
+        "type": "timeseries",
+        "title": "Load average",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "gridPos": {
+          "x": 12,
+          "y": 16,
+          "w": 12,
+          "h": 8
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "short"
+          },
+          "overrides": []
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "vm"
+            },
+            "expr": "a",
+            "legendFormat": "{{node}} 1m",
+            "refId": "A"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "vm"
+            },
+            "expr": "b",
+            "legendFormat": "{{node}} 5m",
+            "refId": "B"
+          },
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "vm"
+            },
+            "expr": "c",
+            "legendFormat": "{{node}} 15m",
+            "refId": "C"
+          }
+        ]
+      }
+    },
+    {
+      "title": "RAM",
+      "series": [
+        [
+          "m",
+          "{{node}}"
+        ]
+      ],
+      "position": [
+        0,
+        0
+      ],
+      "unit": "bytes",
+      "result": {
+        "type": "timeseries",
+        "title": "RAM",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "gridPos": {
+          "x": 0,
+          "y": 0,
+          "w": 12,
+          "h": 8
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "bytes"
+          },
+          "overrides": []
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "vm"
+            },
+            "expr": "m",
+            "legendFormat": "{{node}}",
+            "refId": "A"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Пусто",
+      "series": [],
+      "position": [
+        12,
+        0
+      ],
+      "unit": "s",
+      "percent": false,
+      "result": {
+        "type": "timeseries",
+        "title": "Пусто",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "vm"
+        },
+        "gridPos": {
+          "x": 12,
+          "y": 0,
+          "w": 12,
+          "h": 8
+        },
+        "fieldConfig": {
+          "defaults": {
+            "unit": "s"
+          },
+          "overrides": []
+        },
+        "targets": []
+      }
+    }
+  ],
+  "render_dashboard": [
+    {
+      "dashboard": {},
+      "text": "{}\n"
+    },
+    {
+      "dashboard": {
+        "uid": "x",
+        "title": "Тест",
+        "panels": [
+          {
+            "id": 1,
+            "w": [
+              1,
+              2
+            ]
+          }
+        ]
+      },
+      "text": "{\n  \"uid\": \"x\",\n  \"title\": \"Тест\",\n  \"panels\": [\n    {\n      \"id\": 1,\n      \"w\": [\n        1,\n        2\n      ]\n    }\n  ]\n}\n"
+    }
+  ]
+}

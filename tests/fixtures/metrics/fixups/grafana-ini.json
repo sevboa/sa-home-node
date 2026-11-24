@@ -1,0 +1,51 @@
+{
+  "host": "100.64.0.1",
+  "config": {
+    "grafana_port": 3100
+  },
+  "values": {
+    "server": {
+      "http_addr": "100.64.0.1",
+      "http_port": "3100"
+    },
+    "auth.anonymous": {
+      "enabled": "false"
+    },
+    "analytics": {
+      "reporting_enabled": "false",
+      "check_for_updates": "false",
+      "check_for_plugin_updates": "false"
+    },
+    "plugins": {
+      "preinstall_disabled": "true",
+      "preinstall_auto_update": "false"
+    }
+  },
+  "cases": [
+    {
+      "name": "commented-and-live-keys",
+      "before": "[paths]\n;data = /var/lib/grafana\n\n[server]\n;http_addr =\nhttp_port = 3000\ndomain = localhost\n\n[analytics]\n#reporting_enabled = true\ncheck_for_updates = true\n\n[auth.anonymous]\nenabled = true\norg_name = Main\n",
+      "after": "[paths]\n;data = /var/lib/grafana\n\n[server]\nhttp_addr = 100.64.0.1\nhttp_port = 3100\ndomain = localhost\n\n[analytics]\ncheck_for_plugin_updates = false\nreporting_enabled = false\ncheck_for_updates = false\n\n[auth.anonymous]\nenabled = false\norg_name = Main\n\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n"
+    },
+    {
+      "name": "empty-file",
+      "before": "",
+      "after": "\n[server]\nhttp_port = 3100\nhttp_addr = 100.64.0.1\n\n[auth.anonymous]\nenabled = false\n\n[analytics]\ncheck_for_plugin_updates = false\ncheck_for_updates = false\nreporting_enabled = false\n\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n"
+    },
+    {
+      "name": "sections-without-keys",
+      "before": "[server]\n[analytics]\n[plugins]\n[auth.anonymous]\n",
+      "after": "[server]\nhttp_port = 3100\nhttp_addr = 100.64.0.1\n[analytics]\ncheck_for_plugin_updates = false\ncheck_for_updates = false\nreporting_enabled = false\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n[auth.anonymous]\nenabled = false\n"
+    },
+    {
+      "name": "key-in-foreign-section",
+      "before": "[paths]\nhttp_port = 1\n[server]\ndomain = localhost\n",
+      "after": "[paths]\nhttp_port = 1\n[server]\nhttp_port = 3100\nhttp_addr = 100.64.0.1\ndomain = localhost\n\n[auth.anonymous]\nenabled = false\n\n[analytics]\ncheck_for_plugin_updates = false\ncheck_for_updates = false\nreporting_enabled = false\n\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n"
+    },
+    {
+      "name": "no-trailing-newline",
+      "before": "[server]\nhttp_port = 3000",
+      "after": "[server]\nhttp_addr = 100.64.0.1\nhttp_port = 3100\n\n[auth.anonymous]\nenabled = false\n\n[analytics]\ncheck_for_plugin_updates = false\ncheck_for_updates = false\nreporting_enabled = false\n\n[plugins]\npreinstall_auto_update = false\npreinstall_disabled = true\n"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "own": {
+    "JOB_NODES": "sa-home-nodes",
+    "DATASOURCE_UID": "vm",
+    "DATASOURCE_TYPE": "prometheus",
+    "METRIC_SCRAPE_UP": "up",
+    "LABEL_NODE": "node"
+  },
+  "shared": {
+    "METRICS_PATH": "/metrics",
+    "METRIC_UP": "sa_up",
+    "HOST_METRIC_PREFIX": "sa_host_",
+    "METRIC_TEMPERATURE": "sa_temperature_celsius",
+    "LABEL_KIND": "kind",
+    "LABEL_COMPONENT": "component"
+  }
+}

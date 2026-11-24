@@ -123,14 +123,27 @@ async def run_node(
     assignments = effective(cfg.node.assignments, state.assignments)
     delay_s = cfg.node.restart_delay_s if restart_delay_s is None else restart_delay_s
     factory = make_slot_factory(
-        cfg, table, contexts, store, emit=swarm.emit, restart_delay_s=delay_s, on_fenced=on_fenced, on_spawned=on_spawned
+        cfg,
+        table,
+        contexts,
+        store,
+        emit=swarm.emit,
+        restart_delay_s=delay_s,
+        on_fenced=on_fenced,
+        on_spawned=on_spawned,
     )
-    supervisor = Supervisor(assignments, table, factory)
+    supervisor = Supervisor(assignments, table, factory, auto=table.auto_names(cfg))
     if not supervisor.services:
         log.warning("Нет ни одного валидного назначения — нода работает вхолостую")
     tuning = swarm.swarm
     replicator = ConfigReplicator(
-        cfg.node.id, store, supervisor, table, router=router, emit=swarm.emit, subscribe=swarm.subscribe,
+        cfg.node.id,
+        store,
+        supervisor,
+        table,
+        router=router,
+        emit=swarm.emit,
+        subscribe=swarm.subscribe,
         hooks=[
             *(p.replication_hooks for p in plugins if p.replication_hooks is not None),
             *backup_hooks(cfg, plugins, store, {a.service for a in parse_valid(assignments)}),
@@ -138,17 +151,36 @@ async def run_node(
         poll_interval_s=tuning.replication_poll_interval_s,
     )
     lease = LeaseManager(
-        cfg.node.id, cfg.node.kind, supervisor, table, router=router, emit=swarm.emit,
-        grace_s=tuning.failover_grace_s, ready_timeout_s=tuning.superior_ready_timeout_s,
-        poll_interval_s=tuning.lease_poll_interval_s, settle_s=tuning.lease_settle_s,
+        cfg.node.id,
+        cfg.node.kind,
+        supervisor,
+        table,
+        router=router,
+        emit=swarm.emit,
+        grace_s=tuning.failover_grace_s,
+        ready_timeout_s=tuning.superior_ready_timeout_s,
+        poll_interval_s=tuning.lease_poll_interval_s,
+        settle_s=tuning.lease_settle_s,
     )
     register_supervisor(
-        node_service, supervisor, table, router=router, state=state, state_path=cfg.node.state_path,
-        make_local_link=swarm.make_local_link, lease=lease, replicator=replicator, config=cfg,
+        node_service,
+        supervisor,
+        table,
+        router=router,
+        state=state,
+        state_path=cfg.node.state_path,
+        make_local_link=swarm.make_local_link,
+        lease=lease,
+        replicator=replicator,
+        config=cfg,
     )
     register_power(
-        node_service, kind=cfg.node.kind, power_controllable=cfg.node.power_controllable,
-        request_restart=request_restart, router=router, blockers=[b for p in plugins for b in p.power_blockers],
+        node_service,
+        kind=cfg.node.kind,
+        power_controllable=cfg.node.power_controllable,
+        request_restart=request_restart,
+        router=router,
+        blockers=[b for p in plugins for b in p.power_blockers],
     )
     register_wake(node_service)
     register_update(node_service, repo=origin_repo_url(), emit=swarm.emit)
@@ -204,7 +236,12 @@ async def run_service(
     spec = table.spec(name)
     if spec is None or not spec.process:
         raise PluginError(f"нет процессной службы: {name}")
-    ctx = with_instance(make_context(table.plugin_of(name), cfg, content, plugins=plugins), instance_store(cfg), name, instance)
+    ctx = with_instance(
+        make_context(table.plugin_of(name), cfg, content, plugins=plugins),
+        instance_store(cfg),
+        name,
+        instance,
+    )
     ctx.data_dir.mkdir(parents=True, exist_ok=True)
     own_stop = stop is None
     if own_stop:

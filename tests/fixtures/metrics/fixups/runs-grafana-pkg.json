@@ -1,0 +1,201 @@
+{
+  "config": {
+    "data_dir": "/var/lib/metrics-data",
+    "retention": "90d",
+    "vm_port": 8429,
+    "scrape_interval": "15s",
+    "grafana_port": 3100,
+    "runtime_dir": "/var/lib/metrics-hub",
+    "hub": true,
+    "overlay_unit": "overlay.service"
+  },
+  "fixups": [
+    {
+      "id": "grafana-repo",
+      "title": "Подключить репозиторий apt.grafana.com",
+      "scenarios": [
+        {
+          "name": "absent",
+          "setup": {},
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/apt/keyrings/grafana.asc"
+              ],
+              [
+                "install",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/apt/sources.list.d/grafana.list"
+              ],
+              [
+                "apt-get",
+                "update"
+              ]
+            ],
+            "downloads": [
+              [
+                "curl",
+                "-fsSL",
+                "https://apt.grafana.com/gpg.key",
+                "-o",
+                "<tmp>"
+              ]
+            ],
+            "installed": {
+              "/etc/apt/keyrings/grafana.asc": "",
+              "/etc/apt/sources.list.d/grafana.list": "deb [signed-by=/etc/apt/keyrings/grafana.asc] https://apt.grafana.com stable main\n"
+            },
+            "check_after": true
+          }
+        },
+        {
+          "name": "converged",
+          "setup": {
+            "files": {
+              "/etc/apt/keyrings/grafana.asc": "key\n",
+              "/etc/apt/sources.list.d/grafana.list": "deb [signed-by=/etc/apt/keyrings/grafana.asc] https://apt.grafana.com stable main\n"
+            }
+          },
+          "expect": {
+            "check_before": true
+          }
+        },
+        {
+          "name": "list-stale",
+          "setup": {
+            "files": {
+              "/etc/apt/keyrings/grafana.asc": "key\n",
+              "/etc/apt/sources.list.d/grafana.list": "deb old\n"
+            }
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/apt/keyrings/grafana.asc"
+              ],
+              [
+                "install",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/apt/sources.list.d/grafana.list"
+              ],
+              [
+                "apt-get",
+                "update"
+              ]
+            ],
+            "downloads": [
+              [
+                "curl",
+                "-fsSL",
+                "https://apt.grafana.com/gpg.key",
+                "-o",
+                "<tmp>"
+              ]
+            ],
+            "installed": {
+              "/etc/apt/keyrings/grafana.asc": "",
+              "/etc/apt/sources.list.d/grafana.list": "deb [signed-by=/etc/apt/keyrings/grafana.asc] https://apt.grafana.com stable main\n"
+            },
+            "check_after": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "install-grafana",
+      "title": "Установить grafana",
+      "scenarios": [
+        {
+          "name": "absent",
+          "setup": {
+            "missing_tools": [
+              "grafana-server",
+              "apt-get",
+              "pacman",
+              "dnf",
+              "zypper",
+              "apk",
+              "brew",
+              "yum"
+            ]
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "apt-get",
+                "install",
+                "-y",
+                "grafana"
+              ]
+            ],
+            "downloads": [],
+            "installed": {},
+            "check_after": false
+          }
+        },
+        {
+          "name": "present",
+          "setup": {
+            "missing_tools": []
+          },
+          "expect": {
+            "check_before": true
+          }
+        },
+        {
+          "name": "no-manager",
+          "setup": {
+            "missing_tools": [
+              "grafana-server",
+              "apt",
+              "apt-get",
+              "pacman",
+              "dnf",
+              "zypper",
+              "apk",
+              "brew",
+              "yum"
+            ]
+          },
+          "expect": {
+            "check_before": false,
+            "error": "неизвестен пакетный менеджер для grafana"
+          }
+        }
+      ]
+    }
+  ]
+}

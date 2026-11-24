@@ -26,7 +26,9 @@ def process_argv(service: str, instance: str, config_path: str | None) -> list[s
 
 
 class Supervisor:
-    def __init__(self, assignments: Iterable[str], table: ServiceTable, factory: SlotFactory) -> None:
+    def __init__(
+        self, assignments: Iterable[str], table: ServiceTable, factory: SlotFactory, auto: Iterable[str] = ()
+    ) -> None:
         self.services: dict[str, SlotBase] = {}
         self._table = table
         self._factory = factory
@@ -48,12 +50,22 @@ class Supervisor:
                     item,
                     ", ".join(table.supervised_names()),
                 )
+        for name in auto:
+            self._add_auto(name)
 
     def make(self, assignment: Assignment) -> SlotBase:
         spec = self._table.spec(assignment.service)
         if spec is None or spec.external:
             raise ValueError(f"неизвестное назначение: {assignment.service!r}")
         return self._factory(spec, assignment)
+
+    def _add_auto(self, name: str) -> None:
+        if name in self.services:
+            return
+        try:
+            self.services[name] = self.make(Assignment(service=name))
+        except ValueError:
+            log.warning("Автослужба %r неизвестна — пропускаю", name)
 
     async def start_all(self) -> None:
         for svc in self.services.values():

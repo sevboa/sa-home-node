@@ -1,0 +1,196 @@
+{
+  "type": "table",
+  "title": "Сводка по нодам",
+  "datasource": {
+    "type": "prometheus",
+    "uid": "vm"
+  },
+  "gridPos": {
+    "x": 0,
+    "y": 0,
+    "w": 24,
+    "h": 8
+  },
+  "fieldConfig": {
+    "defaults": {},
+    "overrides": [
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "CPU %"
+        },
+        "properties": [
+          {
+            "id": "unit",
+            "value": "percent"
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "RAM занято %"
+        },
+        "properties": [
+          {
+            "id": "unit",
+            "value": "percent"
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "диск макс %"
+        },
+        "properties": [
+          {
+            "id": "unit",
+            "value": "percent"
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "steal %"
+        },
+        "properties": [
+          {
+            "id": "unit",
+            "value": "percent"
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "аптайм"
+        },
+        "properties": [
+          {
+            "id": "unit",
+            "value": "s"
+          }
+        ]
+      },
+      {
+        "matcher": {
+          "id": "byName",
+          "options": "t макс, °C"
+        },
+        "properties": [
+          {
+            "id": "unit",
+            "value": "celsius"
+          }
+        ]
+      }
+    ]
+  },
+  "targets": [
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "expr": "up{job=\"sa-home-nodes\",node=~\"$node\"}",
+      "legendFormat": "",
+      "refId": "A",
+      "format": "table",
+      "instant": true
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "expr": "sa_host_cpu_busy_pct{node=~\"$node\"}",
+      "legendFormat": "",
+      "refId": "B",
+      "format": "table",
+      "instant": true
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "expr": "sa_host_mem_used_pct{node=~\"$node\"}",
+      "legendFormat": "",
+      "refId": "C",
+      "format": "table",
+      "instant": true
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "expr": "max by (node) (sa_host_disk_pct{node=~\"$node\"})",
+      "legendFormat": "",
+      "refId": "D",
+      "format": "table",
+      "instant": true
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "expr": "sa_host_steal_pct{node=~\"$node\"}",
+      "legendFormat": "",
+      "refId": "E",
+      "format": "table",
+      "instant": true
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "expr": "sa_host_uptime_s{node=~\"$node\"}",
+      "legendFormat": "",
+      "refId": "F",
+      "format": "table",
+      "instant": true
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "vm"
+      },
+      "expr": "max by (node) (sa_temperature_celsius{node=~\"$node\"})",
+      "legendFormat": "",
+      "refId": "G",
+      "format": "table",
+      "instant": true
+    }
+  ],
+  "transformations": [
+    {
+      "id": "merge",
+      "options": {}
+    },
+    {
+      "id": "organize",
+      "options": {
+        "excludeByName": {
+          "Time": true,
+          "job": true,
+          "instance": true
+        },
+        "renameByName": {
+          "node": "Нода",
+          "Value #A": "up",
+          "Value #B": "CPU %",
+          "Value #C": "RAM занято %",
+          "Value #D": "диск макс %",
+          "Value #E": "steal %",
+          "Value #F": "аптайм",
+          "Value #G": "t макс, °C"
+        }
+      }
+    }
+  ]
+}

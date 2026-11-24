@@ -18,7 +18,7 @@ from sa_home_node.proto.wire import (
     make_event,
     make_request,
 )
-from sa_home_node.swarm.config import SwarmSection, swarm_section
+from sa_home_node.swarm.config import SwarmPeer, SwarmSection, swarm_section
 from sa_home_node.swarm.discovery import SwarmDiscovery
 from sa_home_node.swarm.events import EVENT_NODE_LEAVING
 from sa_home_node.swarm.link import PeerLink
@@ -38,6 +38,9 @@ COMMAND_TIMEOUT_S = 10.0
 class SwarmApi:
     def __init__(self, swarm: Swarm) -> None:
         self._swarm = swarm
+
+    def peers(self) -> list[SwarmPeer]:
+        return [*self._swarm.swarm.nodes, *self._swarm.state.peers]
 
     @property
     def node_id(self) -> str:

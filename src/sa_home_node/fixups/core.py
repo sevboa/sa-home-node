@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Callable, Iterable
 from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING
 
@@ -11,6 +11,7 @@ from sa_home_node.swarm.state import NodeState
 
 if TYPE_CHECKING:
     from sa_home_node.host.base import Host
+    from sa_home_node.plugins import Plugin
 
 
 class FixupError(Exception):
@@ -23,15 +24,16 @@ class FixupContext:
     assignments: tuple[Assignment, ...]
     traits: NodeTraits
     host: Host
+    plugins: tuple[Plugin, ...] = ()
 
     @classmethod
-    def build(cls, config: NodeConfig, host: Host) -> FixupContext:
+    def build(cls, config: NodeConfig, host: Host, plugins: Iterable[Plugin] = ()) -> FixupContext:
         state = NodeState.load(config.state_file)
         assignments = tuple(parse_valid(effective(config.node.assignments, state.assignments)))
         traits = traits_for(config.node.kind)
         if config.node.power_controllable is not None:
             traits = replace(traits, always_on=not config.node.power_controllable)
-        return cls(config, assignments, traits, host)
+        return cls(config, assignments, traits, host, tuple(plugins))
 
     def assigned(self, *services: str) -> bool:
         return any(a.service in services for a in self.assignments)

@@ -1,0 +1,267 @@
+[
+  {
+    "name": "config-only",
+    "own_id": "n1",
+    "own_host": "100.64.0.1",
+    "config": [
+      {
+        "id": "n2",
+        "endpoint": "tcp://100.64.0.2:8710",
+        "endpoints": []
+      },
+      {
+        "id": "n3",
+        "endpoint": "tcp://192.168.1.3:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [],
+    "expected": [
+      {
+        "node": "n1",
+        "host": "100.64.0.1"
+      },
+      {
+        "node": "n2",
+        "host": "100.64.0.2"
+      },
+      {
+        "node": "n3",
+        "host": "192.168.1.3"
+      }
+    ]
+  },
+  {
+    "name": "learned-peers",
+    "own_id": "n1",
+    "own_host": "100.64.0.1",
+    "config": [
+      {
+        "id": "n2",
+        "endpoint": "tcp://100.64.0.2:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [
+      {
+        "id": "n3",
+        "endpoint": "tcp://192.168.1.3:8710",
+        "endpoints": []
+      }
+    ],
+    "expected": [
+      {
+        "node": "n1",
+        "host": "100.64.0.1"
+      },
+      {
+        "node": "n2",
+        "host": "100.64.0.2"
+      },
+      {
+        "node": "n3",
+        "host": "192.168.1.3"
+      }
+    ]
+  },
+  {
+    "name": "overlay-from-endpoints",
+    "own_id": "n1",
+    "own_host": "100.64.0.1",
+    "config": [
+      {
+        "id": "n2",
+        "endpoint": "tcp://192.168.1.2:8710",
+        "endpoints": [
+          "tcp://100.64.0.2:8710"
+        ]
+      }
+    ],
+    "learned": [],
+    "expected": [
+      {
+        "node": "n1",
+        "host": "100.64.0.1"
+      },
+      {
+        "node": "n2",
+        "host": "100.64.0.2"
+      }
+    ]
+  },
+  {
+    "name": "duplicate-first-wins",
+    "own_id": "n1",
+    "own_host": "100.64.0.1",
+    "config": [
+      {
+        "id": "n2",
+        "endpoint": "tcp://192.168.1.2:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [
+      {
+        "id": "n2",
+        "endpoint": "tcp://100.64.0.2:8710",
+        "endpoints": []
+      },
+      {
+        "id": "n3",
+        "endpoint": "tcp://192.168.1.3:8710",
+        "endpoints": []
+      }
+    ],
+    "expected": [
+      {
+        "node": "n1",
+        "host": "100.64.0.1"
+      },
+      {
+        "node": "n2",
+        "host": "192.168.1.2"
+      },
+      {
+        "node": "n3",
+        "host": "192.168.1.3"
+      }
+    ]
+  },
+  {
+    "name": "peer-without-address",
+    "own_id": "n1",
+    "own_host": "100.64.0.1",
+    "config": [
+      {
+        "id": "n2",
+        "endpoint": "unix:/run/node.sock",
+        "endpoints": []
+      },
+      {
+        "id": "n3",
+        "endpoint": "tcp://127.0.0.1:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [],
+    "expected": [
+      {
+        "node": "n1",
+        "host": "100.64.0.1"
+      }
+    ]
+  },
+  {
+    "name": "no-own-host",
+    "own_id": "n1",
+    "own_host": null,
+    "config": [
+      {
+        "id": "n2",
+        "endpoint": "tcp://100.64.0.2:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [],
+    "expected": [
+      {
+        "node": "n2",
+        "host": "100.64.0.2"
+      }
+    ]
+  },
+  {
+    "name": "own-skipped-and-replaced",
+    "own_id": "n1",
+    "own_host": "100.64.0.1",
+    "config": [
+      {
+        "id": "n1",
+        "endpoint": "tcp://192.168.1.1:8710",
+        "endpoints": []
+      },
+      {
+        "id": "n2",
+        "endpoint": "tcp://100.64.0.2:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [
+      {
+        "id": "n1",
+        "endpoint": "tcp://192.168.1.9:8710",
+        "endpoints": []
+      }
+    ],
+    "expected": [
+      {
+        "node": "n1",
+        "host": "100.64.0.1"
+      },
+      {
+        "node": "n2",
+        "host": "100.64.0.2"
+      }
+    ]
+  },
+  {
+    "name": "sorted-by-node",
+    "own_id": "n2",
+    "own_host": "100.64.0.2",
+    "config": [
+      {
+        "id": "n3",
+        "endpoint": "tcp://192.168.1.3:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [
+      {
+        "id": "n1",
+        "endpoint": "tcp://100.64.0.1:8710",
+        "endpoints": []
+      }
+    ],
+    "expected": [
+      {
+        "node": "n1",
+        "host": "100.64.0.1"
+      },
+      {
+        "node": "n2",
+        "host": "100.64.0.2"
+      },
+      {
+        "node": "n3",
+        "host": "192.168.1.3"
+      }
+    ]
+  },
+  {
+    "name": "empty",
+    "own_id": "n1",
+    "own_host": null,
+    "config": [],
+    "learned": [],
+    "expected": []
+  },
+  {
+    "name": "empty-own-id",
+    "own_id": "",
+    "own_host": "100.64.0.1",
+    "config": [
+      {
+        "id": "n2",
+        "endpoint": "tcp://100.64.0.2:8710",
+        "endpoints": []
+      }
+    ],
+    "learned": [],
+    "expected": [
+      {
+        "node": "n2",
+        "host": "100.64.0.2"
+      }
+    ]
+  }
+]

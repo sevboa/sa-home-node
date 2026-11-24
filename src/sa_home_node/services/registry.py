@@ -33,6 +33,9 @@ class ServiceTable:
     def supervised_names(self) -> tuple[str, ...]:
         return tuple(n for n in self._specs if not self._specs[n].external)
 
+    def auto_names(self, config: NodeConfig) -> tuple[str, ...]:
+        return tuple(n for n, spec in self._specs.items() if spec.auto is not None and spec.auto(config))
+
     def endpoints(self, config: NodeConfig) -> dict[str, str]:
         result = {}
         for name, spec in self._specs.items():

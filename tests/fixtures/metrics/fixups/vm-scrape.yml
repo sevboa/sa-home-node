@@ -1,0 +1,11 @@
+global:
+  scrape_interval: "15s"
+scrape_configs:
+  - job_name: "sa-home-nodes"
+    metrics_path: "/metrics"
+    file_sd_configs:
+      - files: ["/var/lib/metrics-hub/targets/nodes.json"]
+  - job_name: "sa-home-extra"
+    metrics_path: "/metrics"
+    file_sd_configs:
+      - files: ["/var/lib/metrics-hub/targets/extra.json"]

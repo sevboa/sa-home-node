@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections.abc import Callable
 
 from sa_home_node.fixups.core import FixupContext
+from sa_home_node.metrics.config import MetricsConfig
 
 Need = Callable[[FixupContext], bool]
 
@@ -17,6 +18,10 @@ def power_controllable(ctx: FixupContext) -> bool:
 
 def wakeable(ctx: FixupContext) -> bool:
     return ctx.traits.wakeable
+
+
+def metrics_hub(ctx: FixupContext) -> bool:
+    return ctx.section("metrics", MetricsConfig).hub
 
 
 def all_of(*needs: Need) -> Need:

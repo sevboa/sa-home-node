@@ -7,8 +7,9 @@ from pathlib import Path
 
 import pytest
 
+from sa_home_node.metrics.config import MetricsConfig
 from sa_home_node.monitor import scan
-from sa_home_node.monitor.config import MetricsConfig, SensorsConfig
+from sa_home_node.monitor.config import SensorsConfig
 from sa_home_node.monitor.db import Database, apply_schema
 from sa_home_node.monitor.hostmodels import HostMetricReading
 from sa_home_node.monitor.jobbase import JobContext

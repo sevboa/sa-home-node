@@ -1,0 +1,195 @@
+{
+  "config": {
+    "data_dir": "/var/lib/metrics-data",
+    "retention": "90d",
+    "vm_port": 8429,
+    "scrape_interval": "15s",
+    "grafana_port": 3100,
+    "runtime_dir": "/var/lib/metrics-hub",
+    "hub": true,
+    "overlay_unit": "overlay.service"
+  },
+  "fixups": [
+    {
+      "id": "grafana-provisioning",
+      "title": "Выложить источник данных и провайдер дашбордов grafana",
+      "scenarios": [
+        {
+          "name": "fresh",
+          "setup": {},
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/grafana/provisioning/datasources/sa-home.yaml"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/grafana/provisioning/dashboards/sa-home.yaml"
+              ],
+              [
+                "rm",
+                "-rf",
+                "--",
+                "/etc/grafana/sa-home-dashboards"
+              ],
+              [
+                "systemctl",
+                "restart",
+                "grafana-server.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/grafana/provisioning/datasources/sa-home.yaml": "apiVersion: 1\ndatasources:\n  - name: VictoriaMetrics\n    uid: vm\n    type: prometheus\n    access: proxy\n    url: http://127.0.0.1:8429\n    isDefault: true\n",
+              "/etc/grafana/provisioning/dashboards/sa-home.yaml": "apiVersion: 1\nproviders:\n  - name: sa-home\n    type: file\n    allowUiUpdates: false\n    updateIntervalSeconds: 30\n    options:\n      path: /var/lib/metrics-hub/dashboards\n      foldersFromFilesStructure: true\n"
+            },
+            "check_after": true
+          }
+        },
+        {
+          "name": "converged",
+          "setup": {
+            "files": {
+              "/etc/grafana/provisioning/datasources/sa-home.yaml": "apiVersion: 1\ndatasources:\n  - name: VictoriaMetrics\n    uid: vm\n    type: prometheus\n    access: proxy\n    url: http://127.0.0.1:8429\n    isDefault: true\n",
+              "/etc/grafana/provisioning/dashboards/sa-home.yaml": "apiVersion: 1\nproviders:\n  - name: sa-home\n    type: file\n    allowUiUpdates: false\n    updateIntervalSeconds: 30\n    options:\n      path: /var/lib/metrics-hub/dashboards\n      foldersFromFilesStructure: true\n"
+            }
+          },
+          "expect": {
+            "check_before": true
+          }
+        },
+        {
+          "name": "legacy-present",
+          "setup": {
+            "files": {
+              "/etc/grafana/provisioning/datasources/sa-home.yaml": "apiVersion: 1\ndatasources:\n  - name: VictoriaMetrics\n    uid: vm\n    type: prometheus\n    access: proxy\n    url: http://127.0.0.1:8429\n    isDefault: true\n",
+              "/etc/grafana/provisioning/dashboards/sa-home.yaml": "apiVersion: 1\nproviders:\n  - name: sa-home\n    type: file\n    allowUiUpdates: false\n    updateIntervalSeconds: 30\n    options:\n      path: /var/lib/metrics-hub/dashboards\n      foldersFromFilesStructure: true\n"
+            },
+            "dirs": [
+              "/etc/grafana/sa-home-dashboards"
+            ]
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/grafana/provisioning/datasources/sa-home.yaml"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/grafana/provisioning/dashboards/sa-home.yaml"
+              ],
+              [
+                "rm",
+                "-rf",
+                "--",
+                "/etc/grafana/sa-home-dashboards"
+              ],
+              [
+                "systemctl",
+                "restart",
+                "grafana-server.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/grafana/provisioning/datasources/sa-home.yaml": "apiVersion: 1\ndatasources:\n  - name: VictoriaMetrics\n    uid: vm\n    type: prometheus\n    access: proxy\n    url: http://127.0.0.1:8429\n    isDefault: true\n",
+              "/etc/grafana/provisioning/dashboards/sa-home.yaml": "apiVersion: 1\nproviders:\n  - name: sa-home\n    type: file\n    allowUiUpdates: false\n    updateIntervalSeconds: 30\n    options:\n      path: /var/lib/metrics-hub/dashboards\n      foldersFromFilesStructure: true\n"
+            },
+            "check_after": false
+          }
+        },
+        {
+          "name": "provider-stale",
+          "setup": {
+            "files": {
+              "/etc/grafana/provisioning/datasources/sa-home.yaml": "apiVersion: 1\ndatasources:\n  - name: VictoriaMetrics\n    uid: vm\n    type: prometheus\n    access: proxy\n    url: http://127.0.0.1:8429\n    isDefault: true\n",
+              "/etc/grafana/provisioning/dashboards/sa-home.yaml": "old\n"
+            }
+          },
+          "expect": {
+            "check_before": false,
+            "sudo_calls": [
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/grafana/provisioning/datasources/sa-home.yaml"
+              ],
+              [
+                "install",
+                "-D",
+                "-m",
+                "0644",
+                "-o",
+                "root",
+                "-g",
+                "root",
+                "<tmp>",
+                "/etc/grafana/provisioning/dashboards/sa-home.yaml"
+              ],
+              [
+                "rm",
+                "-rf",
+                "--",
+                "/etc/grafana/sa-home-dashboards"
+              ],
+              [
+                "systemctl",
+                "restart",
+                "grafana-server.service"
+              ]
+            ],
+            "downloads": [],
+            "installed": {
+              "/etc/grafana/provisioning/datasources/sa-home.yaml": "apiVersion: 1\ndatasources:\n  - name: VictoriaMetrics\n    uid: vm\n    type: prometheus\n    access: proxy\n    url: http://127.0.0.1:8429\n    isDefault: true\n",
+              "/etc/grafana/provisioning/dashboards/sa-home.yaml": "apiVersion: 1\nproviders:\n  - name: sa-home\n    type: file\n    allowUiUpdates: false\n    updateIntervalSeconds: 30\n    options:\n      path: /var/lib/metrics-hub/dashboards\n      foldersFromFilesStructure: true\n"
+            },
+            "check_after": true
+          }
+        }
+      ]
+    }
+  ]
+}

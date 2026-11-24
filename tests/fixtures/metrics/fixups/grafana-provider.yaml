@@ -1,0 +1,9 @@
+apiVersion: 1
+providers:
+  - name: sa-home
+    type: file
+    allowUiUpdates: false
+    updateIntervalSeconds: 30
+    options:
+      path: /var/lib/metrics-hub/dashboards
+      foldersFromFilesStructure: true
