@@ -11,6 +11,14 @@
 - `docs/` — описание модулей.
 - Фиксапы хоста (донастройка машины под назначения, команда `sa-home-node fix`) — [docs/fixups.md](docs/fixups.md).
 - Плагины — Python-пакеты с точкой входа `sa_home_node.plugins`; службы плагина, назначения и аренда — [docs/plugins.md](docs/plugins.md), [docs/services.md](docs/services.md).
+- Мониторинг (плагин `monitor`) — датчики, политики, экспорт метрик — [docs/monitor.md](docs/monitor.md).
+- Бэкап — запечатанные копии identity и снапшоты БД на напарнике — [docs/backup.md](docs/backup.md).
+- Wake-on-LAN — будит спящую ноду и доводит службу до готовности — [docs/wake.md](docs/wake.md).
+- Отложенные задачи (плагин `tasks`) — очередь команд с таймерами и ожиданием событий — [docs/tasks.md](docs/tasks.md).
+
+## Зависимости
+- Основные: `aiosqlite`, `psutil`, `pydantic-settings`.
+- Опциональные: `cryptography` (для бэкапа, extras `backup`).
 
 ## Лицензия
 [PolyForm Noncommercial 1.0.0](LICENSE): пользоваться, изменять и распространять можно в некоммерческих
