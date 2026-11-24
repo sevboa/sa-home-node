@@ -8,6 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel
 
 from sa_home_node.backup.spec import BackupSpec
+from sa_home_node.bot.spec import BotSpec
 from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
 from sa_home_node.fixups.core import Fixup, FixupContext
@@ -87,6 +88,7 @@ class Plugin:
     task_kinds: tuple[TaskKind, ...] = ()
     scrape_jobs: tuple[ScrapeJobSpec, ...] = ()
     dashboards: tuple[DashboardSpec, ...] = ()
+    bot: BotSpec | None = None
 
 
 def available() -> dict[str, EntryPoint]:
