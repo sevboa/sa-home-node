@@ -1,0 +1,3576 @@
+{
+  "interval": 4.0,
+  "max_ticks": 450,
+  "cases": [
+    {
+      "name": "stop-before-first-tick",
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 0,
+      "delays": []
+    },
+    {
+      "name": "three-ticks",
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "tick",
+          3
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 4,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "no-ticks-after-stop",
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "tick",
+          2
+        ],
+        [
+          "stop"
+        ],
+        [
+          "tick",
+          2
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 3,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "max-ticks",
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "tick",
+          460
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 450,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "thread",
+      "message_thread_id": 7,
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "tick",
+          1
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing",
+            "message_thread_id": 7
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing",
+            "message_thread_id": 7
+          }
+        ]
+      ],
+      "sleep_calls": 2,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "double-start",
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "start"
+        ],
+        [
+          "tick",
+          1
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 2,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "restart-after-stop",
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "tick",
+          1
+        ],
+        [
+          "stop"
+        ],
+        [
+          "start"
+        ],
+        [
+          "tick",
+          1
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 4,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "stop-without-start",
+      "steps": [
+        [
+          "stop"
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [],
+      "sleep_calls": 0,
+      "delays": []
+    },
+    {
+      "name": "errors-swallowed",
+      "script": {
+        "send_chat_action": [
+          "net",
+          "bad",
+          "forbidden"
+        ]
+      },
+      "steps": [
+        [
+          "start"
+        ],
+        [
+          "tick",
+          3
+        ],
+        [
+          "stop"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 4,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "context-manager",
+      "steps": [
+        [
+          "enter"
+        ],
+        [
+          "tick",
+          2
+        ],
+        [
+          "exit"
+        ],
+        [
+          "tick",
+          2
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ],
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing"
+          }
+        ]
+      ],
+      "sleep_calls": 3,
+      "delays": [
+        4.0
+      ]
+    },
+    {
+      "name": "context-manager-thread",
+      "message_thread_id": 7,
+      "steps": [
+        [
+          "enter"
+        ],
+        [
+          "exit"
+        ]
+      ],
+      "calls": [
+        [
+          "send_chat_action",
+          {
+            "chat_id": 1001,
+            "action": "typing",
+            "message_thread_id": 7
+          }
+        ]
+      ],
+      "sleep_calls": 0,
+      "delays": []
+    }
+  ]
+}

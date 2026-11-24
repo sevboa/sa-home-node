@@ -1,0 +1,399 @@
+{
+  "ops": [
+    {
+      "op": "create",
+      "code": "B-LATE",
+      "chat": 1001,
+      "user": 5001,
+      "at": "2026-01-01T10:05:00+00:00",
+      "exp": "2026-01-01T11:05:00+00:00"
+    },
+    {
+      "op": "create",
+      "code": "A-EARLY",
+      "chat": 1001,
+      "user": null,
+      "at": "2026-01-01T10:00:00+00:00",
+      "exp": "2026-01-01T11:00:00+00:00"
+    },
+    {
+      "op": "create",
+      "code": "C-SHORT",
+      "chat": 1002,
+      "user": 5002,
+      "at": "2026-01-01T10:00:00.500000+00:00",
+      "exp": "2026-01-01T10:30:00+00:00"
+    },
+    {
+      "op": "create",
+      "code": "D-ONE",
+      "chat": 1001,
+      "user": 5001,
+      "at": "2026-01-01T10:10:00+00:00",
+      "exp": "2026-01-01T12:00:00+00:00"
+    },
+    {
+      "op": "create",
+      "code": "E-ONE",
+      "chat": 1001,
+      "user": 5001,
+      "at": "2026-01-01T10:11:00+00:00",
+      "exp": "2026-01-01T12:00:00+00:00"
+    },
+    {
+      "op": "open",
+      "at": "2026-01-01T10:20:00+00:00"
+    },
+    {
+      "op": "open",
+      "at": "2026-01-01T10:30:00+00:00"
+    },
+    {
+      "op": "find",
+      "code": "A-EARLY"
+    },
+    {
+      "op": "find",
+      "code": "NOPE"
+    },
+    {
+      "op": "redeem",
+      "code": "A-EARLY",
+      "chat": 2001,
+      "user": 5100,
+      "name": "user-a",
+      "at": "2026-01-01T10:20:00+00:00"
+    },
+    {
+      "op": "redeem",
+      "code": "A-EARLY",
+      "chat": 2002,
+      "user": 5101,
+      "name": "user-b",
+      "at": "2026-01-01T10:21:00+00:00"
+    },
+    {
+      "op": "redeem",
+      "code": "C-SHORT",
+      "chat": 2003,
+      "user": null,
+      "name": null,
+      "at": "2026-01-01T10:30:00+00:00"
+    },
+    {
+      "op": "redeem",
+      "code": "C-SHORT",
+      "chat": 2003,
+      "user": null,
+      "name": null,
+      "at": "2026-01-01T10:29:59+00:00"
+    },
+    {
+      "op": "redeem",
+      "code": "NOPE",
+      "chat": 2004,
+      "user": 1,
+      "name": "x",
+      "at": "2026-01-01T10:21:00+00:00"
+    },
+    {
+      "op": "revoke",
+      "code": "D-ONE",
+      "at": "2026-01-01T10:25:00+00:00"
+    },
+    {
+      "op": "revoke",
+      "code": "D-ONE",
+      "at": "2026-01-01T10:26:00+00:00"
+    },
+    {
+      "op": "revoke",
+      "code": "A-EARLY",
+      "at": "2026-01-01T10:26:00+00:00"
+    },
+    {
+      "op": "revoke",
+      "code": "NOPE",
+      "at": "2026-01-01T10:26:00+00:00"
+    },
+    {
+      "op": "redeem",
+      "code": "D-ONE",
+      "chat": 2005,
+      "user": 5105,
+      "name": "user-c",
+      "at": "2026-01-01T10:27:00+00:00"
+    },
+    {
+      "op": "find",
+      "code": "A-EARLY"
+    },
+    {
+      "op": "find",
+      "code": "D-ONE"
+    },
+    {
+      "op": "open",
+      "at": "2026-01-01T10:28:00+00:00"
+    },
+    {
+      "op": "open",
+      "at": "2026-01-01T12:00:00+00:00"
+    }
+  ],
+  "results": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    [
+      {
+        "code": "A-EARLY",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": null,
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "expires_at": "2026-01-01T11:00:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "C-SHORT",
+        "issued_by_chat_id": 1002,
+        "issued_by_user_id": 5002,
+        "created_at": "2026-01-01T10:00:00.500000+00:00",
+        "expires_at": "2026-01-01T10:30:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "B-LATE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:05:00+00:00",
+        "expires_at": "2026-01-01T11:05:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "D-ONE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:10:00+00:00",
+        "expires_at": "2026-01-01T12:00:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "E-ONE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:11:00+00:00",
+        "expires_at": "2026-01-01T12:00:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      }
+    ],
+    [
+      {
+        "code": "A-EARLY",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": null,
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "expires_at": "2026-01-01T11:00:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "B-LATE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:05:00+00:00",
+        "expires_at": "2026-01-01T11:05:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "D-ONE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:10:00+00:00",
+        "expires_at": "2026-01-01T12:00:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "E-ONE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:11:00+00:00",
+        "expires_at": "2026-01-01T12:00:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      }
+    ],
+    {
+      "code": "A-EARLY",
+      "issued_by_chat_id": 1001,
+      "issued_by_user_id": null,
+      "created_at": "2026-01-01T10:00:00+00:00",
+      "expires_at": "2026-01-01T11:00:00+00:00",
+      "redeemed_at": null,
+      "redeemed_chat_id": null,
+      "redeemed_user_id": null,
+      "redeemed_user_name": null,
+      "revoked_at": null
+    },
+    null,
+    true,
+    false,
+    false,
+    true,
+    false,
+    true,
+    false,
+    false,
+    false,
+    false,
+    {
+      "code": "A-EARLY",
+      "issued_by_chat_id": 1001,
+      "issued_by_user_id": null,
+      "created_at": "2026-01-01T10:00:00+00:00",
+      "expires_at": "2026-01-01T11:00:00+00:00",
+      "redeemed_at": "2026-01-01T10:20:00+00:00",
+      "redeemed_chat_id": 2001,
+      "redeemed_user_id": 5100,
+      "redeemed_user_name": "user-a",
+      "revoked_at": null
+    },
+    {
+      "code": "D-ONE",
+      "issued_by_chat_id": 1001,
+      "issued_by_user_id": 5001,
+      "created_at": "2026-01-01T10:10:00+00:00",
+      "expires_at": "2026-01-01T12:00:00+00:00",
+      "redeemed_at": null,
+      "redeemed_chat_id": null,
+      "redeemed_user_id": null,
+      "redeemed_user_name": null,
+      "revoked_at": "2026-01-01T10:25:00+00:00"
+    },
+    [
+      {
+        "code": "B-LATE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:05:00+00:00",
+        "expires_at": "2026-01-01T11:05:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      },
+      {
+        "code": "E-ONE",
+        "issued_by_chat_id": 1001,
+        "issued_by_user_id": 5001,
+        "created_at": "2026-01-01T10:11:00+00:00",
+        "expires_at": "2026-01-01T12:00:00+00:00",
+        "redeemed_at": null,
+        "redeemed_chat_id": null,
+        "redeemed_user_id": null,
+        "redeemed_user_name": null,
+        "revoked_at": null
+      }
+    ],
+    []
+  ],
+  "rows": [
+    {
+      "code": "A-EARLY",
+      "issued_by_chat_id": 1001,
+      "issued_by_user_id": null,
+      "created_at": "2026-01-01T10:00:00+00:00",
+      "expires_at": "2026-01-01T11:00:00+00:00",
+      "redeemed_at": "2026-01-01T10:20:00+00:00",
+      "redeemed_chat_id": 2001,
+      "redeemed_user_id": 5100,
+      "redeemed_user_name": "user-a",
+      "revoked_at": null
+    },
+    {
+      "code": "B-LATE",
+      "issued_by_chat_id": 1001,
+      "issued_by_user_id": 5001,
+      "created_at": "2026-01-01T10:05:00+00:00",
+      "expires_at": "2026-01-01T11:05:00+00:00",
+      "redeemed_at": null,
+      "redeemed_chat_id": null,
+      "redeemed_user_id": null,
+      "redeemed_user_name": null,
+      "revoked_at": null
+    },
+    {
+      "code": "C-SHORT",
+      "issued_by_chat_id": 1002,
+      "issued_by_user_id": 5002,
+      "created_at": "2026-01-01T10:00:00.500000+00:00",
+      "expires_at": "2026-01-01T10:30:00+00:00",
+      "redeemed_at": "2026-01-01T10:29:59+00:00",
+      "redeemed_chat_id": 2003,
+      "redeemed_user_id": null,
+      "redeemed_user_name": null,
+      "revoked_at": null
+    },
+    {
+      "code": "D-ONE",
+      "issued_by_chat_id": 1001,
+      "issued_by_user_id": 5001,
+      "created_at": "2026-01-01T10:10:00+00:00",
+      "expires_at": "2026-01-01T12:00:00+00:00",
+      "redeemed_at": null,
+      "redeemed_chat_id": null,
+      "redeemed_user_id": null,
+      "redeemed_user_name": null,
+      "revoked_at": "2026-01-01T10:25:00+00:00"
+    },
+    {
+      "code": "E-ONE",
+      "issued_by_chat_id": 1001,
+      "issued_by_user_id": 5001,
+      "created_at": "2026-01-01T10:11:00+00:00",
+      "expires_at": "2026-01-01T12:00:00+00:00",
+      "redeemed_at": null,
+      "redeemed_chat_id": null,
+      "redeemed_user_id": null,
+      "redeemed_user_name": null,
+      "revoked_at": null
+    }
+  ]
+}

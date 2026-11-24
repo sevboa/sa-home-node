@@ -1,0 +1,610 @@
+{
+  "subs": [
+    {
+      "broken": false,
+      "source": "config",
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ],
+      "name": "owner",
+      "chat_id": 1001
+    },
+    {
+      "broken": false,
+      "source": "config",
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [
+        "system"
+      ],
+      "allowed_commands": [
+        "*"
+      ],
+      "name": "owner-no-system",
+      "chat_id": 1002
+    },
+    {
+      "broken": true,
+      "source": "config",
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ],
+      "name": "owner-broken",
+      "chat_id": 1003
+    },
+    {
+      "broken": false,
+      "source": "guest",
+      "event_types": [
+        "system"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "nodes"
+      ],
+      "name": "guest",
+      "chat_id": 1004
+    },
+    {
+      "broken": false,
+      "source": "guest",
+      "event_types": [],
+      "except_event_types": [],
+      "allowed_commands": [
+        "nodes"
+      ],
+      "name": "guest-quiet",
+      "chat_id": 1005
+    },
+    {
+      "broken": false,
+      "source": "config",
+      "event_types": [
+        "alert"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "nodes",
+        "status"
+      ],
+      "name": "group",
+      "chat_id": -100500
+    },
+    {
+      "broken": false,
+      "source": "config",
+      "event_types": [
+        "alert"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ],
+      "name": "owner-alerts",
+      "chat_id": 1007
+    },
+    {
+      "broken": true,
+      "source": "guest",
+      "event_types": [
+        "system"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "nodes"
+      ],
+      "name": "guest-broken",
+      "chat_id": 1008
+    }
+  ],
+  "cases": [
+    {
+      "name": "broadcast-some",
+      "call": {
+        "fn": "broadcast",
+        "to": [
+          1001,
+          1004,
+          1005
+        ],
+        "text": "всем"
+      },
+      "result": 3,
+      "sent": [
+        [
+          1001,
+          "всем",
+          {}
+        ],
+        [
+          1004,
+          "всем",
+          {}
+        ],
+        [
+          1005,
+          "всем",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "broadcast-kwargs",
+      "call": {
+        "fn": "broadcast",
+        "to": [
+          1001,
+          1004
+        ],
+        "text": "всем",
+        "kwargs": {
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "message_thread_id": 5
+        }
+      },
+      "result": 2,
+      "sent": [
+        [
+          1001,
+          "всем",
+          {
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "message_thread_id": 5
+          }
+        ],
+        [
+          1004,
+          "всем",
+          {
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "message_thread_id": 5
+          }
+        ]
+      ]
+    },
+    {
+      "name": "broadcast-failures",
+      "call": {
+        "fn": "broadcast",
+        "to": [
+          1001,
+          1004,
+          1005,
+          1007
+        ],
+        "text": "всем"
+      },
+      "fail": [
+        1004,
+        1001
+      ],
+      "result": 2,
+      "sent": [
+        [
+          1001,
+          "всем",
+          {}
+        ],
+        [
+          1004,
+          "всем",
+          {}
+        ],
+        [
+          1005,
+          "всем",
+          {}
+        ],
+        [
+          1007,
+          "всем",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "broadcast-empty",
+      "call": {
+        "fn": "broadcast",
+        "to": [],
+        "text": "никому"
+      },
+      "result": 0,
+      "sent": []
+    },
+    {
+      "name": "admin-subs",
+      "call": {
+        "fn": "admin_subs"
+      },
+      "result": [
+        "owner",
+        "owner-no-system",
+        "owner-broken",
+        "owner-alerts"
+      ],
+      "sent": []
+    },
+    {
+      "name": "notify-admins",
+      "call": {
+        "fn": "notify_admins",
+        "text": "админам"
+      },
+      "result": null,
+      "sent": [
+        [
+          1001,
+          "админам",
+          {}
+        ],
+        [
+          1002,
+          "админам",
+          {}
+        ],
+        [
+          1003,
+          "админам",
+          {}
+        ],
+        [
+          1007,
+          "админам",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "notify-admins-markup",
+      "call": {
+        "fn": "notify_admins",
+        "text": "админам",
+        "kwargs": {
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "result": null,
+      "sent": [
+        [
+          1001,
+          "админам",
+          {
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          1002,
+          "админам",
+          {
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          1003,
+          "админам",
+          {
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          1007,
+          "админам",
+          {
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ]
+    },
+    {
+      "name": "notify-admins-event-excepted",
+      "call": {
+        "fn": "notify_admins",
+        "text": "админам",
+        "kwargs": {
+          "event_type": "system"
+        }
+      },
+      "result": null,
+      "sent": [
+        [
+          1001,
+          "админам",
+          {}
+        ],
+        [
+          1003,
+          "админам",
+          {}
+        ],
+        [
+          1007,
+          "админам",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "notify-admins-event-other",
+      "call": {
+        "fn": "notify_admins",
+        "text": "админам",
+        "kwargs": {
+          "event_type": "alert"
+        }
+      },
+      "result": null,
+      "sent": [
+        [
+          1001,
+          "админам",
+          {}
+        ],
+        [
+          1002,
+          "админам",
+          {}
+        ],
+        [
+          1003,
+          "админам",
+          {}
+        ],
+        [
+          1007,
+          "админам",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "notify-admins-failure",
+      "call": {
+        "fn": "notify_admins",
+        "text": "админам"
+      },
+      "fail": [
+        1001
+      ],
+      "result": null,
+      "sent": [
+        [
+          1001,
+          "админам",
+          {}
+        ],
+        [
+          1002,
+          "админам",
+          {}
+        ],
+        [
+          1003,
+          "админам",
+          {}
+        ],
+        [
+          1007,
+          "админам",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "system",
+      "call": {
+        "fn": "broadcast_system",
+        "text": "система"
+      },
+      "result": 2,
+      "sent": [
+        [
+          1001,
+          "система",
+          {}
+        ],
+        [
+          1004,
+          "система",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "system-failure",
+      "call": {
+        "fn": "broadcast_system",
+        "text": "система"
+      },
+      "fail": [
+        1001
+      ],
+      "result": 1,
+      "sent": [
+        [
+          1001,
+          "система",
+          {}
+        ],
+        [
+          1004,
+          "система",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "all",
+      "call": {
+        "fn": "broadcast_all",
+        "text": "все"
+      },
+      "result": 6,
+      "sent": [
+        [
+          1001,
+          "все",
+          {}
+        ],
+        [
+          1002,
+          "все",
+          {}
+        ],
+        [
+          1004,
+          "все",
+          {}
+        ],
+        [
+          1005,
+          "все",
+          {}
+        ],
+        [
+          -100500,
+          "все",
+          {}
+        ],
+        [
+          1007,
+          "все",
+          {}
+        ]
+      ]
+    },
+    {
+      "name": "all-failures",
+      "call": {
+        "fn": "broadcast_all",
+        "text": "все"
+      },
+      "fail": [
+        1001,
+        1002,
+        1004,
+        1005,
+        -100500,
+        1007
+      ],
+      "result": 0,
+      "sent": [
+        [
+          1001,
+          "все",
+          {}
+        ],
+        [
+          1002,
+          "все",
+          {}
+        ],
+        [
+          1004,
+          "все",
+          {}
+        ],
+        [
+          1005,
+          "все",
+          {}
+        ],
+        [
+          -100500,
+          "все",
+          {}
+        ],
+        [
+          1007,
+          "все",
+          {}
+        ]
+      ]
+    }
+  ]
+}

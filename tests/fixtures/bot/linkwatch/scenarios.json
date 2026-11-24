@@ -1,0 +1,289 @@
+{
+  "default_threshold": 60.0,
+  "cases": [
+    {
+      "name": "success-only",
+      "steps": [
+        [
+          "ok"
+        ],
+        [
+          "advance",
+          100
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "response",
+        "response"
+      ],
+      "reconnects": []
+    },
+    {
+      "name": "short-outage",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          10
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "response"
+      ],
+      "reconnects": []
+    },
+    {
+      "name": "long-outage",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          30
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          40
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response"
+      ],
+      "reconnects": [
+        70.0
+      ]
+    },
+    {
+      "name": "exactly-threshold",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          60
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "response"
+      ],
+      "reconnects": [
+        60.0
+      ]
+    },
+    {
+      "name": "just-below",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          59.5
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "response"
+      ],
+      "reconnects": []
+    },
+    {
+      "name": "repeated",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          100
+        ],
+        [
+          "ok"
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          5
+        ],
+        [
+          "ok"
+        ],
+        [
+          "net"
+        ],
+        [
+          "advance",
+          61
+        ],
+        [
+          "net"
+        ],
+        [
+          "ok"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "response",
+        "TelegramNetworkError",
+        "response",
+        "TelegramNetworkError",
+        "TelegramNetworkError",
+        "response",
+        "response"
+      ],
+      "reconnects": [
+        100.0,
+        61.0
+      ]
+    },
+    {
+      "name": "other-errors-do-not-count",
+      "steps": [
+        [
+          "bad"
+        ],
+        [
+          "advance",
+          100
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramBadRequest",
+        "response"
+      ],
+      "reconnects": []
+    },
+    {
+      "name": "other-error-in-outage",
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          100
+        ],
+        [
+          "bad"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "TelegramBadRequest",
+        "response"
+      ],
+      "reconnects": [
+        100.0
+      ]
+    },
+    {
+      "name": "custom-threshold-fires",
+      "threshold": 5.0,
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          6
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "response"
+      ],
+      "reconnects": [
+        6.0
+      ]
+    },
+    {
+      "name": "custom-threshold-quiet",
+      "threshold": 5.0,
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          4
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "response"
+      ],
+      "reconnects": []
+    },
+    {
+      "name": "callback-error",
+      "callback_raises": true,
+      "steps": [
+        [
+          "net"
+        ],
+        [
+          "advance",
+          100
+        ],
+        [
+          "ok"
+        ],
+        [
+          "ok"
+        ]
+      ],
+      "outcomes": [
+        "TelegramNetworkError",
+        "response",
+        "response"
+      ],
+      "reconnects": [
+        100.0
+      ]
+    }
+  ]
+}

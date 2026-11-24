@@ -1,0 +1,1189 @@
+{
+  "cases": [
+    {
+      "name": "document-bytes",
+      "call": {
+        "method": "send_document",
+        "args": {
+          "chat_id": 1001,
+          "document": {
+            "bytes": 5
+          },
+          "filename": "a.txt",
+          "caption": "док",
+          "message_thread_id": 4
+        }
+      },
+      "result": [
+        1,
+        "doc-1"
+      ],
+      "calls": [
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "a.txt",
+              "size": 5
+            },
+            "caption": "док",
+            "message_thread_id": 4
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "document-default-name",
+      "call": {
+        "method": "send_document",
+        "args": {
+          "chat_id": 1001,
+          "document": {
+            "bytes": 3
+          }
+        }
+      },
+      "result": [
+        1,
+        "doc-1"
+      ],
+      "calls": [
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 3
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "document-file-id",
+      "call": {
+        "method": "send_document",
+        "args": {
+          "chat_id": 1001,
+          "document": "FILE-ID",
+          "caption": "док"
+        }
+      },
+      "result": [
+        1,
+        "doc-1"
+      ],
+      "calls": [
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": "FILE-ID",
+            "caption": "док"
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "document-net-ok",
+      "call": {
+        "method": "send_document",
+        "args": {
+          "chat_id": 1001,
+          "document": {
+            "bytes": 3
+          }
+        }
+      },
+      "script": {
+        "send_document": [
+          "net",
+          "ok"
+        ]
+      },
+      "result": [
+        1,
+        "doc-1"
+      ],
+      "calls": [
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 3
+            }
+          }
+        ],
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 3
+            }
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0
+      ],
+      "outbox": []
+    },
+    {
+      "name": "document-fail",
+      "call": {
+        "method": "send_document",
+        "args": {
+          "chat_id": 1001,
+          "document": {
+            "bytes": 3
+          }
+        }
+      },
+      "script": {
+        "send_document": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 3
+            }
+          }
+        ],
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 3
+            }
+          }
+        ],
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 3
+            }
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": []
+    },
+    {
+      "name": "document-forbidden",
+      "call": {
+        "method": "send_document",
+        "args": {
+          "chat_id": 1001,
+          "document": {
+            "bytes": 3
+          }
+        }
+      },
+      "script": {
+        "send_document": [
+          "forbidden"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 3
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-bytes",
+      "call": {
+        "method": "send_photo",
+        "args": {
+          "chat_id": 1001,
+          "photo": {
+            "bytes": 4
+          },
+          "caption": "фото",
+          "message_thread_id": 4
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "photo.png",
+              "size": 4
+            },
+            "caption": "фото",
+            "message_thread_id": 4
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-long-caption",
+      "call": {
+        "method": "send_photo",
+        "args": {
+          "chat_id": 1001,
+          "photo": {
+            "bytes": 4
+          },
+          "caption": {
+            "parts": [
+              [
+                "ж",
+                2000
+              ]
+            ]
+          }
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "photo.png",
+              "size": 4
+            },
+            "caption": "<2000:63163f9f320a>"
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "document-long-caption",
+      "call": {
+        "method": "send_document",
+        "args": {
+          "chat_id": 1001,
+          "document": {
+            "bytes": 4
+          },
+          "caption": {
+            "parts": [
+              [
+                "ж",
+                2000
+              ]
+            ]
+          }
+        }
+      },
+      "result": [
+        1,
+        "doc-1"
+      ],
+      "calls": [
+        [
+          "send_document",
+          {
+            "chat_id": 1001,
+            "document": {
+              "file": "file",
+              "size": 4
+            },
+            "caption": "<2000:63163f9f320a>"
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-named",
+      "call": {
+        "method": "send_photo",
+        "args": {
+          "chat_id": 1001,
+          "photo": {
+            "bytes": 4
+          },
+          "filename": "p.jpg"
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "p.jpg",
+              "size": 4
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-fail",
+      "call": {
+        "method": "send_photo",
+        "args": {
+          "chat_id": 1001,
+          "photo": {
+            "bytes": 4
+          }
+        }
+      },
+      "script": {
+        "send_photo": [
+          "bad"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "photo.png",
+              "size": 4
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-ex-defaults",
+      "call": {
+        "method": "send_photo_ex",
+        "args": {
+          "chat_id": 1001,
+          "photo": {
+            "bytes": 6
+          }
+        }
+      },
+      "result": [
+        1,
+        "photo-1"
+      ],
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "image.png",
+              "size": 6
+            },
+            "has_spoiler": false
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-ex-all",
+      "call": {
+        "method": "send_photo_ex",
+        "args": {
+          "chat_id": 1001,
+          "photo": {
+            "bytes": 6
+          },
+          "filename": "x.jpg",
+          "caption": "к",
+          "message_thread_id": 4,
+          "reply_to_message_id": 8,
+          "has_spoiler": true,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "result": [
+        1,
+        "photo-1"
+      ],
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "x.jpg",
+              "size": 6
+            },
+            "caption": "к",
+            "message_thread_id": 4,
+            "reply_parameters": {
+              "message_id": 8,
+              "allow_sending_without_reply": true
+            },
+            "has_spoiler": true,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-ex-file-id",
+      "call": {
+        "method": "send_photo_ex",
+        "args": {
+          "chat_id": 1001,
+          "photo": "PHOTO-ID",
+          "caption": "к"
+        }
+      },
+      "result": [
+        1,
+        "photo-1"
+      ],
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": "PHOTO-ID",
+            "caption": "к",
+            "has_spoiler": false
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "photo-ex-fail",
+      "call": {
+        "method": "send_photo_ex",
+        "args": {
+          "chat_id": 1001,
+          "photo": {
+            "bytes": 6
+          }
+        }
+      },
+      "script": {
+        "send_photo": [
+          "forbidden"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "image.png",
+              "size": 6
+            },
+            "has_spoiler": false
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "voice-bytes",
+      "call": {
+        "method": "send_voice",
+        "args": {
+          "chat_id": 1001,
+          "voice": {
+            "bytes": 7
+          },
+          "caption": "голос",
+          "message_thread_id": 4
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_voice",
+          {
+            "chat_id": 1001,
+            "voice": {
+              "file": "voice.ogg",
+              "size": 7
+            },
+            "caption": "голос",
+            "message_thread_id": 4
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "voice-named",
+      "call": {
+        "method": "send_voice",
+        "args": {
+          "chat_id": 1001,
+          "voice": {
+            "bytes": 7
+          },
+          "filename": "v.ogg"
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_voice",
+          {
+            "chat_id": 1001,
+            "voice": {
+              "file": "v.ogg",
+              "size": 7
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "voice-fail",
+      "call": {
+        "method": "send_voice",
+        "args": {
+          "chat_id": 1001,
+          "voice": {
+            "bytes": 7
+          }
+        }
+      },
+      "script": {
+        "send_voice": [
+          "ra:1",
+          "net",
+          "net"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "send_voice",
+          {
+            "chat_id": 1001,
+            "voice": {
+              "file": "voice.ogg",
+              "size": 7
+            }
+          }
+        ],
+        [
+          "send_voice",
+          {
+            "chat_id": 1001,
+            "voice": {
+              "file": "voice.ogg",
+              "size": 7
+            }
+          }
+        ],
+        [
+          "send_voice",
+          {
+            "chat_id": 1001,
+            "voice": {
+              "file": "voice.ogg",
+              "size": 7
+            }
+          }
+        ]
+      ],
+      "sleeps": [
+        2.0,
+        2.0
+      ],
+      "outbox": []
+    },
+    {
+      "name": "album-empty",
+      "call": {
+        "method": "send_media_group",
+        "args": {
+          "chat_id": 1001,
+          "photos": []
+        }
+      },
+      "result": null,
+      "calls": [],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "album-single",
+      "call": {
+        "method": "send_media_group",
+        "args": {
+          "chat_id": 1001,
+          "photos": [
+            {
+              "bytes": 2
+            }
+          ],
+          "caption": "один",
+          "message_thread_id": 4
+        }
+      },
+      "result": [
+        1
+      ],
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "photo.png",
+              "size": 2
+            },
+            "caption": "один",
+            "message_thread_id": 4
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "album-single-fail",
+      "call": {
+        "method": "send_media_group",
+        "args": {
+          "chat_id": 1001,
+          "photos": [
+            {
+              "bytes": 2
+            }
+          ]
+        }
+      },
+      "script": {
+        "send_photo": [
+          "bad"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "send_photo",
+          {
+            "chat_id": 1001,
+            "photo": {
+              "file": "photo.png",
+              "size": 2
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "album-two",
+      "call": {
+        "method": "send_media_group",
+        "args": {
+          "chat_id": 1001,
+          "photos": [
+            {
+              "bytes": 2
+            },
+            {
+              "bytes": 3
+            }
+          ],
+          "caption": "два",
+          "message_thread_id": 4
+        }
+      },
+      "result": [
+        1,
+        2
+      ],
+      "calls": [
+        [
+          "send_media_group",
+          {
+            "chat_id": 1001,
+            "media": [
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo1.png",
+                  "size": 2
+                },
+                "caption": "два",
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo2.png",
+                  "size": 3
+                },
+                "parse_mode": "HTML"
+              }
+            ],
+            "message_thread_id": 4
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "album-no-caption",
+      "call": {
+        "method": "send_media_group",
+        "args": {
+          "chat_id": 1001,
+          "photos": [
+            {
+              "bytes": 2
+            },
+            {
+              "bytes": 3
+            }
+          ]
+        }
+      },
+      "result": [
+        1,
+        2
+      ],
+      "calls": [
+        [
+          "send_media_group",
+          {
+            "chat_id": 1001,
+            "media": [
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo1.png",
+                  "size": 2
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo2.png",
+                  "size": 3
+                },
+                "parse_mode": "HTML"
+              }
+            ]
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "album-twelve",
+      "call": {
+        "method": "send_media_group",
+        "args": {
+          "chat_id": 1001,
+          "photos": [
+            {
+              "bytes": 1
+            },
+            {
+              "bytes": 2
+            },
+            {
+              "bytes": 3
+            },
+            {
+              "bytes": 4
+            },
+            {
+              "bytes": 5
+            },
+            {
+              "bytes": 6
+            },
+            {
+              "bytes": 7
+            },
+            {
+              "bytes": 8
+            },
+            {
+              "bytes": 9
+            },
+            {
+              "bytes": 10
+            },
+            {
+              "bytes": 11
+            },
+            {
+              "bytes": 12
+            }
+          ],
+          "caption": "много"
+        }
+      },
+      "result": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "calls": [
+        [
+          "send_media_group",
+          {
+            "chat_id": 1001,
+            "media": [
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo1.png",
+                  "size": 1
+                },
+                "caption": "много",
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo2.png",
+                  "size": 2
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo3.png",
+                  "size": 3
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo4.png",
+                  "size": 4
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo5.png",
+                  "size": 5
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo6.png",
+                  "size": 6
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo7.png",
+                  "size": 7
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo8.png",
+                  "size": 8
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo9.png",
+                  "size": 9
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo10.png",
+                  "size": 10
+                },
+                "parse_mode": "HTML"
+              }
+            ]
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "album-fail",
+      "call": {
+        "method": "send_media_group",
+        "args": {
+          "chat_id": 1001,
+          "photos": [
+            {
+              "bytes": 2
+            },
+            {
+              "bytes": 3
+            }
+          ]
+        }
+      },
+      "script": {
+        "send_media_group": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "send_media_group",
+          {
+            "chat_id": 1001,
+            "media": [
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo1.png",
+                  "size": 2
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo2.png",
+                  "size": 3
+                },
+                "parse_mode": "HTML"
+              }
+            ]
+          }
+        ],
+        [
+          "send_media_group",
+          {
+            "chat_id": 1001,
+            "media": [
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo1.png",
+                  "size": 2
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo2.png",
+                  "size": 3
+                },
+                "parse_mode": "HTML"
+              }
+            ]
+          }
+        ],
+        [
+          "send_media_group",
+          {
+            "chat_id": 1001,
+            "media": [
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo1.png",
+                  "size": 2
+                },
+                "parse_mode": "HTML"
+              },
+              {
+                "type": "photo",
+                "media": {
+                  "file": "photo2.png",
+                  "size": 3
+                },
+                "parse_mode": "HTML"
+              }
+            ]
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": []
+    },
+    {
+      "name": "delete",
+      "call": {
+        "method": "delete_message",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 9
+        }
+      },
+      "result": null,
+      "calls": [
+        [
+          "delete_message",
+          {
+            "chat_id": 1001,
+            "message_id": 9
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "delete-swallows-net",
+      "call": {
+        "method": "delete_message",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 9
+        }
+      },
+      "script": {
+        "delete_message": [
+          "net"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "delete_message",
+          {
+            "chat_id": 1001,
+            "message_id": 9
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "delete-swallows-bad",
+      "call": {
+        "method": "delete_message",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 9
+        }
+      },
+      "script": {
+        "delete_message": [
+          "bad"
+        ]
+      },
+      "result": null,
+      "calls": [
+        [
+          "delete_message",
+          {
+            "chat_id": 1001,
+            "message_id": 9
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    }
+  ]
+}

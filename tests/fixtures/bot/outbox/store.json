@@ -1,0 +1,379 @@
+{
+  "kinds": {
+    "ALERT": "alert",
+    "TASK": "task",
+    "DELIVER": "deliver_message",
+    "INTERACTIVE": "interactive"
+  },
+  "ops": [
+    {
+      "op": "enqueue",
+      "chat_id": 1001,
+      "kind": "alert",
+      "payload": {
+        "text": "a1"
+      },
+      "at": "2026-01-01T10:00:00+00:00"
+    },
+    {
+      "op": "enqueue",
+      "chat_id": 1001,
+      "kind": "task",
+      "payload": {
+        "text": "t1",
+        "n": 1
+      },
+      "at": "2026-01-01T10:00:00+00:00",
+      "thread": 77
+    },
+    {
+      "op": "enqueue",
+      "chat_id": 1002,
+      "kind": "deliver_message",
+      "payload": {
+        "text": "д1"
+      },
+      "at": "2026-01-01T09:00:00+00:00"
+    },
+    {
+      "op": "enqueue",
+      "chat_id": 1001,
+      "kind": "interactive",
+      "payload": {
+        "text": "i1"
+      },
+      "at": "2026-01-01T10:00:00.250000+00:00",
+      "dedup": "k"
+    },
+    {
+      "op": "enqueue",
+      "chat_id": 1002,
+      "kind": "interactive",
+      "payload": {
+        "text": "i2"
+      },
+      "at": "2026-01-01T10:00:00.250000+00:00",
+      "dedup": "k"
+    },
+    {
+      "op": "enqueue",
+      "chat_id": 1001,
+      "kind": "interactive",
+      "payload": {
+        "text": "i3"
+      },
+      "at": "2026-01-01T10:00:01+00:00",
+      "dedup": "k"
+    },
+    {
+      "op": "enqueue",
+      "chat_id": 1001,
+      "kind": "weird",
+      "payload": {
+        "text": "w"
+      },
+      "at": "2026-01-01T15:00:02+05:00"
+    },
+    {
+      "op": "enqueue",
+      "chat_id": 1001,
+      "kind": "alert",
+      "payload": {
+        "text": "a2"
+      },
+      "at": "2026-01-01T10:00:00+00:00"
+    },
+    {
+      "op": "due",
+      "at": "2026-01-01T10:10:00+00:00"
+    },
+    {
+      "op": "due",
+      "at": "2026-01-01T10:10:00+00:00",
+      "limit": 2
+    },
+    {
+      "op": "bump",
+      "id": 1
+    },
+    {
+      "op": "bump",
+      "id": 1
+    },
+    {
+      "op": "bump",
+      "id": 999
+    },
+    {
+      "op": "delete",
+      "id": 3
+    },
+    {
+      "op": "delete",
+      "id": 999
+    },
+    {
+      "op": "due",
+      "at": "2026-01-01T10:15:00+00:00"
+    },
+    {
+      "op": "expire",
+      "at": "2026-01-01T10:15:00+00:00"
+    },
+    {
+      "op": "expire",
+      "at": "2026-01-01T10:15:00+00:00"
+    },
+    {
+      "op": "due",
+      "at": "2026-01-01T16:00:00+00:00"
+    },
+    {
+      "op": "expire",
+      "at": "2026-01-02T10:00:00+00:00"
+    },
+    {
+      "op": "due",
+      "at": "2026-01-02T10:00:00+00:00"
+    }
+  ],
+  "results": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    [
+      {
+        "id": 3,
+        "chat_id": 1002,
+        "kind": "deliver_message",
+        "created_at": "2026-01-01T09:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-02T09:00:00.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "д1"
+        }
+      },
+      {
+        "id": 1,
+        "chat_id": 1001,
+        "kind": "alert",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-01T16:00:00.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "a1"
+        }
+      },
+      {
+        "id": 2,
+        "chat_id": 1001,
+        "kind": "task",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-02T10:00:00.000000+00:00",
+        "message_thread_id": 77,
+        "payload": {
+          "text": "t1",
+          "n": 1
+        }
+      },
+      {
+        "id": 8,
+        "chat_id": 1001,
+        "kind": "alert",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-01T16:00:00.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "a2"
+        }
+      },
+      {
+        "id": 5,
+        "chat_id": 1002,
+        "kind": "interactive",
+        "created_at": "2026-01-01T10:00:00.250000+00:00",
+        "attempts": 0,
+        "dedup_key": "k",
+        "expires_at": "2026-01-01T10:15:00.250000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "i2"
+        }
+      },
+      {
+        "id": 6,
+        "chat_id": 1001,
+        "kind": "interactive",
+        "created_at": "2026-01-01T10:00:01+00:00",
+        "attempts": 0,
+        "dedup_key": "k",
+        "expires_at": "2026-01-01T10:15:01.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "i3"
+        }
+      },
+      {
+        "id": 7,
+        "chat_id": 1001,
+        "kind": "weird",
+        "created_at": "2026-01-01T10:00:02+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-01T10:15:02.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "w"
+        }
+      }
+    ],
+    [
+      {
+        "id": 3,
+        "chat_id": 1002,
+        "kind": "deliver_message",
+        "created_at": "2026-01-01T09:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-02T09:00:00.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "д1"
+        }
+      },
+      {
+        "id": 1,
+        "chat_id": 1001,
+        "kind": "alert",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-01T16:00:00.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "a1"
+        }
+      }
+    ],
+    null,
+    null,
+    null,
+    null,
+    null,
+    [
+      {
+        "id": 1,
+        "chat_id": 1001,
+        "kind": "alert",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 2,
+        "dedup_key": null,
+        "expires_at": "2026-01-01T16:00:00.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "a1"
+        }
+      },
+      {
+        "id": 2,
+        "chat_id": 1001,
+        "kind": "task",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-02T10:00:00.000000+00:00",
+        "message_thread_id": 77,
+        "payload": {
+          "text": "t1",
+          "n": 1
+        }
+      },
+      {
+        "id": 8,
+        "chat_id": 1001,
+        "kind": "alert",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-01T16:00:00.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "a2"
+        }
+      },
+      {
+        "id": 5,
+        "chat_id": 1002,
+        "kind": "interactive",
+        "created_at": "2026-01-01T10:00:00.250000+00:00",
+        "attempts": 0,
+        "dedup_key": "k",
+        "expires_at": "2026-01-01T10:15:00.250000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "i2"
+        }
+      },
+      {
+        "id": 6,
+        "chat_id": 1001,
+        "kind": "interactive",
+        "created_at": "2026-01-01T10:00:01+00:00",
+        "attempts": 0,
+        "dedup_key": "k",
+        "expires_at": "2026-01-01T10:15:01.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "i3"
+        }
+      },
+      {
+        "id": 7,
+        "chat_id": 1001,
+        "kind": "weird",
+        "created_at": "2026-01-01T10:00:02+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-01T10:15:02.000000+00:00",
+        "message_thread_id": null,
+        "payload": {
+          "text": "w"
+        }
+      }
+    ],
+    0,
+    0,
+    [
+      {
+        "id": 2,
+        "chat_id": 1001,
+        "kind": "task",
+        "created_at": "2026-01-01T10:00:00+00:00",
+        "attempts": 0,
+        "dedup_key": null,
+        "expires_at": "2026-01-02T10:00:00.000000+00:00",
+        "message_thread_id": 77,
+        "payload": {
+          "text": "t1",
+          "n": 1
+        }
+      }
+    ],
+    6,
+    []
+  ],
+  "rows": []
+}

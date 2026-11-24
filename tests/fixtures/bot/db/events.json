@@ -1,0 +1,319 @@
+{
+  "consts": {
+    "NOTIF_ALERT": "alert",
+    "NOTIF_CLEARED": "cleared"
+  },
+  "ops": [
+    {
+      "op": "event",
+      "type": "node_up",
+      "node": "n1",
+      "text": "нода n1 в сети",
+      "at": "2026-01-01T10:00:00+00:00"
+    },
+    {
+      "op": "event",
+      "type": "node_down",
+      "node": "n2",
+      "text": "нода n2 пропала",
+      "at": "2026-01-01T10:01:00+00:00"
+    },
+    {
+      "op": "event",
+      "type": "service_up",
+      "node": null,
+      "text": "служба без ноды",
+      "at": "2026-01-01T10:02:00.125000+00:00"
+    },
+    {
+      "op": "event",
+      "type": "node_up",
+      "node": "n2",
+      "text": "нода n2 вернулась",
+      "at": "2026-01-01T10:03:00+00:00"
+    },
+    {
+      "op": "event",
+      "type": "node_up",
+      "node": "n1",
+      "text": "нода n1 снова",
+      "at": "2026-01-01T10:04:00+00:00"
+    },
+    {
+      "op": "recent",
+      "limit": 20
+    },
+    {
+      "op": "recent",
+      "limit": 2
+    },
+    {
+      "op": "recent",
+      "limit": 20,
+      "node": "n1"
+    },
+    {
+      "op": "recent",
+      "limit": 20,
+      "node": "zz"
+    },
+    {
+      "op": "recent",
+      "limit": 20,
+      "type": "node_up"
+    },
+    {
+      "op": "recent",
+      "limit": 1,
+      "node": "n2",
+      "type": "node_up"
+    },
+    {
+      "op": "prune",
+      "keep": 3
+    },
+    {
+      "op": "prune",
+      "keep": 3
+    },
+    {
+      "op": "recent",
+      "limit": 20
+    },
+    {
+      "op": "notify",
+      "component": "c1",
+      "chat": 1001,
+      "kind": "alert",
+      "message": 11,
+      "at": "2026-01-01T10:00:00+00:00"
+    },
+    {
+      "op": "notify",
+      "component": "c1",
+      "chat": 1001,
+      "kind": "cleared",
+      "message": 12,
+      "at": "2026-01-01T10:05:00+00:00"
+    },
+    {
+      "op": "notify",
+      "component": "c1",
+      "chat": 1002,
+      "kind": "alert",
+      "message": null,
+      "at": "2026-01-01T10:06:00+00:00"
+    },
+    {
+      "op": "alert_id",
+      "component": "c1",
+      "chat": 1001
+    },
+    {
+      "op": "alert_id",
+      "component": "c1",
+      "chat": 1002
+    },
+    {
+      "op": "alert_id",
+      "component": "c1",
+      "chat": 1003
+    },
+    {
+      "op": "alert_id",
+      "component": "c2",
+      "chat": 1001
+    },
+    {
+      "op": "notify",
+      "component": "c1",
+      "chat": 1001,
+      "kind": "alert",
+      "message": 21,
+      "at": "2026-01-01T10:10:00+00:00"
+    },
+    {
+      "op": "alert_id",
+      "component": "c1",
+      "chat": 1001
+    },
+    {
+      "op": "notify",
+      "component": "c3",
+      "chat": 1001,
+      "kind": "cleared",
+      "message": 31,
+      "at": "2026-01-01T10:11:00+00:00"
+    },
+    {
+      "op": "alert_id",
+      "component": "c3",
+      "chat": 1001
+    }
+  ],
+  "results": [
+    null,
+    null,
+    null,
+    null,
+    null,
+    [
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 снова",
+        "created_at": "2026-01-01T10:04:00+00:00"
+      },
+      {
+        "event_type": "node_up",
+        "node": "n2",
+        "text": "нода n2 вернулась",
+        "created_at": "2026-01-01T10:03:00+00:00"
+      },
+      {
+        "event_type": "service_up",
+        "node": null,
+        "text": "служба без ноды",
+        "created_at": "2026-01-01T10:02:00.125000+00:00"
+      },
+      {
+        "event_type": "node_down",
+        "node": "n2",
+        "text": "нода n2 пропала",
+        "created_at": "2026-01-01T10:01:00+00:00"
+      },
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 в сети",
+        "created_at": "2026-01-01T10:00:00+00:00"
+      }
+    ],
+    [
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 снова",
+        "created_at": "2026-01-01T10:04:00+00:00"
+      },
+      {
+        "event_type": "node_up",
+        "node": "n2",
+        "text": "нода n2 вернулась",
+        "created_at": "2026-01-01T10:03:00+00:00"
+      }
+    ],
+    [
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 снова",
+        "created_at": "2026-01-01T10:04:00+00:00"
+      },
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 в сети",
+        "created_at": "2026-01-01T10:00:00+00:00"
+      }
+    ],
+    [],
+    [
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 снова",
+        "created_at": "2026-01-01T10:04:00+00:00"
+      },
+      {
+        "event_type": "node_up",
+        "node": "n2",
+        "text": "нода n2 вернулась",
+        "created_at": "2026-01-01T10:03:00+00:00"
+      },
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 в сети",
+        "created_at": "2026-01-01T10:00:00+00:00"
+      }
+    ],
+    [
+      {
+        "event_type": "node_up",
+        "node": "n2",
+        "text": "нода n2 вернулась",
+        "created_at": "2026-01-01T10:03:00+00:00"
+      }
+    ],
+    2,
+    0,
+    [
+      {
+        "event_type": "node_up",
+        "node": "n1",
+        "text": "нода n1 снова",
+        "created_at": "2026-01-01T10:04:00+00:00"
+      },
+      {
+        "event_type": "node_up",
+        "node": "n2",
+        "text": "нода n2 вернулась",
+        "created_at": "2026-01-01T10:03:00+00:00"
+      },
+      {
+        "event_type": "service_up",
+        "node": null,
+        "text": "служба без ноды",
+        "created_at": "2026-01-01T10:02:00.125000+00:00"
+      }
+    ],
+    null,
+    null,
+    null,
+    11,
+    null,
+    null,
+    null,
+    null,
+    21,
+    null,
+    null
+  ],
+  "notifications": [
+    {
+      "component_id": "c1",
+      "chat_id": 1001,
+      "kind": "alert",
+      "message_id": 21,
+      "sent_at": "2026-01-01T10:10:00+00:00"
+    },
+    {
+      "component_id": "c1",
+      "chat_id": 1001,
+      "kind": "cleared",
+      "message_id": 12,
+      "sent_at": "2026-01-01T10:05:00+00:00"
+    },
+    {
+      "component_id": "c1",
+      "chat_id": 1002,
+      "kind": "alert",
+      "message_id": null,
+      "sent_at": "2026-01-01T10:06:00+00:00"
+    },
+    {
+      "component_id": "c3",
+      "chat_id": 1001,
+      "kind": "cleared",
+      "message_id": 31,
+      "sent_at": "2026-01-01T10:11:00+00:00"
+    }
+  ],
+  "bulk": {
+    "deleted": 5,
+    "remaining": 500,
+    "newest": "b504",
+    "oldest": "b5"
+  }
+}
