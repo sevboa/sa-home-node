@@ -1,0 +1,11 @@
+INFO: task kworker/0:1:123 blocked for more than 120 seconds.
+watchdog: BUG: soft lockup - CPU#1 stuck for 22s!
+rcu: INFO: rcu_sched self-detected stall on CPU
+rcu_preempt detected stalls on CPUs/tasks
+clocksource: timekeeping watchdog on CPU1: Marking clocksource 'tsc' as unstable
+NETDEV WATCHDOG: eth0 (virtio_net): transmit queue 0 timed out
+virtio_net virtio0 eth0: TX timeout on queue: 0
+hung_task: blocked tasks
+usb 1-1: new high-speed USB device number 2
+eth0: Link is Up - 1Gbps/Full
+Blocked For More Than 30 Seconds

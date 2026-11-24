@@ -1,0 +1,196 @@
+{
+  "parse_proc_stat_cpu": {
+    "in/proc-stat-1.txt": {
+      "user": 1000,
+      "nice": 10,
+      "system": 500,
+      "idle": 8000,
+      "iowait": 200,
+      "irq": 0,
+      "softirq": 50,
+      "steal": 100
+    },
+    "in/proc-stat-2.txt": {
+      "user": 1100,
+      "nice": 10,
+      "system": 520,
+      "idle": 8500,
+      "iowait": 260,
+      "irq": 0,
+      "softirq": 60,
+      "steal": 130
+    },
+    "in/proc-stat-short.txt": {
+      "user": 1,
+      "nice": 2,
+      "system": 3,
+      "idle": 4
+    },
+    "empty": {},
+    "no_cpu_line": {}
+  },
+  "cpu_deltas": {
+    "normal": [
+      4.166666666666666,
+      8.333333333333332
+    ],
+    "same": [
+      0.0,
+      0.0
+    ],
+    "counter_reset": [
+      0.0,
+      0.0
+    ],
+    "empty_prev": [
+      1.2287334593572778,
+      2.4574669187145557
+    ],
+    "negative_steal": [
+      0.0,
+      0.0
+    ],
+    "short_fields": [
+      0.0,
+      0.0
+    ]
+  },
+  "parse_meminfo": {
+    "in/meminfo.txt": {
+      "MemTotal": 3868140,
+      "MemFree": 412000,
+      "MemAvailable": 1500000,
+      "Buffers": 10000,
+      "SwapTotal": 4000000,
+      "SwapFree": 3000000,
+      "HugePages_Total": 0
+    },
+    "empty": {}
+  },
+  "parse_loadavg": {
+    "in/loadavg.txt": 1.5,
+    "empty": null,
+    "garbage": null
+  },
+  "parse_pressure_some_avg60": {
+    "in/pressure-cpu.txt": 3.45,
+    "in/pressure-nofull.txt": 0.0,
+    "only_full": null,
+    "bad_value": null,
+    "no_avg60": null,
+    "empty": null
+  },
+  "parse_vmstat": {
+    "in/vmstat-1.txt": {
+      "nr_free_pages": 1000,
+      "oom_kill": 2,
+      "pgfault": 555
+    },
+    "in/vmstat-2.txt": {
+      "nr_free_pages": 900,
+      "oom_kill": 5,
+      "pgfault": 777
+    },
+    "empty": {}
+  },
+  "parse_proc_net_dev": {
+    "in/net-dev-1.txt": {
+      "eth0": [
+        2,
+        1,
+        1,
+        0
+      ],
+      "eth1": [
+        5,
+        0,
+        3,
+        0
+      ],
+      "wg0": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vpn0": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "veth1": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "docker0": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "in/net-dev-2.txt": {
+      "eth0": [
+        6,
+        2,
+        4,
+        0
+      ],
+      "eth1": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "wg0": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "vpn0": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "veth1": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "docker0": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "eth2": [
+        8,
+        0,
+        8,
+        0
+      ]
+    },
+    "empty": {}
+  },
+  "net_err_delta": {
+    "normal": 7,
+    "same": 0,
+    "no_prev": 0,
+    "counter_reset_only_eth1": 0
+  },
+  "parse_conntrack": {
+    "('1024\\n', '65536\\n')": 1.5625,
+    "('0', '100')": 0.0,
+    "('x', '100')": null,
+    "('10', '0')": null,
+    "('10', '-5')": null,
+    "('10', 'abc')": null,
+    "('', '')": null
+  }
+}

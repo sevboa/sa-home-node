@@ -1,0 +1,28 @@
+{
+  "coretemp-isa-0000": {
+    "Adapter": "ISA adapter",
+    "Package id 0": {
+      "temp1_input": 46.0,
+      "temp1_max": 100.0,
+      "temp1_crit": 100.0
+    },
+    "Core 0": {
+      "temp2_input": 44.0,
+      "temp2_max": 100.0
+    }
+  },
+  "acpitz-acpi-0": {
+    "temp1": {
+      "temp1_input": 27.8,
+      "temp1_crit": 105.0
+    },
+    "fan1": {
+      "fan1_min": 0
+    },
+    "temp2": {
+      "temp2_crit": 105.0,
+      "temp2_input": 29
+    }
+  },
+  "k10temp-pci-00c3": "not-a-dict"
+}

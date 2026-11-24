@@ -1,0 +1,445 @@
+{
+  "cpu_busy_pct": {
+    "normal": 22.22222222222222,
+    "same": 0.0,
+    "counter_reset": 0.0,
+    "empty_prev": 17.20226843100189,
+    "both_empty": 0.0,
+    "all_idle": 0.0,
+    "iowait_counts_as_idle": 0.0,
+    "all_busy": 100.0,
+    "idle_went_back": 0.0
+  },
+  "parse_loadavgs": {
+    "in/loadavg.txt": [
+      1.5,
+      1.2,
+      0.9
+    ],
+    "empty": null,
+    "garbage": null,
+    "two_fields": null,
+    "partial_garbage": null,
+    "integers": [
+      1.0,
+      2.0,
+      3.0
+    ],
+    "only_three": [
+      0.01,
+      0.02,
+      0.03
+    ],
+    "negative": [
+      -1.0,
+      0.5,
+      0.5
+    ]
+  },
+  "parse_uptime": {
+    "in/uptime.txt": 12345.67,
+    "empty": null,
+    "whitespace": null,
+    "garbage": null,
+    "single_field": 42.0,
+    "zero": 0.0
+  },
+  "parse_net_bytes": {
+    "in/net-dev-1.txt": {
+      "lo": [
+        1000,
+        1000
+      ],
+      "eth0": [
+        5000,
+        4000
+      ],
+      "eth1": [
+        7000,
+        6000
+      ],
+      "wg0": [
+        9000,
+        8000
+      ],
+      "vpn0": [
+        3000,
+        2000
+      ],
+      "veth1": [
+        100,
+        200
+      ],
+      "docker0": [
+        500,
+        600
+      ]
+    },
+    "in/net-dev-2.txt": {
+      "lo": [
+        2000,
+        2000
+      ],
+      "eth0": [
+        6000,
+        5000
+      ],
+      "eth1": [
+        100,
+        100
+      ],
+      "wg0": [
+        19000,
+        18000
+      ],
+      "vpn0": [
+        5000,
+        3500
+      ],
+      "veth1": [
+        300,
+        400
+      ],
+      "docker0": [
+        900,
+        1000
+      ],
+      "eth2": [
+        100,
+        100
+      ]
+    },
+    "empty": {},
+    "header_only": {},
+    "line_without_colon": {},
+    "huge_counters": {
+      "eth0": [
+        18446744073709551615,
+        18446744073709551614
+      ]
+    },
+    "negative_and_text": {
+      "eth0": [
+        -5,
+        7
+      ]
+    },
+    "exactly_16_fields": {
+      "e": [
+        1,
+        2
+      ]
+    },
+    "fifteen_fields": {}
+  },
+  "net_rates": {
+    "normal_all": {
+      "lo": [
+        100.0,
+        100.0
+      ],
+      "eth0": [
+        100.0,
+        100.0
+      ],
+      "eth1": [
+        0.0,
+        0.0
+      ],
+      "wg0": [
+        1000.0,
+        1000.0
+      ],
+      "vpn0": [
+        200.0,
+        150.0
+      ],
+      "veth1": [
+        20.0,
+        20.0
+      ],
+      "docker0": [
+        40.0,
+        40.0
+      ]
+    },
+    "normal_eth_only": {
+      "eth0": [
+        100.0,
+        100.0
+      ],
+      "eth1": [
+        0.0,
+        0.0
+      ]
+    },
+    "include_none": {},
+    "window_zero": {
+      "eth0": [
+        1000000.0,
+        1000000.0
+      ]
+    },
+    "window_negative": {
+      "eth0": [
+        1000000.0,
+        1000000.0
+      ]
+    },
+    "window_fraction": {
+      "eth0": [
+        400.0,
+        400.0
+      ]
+    },
+    "empty_prev": {},
+    "empty_cur": {},
+    "iface_vanished": {
+      "eth0": [
+        20.0,
+        40.0
+      ]
+    },
+    "iface_appeared": {
+      "eth0": [
+        20.0,
+        40.0
+      ]
+    },
+    "counter_reset_rx": {
+      "eth0": [
+        0.0,
+        50.0
+      ]
+    },
+    "counter_reset_tx": {
+      "eth0": [
+        50.0,
+        0.0
+      ]
+    },
+    "same": {
+      "lo": [
+        0.0,
+        0.0
+      ],
+      "eth0": [
+        0.0,
+        0.0
+      ],
+      "eth1": [
+        0.0,
+        0.0
+      ],
+      "wg0": [
+        0.0,
+        0.0
+      ],
+      "vpn0": [
+        0.0,
+        0.0
+      ],
+      "veth1": [
+        0.0,
+        0.0
+      ],
+      "docker0": [
+        0.0,
+        0.0
+      ],
+      "eth2": [
+        0.0,
+        0.0
+      ]
+    }
+  },
+  "parse_mount_points": {
+    "in/mounts.txt": [
+      "/",
+      "/mnt/data",
+      "/mnt/my disk"
+    ],
+    "in/mounts-edge.txt": [
+      "/mnt/x",
+      "/mnt/y",
+      "/"
+    ],
+    "empty": []
+  },
+  "metric_iface": {
+    "table": [
+      {
+        "name": "eth0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "eth0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "enp1s0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "enp1s0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "wlan0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "wlan0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "wg0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "wg0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "vpn0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "vpn0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "lo",
+        "has_device": true,
+        "metric": false
+      },
+      {
+        "name": "lo",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "lo0",
+        "has_device": true,
+        "metric": false
+      },
+      {
+        "name": "lo0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "veth1",
+        "has_device": true,
+        "metric": false
+      },
+      {
+        "name": "veth1",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "vethabc",
+        "has_device": true,
+        "metric": false
+      },
+      {
+        "name": "vethabc",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "vprobe0",
+        "has_device": true,
+        "metric": false
+      },
+      {
+        "name": "vprobe0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "docker0",
+        "has_device": true,
+        "metric": false
+      },
+      {
+        "name": "docker0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "br-1a2b",
+        "has_device": true,
+        "metric": false
+      },
+      {
+        "name": "br-1a2b",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "bridge0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "bridge0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "virbr0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "virbr0",
+        "has_device": false,
+        "metric": false
+      }
+    ],
+    "overlay_vpn0": [
+      {
+        "name": "vpn0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "vpn0",
+        "has_device": false,
+        "metric": true
+      },
+      {
+        "name": "wg0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "wg0",
+        "has_device": false,
+        "metric": false
+      },
+      {
+        "name": "eth0",
+        "has_device": true,
+        "metric": true
+      },
+      {
+        "name": "eth0",
+        "has_device": false,
+        "metric": false
+      }
+    ]
+  }
+}

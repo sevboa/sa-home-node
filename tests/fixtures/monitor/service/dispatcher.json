@@ -1,0 +1,180 @@
+[
+  {
+    "delivered_count": 0,
+    "results": {
+      "dispatch_alert": {
+        "delivered": false,
+        "handled": false
+      },
+      "dispatch_clear": {
+        "delivered": false,
+        "handled": false
+      },
+      "dispatch_smart": {
+        "delivered": false,
+        "handled": false
+      },
+      "dispatch_host_alert": {
+        "delivered": false,
+        "handled": false
+      },
+      "dispatch_host_clear": {
+        "delivered": false,
+        "handled": false
+      }
+    },
+    "broadcasts": [
+      {
+        "event_type": "overheat_started",
+        "data": {
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "temperature_c": 86.5,
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "overheat_cleared",
+        "data": {
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "temperature_c": 60.0,
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "smart_degraded",
+        "data": {
+          "component_id": "disk:/dev/sda",
+          "label": "Disk-A",
+          "health_from": "ok",
+          "health_to": "warning",
+          "attr_changes": [
+            {
+              "attr_id": 5,
+              "name": "Reallocated_Sector_Ct",
+              "old": 0,
+              "new": 3
+            }
+          ],
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "host_degraded",
+        "data": {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 14.0,
+          "unit": "%",
+          "hint": "h",
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "host_recovered",
+        "data": {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "hint": "h",
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      }
+    ]
+  },
+  {
+    "delivered_count": 2,
+    "results": {
+      "dispatch_alert": {
+        "delivered": true,
+        "handled": true
+      },
+      "dispatch_clear": {
+        "delivered": true,
+        "handled": true
+      },
+      "dispatch_smart": {
+        "delivered": true,
+        "handled": true
+      },
+      "dispatch_host_alert": {
+        "delivered": true,
+        "handled": true
+      },
+      "dispatch_host_clear": {
+        "delivered": true,
+        "handled": true
+      }
+    },
+    "broadcasts": [
+      {
+        "event_type": "overheat_started",
+        "data": {
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "temperature_c": 86.5,
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "overheat_cleared",
+        "data": {
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "temperature_c": 60.0,
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "smart_degraded",
+        "data": {
+          "component_id": "disk:/dev/sda",
+          "label": "Disk-A",
+          "health_from": "ok",
+          "health_to": "warning",
+          "attr_changes": [
+            {
+              "attr_id": 5,
+              "name": "Reallocated_Sector_Ct",
+              "old": 0,
+              "new": 3
+            }
+          ],
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "host_degraded",
+        "data": {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 14.0,
+          "unit": "%",
+          "hint": "h",
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      },
+      {
+        "event_type": "host_recovered",
+        "data": {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "hint": "h",
+          "at": "2026-03-01T00:10:00+00:00"
+        }
+      }
+    ]
+  }
+]

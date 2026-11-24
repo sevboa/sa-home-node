@@ -1,0 +1,175 @@
+{
+  "blockdevices": [
+    {
+      "name": "mmcblk0",
+      "type": "disk",
+      "mountpoint": null,
+      "tran": null,
+      "model": null,
+      "path": "/dev/mmcblk0",
+      "rota": false,
+      "size": 61530439680,
+      "children": [
+        {
+          "name": "mmcblk0p1",
+          "type": "part",
+          "mountpoint": "/boot/efi",
+          "tran": null,
+          "model": null,
+          "path": "/dev/mmcblk0p1",
+          "rota": false,
+          "size": 1000
+        },
+        {
+          "name": "mmcblk0p2",
+          "type": "part",
+          "tran": null,
+          "model": null,
+          "path": "/dev/mmcblk0p2",
+          "rota": false,
+          "size": 1000,
+          "mountpoints": [
+            "/"
+          ]
+        },
+        {
+          "name": "mmcblk0p3",
+          "type": "part",
+          "tran": null,
+          "model": null,
+          "path": "/dev/mmcblk0p3",
+          "rota": false,
+          "size": 1000,
+          "mountpoints": [
+            "[SWAP]"
+          ]
+        },
+        {
+          "name": "mmcblk0p4",
+          "type": "part",
+          "tran": null,
+          "model": null,
+          "path": "/dev/mmcblk0p4",
+          "rota": false,
+          "size": 1000,
+          "mountpoints": [
+            null
+          ]
+        }
+      ]
+    },
+    {
+      "name": "mmcblk0boot0",
+      "type": "disk",
+      "mountpoint": null,
+      "tran": null,
+      "model": null,
+      "path": "/dev/mmcblk0boot0",
+      "rota": false,
+      "size": 4194304,
+      "children": []
+    },
+    {
+      "name": "mmcblk0boot1",
+      "type": "disk",
+      "mountpoint": null,
+      "tran": null,
+      "model": null,
+      "path": "/dev/mmcblk0boot1",
+      "rota": false,
+      "size": 4194304,
+      "children": []
+    },
+    {
+      "name": "sda",
+      "type": "disk",
+      "mountpoint": null,
+      "tran": "usb",
+      "model": "Disk-A",
+      "path": "/dev/sda",
+      "rota": "1",
+      "size": 320072933376,
+      "children": [
+        {
+          "name": "sda1",
+          "type": "part",
+          "tran": null,
+          "model": null,
+          "path": "/dev/sda1",
+          "rota": false,
+          "size": 1000,
+          "mountpoints": [
+            "/mnt/data"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "sdb",
+      "type": "disk",
+      "mountpoint": null,
+      "tran": "usb",
+      "model": "Disk-B",
+      "path": "/dev/sdb",
+      "rota": true,
+      "size": 250059350016,
+      "children": [
+        {
+          "name": "sdb1",
+          "type": "part",
+          "mountpoint": "/mnt/scratch",
+          "tran": null,
+          "model": null,
+          "path": "/dev/sdb1",
+          "rota": false,
+          "size": 1000
+        }
+      ]
+    },
+    {
+      "name": "sdc",
+      "type": "disk",
+      "mountpoint": null,
+      "tran": "usb",
+      "model": "Card-Reader",
+      "path": "/dev/sdc",
+      "rota": "1",
+      "size": "0",
+      "children": []
+    },
+    {
+      "name": "nvme0n1",
+      "type": "disk",
+      "mountpoint": null,
+      "tran": "nvme",
+      "model": "Disk-C",
+      "path": "/dev/nvme0n1",
+      "rota": false,
+      "size": 512110190592,
+      "children": [
+        {
+          "name": "nvme0n1p1",
+          "type": "part",
+          "mountpoint": "/mnt/nvme",
+          "tran": null,
+          "model": null,
+          "path": "/dev/nvme0n1p1",
+          "rota": false,
+          "size": 1000
+        }
+      ]
+    },
+    {
+      "name": "loop0",
+      "type": "loop",
+      "mountpoint": "/snap/core",
+      "path": "/dev/loop0"
+    },
+    {
+      "name": "sr0",
+      "type": "rom",
+      "mountpoint": null,
+      "path": "/dev/sr0"
+    }
+  ]
+}

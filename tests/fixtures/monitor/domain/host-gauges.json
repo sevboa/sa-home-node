@@ -1,0 +1,1132 @@
+{
+  "constants": {
+    "INSTANCE_LABEL_MOUNT": "mount",
+    "INSTANCE_LABEL_IFACE": "iface"
+  },
+  "gauges": {
+    "cpu_busy_pct": {
+      "metric": "cpu_busy_pct",
+      "label": "CPU загрузка",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "mem_used_pct": {
+      "metric": "mem_used_pct",
+      "label": "RAM занято",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "mem_available_bytes": {
+      "metric": "mem_available_bytes",
+      "label": "RAM доступно",
+      "unit": "B",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "load1": {
+      "metric": "load1",
+      "label": "load 1 мин",
+      "unit": "",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "load5": {
+      "metric": "load5",
+      "label": "load 5 мин",
+      "unit": "",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "load15": {
+      "metric": "load15",
+      "label": "load 15 мин",
+      "unit": "",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "disk_pct": {
+      "metric": "disk_pct",
+      "label": "диск заполнен",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": "mount"
+    },
+    "net_rx_bps": {
+      "metric": "net_rx_bps",
+      "label": "сеть приём",
+      "unit": "B/s",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": "iface"
+    },
+    "net_tx_bps": {
+      "metric": "net_tx_bps",
+      "label": "сеть отдача",
+      "unit": "B/s",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": "iface"
+    },
+    "uptime_s": {
+      "metric": "uptime_s",
+      "label": "аптайм",
+      "unit": "s",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "procs": {
+      "metric": "procs",
+      "label": "процессов",
+      "unit": "",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    }
+  },
+  "gauge_keys": [
+    "cpu_busy_pct",
+    "mem_used_pct",
+    "mem_available_bytes",
+    "load1",
+    "load5",
+    "load15",
+    "disk_pct",
+    "net_rx_bps",
+    "net_tx_bps",
+    "uptime_s",
+    "procs"
+  ],
+  "metric_spec": {
+    "steal_pct": {
+      "metric": "steal_pct",
+      "label": "CPU steal",
+      "unit": "%",
+      "direction": "above",
+      "warn": 10.0,
+      "crit": 25.0,
+      "hysteresis": 3.0,
+      "hint": "вероятна переподписка ноды провайдером",
+      "instance_label": null
+    },
+    "load_per_core": {
+      "metric": "load_per_core",
+      "label": "load/ядро",
+      "unit": "",
+      "direction": "above",
+      "warn": 1.5,
+      "crit": 4.0,
+      "hysteresis": 0.4,
+      "hint": "нода перегружена",
+      "instance_label": null
+    },
+    "cpu_busy_pct": {
+      "metric": "cpu_busy_pct",
+      "label": "CPU загрузка",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "disk_pct": {
+      "metric": "disk_pct",
+      "label": "диск заполнен",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": "mount"
+    },
+    "net_rx_bps": {
+      "metric": "net_rx_bps",
+      "label": "сеть приём",
+      "unit": "B/s",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": "iface"
+    },
+    "uptime_s": {
+      "metric": "uptime_s",
+      "label": "аптайм",
+      "unit": "s",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.0,
+      "hint": "",
+      "instance_label": null
+    },
+    "nope": null,
+    "": null,
+    "host:steal_pct": null
+  },
+  "metric_keys_disjoint_from_gauges": [],
+  "instance_of": [
+    {
+      "component_id": "host:disk_pct:/mnt/data",
+      "metric": "disk_pct",
+      "instance": "/mnt/data"
+    },
+    {
+      "component_id": "host:disk_pct:/",
+      "metric": "disk_pct",
+      "instance": "/"
+    },
+    {
+      "component_id": "host:disk_pct:/mnt/my disk",
+      "metric": "disk_pct",
+      "instance": "/mnt/my disk"
+    },
+    {
+      "component_id": "host:disk_pct:",
+      "metric": "disk_pct",
+      "instance": ""
+    },
+    {
+      "component_id": "host:disk_pct",
+      "metric": "disk_pct",
+      "instance": null
+    },
+    {
+      "component_id": "host:net_rx_bps:eth0",
+      "metric": "net_rx_bps",
+      "instance": "eth0"
+    },
+    {
+      "component_id": "host:net_rx_bps:eth0",
+      "metric": "net_tx_bps",
+      "instance": null
+    },
+    {
+      "component_id": "host:load1",
+      "metric": "load1",
+      "instance": null
+    },
+    {
+      "component_id": "host:steal_pct",
+      "metric": "steal_pct",
+      "instance": null
+    },
+    {
+      "component_id": "host:a:b:c",
+      "metric": "a",
+      "instance": "b:c"
+    },
+    {
+      "component_id": "disk_pct:/",
+      "metric": "disk_pct",
+      "instance": null
+    },
+    {
+      "component_id": "",
+      "metric": "",
+      "instance": null
+    }
+  ],
+  "band_without_thresholds": {
+    "steal_pct": {
+      "spec": {
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "unit": "%",
+        "direction": "above",
+        "warn": null,
+        "crit": null,
+        "hysteresis": 3.0,
+        "hint": "вероятна переподписка ноды провайдером",
+        "instance_label": null
+      },
+      "bands": [
+        {
+          "value": -1.0,
+          "band": "mid"
+        },
+        {
+          "value": 0.0,
+          "band": "mid"
+        },
+        {
+          "value": 0.5,
+          "band": "mid"
+        },
+        {
+          "value": 50.0,
+          "band": "mid"
+        },
+        {
+          "value": 100.0,
+          "band": "mid"
+        },
+        {
+          "value": 1000000000.0,
+          "band": "mid"
+        }
+      ]
+    },
+    "mem_available_pct": {
+      "spec": {
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "unit": "%",
+        "direction": "below",
+        "warn": null,
+        "crit": null,
+        "hysteresis": 4.0,
+        "hint": "мало свободной памяти",
+        "instance_label": null
+      },
+      "bands": [
+        {
+          "value": -1.0,
+          "band": "mid"
+        },
+        {
+          "value": 0.0,
+          "band": "mid"
+        },
+        {
+          "value": 0.5,
+          "band": "mid"
+        },
+        {
+          "value": 50.0,
+          "band": "mid"
+        },
+        {
+          "value": 100.0,
+          "band": "mid"
+        },
+        {
+          "value": 1000000000.0,
+          "band": "mid"
+        }
+      ]
+    },
+    "load_per_core": {
+      "spec": {
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "unit": "",
+        "direction": "above",
+        "warn": null,
+        "crit": null,
+        "hysteresis": 0.4,
+        "hint": "нода перегружена",
+        "instance_label": null
+      },
+      "bands": [
+        {
+          "value": -1.0,
+          "band": "mid"
+        },
+        {
+          "value": 0.0,
+          "band": "mid"
+        },
+        {
+          "value": 0.5,
+          "band": "mid"
+        },
+        {
+          "value": 50.0,
+          "band": "mid"
+        },
+        {
+          "value": 100.0,
+          "band": "mid"
+        },
+        {
+          "value": 1000000000.0,
+          "band": "mid"
+        }
+      ]
+    }
+  },
+  "gauge_bands": {
+    "cpu_busy_pct": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "mem_used_pct": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "mem_available_bytes": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "load1": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "load5": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "load15": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "disk_pct": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "net_rx_bps": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "net_tx_bps": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "uptime_s": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ],
+    "procs": [
+      {
+        "value": -1.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.0,
+        "band": "mid"
+      },
+      {
+        "value": 0.5,
+        "band": "mid"
+      },
+      {
+        "value": 50.0,
+        "band": "mid"
+      },
+      {
+        "value": 100.0,
+        "band": "mid"
+      },
+      {
+        "value": 1000000000.0,
+        "band": "mid"
+      }
+    ]
+  },
+  "without_thresholds_all": {
+    "steal_pct": {
+      "metric": "steal_pct",
+      "label": "CPU steal",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 3.0,
+      "hint": "вероятна переподписка ноды провайдером",
+      "instance_label": null
+    },
+    "iowait_pct": {
+      "metric": "iowait_pct",
+      "label": "iowait",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 4.0,
+      "hint": "хранилище ноды не успевает за нагрузкой",
+      "instance_label": null
+    },
+    "load_per_core": {
+      "metric": "load_per_core",
+      "label": "load/ядро",
+      "unit": "",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 0.4,
+      "hint": "нода перегружена",
+      "instance_label": null
+    },
+    "mem_available_pct": {
+      "metric": "mem_available_pct",
+      "label": "RAM свободно",
+      "unit": "%",
+      "direction": "below",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 4.0,
+      "hint": "мало свободной памяти",
+      "instance_label": null
+    },
+    "swap_used_pct": {
+      "metric": "swap_used_pct",
+      "label": "swap занято",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 6.0,
+      "hint": "активный своппинг — памяти не хватает",
+      "instance_label": null
+    },
+    "disk_used_pct": {
+      "metric": "disk_used_pct",
+      "label": "диск / заполнен",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 3.0,
+      "hint": "мало места на корневом разделе",
+      "instance_label": null
+    },
+    "psi_cpu": {
+      "metric": "psi_cpu",
+      "label": "PSI cpu",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 5.0,
+      "hint": "давление по CPU — задачи ждут процессор",
+      "instance_label": null
+    },
+    "psi_memory": {
+      "metric": "psi_memory",
+      "label": "PSI mem",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 5.0,
+      "hint": "давление по памяти",
+      "instance_label": null
+    },
+    "psi_io": {
+      "metric": "psi_io",
+      "label": "PSI io",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 5.0,
+      "hint": "давление по I/O",
+      "instance_label": null
+    },
+    "oom_kills": {
+      "metric": "oom_kills",
+      "label": "OOM-kill",
+      "unit": "/мин",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 1.0,
+      "hint": "ядро убивало процессы из-за нехватки памяти",
+      "instance_label": null
+    },
+    "conntrack_pct": {
+      "metric": "conntrack_pct",
+      "label": "conntrack",
+      "unit": "%",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 3.0,
+      "hint": "таблица conntrack почти полна — новые соединения дропаются",
+      "instance_label": null
+    },
+    "net_err_rate": {
+      "metric": "net_err_rate",
+      "label": "ошибки NIC",
+      "unit": "/мин",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 1.0,
+      "hint": "интерфейс теряет пакеты — `ip -s link`, проверь линк/драйвер virtio",
+      "instance_label": null
+    },
+    "kernel_stall_events": {
+      "metric": "kernel_stall_events",
+      "label": "стойла ядра",
+      "unit": "/скан",
+      "direction": "above",
+      "warn": null,
+      "crit": null,
+      "hysteresis": 1.0,
+      "hint": "ядро логировало стойла — вероятны фризы VM гипервизором",
+      "instance_label": null
+    }
+  },
+  "without_then_with_thresholds": {
+    "metric": "steal_pct",
+    "label": "CPU steal",
+    "unit": "%",
+    "direction": "above",
+    "warn": 7.0,
+    "crit": 20.0,
+    "hysteresis": 3.0,
+    "hint": "вероятна переподписка ноды провайдером",
+    "instance_label": null
+  },
+  "with_thresholds_keeps_instance_label": {
+    "metric": "disk_pct",
+    "label": "диск заполнен",
+    "unit": "%",
+    "direction": "above",
+    "warn": 1.0,
+    "crit": 2.0,
+    "hysteresis": 0.0,
+    "hint": "",
+    "instance_label": "mount"
+  },
+  "gauge_diff": [
+    {
+      "metric": "cpu_busy_pct",
+      "component_id": "host:cpu_busy_pct",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "value": 1.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:cpu_busy_pct",
+                "metric": "cpu_busy_pct",
+                "label": "CPU загрузка",
+                "value": 1.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "value": 99.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:cpu_busy_pct",
+                "metric": "cpu_busy_pct",
+                "label": "CPU загрузка",
+                "value": 99.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "value": 100.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:cpu_busy_pct",
+                "metric": "cpu_busy_pct",
+                "label": "CPU загрузка",
+                "value": 100.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "value": 100.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:cpu_busy_pct",
+                "metric": "cpu_busy_pct",
+                "label": "CPU загрузка",
+                "value": 100.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "value": 2.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:cpu_busy_pct",
+                "metric": "cpu_busy_pct",
+                "label": "CPU загрузка",
+                "value": 2.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    },
+    {
+      "metric": "disk_pct",
+      "component_id": "host:disk_pct:/mnt/data",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "value": 1.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:disk_pct:/mnt/data",
+                "metric": "disk_pct",
+                "label": "диск заполнен",
+                "value": 1.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "value": 99.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:disk_pct:/mnt/data",
+                "metric": "disk_pct",
+                "label": "диск заполнен",
+                "value": 99.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "value": 100.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:disk_pct:/mnt/data",
+                "metric": "disk_pct",
+                "label": "диск заполнен",
+                "value": 100.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "value": 100.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:disk_pct:/mnt/data",
+                "metric": "disk_pct",
+                "label": "диск заполнен",
+                "value": 100.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "value": 2.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:disk_pct:/mnt/data",
+                "metric": "disk_pct",
+                "label": "диск заполнен",
+                "value": 2.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    }
+  ],
+  "stripped_threshold_diff": [
+    {
+      "now": "2026-01-01T00:00:00+00:00",
+      "value": 1.0,
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 1.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "now": "2026-01-01T00:01:00+00:00",
+      "value": 50.0,
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 50.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "now": "2026-01-01T00:02:00+00:00",
+      "value": 99.0,
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 99.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "now": "2026-01-01T00:03:00+00:00",
+      "value": 0.0,
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 0.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          }
+        ],
+        "transitions": []
+      }
+    }
+  ]
+}

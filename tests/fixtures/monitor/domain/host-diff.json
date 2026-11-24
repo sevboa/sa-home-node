@@ -1,0 +1,1939 @@
+{
+  "scenarios": [
+    {
+      "name": "steal-above-3-3",
+      "metric": "steal_pct",
+      "thresholds": {
+        "warn": 10.0,
+        "crit": 25.0
+      },
+      "consecutive_to_alert": 3,
+      "consecutive_to_clear": 3,
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "value": 2.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 2.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "value": 11.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 11.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "value": 12.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 12.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 2,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "value": 9.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 9.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "value": 11.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 11.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "value": 15.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 15.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 2,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "value": 30.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 30.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 30.0,
+                "unit": "%",
+                "hint": "вероятна переподписка ноды провайдером",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "value": 8.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 8.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "value": 7.5,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 7.5,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:09:00+00:00",
+          "value": 6.9,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 6.9,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:10:00+00:00",
+          "value": 7.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 7.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 2,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:11:00+00:00",
+          "value": 5.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 5.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:steal_pct",
+                "metric": "steal_pct",
+                "label": "CPU steal",
+                "value": 5.0,
+                "unit": "%",
+                "hint": "вероятна переподписка ноды провайдером",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "at": "2026-01-01T00:11:00+00:00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "mem-below-2-2",
+      "metric": "mem_available_pct",
+      "thresholds": {
+        "warn": 15.0,
+        "crit": 7.0
+      },
+      "consecutive_to_alert": 2,
+      "consecutive_to_clear": 2,
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "value": 40.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 40.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "value": 20.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 20.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "value": 15.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 15.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "value": 14.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 14.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 14.0,
+                "unit": "%",
+                "hint": "мало свободной памяти",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "at": "2026-01-01T00:03:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "value": 10.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 10.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "value": 16.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 16.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "value": 18.9,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 18.9,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "value": 19.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 19.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "value": 19.1,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 19.1,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 19.1,
+                "unit": "%",
+                "hint": "мало свободной памяти",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "at": "2026-01-01T00:08:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:09:00+00:00",
+          "value": 25.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 25.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:10:00+00:00",
+          "value": 30.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 30.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "mem-below-override",
+      "metric": "mem_available_pct",
+      "thresholds": {
+        "warn": 30.0,
+        "crit": 10.0
+      },
+      "consecutive_to_alert": 2,
+      "consecutive_to_clear": 2,
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "value": 40.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 40.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "value": 31.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 31.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "value": 30.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 30.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "value": 29.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 29.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 29.0,
+                "unit": "%",
+                "hint": "мало свободной памяти",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "at": "2026-01-01T00:03:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "value": 33.9,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 33.9,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "value": 34.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 34.0,
+                "unit": "%",
+                "status": "alerting",
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "value": 35.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 35.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 35.0,
+                "unit": "%",
+                "hint": "мало свободной памяти",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "value": 36.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:mem_available_pct",
+                "metric": "mem_available_pct",
+                "label": "RAM свободно",
+                "value": 36.0,
+                "unit": "%",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "oom-1-1",
+      "metric": "oom_kills",
+      "thresholds": {
+        "warn": 1.0,
+        "crit": 1.0
+      },
+      "consecutive_to_alert": 1,
+      "consecutive_to_clear": 1,
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "value": 0.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "value": 0.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "value": 2.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 2.0,
+                "unit": "/мин",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 2.0,
+                "unit": "/мин",
+                "hint": "ядро убивало процессы из-за нехватки памяти",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "at": "2026-01-01T00:02:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "value": 1.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 1.0,
+                "unit": "/мин",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "value": 0.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "hint": "ядро убивало процессы из-за нехватки памяти",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "at": "2026-01-01T00:04:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "value": 0.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "value": 1.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 1.0,
+                "unit": "/мин",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 1.0,
+                "unit": "/мин",
+                "hint": "ядро убивало процессы из-за нехватки памяти",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "value": 0.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "hint": "ядро убивало процессы из-за нехватки памяти",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "at": "2026-01-01T00:07:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "value": 0.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:oom_kills",
+                "metric": "oom_kills",
+                "label": "OOM-kill",
+                "value": 0.0,
+                "unit": "/мин",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "load-per-core-3-3",
+      "metric": "load_per_core",
+      "thresholds": {
+        "warn": 1.5,
+        "crit": 4.0
+      },
+      "consecutive_to_alert": 3,
+      "consecutive_to_clear": 3,
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "value": 0.5,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 0.5,
+                "unit": "",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "value": 1.6,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.6,
+                "unit": "",
+                "status": "ok",
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "value": 1.5,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.5,
+                "unit": "",
+                "status": "ok",
+                "consecutive_count": 2,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "value": 1.4,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.4,
+                "unit": "",
+                "status": "ok",
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "value": 1.6,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.6,
+                "unit": "",
+                "status": "ok",
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "value": 1.7,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.7,
+                "unit": "",
+                "status": "ok",
+                "consecutive_count": 2,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "value": 2.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 2.0,
+                "unit": "",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 2.0,
+                "unit": "",
+                "hint": "нода перегружена",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "value": 1.2,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.2,
+                "unit": "",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "value": 1.1,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.1,
+                "unit": "",
+                "status": "alerting",
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:09:00+00:00",
+          "value": 1.0,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.0,
+                "unit": "",
+                "status": "alerting",
+                "consecutive_count": 2,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:10:00+00:00",
+          "value": 1.2,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 1.2,
+                "unit": "",
+                "status": "alerting",
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:11:00+00:00",
+          "value": 0.5,
+          "diff": {
+            "states": [
+              {
+                "component_id": "host:load_per_core",
+                "metric": "load_per_core",
+                "label": "load/ядро",
+                "value": 0.5,
+                "unit": "",
+                "status": "alerting",
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    }
+  ],
+  "bands": {
+    "steal_pct": [
+      {
+        "value": 6.0,
+        "band": "under"
+      },
+      {
+        "value": 7.0,
+        "band": "under"
+      },
+      {
+        "value": 7.1,
+        "band": "mid"
+      },
+      {
+        "value": 9.9,
+        "band": "mid"
+      },
+      {
+        "value": 10.0,
+        "band": "over"
+      },
+      {
+        "value": 10.1,
+        "band": "over"
+      },
+      {
+        "value": 14.0,
+        "band": "over"
+      }
+    ],
+    "iowait_pct": [
+      {
+        "value": 10.0,
+        "band": "under"
+      },
+      {
+        "value": 11.0,
+        "band": "under"
+      },
+      {
+        "value": 11.1,
+        "band": "mid"
+      },
+      {
+        "value": 14.9,
+        "band": "mid"
+      },
+      {
+        "value": 15.0,
+        "band": "over"
+      },
+      {
+        "value": 15.1,
+        "band": "over"
+      },
+      {
+        "value": 20.0,
+        "band": "over"
+      }
+    ],
+    "load_per_core": [
+      {
+        "value": 0.1,
+        "band": "under"
+      },
+      {
+        "value": 1.1,
+        "band": "under"
+      },
+      {
+        "value": 1.2,
+        "band": "mid"
+      },
+      {
+        "value": 1.4,
+        "band": "mid"
+      },
+      {
+        "value": 1.5,
+        "band": "over"
+      },
+      {
+        "value": 1.6,
+        "band": "over"
+      },
+      {
+        "value": 2.9,
+        "band": "over"
+      }
+    ],
+    "mem_available_pct": [
+      {
+        "value": 10.0,
+        "band": "over"
+      },
+      {
+        "value": 14.9,
+        "band": "over"
+      },
+      {
+        "value": 15.0,
+        "band": "over"
+      },
+      {
+        "value": 15.1,
+        "band": "mid"
+      },
+      {
+        "value": 18.9,
+        "band": "mid"
+      },
+      {
+        "value": 19.0,
+        "band": "under"
+      },
+      {
+        "value": 20.0,
+        "band": "under"
+      }
+    ],
+    "swap_used_pct": [
+      {
+        "value": 18.0,
+        "band": "under"
+      },
+      {
+        "value": 19.0,
+        "band": "under"
+      },
+      {
+        "value": 19.1,
+        "band": "mid"
+      },
+      {
+        "value": 24.9,
+        "band": "mid"
+      },
+      {
+        "value": 25.0,
+        "band": "over"
+      },
+      {
+        "value": 25.1,
+        "band": "over"
+      },
+      {
+        "value": 32.0,
+        "band": "over"
+      }
+    ],
+    "disk_used_pct": [
+      {
+        "value": 76.0,
+        "band": "under"
+      },
+      {
+        "value": 77.0,
+        "band": "under"
+      },
+      {
+        "value": 77.1,
+        "band": "mid"
+      },
+      {
+        "value": 79.9,
+        "band": "mid"
+      },
+      {
+        "value": 80.0,
+        "band": "over"
+      },
+      {
+        "value": 80.1,
+        "band": "over"
+      },
+      {
+        "value": 84.0,
+        "band": "over"
+      }
+    ],
+    "psi_cpu": [
+      {
+        "value": 14.0,
+        "band": "under"
+      },
+      {
+        "value": 15.0,
+        "band": "under"
+      },
+      {
+        "value": 15.1,
+        "band": "mid"
+      },
+      {
+        "value": 19.9,
+        "band": "mid"
+      },
+      {
+        "value": 20.0,
+        "band": "over"
+      },
+      {
+        "value": 20.1,
+        "band": "over"
+      },
+      {
+        "value": 26.0,
+        "band": "over"
+      }
+    ],
+    "psi_memory": [
+      {
+        "value": 14.0,
+        "band": "under"
+      },
+      {
+        "value": 15.0,
+        "band": "under"
+      },
+      {
+        "value": 15.1,
+        "band": "mid"
+      },
+      {
+        "value": 19.9,
+        "band": "mid"
+      },
+      {
+        "value": 20.0,
+        "band": "over"
+      },
+      {
+        "value": 20.1,
+        "band": "over"
+      },
+      {
+        "value": 26.0,
+        "band": "over"
+      }
+    ],
+    "psi_io": [
+      {
+        "value": 14.0,
+        "band": "under"
+      },
+      {
+        "value": 15.0,
+        "band": "under"
+      },
+      {
+        "value": 15.1,
+        "band": "mid"
+      },
+      {
+        "value": 19.9,
+        "band": "mid"
+      },
+      {
+        "value": 20.0,
+        "band": "over"
+      },
+      {
+        "value": 20.1,
+        "band": "over"
+      },
+      {
+        "value": 26.0,
+        "band": "over"
+      }
+    ],
+    "oom_kills": [
+      {
+        "value": -1.0,
+        "band": "under"
+      },
+      {
+        "value": 0.0,
+        "band": "under"
+      },
+      {
+        "value": 0.1,
+        "band": "mid"
+      },
+      {
+        "value": 0.9,
+        "band": "mid"
+      },
+      {
+        "value": 1.0,
+        "band": "over"
+      },
+      {
+        "value": 1.1,
+        "band": "over"
+      },
+      {
+        "value": 3.0,
+        "band": "over"
+      }
+    ],
+    "conntrack_pct": [
+      {
+        "value": 76.0,
+        "band": "under"
+      },
+      {
+        "value": 77.0,
+        "band": "under"
+      },
+      {
+        "value": 77.1,
+        "band": "mid"
+      },
+      {
+        "value": 79.9,
+        "band": "mid"
+      },
+      {
+        "value": 80.0,
+        "band": "over"
+      },
+      {
+        "value": 80.1,
+        "band": "over"
+      },
+      {
+        "value": 84.0,
+        "band": "over"
+      }
+    ],
+    "net_err_rate": [
+      {
+        "value": -1.0,
+        "band": "under"
+      },
+      {
+        "value": 0.0,
+        "band": "under"
+      },
+      {
+        "value": 0.1,
+        "band": "mid"
+      },
+      {
+        "value": 0.9,
+        "band": "mid"
+      },
+      {
+        "value": 1.0,
+        "band": "over"
+      },
+      {
+        "value": 1.1,
+        "band": "over"
+      },
+      {
+        "value": 3.0,
+        "band": "over"
+      }
+    ],
+    "kernel_stall_events": [
+      {
+        "value": -1.0,
+        "band": "under"
+      },
+      {
+        "value": 0.0,
+        "band": "under"
+      },
+      {
+        "value": 0.1,
+        "band": "mid"
+      },
+      {
+        "value": 0.9,
+        "band": "mid"
+      },
+      {
+        "value": 1.0,
+        "band": "over"
+      },
+      {
+        "value": 1.1,
+        "band": "over"
+      },
+      {
+        "value": 3.0,
+        "band": "over"
+      }
+    ]
+  },
+  "fmt": [
+    {
+      "value": 0.0,
+      "unit": "%",
+      "text": "0%"
+    },
+    {
+      "value": 0.0,
+      "unit": "",
+      "text": "0.0"
+    },
+    {
+      "value": 0.0,
+      "unit": "/мин",
+      "text": "0/мин"
+    },
+    {
+      "value": 0.0,
+      "unit": "/скан",
+      "text": "0/скан"
+    },
+    {
+      "value": 0.55,
+      "unit": "%",
+      "text": "1%"
+    },
+    {
+      "value": 0.55,
+      "unit": "",
+      "text": "0.6"
+    },
+    {
+      "value": 0.55,
+      "unit": "/мин",
+      "text": "1/мин"
+    },
+    {
+      "value": 0.55,
+      "unit": "/скан",
+      "text": "1/скан"
+    },
+    {
+      "value": 1.5,
+      "unit": "%",
+      "text": "2%"
+    },
+    {
+      "value": 1.5,
+      "unit": "",
+      "text": "1.5"
+    },
+    {
+      "value": 1.5,
+      "unit": "/мин",
+      "text": "2/мин"
+    },
+    {
+      "value": 1.5,
+      "unit": "/скан",
+      "text": "2/скан"
+    },
+    {
+      "value": 12.34,
+      "unit": "%",
+      "text": "12%"
+    },
+    {
+      "value": 12.34,
+      "unit": "",
+      "text": "12.3"
+    },
+    {
+      "value": 12.34,
+      "unit": "/мин",
+      "text": "12/мин"
+    },
+    {
+      "value": 12.34,
+      "unit": "/скан",
+      "text": "12/скан"
+    },
+    {
+      "value": 99.5,
+      "unit": "%",
+      "text": "100%"
+    },
+    {
+      "value": 99.5,
+      "unit": "",
+      "text": "99.5"
+    },
+    {
+      "value": 99.5,
+      "unit": "/мин",
+      "text": "100/мин"
+    },
+    {
+      "value": 99.5,
+      "unit": "/скан",
+      "text": "100/скан"
+    },
+    {
+      "value": 98.0,
+      "unit": "%",
+      "text": "98%"
+    },
+    {
+      "value": 98.0,
+      "unit": "",
+      "text": "98.0"
+    },
+    {
+      "value": 98.0,
+      "unit": "/мин",
+      "text": "98/мин"
+    },
+    {
+      "value": 98.0,
+      "unit": "/скан",
+      "text": "98/скан"
+    }
+  ],
+  "two_metrics": [
+    {
+      "now": "2026-01-01T00:00:00+00:00",
+      "values": [
+        5.0,
+        5.0
+      ],
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 5.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          },
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 5.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "now": "2026-01-01T00:01:00+00:00",
+      "values": [
+        12.0,
+        16.0
+      ],
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 12.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 1,
+            "alerting_since": null
+          },
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 16.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 1,
+            "alerting_since": null
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "now": "2026-01-01T00:02:00+00:00",
+      "values": [
+        13.0,
+        17.0
+      ],
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 13.0,
+            "unit": "%",
+            "status": "alerting",
+            "consecutive_count": 0,
+            "alerting_since": "2026-01-01T00:02:00+00:00"
+          },
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 17.0,
+            "unit": "%",
+            "status": "alerting",
+            "consecutive_count": 0,
+            "alerting_since": "2026-01-01T00:02:00+00:00"
+          }
+        ],
+        "transitions": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 13.0,
+            "unit": "%",
+            "hint": "вероятна переподписка ноды провайдером",
+            "from_status": "ok",
+            "to_status": "alerting",
+            "at": "2026-01-01T00:02:00+00:00"
+          },
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 17.0,
+            "unit": "%",
+            "hint": "хранилище ноды не успевает за нагрузкой",
+            "from_status": "ok",
+            "to_status": "alerting",
+            "at": "2026-01-01T00:02:00+00:00"
+          }
+        ]
+      }
+    },
+    {
+      "now": "2026-01-01T00:03:00+00:00",
+      "values": [
+        13.0,
+        5.0
+      ],
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 13.0,
+            "unit": "%",
+            "status": "alerting",
+            "consecutive_count": 0,
+            "alerting_since": "2026-01-01T00:02:00+00:00"
+          },
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 5.0,
+            "unit": "%",
+            "status": "alerting",
+            "consecutive_count": 1,
+            "alerting_since": "2026-01-01T00:02:00+00:00"
+          }
+        ],
+        "transitions": []
+      }
+    },
+    {
+      "now": "2026-01-01T00:04:00+00:00",
+      "values": [
+        5.0,
+        5.0
+      ],
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 5.0,
+            "unit": "%",
+            "status": "alerting",
+            "consecutive_count": 1,
+            "alerting_since": "2026-01-01T00:02:00+00:00"
+          },
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 5.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          }
+        ],
+        "transitions": [
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 5.0,
+            "unit": "%",
+            "hint": "хранилище ноды не успевает за нагрузкой",
+            "from_status": "alerting",
+            "to_status": "ok",
+            "at": "2026-01-01T00:04:00+00:00"
+          }
+        ]
+      }
+    },
+    {
+      "now": "2026-01-01T00:05:00+00:00",
+      "values": [
+        5.0,
+        5.0
+      ],
+      "diff": {
+        "states": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 5.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          },
+          {
+            "component_id": "host:iowait_pct",
+            "metric": "iowait_pct",
+            "label": "iowait",
+            "value": 5.0,
+            "unit": "%",
+            "status": "ok",
+            "consecutive_count": 0,
+            "alerting_since": null
+          }
+        ],
+        "transitions": [
+          {
+            "component_id": "host:steal_pct",
+            "metric": "steal_pct",
+            "label": "CPU steal",
+            "value": 5.0,
+            "unit": "%",
+            "hint": "вероятна переподписка ноды провайдером",
+            "from_status": "alerting",
+            "to_status": "ok",
+            "at": "2026-01-01T00:05:00+00:00"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "coretemp": [
+    {
+      "label": "Package id 0",
+      "current": 45.0,
+      "high": 100.0,
+      "critical": 100.0
+    },
+    {
+      "label": "Core 0",
+      "current": 43.5,
+      "high": 100.0,
+      "critical": 100.0
+    },
+    {
+      "label": "",
+      "current": 41.0,
+      "high": null,
+      "critical": null
+    },
+    {
+      "label": "  ",
+      "current": 40.25,
+      "high": null,
+      "critical": null
+    },
+    {
+      "label": "Core 9",
+      "current": null,
+      "high": null,
+      "critical": null
+    }
+  ],
+  "acpitz": [
+    {
+      "label": "",
+      "current": 27,
+      "high": 105.0,
+      "critical": 105.0
+    }
+  ],
+  "nvme": [
+    {
+      "label": "Composite",
+      "current": 38.0,
+      "high": 84.8,
+      "critical": 84.8
+    }
+  ],
+  "empty-chip": []
+}

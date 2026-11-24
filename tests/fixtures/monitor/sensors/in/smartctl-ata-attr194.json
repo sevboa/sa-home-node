@@ -1,0 +1,29 @@
+{
+  "device": {
+    "name": "/dev/sdb",
+    "type": "scsi"
+  },
+  "model_name": "Disk-B",
+  "smart_status": {
+    "passed": true
+  },
+  "ata_smart_attributes": {
+    "table": [
+      {
+        "id": 5,
+        "name": "Reallocated_Sector_Ct",
+        "raw": {
+          "value": 0
+        }
+      },
+      {
+        "id": 194,
+        "name": "Temperature_Celsius",
+        "raw": {
+          "value": 36,
+          "string": "36"
+        }
+      }
+    ]
+  }
+}

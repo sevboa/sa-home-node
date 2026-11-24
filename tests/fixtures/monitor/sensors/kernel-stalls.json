@@ -1,0 +1,147 @@
+{
+  "in/kernel-journal.txt": 9,
+  "empty": 0,
+  "read_kernel_stall_count": {
+    "ok": {
+      "count": 9,
+      "calls": [
+        [
+          "journalctl",
+          "-k",
+          "--no-pager",
+          "-o",
+          "cat",
+          "-S",
+          "@1768478390",
+          "-U",
+          "@1768478400"
+        ]
+      ],
+      "problem": null
+    },
+    "ok_clean": {
+      "count": 0,
+      "calls": [
+        [
+          "journalctl",
+          "-k",
+          "--no-pager",
+          "-o",
+          "cat",
+          "-S",
+          "@1768478390",
+          "-U",
+          "@1768478400"
+        ]
+      ],
+      "problem": null
+    },
+    "no_journalctl": {
+      "count": null,
+      "calls": [],
+      "problem": {
+        "id": "journalctl-kernel",
+        "status": "missing_program",
+        "hint": "установите пакет 'systemd' через пакетный менеджер системы (нужна команда 'journalctl') — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      }
+    },
+    "not_linux": {
+      "count": null,
+      "calls": [],
+      "problem": {
+        "id": "journalctl-kernel",
+        "status": "unsupported_platform",
+        "hint": "не поддерживается на этой ОС (пока есть только для linux) — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      }
+    },
+    "no_group": {
+      "count": null,
+      "calls": [],
+      "problem": {
+        "id": "journalctl-kernel",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'journalctl' — выполните на ноде `nodectl fix` — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      }
+    },
+    "permission_error": {
+      "count": null,
+      "calls": [
+        [
+          "journalctl",
+          "-k",
+          "--no-pager",
+          "-o",
+          "cat",
+          "-S",
+          "@1768478390",
+          "-U",
+          "@1768478400"
+        ]
+      ],
+      "problem": {
+        "id": "journalctl-kernel",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'journalctl' — выполните на ноде `nodectl fix` — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      }
+    },
+    "other_error": {
+      "count": null,
+      "calls": [
+        [
+          "journalctl",
+          "-k",
+          "--no-pager",
+          "-o",
+          "cat",
+          "-S",
+          "@1768478390",
+          "-U",
+          "@1768478400"
+        ]
+      ],
+      "problem": null
+    },
+    "oserror": {
+      "count": null,
+      "calls": [
+        [
+          "journalctl",
+          "-k",
+          "--no-pager",
+          "-o",
+          "cat",
+          "-S",
+          "@1768478390",
+          "-U",
+          "@1768478400"
+        ]
+      ],
+      "problem": null
+    },
+    "timeout": {
+      "count": null,
+      "calls": [
+        [
+          "journalctl",
+          "-k",
+          "--no-pager",
+          "-o",
+          "cat",
+          "-S",
+          "@1768478390",
+          "-U",
+          "@1768478400"
+        ]
+      ],
+      "problem": null
+    }
+  },
+  "can_read_kernel_journal": {
+    "root": true,
+    "journal_group": true,
+    "adm_group": true,
+    "other_group": false,
+    "unknown_gid": false
+  },
+  "requirement_key": "journalctl-kernel"
+}

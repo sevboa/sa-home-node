@@ -56,14 +56,14 @@ def test_plugin_with_fixups(monkeypatch: pytest.MonkeyPatch) -> None:
     fixup = Fixup("fx-a", "T", lambda: True, lambda: None)
     plugin = Plugin(name="plug", fixups=lambda ctx: [fixup])
     patch_eps(monkeypatch, {"plug": FakeEP("plug", plugin)})
-    (loaded,) = load_plugins(["plug"])
+    loaded = load_plugins(["plug"])[-1]
     assert loaded.fixups(None) == [fixup]
 
 
 def test_load_order(monkeypatch: pytest.MonkeyPatch) -> None:
     eps = {n: FakeEP(n, Plugin(name=n)) for n in ("a", "b")}
     patch_eps(monkeypatch, eps)
-    assert [p.name for p in load_plugins(["b", "a"])] == ["b", "a"]
+    assert [p.name for p in load_plugins(["b", "a"])] == ["monitor", "b", "a"]
 
 
 @pytest.mark.parametrize(

@@ -25,6 +25,7 @@ from sa_home_node.services.registry import ServiceTable
 from sa_home_node.services.replication import ConfigReplicator
 from sa_home_node.services.slot import SlotBase
 from sa_home_node.services.supervisor import SlotFactory, Supervisor, process_argv
+from sa_home_node.swarm.config import swarm_section
 from sa_home_node.swarm.node import Swarm, SwarmApi
 from sa_home_node.swarm.state import NodeState
 
@@ -87,7 +88,7 @@ async def run_node(
         for action in plugin.node_actions:
             node_service.actions.add(action.spec, action.handler)
     api = SwarmApi(swarm)
-    contexts = {p.name: make_context(p, cfg, content, api) for p in plugins}
+    contexts = {p.name: make_context(p, cfg, content, api, plugins) for p in plugins}
     for ctx in contexts.values():
         ctx.data_dir.mkdir(parents=True, exist_ok=True)
 
@@ -197,7 +198,7 @@ async def run_service(
     spec = table.spec(name)
     if spec is None or not spec.process:
         raise PluginError(f"нет процессной службы: {name}")
-    ctx = with_instance(make_context(table.plugin_of(name), cfg, content), instance_store(cfg), name, instance)
+    ctx = with_instance(make_context(table.plugin_of(name), cfg, content, plugins=plugins), instance_store(cfg), name, instance)
     ctx.data_dir.mkdir(parents=True, exist_ok=True)
     own_stop = stop is None
     if own_stop:
@@ -205,7 +206,9 @@ async def run_service(
         remove = install_stop_handlers(asyncio.get_running_loop(), current().stop_signals(), stop.set)
     server = None
     if spec.handler is not None and spec.endpoint is not None:
-        server = ProtoServer(spec.endpoint(ctx.config), spec.handler(ctx))
+        handler = spec.handler(ctx)
+        server = ProtoServer(spec.endpoint(ctx.config), handler, token=swarm_section(cfg).token)
+        ctx = dataclasses.replace(ctx, handler=handler, broadcast=server.broadcast_event)
     pending: list[asyncio.Task] = []
     try:
         if server is not None:

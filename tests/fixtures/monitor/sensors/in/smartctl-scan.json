@@ -1,0 +1,35 @@
+{
+  "devices": [
+    {
+      "name": "/dev/sda",
+      "info_name": "/dev/sda [SAT]",
+      "type": "sat",
+      "protocol": "ATA"
+    },
+    {
+      "name": "/dev/sdb",
+      "info_name": "/dev/sdb",
+      "protocol": "SCSI"
+    },
+    {
+      "name": "/dev/nvme0",
+      "info_name": "/dev/nvme0",
+      "type": "nvme",
+      "protocol": "NVMe"
+    },
+    {
+      "name": "/dev/mmcblk0",
+      "info_name": "/dev/mmcblk0",
+      "type": "scsi",
+      "protocol": "SCSI"
+    },
+    {
+      "name": "/dev/loop0",
+      "type": "scsi"
+    },
+    {
+      "info_name": "без имени",
+      "type": "sat"
+    }
+  ]
+}

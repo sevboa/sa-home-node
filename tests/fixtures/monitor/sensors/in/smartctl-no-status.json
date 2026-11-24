@@ -1,0 +1,6 @@
+{
+  "device": {
+    "name": "/dev/sdx",
+    "type": "scsi"
+  }
+}

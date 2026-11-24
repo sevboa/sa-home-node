@@ -1,0 +1,1434 @@
+{
+  "scenarios": [
+    {
+      "name": "flapping-3-3",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "temps": {
+            "cpu-a": 81.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 81.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "temps": {
+            "cpu-a": 82.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 82.0,
+                "consecutive_count": 2,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "temps": {
+            "cpu-a": 81.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 81.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "temps": {
+            "cpu-a": 83.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 83.0,
+                "consecutive_count": 2,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "temps": {
+            "cpu-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 85.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 85.0,
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "temps": {
+            "cpu-a": 78.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 78.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 70.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:09:00+00:00",
+          "temps": {
+            "cpu-a": 79.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 79.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:10:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 70.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:11:00+00:00",
+          "temps": {
+            "cpu-a": 72.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 72.0,
+                "consecutive_count": 2,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:12:00+00:00",
+          "temps": {
+            "cpu-a": 71.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 71.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 71.0,
+                "at": "2026-01-01T00:12:00+00:00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "boundary-mid-2-2",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "temps": {
+            "cpu-a": 80.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 80.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "temps": {
+            "cpu-a": 80.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 80.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:01:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 80.0,
+                "at": "2026-01-01T00:01:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "temps": {
+            "cpu-a": 77.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 77.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:01:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "temps": {
+            "cpu-a": 75.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 75.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:01:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "temps": {
+            "cpu-a": 76.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 76.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:01:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "temps": {
+            "cpu-a": 75.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 75.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:01:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "temps": {
+            "cpu-a": 74.9
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 74.9,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 74.9,
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "temps": {
+            "cpu-a": 80.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 80.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "temps": {
+            "cpu-a": 74.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 74.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:09:00+00:00",
+          "temps": {
+            "cpu-a": 74.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 74.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "immediate-1-1",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "temps": {
+            "cpu-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 85.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:00:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 85.0,
+                "at": "2026-01-01T00:00:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "temps": {
+            "cpu-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 85.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:00:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 70.0,
+                "at": "2026-01-01T00:02:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "temps": {
+            "cpu-a": 80.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 80.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:03:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 80.0,
+                "at": "2026-01-01T00:03:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 70.0,
+                "at": "2026-01-01T00:04:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "appear-disappear",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "temps": {
+            "cpu-a": 85.0,
+            "disk-a": 40.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 85.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              },
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "ok",
+                "temperature_c": 40.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "temps": {
+            "cpu-a": 85.0,
+            "disk-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 85.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:01:00+00:00"
+              },
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "ok",
+                "temperature_c": 85.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 85.0,
+                "at": "2026-01-01T00:01:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "temps": {
+            "disk-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "alerting",
+                "temperature_c": 85.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 85.0,
+                "at": "2026-01-01T00:02:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "temps": {
+            "disk-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "alerting",
+                "temperature_c": 85.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "temps": {
+            "cpu-a": 70.0,
+            "disk-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 70.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:01:00+00:00"
+              },
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "alerting",
+                "temperature_c": 70.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 70.0,
+                "at": "2026-01-01T00:05:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "temps": {
+            "cpu-a": 70.0,
+            "disk-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              },
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 70.0,
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "temps": {
+            "cpu-a": 70.0,
+            "disk-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              },
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "temps": {
+            "disk-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "disk-a",
+                "kind": "disk",
+                "label": "DISK A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:09:00+00:00",
+          "temps": {
+            "cpu-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 85.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:10:00+00:00",
+          "temps": {
+            "cpu-a": 85.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 85.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:10:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 85.0,
+                "at": "2026-01-01T00:10:00+00:00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "baseline-before-min-samples",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "temps": {
+            "cpu-a": 60.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 60.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "temps": {
+            "cpu-a": 60.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 60.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "temps": {
+            "cpu-a": 75.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 75.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "temps": {
+            "cpu-a": 75.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 75.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "temps": {
+            "cpu-a": 79.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 79.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "temps": {
+            "cpu-a": 81.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 81.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "temps": {
+            "cpu-a": 81.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 81.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 81.0,
+                "at": "2026-01-01T00:06:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 70.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:06:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 70.0,
+                "at": "2026-01-01T00:08:00+00:00"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "baseline-after-min-samples",
+      "steps": [
+        {
+          "now": "2026-01-01T00:00:00+00:00",
+          "temps": {
+            "cpu-a": 45.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 45.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:01:00+00:00",
+          "temps": {
+            "cpu-a": 60.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 60.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:02:00+00:00",
+          "temps": {
+            "cpu-a": 60.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 60.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "ok",
+                "to_status": "alerting",
+                "temperature_c": 60.0,
+                "at": "2026-01-01T00:02:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:03:00+00:00",
+          "temps": {
+            "cpu-a": 59.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 59.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:04:00+00:00",
+          "temps": {
+            "cpu-a": 55.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 55.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:05:00+00:00",
+          "temps": {
+            "cpu-a": 60.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 60.0,
+                "consecutive_count": 0,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:06:00+00:00",
+          "temps": {
+            "cpu-a": 50.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "alerting",
+                "temperature_c": 50.0,
+                "consecutive_count": 1,
+                "alerting_since": "2026-01-01T00:02:00+00:00"
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:07:00+00:00",
+          "temps": {
+            "cpu-a": 50.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 50.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "from_status": "alerting",
+                "to_status": "ok",
+                "temperature_c": 50.0,
+                "at": "2026-01-01T00:07:00+00:00"
+              }
+            ]
+          }
+        },
+        {
+          "now": "2026-01-01T00:08:00+00:00",
+          "temps": {
+            "cpu-a": 70.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 70.0,
+                "consecutive_count": 1,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        },
+        {
+          "now": "2026-01-01T00:09:00+00:00",
+          "temps": {
+            "cpu-a": 45.0
+          },
+          "diff": {
+            "states": [
+              {
+                "component_id": "cpu-a",
+                "kind": "cpu",
+                "label": "CPU A",
+                "status": "ok",
+                "temperature_c": 45.0,
+                "consecutive_count": 0,
+                "alerting_since": null
+              }
+            ],
+            "transitions": []
+          }
+        }
+      ]
+    }
+  ]
+}

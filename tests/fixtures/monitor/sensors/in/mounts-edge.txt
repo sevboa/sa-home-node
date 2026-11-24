@@ -1,0 +1,8 @@
+short ext4
+
+/dev/a1 /mnt xfs rw 0 0
+/dev/a2 /mnt/x btrfs rw 0 0
+srv:/share /mnt/nfs nfs4 rw 0 0
+/dev/a3 /media/usb exfat rw 0 0
+/dev/a4 /mnt/y fuseblk rw 0 0
+/dev/a5 / ext4 rw 0 0

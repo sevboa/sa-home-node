@@ -1,0 +1,451 @@
+{
+  "cases": [
+    {
+      "kind": "server",
+      "variant": "implicit",
+      "sensors": {},
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "cpu-enabled",
+      "sensors": {
+        "cpu": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "cpu-disabled",
+      "sensors": {
+        "cpu": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "disks-enabled",
+      "sensors": {
+        "disks": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "disks-disabled",
+      "sensors": {
+        "disks": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": false,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "cpu-disks-explicit",
+      "sensors": {
+        "cpu": {
+          "enabled": true
+        },
+        "disks": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "host-enabled",
+      "sensors": {
+        "host": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": true
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "host-disabled",
+      "sensors": {
+        "host": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "cpu-threshold-only",
+      "sensors": {
+        "cpu": {
+          "warn_c": 70.0
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "server",
+      "variant": "gpu-enabled",
+      "sensors": {
+        "gpu": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": true,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "implicit",
+      "sensors": {},
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "cpu-enabled",
+      "sensors": {
+        "cpu": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "cpu-disabled",
+      "sensors": {
+        "cpu": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "disks-enabled",
+      "sensors": {
+        "disks": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "disks-disabled",
+      "sensors": {
+        "disks": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": false,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "cpu-disks-explicit",
+      "sensors": {
+        "cpu": {
+          "enabled": true
+        },
+        "disks": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "host-enabled",
+      "sensors": {
+        "host": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": true
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "host-disabled",
+      "sensors": {
+        "host": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "cpu-threshold-only",
+      "sensors": {
+        "cpu": {
+          "warn_c": 70.0
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "workstation",
+      "variant": "gpu-enabled",
+      "sensors": {
+        "gpu": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": true,
+        "disks": true,
+        "host": false
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "implicit",
+      "sensors": {},
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": false,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "cpu-enabled",
+      "sensors": {
+        "cpu": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": false,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "cpu-disabled",
+      "sensors": {
+        "cpu": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": false,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "disks-enabled",
+      "sensors": {
+        "disks": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": true,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "disks-disabled",
+      "sensors": {
+        "disks": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": false,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "cpu-disks-explicit",
+      "sensors": {
+        "cpu": {
+          "enabled": true
+        },
+        "disks": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": true,
+        "gpu": false,
+        "disks": true,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "host-enabled",
+      "sensors": {
+        "host": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": false,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "host-disabled",
+      "sensors": {
+        "host": {
+          "enabled": false
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": false,
+        "host": false
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "cpu-threshold-only",
+      "sensors": {
+        "cpu": {
+          "warn_c": 70.0
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": false,
+        "disks": false,
+        "host": true
+      }
+    },
+    {
+      "kind": "vps",
+      "variant": "gpu-enabled",
+      "sensors": {
+        "gpu": {
+          "enabled": true
+        }
+      },
+      "enabled": {
+        "cpu": false,
+        "gpu": true,
+        "disks": false,
+        "host": true
+      }
+    }
+  ]
+}

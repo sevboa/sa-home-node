@@ -1,0 +1,160 @@
+{
+  "lsblk": {
+    "host": {
+      "disks": [
+        {
+          "path": "/dev/mmcblk0",
+          "kind": "emmc",
+          "mountpoints": [
+            "/boot/efi",
+            "/"
+          ],
+          "model": null
+        },
+        {
+          "path": "/dev/sda",
+          "kind": "hdd",
+          "mountpoints": [
+            "/mnt/data"
+          ],
+          "model": "Disk-A"
+        },
+        {
+          "path": "/dev/sdb",
+          "kind": "hdd",
+          "mountpoints": [
+            "/mnt/scratch"
+          ],
+          "model": "Disk-B"
+        },
+        {
+          "path": "/dev/nvme0n1",
+          "kind": "nvme",
+          "mountpoints": [
+            "/mnt/nvme"
+          ],
+          "model": "Disk-C"
+        }
+      ],
+      "labels": [
+        [
+          "eMMC",
+          "/dev/mmcblk0"
+        ],
+        [
+          "NVMe",
+          "/dev/nvme0n1"
+        ],
+        [
+          "HDD1",
+          "/dev/sda"
+        ],
+        [
+          "HDD2",
+          "/dev/sdb"
+        ]
+      ]
+    },
+    "emmc_late": {
+      "disks": [
+        {
+          "path": "/dev/sda",
+          "kind": "hdd",
+          "mountpoints": [],
+          "model": "Disk-A"
+        },
+        {
+          "path": "/dev/sdz",
+          "kind": "emmc",
+          "mountpoints": [],
+          "model": null
+        },
+        {
+          "path": "/dev/sdy",
+          "kind": "ssd",
+          "mountpoints": [],
+          "model": "Disk-D"
+        },
+        {
+          "path": "/dev/sdw",
+          "kind": "hdd",
+          "mountpoints": [],
+          "model": "Disk-E"
+        },
+        {
+          "path": "/dev/nvme1n2",
+          "kind": "nvme",
+          "mountpoints": [],
+          "model": null
+        },
+        {
+          "path": "/dev/",
+          "kind": "hdd",
+          "mountpoints": [],
+          "model": null
+        }
+      ],
+      "labels": [
+        [
+          "eMMC",
+          "/dev/sdz"
+        ],
+        [
+          "HDD1",
+          "/dev/"
+        ],
+        [
+          "NVMe",
+          "/dev/nvme1n2"
+        ],
+        [
+          "HDD2",
+          "/dev/sda"
+        ],
+        [
+          "HDD3",
+          "/dev/sdw"
+        ],
+        [
+          "SSD",
+          "/dev/sdy"
+        ]
+      ]
+    },
+    "empty": {
+      "disks": [],
+      "labels": []
+    }
+  },
+  "nvme_controller_path": {
+    "/dev/nvme0n1": "/dev/nvme0",
+    "/dev/nvme12n3": "/dev/nvme12",
+    "/dev/nvme0": null,
+    "/dev/nvme0n1p1": null,
+    "/dev/sda": null,
+    "/dev/mmcblk0": null
+  },
+  "disk_kind": {
+    "('mmcblk0', None, False)": "emmc",
+    "('sda', 'mmc', True)": "emmc",
+    "('nvme0n1', None, None)": "nvme",
+    "('sda', 'nvme', True)": "nvme",
+    "('sda', 'usb', '1')": "hdd",
+    "('sda', 'usb', '0')": "ssd",
+    "('sda', 'usb', True)": "hdd",
+    "('sda', 'usb', False)": "ssd",
+    "('sda', None, None)": "hdd",
+    "('sda', 'sata', ' 0 ')": "ssd"
+  },
+  "is_empty_media": {
+    "None": false,
+    "''": false,
+    "'  '": false,
+    "'0'": true,
+    "0": true,
+    "'5'": false,
+    "5": false,
+    "'abc'": false,
+    "' 0 '": true
+  }
+}

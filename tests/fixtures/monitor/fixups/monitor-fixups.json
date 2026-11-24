@@ -1,0 +1,440 @@
+{
+  "needed": {
+    "server/none/disks-on": [],
+    "server/none/disks-off": [],
+    "server/monitor/disks-on": [
+      {
+        "id": "install-smartmontools",
+        "title": "Установить smartmontools"
+      },
+      {
+        "id": "smartctl-sudoers",
+        "title": "Разрешить smartctl без пароля (sudoers + обёртка ~/.local/bin)"
+      },
+      {
+        "id": "node-unit-smartctl-path",
+        "title": "Поправить PATH юнита sa-home-node (~/.local/bin первым, там обёртка smartctl)"
+      },
+      {
+        "id": "journalctl-group",
+        "title": "Добавить пользователя в группу systemd-journal"
+      }
+    ],
+    "server/monitor/disks-off": [
+      {
+        "id": "journalctl-group",
+        "title": "Добавить пользователя в группу systemd-journal"
+      }
+    ],
+    "workstation/none/disks-on": [],
+    "workstation/none/disks-off": [],
+    "workstation/monitor/disks-on": [
+      {
+        "id": "install-smartmontools",
+        "title": "Установить smartmontools"
+      },
+      {
+        "id": "smartctl-sudoers",
+        "title": "Разрешить smartctl без пароля (sudoers + обёртка ~/.local/bin)"
+      },
+      {
+        "id": "node-unit-smartctl-path",
+        "title": "Поправить PATH юнита sa-home-node (~/.local/bin первым, там обёртка smartctl)"
+      },
+      {
+        "id": "journalctl-group",
+        "title": "Добавить пользователя в группу systemd-journal"
+      }
+    ],
+    "workstation/monitor/disks-off": [
+      {
+        "id": "journalctl-group",
+        "title": "Добавить пользователя в группу systemd-journal"
+      }
+    ],
+    "vps/none/disks-on": [],
+    "vps/none/disks-off": [],
+    "vps/monitor/disks-on": [
+      {
+        "id": "install-smartmontools",
+        "title": "Установить smartmontools"
+      },
+      {
+        "id": "smartctl-sudoers",
+        "title": "Разрешить smartctl без пароля (sudoers + обёртка ~/.local/bin)"
+      },
+      {
+        "id": "node-unit-smartctl-path",
+        "title": "Поправить PATH юнита sa-home-node (~/.local/bin первым, там обёртка smartctl)"
+      },
+      {
+        "id": "journalctl-group",
+        "title": "Добавить пользователя в группу systemd-journal"
+      }
+    ],
+    "vps/monitor/disks-off": [
+      {
+        "id": "journalctl-group",
+        "title": "Добавить пользователя в группу systemd-journal"
+      }
+    ]
+  },
+  "apply": [
+    {
+      "id": "install-smartmontools",
+      "name": "empty_apt",
+      "check_before": true,
+      "check_after": true,
+      "calls": [
+        [
+          "sudo",
+          "apt-get",
+          "install",
+          "-y",
+          "smartmontools"
+        ]
+      ],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    },
+    {
+      "id": "install-smartmontools",
+      "name": "empty_dnf",
+      "check_before": true,
+      "check_after": true,
+      "calls": [
+        [
+          "sudo",
+          "dnf",
+          "install",
+          "-y",
+          "smartmontools"
+        ]
+      ],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    },
+    {
+      "id": "install-smartmontools",
+      "name": "empty_no_manager",
+      "check_before": true,
+      "error": {
+        "type": "FixupError",
+        "message": "не найден известный пакетный менеджер для smartmontools"
+      },
+      "check_after": true,
+      "calls": [],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    },
+    {
+      "id": "smartctl-sudoers",
+      "name": "empty",
+      "check_before": false,
+      "check_after": true,
+      "calls": [
+        [
+          "/usr/bin/visudo",
+          "-cf",
+          "<tmp>"
+        ],
+        [
+          "sudo",
+          "install",
+          "-m",
+          "0440",
+          "-o",
+          "root",
+          "-g",
+          "root",
+          "<tmp>",
+          "/etc/sudoers.d/50-sa-home-node-smartctl"
+        ]
+      ],
+      "installed": {
+        "/etc/sudoers.d/50-sa-home-node-smartctl": "user-a ALL=(root) NOPASSWD: /usr/bin/smartctl *\n"
+      },
+      "files": {
+        "wrapper": {
+          "content": "#!/bin/sh\nexec sudo -n /usr/bin/smartctl \"$@\"\n",
+          "mode": "0o755"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "smartctl-sudoers",
+      "name": "no_smartctl",
+      "check_before": false,
+      "error": {
+        "type": "FixupError",
+        "message": "smartctl не найден в PATH — сначала install-smartmontools"
+      },
+      "check_after": false,
+      "calls": [],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    },
+    {
+      "id": "smartctl-sudoers",
+      "name": "sudoers_present",
+      "check_before": false,
+      "check_after": true,
+      "calls": [],
+      "installed": {},
+      "files": {
+        "wrapper": {
+          "content": "#!/bin/sh\nexec sudo -n /usr/bin/smartctl \"$@\"\n",
+          "mode": "0o755"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "smartctl-sudoers",
+      "name": "wrapper_present",
+      "check_before": false,
+      "check_after": true,
+      "calls": [
+        [
+          "/usr/bin/visudo",
+          "-cf",
+          "<tmp>"
+        ],
+        [
+          "sudo",
+          "install",
+          "-m",
+          "0440",
+          "-o",
+          "root",
+          "-g",
+          "root",
+          "<tmp>",
+          "/etc/sudoers.d/50-sa-home-node-smartctl"
+        ]
+      ],
+      "installed": {
+        "/etc/sudoers.d/50-sa-home-node-smartctl": "user-a ALL=(root) NOPASSWD: /usr/bin/smartctl *\n"
+      },
+      "files": {
+        "wrapper": {
+          "content": "#!/bin/sh\nexec custom\n"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "smartctl-sudoers",
+      "name": "both_present",
+      "check_before": true,
+      "check_after": true,
+      "calls": [],
+      "installed": {},
+      "files": {
+        "wrapper": {
+          "content": "#!/bin/sh\nexec custom\n"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "node-unit-smartctl-path",
+      "name": "no_unit",
+      "check_before": true,
+      "error": {
+        "type": "FileNotFoundError",
+        "message": "[Errno 2] No such file or directory: '/home/user-a/.config/systemd/user/sa-home-node.service'"
+      },
+      "check_after": true,
+      "calls": [],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    },
+    {
+      "id": "node-unit-smartctl-path",
+      "name": "unit_path_not_first",
+      "check_before": false,
+      "check_after": true,
+      "calls": [
+        [
+          "systemctl",
+          "--user",
+          "daemon-reload"
+        ],
+        [
+          "systemctl",
+          "--user",
+          "restart",
+          "sa-home-node.service"
+        ]
+      ],
+      "installed": {},
+      "files": {
+        "unit": {
+          "content": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/local/bin:/usr/bin\nExecStart=/bin/true\n"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "node-unit-smartctl-path",
+      "name": "unit_path_first",
+      "check_before": true,
+      "check_after": true,
+      "calls": [
+        [
+          "systemctl",
+          "--user",
+          "daemon-reload"
+        ],
+        [
+          "systemctl",
+          "--user",
+          "restart",
+          "sa-home-node.service"
+        ]
+      ],
+      "installed": {},
+      "files": {
+        "unit": {
+          "content": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/bin\nExecStart=/bin/true\n"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "node-unit-smartctl-path",
+      "name": "unit_no_path_line",
+      "check_before": false,
+      "error": {
+        "type": "FixupError",
+        "message": "в /home/user-a/.config/systemd/user/sa-home-node.service нет строки Environment=PATH= — правьте руками"
+      },
+      "check_after": false,
+      "calls": [],
+      "installed": {},
+      "files": {
+        "unit": {
+          "content": "[Service]\nExecStart=/bin/true\n"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "node-unit-smartctl-path",
+      "name": "restart_fails",
+      "check_before": false,
+      "check_after": true,
+      "calls": [
+        [
+          "systemctl",
+          "--user",
+          "daemon-reload"
+        ],
+        [
+          "systemctl",
+          "--user",
+          "restart",
+          "sa-home-node.service"
+        ]
+      ],
+      "installed": {},
+      "files": {
+        "unit": {
+          "content": "[Service]\nEnvironment=PATH=/home/user-a/.local/bin:/usr/local/bin:/usr/bin\nExecStart=/bin/true\n"
+        }
+      },
+      "warnings": []
+    },
+    {
+      "id": "journalctl-group",
+      "name": "empty",
+      "check_before": false,
+      "check_after": false,
+      "calls": [
+        [
+          "id",
+          "-nG",
+          "user-a"
+        ],
+        [
+          "sudo",
+          "usermod",
+          "-aG",
+          "systemd-journal",
+          "user-a"
+        ],
+        [
+          "id",
+          "-nG",
+          "user-a"
+        ]
+      ],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    },
+    {
+      "id": "journalctl-group",
+      "name": "member",
+      "check_before": true,
+      "check_after": true,
+      "calls": [
+        [
+          "id",
+          "-nG",
+          "user-a"
+        ],
+        [
+          "sudo",
+          "usermod",
+          "-aG",
+          "systemd-journal",
+          "user-a"
+        ],
+        [
+          "id",
+          "-nG",
+          "user-a"
+        ]
+      ],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    },
+    {
+      "id": "journalctl-group",
+      "name": "not_member",
+      "check_before": false,
+      "check_after": false,
+      "calls": [
+        [
+          "id",
+          "-nG",
+          "user-a"
+        ],
+        [
+          "sudo",
+          "usermod",
+          "-aG",
+          "systemd-journal",
+          "user-a"
+        ],
+        [
+          "id",
+          "-nG",
+          "user-a"
+        ]
+      ],
+      "installed": {},
+      "files": {},
+      "warnings": []
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+{
+  "discover": [
+    {
+      "label": "eMMC",
+      "health": null,
+      "temperature_c": null,
+      "free_bytes": 30480,
+      "total_bytes": 60512,
+      "model": null,
+      "kind": "emmc"
+    },
+    {
+      "label": "NVMe",
+      "health": "ok",
+      "temperature_c": 41.0,
+      "free_bytes": null,
+      "total_bytes": null,
+      "model": "Disk-C",
+      "kind": "nvme"
+    },
+    {
+      "label": "HDD1",
+      "health": "ok",
+      "temperature_c": 34.0,
+      "free_bytes": 100000,
+      "total_bytes": 300000,
+      "model": "Disk-A",
+      "kind": "hdd"
+    },
+    {
+      "label": "HDD2",
+      "health": "warning",
+      "temperature_c": 37.0,
+      "free_bytes": 7,
+      "total_bytes": 10,
+      "model": "Disk-B",
+      "kind": "hdd"
+    }
+  ],
+  "specs_only_sda": [
+    {
+      "label": "eMMC",
+      "health": null,
+      "temperature_c": null,
+      "free_bytes": 30480,
+      "total_bytes": 60512,
+      "model": null,
+      "kind": "emmc"
+    },
+    {
+      "label": "NVMe",
+      "health": null,
+      "temperature_c": null,
+      "free_bytes": null,
+      "total_bytes": null,
+      "model": "Disk-C",
+      "kind": "nvme"
+    },
+    {
+      "label": "HDD1",
+      "health": "ok",
+      "temperature_c": 34.0,
+      "free_bytes": 100000,
+      "total_bytes": 300000,
+      "model": "Disk-A",
+      "kind": "hdd"
+    },
+    {
+      "label": "HDD2",
+      "health": null,
+      "temperature_c": null,
+      "free_bytes": 7,
+      "total_bytes": 10,
+      "model": "Disk-B",
+      "kind": "hdd"
+    }
+  ],
+  "health_overrides": [
+    {
+      "label": "eMMC",
+      "health": null,
+      "temperature_c": null,
+      "free_bytes": 30480,
+      "total_bytes": 60512,
+      "model": null,
+      "kind": "emmc"
+    },
+    {
+      "label": "NVMe",
+      "health": "failed",
+      "temperature_c": 41.0,
+      "free_bytes": null,
+      "total_bytes": null,
+      "model": "Disk-C",
+      "kind": "nvme"
+    },
+    {
+      "label": "HDD1",
+      "health": "ok",
+      "temperature_c": 34.0,
+      "free_bytes": 100000,
+      "total_bytes": 300000,
+      "model": "Disk-A",
+      "kind": "hdd"
+    },
+    {
+      "label": "HDD2",
+      "health": null,
+      "temperature_c": 37.0,
+      "free_bytes": 7,
+      "total_bytes": 10,
+      "model": "Disk-B",
+      "kind": "hdd"
+    }
+  ],
+  "health_overrides_empty": [
+    {
+      "label": "eMMC",
+      "health": null,
+      "temperature_c": null,
+      "free_bytes": 30480,
+      "total_bytes": 60512,
+      "model": null,
+      "kind": "emmc"
+    },
+    {
+      "label": "NVMe",
+      "health": "ok",
+      "temperature_c": 41.0,
+      "free_bytes": null,
+      "total_bytes": null,
+      "model": "Disk-C",
+      "kind": "nvme"
+    },
+    {
+      "label": "HDD1",
+      "health": "ok",
+      "temperature_c": 34.0,
+      "free_bytes": 100000,
+      "total_bytes": 300000,
+      "model": "Disk-A",
+      "kind": "hdd"
+    },
+    {
+      "label": "HDD2",
+      "health": "warning",
+      "temperature_c": 37.0,
+      "free_bytes": 7,
+      "total_bytes": 10,
+      "model": "Disk-B",
+      "kind": "hdd"
+    }
+  ]
+}

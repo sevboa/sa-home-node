@@ -1,0 +1,21 @@
+{
+  "device": {
+    "name": "/dev/sdb",
+    "type": "scsi"
+  },
+  "smart_status": {
+    "passed": false
+  },
+  "temperature": {
+    "current": 52
+  },
+  "ata_smart_attributes": {
+    "table": [
+      {
+        "id": 5,
+        "name": "Reallocated_Sector_Ct",
+        "raw": {}
+      }
+    ]
+  }
+}

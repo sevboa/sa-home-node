@@ -1,0 +1,1 @@
+reboot   system boot  6.12.90 2026-01-14T08:00:00+00:00   still running

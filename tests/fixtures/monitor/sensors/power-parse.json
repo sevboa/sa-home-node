@@ -1,0 +1,498 @@
+{
+  "last_args": [
+    "last",
+    "-xR",
+    "--time-format",
+    "iso",
+    "reboot"
+  ],
+  "journal_args": [
+    "journalctl",
+    "--list-boots",
+    "-o",
+    "json"
+  ],
+  "parse_last_reboots": {
+    "in/last-reboot.txt": [
+      {
+        "kind": "clean",
+        "boot_at": "2026-01-10T07:00:00+00:00",
+        "down_at": "2026-01-14T07:55:00+00:00",
+        "up_at": null,
+        "down_approx": false
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2026-01-05T10:00:00+00:00",
+        "down_at": null,
+        "up_at": "2026-01-10T07:00:00+00:00",
+        "down_approx": true
+      },
+      {
+        "kind": "clean",
+        "boot_at": "2025-12-20T09:00:00+00:00",
+        "down_at": "2026-01-05T09:58:00+00:00",
+        "up_at": "2026-01-05T10:00:00+00:00",
+        "down_approx": false
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2025-12-01T09:00:00+00:00",
+        "down_at": null,
+        "up_at": "2025-12-20T09:00:00+00:00",
+        "down_approx": true
+      },
+      {
+        "kind": "clean",
+        "boot_at": "2025-11-01T09:00:00+00:00",
+        "down_at": "2025-12-01T08:00:00+00:00",
+        "up_at": "2025-12-01T09:00:00+00:00",
+        "down_approx": false
+      }
+    ],
+    "in/last-reboot.txt_limit2": [
+      {
+        "kind": "clean",
+        "boot_at": "2026-01-10T07:00:00+00:00",
+        "down_at": "2026-01-14T07:55:00+00:00",
+        "up_at": null,
+        "down_approx": false
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2026-01-05T10:00:00+00:00",
+        "down_at": null,
+        "up_at": "2026-01-10T07:00:00+00:00",
+        "down_approx": true
+      }
+    ],
+    "in/last-still-only.txt": [],
+    "empty": []
+  },
+  "parse_journal_boots": {
+    "in/journal-boots.json": [
+      [
+        "2025-12-01T09:00:40+00:00",
+        "2025-12-20T08:59:10+00:00"
+      ],
+      [
+        "2026-01-05T10:00:50+00:00",
+        "2026-01-05T10:30:00+00:00"
+      ],
+      [
+        "2026-01-10T07:00:00+00:00",
+        "2026-01-14T07:54:00+00:00"
+      ]
+    ],
+    "invalid_json": [],
+    "empty_list": []
+  },
+  "enrich_unexpected": {
+    "matched": [
+      {
+        "kind": "clean",
+        "boot_at": "2026-01-10T07:00:00+00:00",
+        "down_at": "2026-01-14T07:55:00+00:00",
+        "up_at": null,
+        "down_approx": false
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2026-01-05T10:00:00+00:00",
+        "down_at": "2026-01-05T10:30:00+00:00",
+        "up_at": "2026-01-10T07:00:00+00:00",
+        "down_approx": true
+      },
+      {
+        "kind": "clean",
+        "boot_at": "2025-12-20T09:00:00+00:00",
+        "down_at": "2026-01-05T09:58:00+00:00",
+        "up_at": "2026-01-05T10:00:00+00:00",
+        "down_approx": false
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2025-12-01T09:00:00+00:00",
+        "down_at": "2025-12-20T08:59:10+00:00",
+        "up_at": "2025-12-20T09:00:00+00:00",
+        "down_approx": true
+      },
+      {
+        "kind": "clean",
+        "boot_at": "2025-11-01T09:00:00+00:00",
+        "down_at": "2025-12-01T08:00:00+00:00",
+        "up_at": "2025-12-01T09:00:00+00:00",
+        "down_approx": false
+      }
+    ],
+    "no_boots": [
+      {
+        "kind": "clean",
+        "boot_at": "2026-01-10T07:00:00+00:00",
+        "down_at": "2026-01-14T07:55:00+00:00",
+        "up_at": null,
+        "down_approx": false
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2026-01-05T10:00:00+00:00",
+        "down_at": null,
+        "up_at": "2026-01-10T07:00:00+00:00",
+        "down_approx": true
+      },
+      {
+        "kind": "clean",
+        "boot_at": "2025-12-20T09:00:00+00:00",
+        "down_at": "2026-01-05T09:58:00+00:00",
+        "up_at": "2026-01-05T10:00:00+00:00",
+        "down_approx": false
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2025-12-01T09:00:00+00:00",
+        "down_at": null,
+        "up_at": "2025-12-20T09:00:00+00:00",
+        "down_approx": true
+      },
+      {
+        "kind": "clean",
+        "boot_at": "2025-11-01T09:00:00+00:00",
+        "down_at": "2025-12-01T08:00:00+00:00",
+        "up_at": "2025-12-01T09:00:00+00:00",
+        "down_approx": false
+      }
+    ],
+    "special": [
+      {
+        "kind": "unexpected",
+        "boot_at": "2024-01-01T00:00:00+00:00",
+        "down_at": null,
+        "up_at": null,
+        "down_approx": true
+      },
+      {
+        "kind": "unexpected",
+        "boot_at": "2026-01-05T10:00:00+00:00",
+        "down_at": "2026-01-05T09:00:00+00:00",
+        "up_at": null,
+        "down_approx": true
+      },
+      {
+        "kind": "clean",
+        "boot_at": "2026-01-10T07:00:00+00:00",
+        "down_at": "2026-01-14T07:55:00+00:00",
+        "up_at": null,
+        "down_approx": false
+      }
+    ]
+  },
+  "read_power_events": {
+    "full": {
+      "offset": 0,
+      "limit": 10,
+      "events": [
+        {
+          "kind": "clean",
+          "boot_at": "2026-01-10T07:00:00+00:00",
+          "down_at": "2026-01-14T07:55:00+00:00",
+          "up_at": null,
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-01-05T10:00:00+00:00",
+          "down_at": "2026-01-05T10:30:00+00:00",
+          "up_at": "2026-01-10T07:00:00+00:00",
+          "down_approx": true
+        },
+        {
+          "kind": "clean",
+          "boot_at": "2025-12-20T09:00:00+00:00",
+          "down_at": "2026-01-05T09:58:00+00:00",
+          "up_at": "2026-01-05T10:00:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2025-12-01T09:00:00+00:00",
+          "down_at": "2025-12-20T08:59:10+00:00",
+          "up_at": "2025-12-20T09:00:00+00:00",
+          "down_approx": true
+        },
+        {
+          "kind": "clean",
+          "boot_at": "2025-11-01T09:00:00+00:00",
+          "down_at": "2025-12-01T08:00:00+00:00",
+          "up_at": "2025-12-01T09:00:00+00:00",
+          "down_approx": false
+        }
+      ],
+      "has_next": false,
+      "calls": [
+        [
+          "last",
+          "-xR",
+          "--time-format",
+          "iso",
+          "reboot"
+        ],
+        [
+          "journalctl",
+          "--list-boots",
+          "-o",
+          "json"
+        ]
+      ],
+      "problems": {
+        "last": null,
+        "journalctl": null
+      }
+    },
+    "page_offset_2_limit_2": {
+      "offset": 2,
+      "limit": 2,
+      "events": [
+        {
+          "kind": "clean",
+          "boot_at": "2025-12-20T09:00:00+00:00",
+          "down_at": "2026-01-05T09:58:00+00:00",
+          "up_at": "2026-01-05T10:00:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2025-12-01T09:00:00+00:00",
+          "down_at": "2025-12-20T08:59:10+00:00",
+          "up_at": "2025-12-20T09:00:00+00:00",
+          "down_approx": true
+        }
+      ],
+      "has_next": true,
+      "calls": [
+        [
+          "last",
+          "-xR",
+          "--time-format",
+          "iso",
+          "reboot"
+        ],
+        [
+          "journalctl",
+          "--list-boots",
+          "-o",
+          "json"
+        ]
+      ],
+      "problems": {
+        "last": null,
+        "journalctl": null
+      }
+    },
+    "page_beyond": {
+      "offset": 20,
+      "limit": 5,
+      "events": [],
+      "has_next": false,
+      "calls": [
+        [
+          "last",
+          "-xR",
+          "--time-format",
+          "iso",
+          "reboot"
+        ],
+        [
+          "journalctl",
+          "--list-boots",
+          "-o",
+          "json"
+        ]
+      ],
+      "problems": {
+        "last": null,
+        "journalctl": null
+      }
+    },
+    "no_last": {
+      "offset": 0,
+      "limit": 10,
+      "events": [],
+      "has_next": false,
+      "calls": [],
+      "problems": {
+        "last": {
+          "id": "last",
+          "status": "missing_program",
+          "hint": "установите пакет 'util-linux' через пакетный менеджер системы (нужна команда 'last') — история отключений машины"
+        },
+        "journalctl": null
+      }
+    },
+    "no_journalctl": {
+      "offset": 0,
+      "limit": 10,
+      "events": [
+        {
+          "kind": "clean",
+          "boot_at": "2026-01-10T07:00:00+00:00",
+          "down_at": "2026-01-14T07:55:00+00:00",
+          "up_at": null,
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-01-05T10:00:00+00:00",
+          "down_at": null,
+          "up_at": "2026-01-10T07:00:00+00:00",
+          "down_approx": true
+        },
+        {
+          "kind": "clean",
+          "boot_at": "2025-12-20T09:00:00+00:00",
+          "down_at": "2026-01-05T09:58:00+00:00",
+          "up_at": "2026-01-05T10:00:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2025-12-01T09:00:00+00:00",
+          "down_at": null,
+          "up_at": "2025-12-20T09:00:00+00:00",
+          "down_approx": true
+        },
+        {
+          "kind": "clean",
+          "boot_at": "2025-11-01T09:00:00+00:00",
+          "down_at": "2025-12-01T08:00:00+00:00",
+          "up_at": "2025-12-01T09:00:00+00:00",
+          "down_approx": false
+        }
+      ],
+      "has_next": false,
+      "calls": [
+        [
+          "last",
+          "-xR",
+          "--time-format",
+          "iso",
+          "reboot"
+        ]
+      ],
+      "problems": {
+        "last": null,
+        "journalctl": {
+          "id": "journalctl",
+          "status": "missing_program",
+          "hint": "установите пакет 'systemd' через пакетный менеджер системы (нужна команда 'journalctl') — точное время внезапных отключений"
+        }
+      }
+    },
+    "last_fails": {
+      "offset": 0,
+      "limit": 10,
+      "events": [],
+      "has_next": false,
+      "calls": [
+        [
+          "last",
+          "-xR",
+          "--time-format",
+          "iso",
+          "reboot"
+        ]
+      ],
+      "problems": {
+        "last": {
+          "id": "last",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'last' — выполните на ноде `nodectl fix` — история отключений машины"
+        },
+        "journalctl": null
+      }
+    },
+    "journal_denied": {
+      "offset": 0,
+      "limit": 10,
+      "events": [
+        {
+          "kind": "clean",
+          "boot_at": "2026-01-10T07:00:00+00:00",
+          "down_at": "2026-01-14T07:55:00+00:00",
+          "up_at": null,
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2026-01-05T10:00:00+00:00",
+          "down_at": null,
+          "up_at": "2026-01-10T07:00:00+00:00",
+          "down_approx": true
+        },
+        {
+          "kind": "clean",
+          "boot_at": "2025-12-20T09:00:00+00:00",
+          "down_at": "2026-01-05T09:58:00+00:00",
+          "up_at": "2026-01-05T10:00:00+00:00",
+          "down_approx": false
+        },
+        {
+          "kind": "unexpected",
+          "boot_at": "2025-12-01T09:00:00+00:00",
+          "down_at": null,
+          "up_at": "2025-12-20T09:00:00+00:00",
+          "down_approx": true
+        },
+        {
+          "kind": "clean",
+          "boot_at": "2025-11-01T09:00:00+00:00",
+          "down_at": "2025-12-01T08:00:00+00:00",
+          "up_at": "2025-12-01T09:00:00+00:00",
+          "down_approx": false
+        }
+      ],
+      "has_next": false,
+      "calls": [
+        [
+          "last",
+          "-xR",
+          "--time-format",
+          "iso",
+          "reboot"
+        ],
+        [
+          "journalctl",
+          "--list-boots",
+          "-o",
+          "json"
+        ]
+      ],
+      "problems": {
+        "last": null,
+        "journalctl": {
+          "id": "journalctl",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'journalctl' — выполните на ноде `nodectl fix` — точное время внезапных отключений"
+        }
+      }
+    },
+    "last_oserror": {
+      "offset": 0,
+      "limit": 10,
+      "events": [],
+      "has_next": false,
+      "calls": [
+        [
+          "last",
+          "-xR",
+          "--time-format",
+          "iso",
+          "reboot"
+        ]
+      ],
+      "problems": {
+        "last": null,
+        "journalctl": null
+      }
+    }
+  }
+}

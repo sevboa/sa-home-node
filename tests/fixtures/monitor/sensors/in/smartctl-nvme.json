@@ -1,0 +1,14 @@
+{
+  "device": {
+    "name": "/dev/nvme0",
+    "type": "nvme"
+  },
+  "model_name": "Disk-C",
+  "serial_number": "SN-C",
+  "smart_status": {
+    "passed": true
+  },
+  "temperature": {
+    "current": 41
+  }
+}

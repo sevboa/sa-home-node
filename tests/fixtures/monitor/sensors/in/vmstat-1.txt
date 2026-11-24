@@ -1,0 +1,5 @@
+nr_free_pages 1000
+oom_kill 2
+pgfault 555
+bad_line x y z
+weird abc

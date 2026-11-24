@@ -1,0 +1,697 @@
+{
+  "render_metrics": {
+    "full": {
+      "health": [
+        {
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 38.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 55.5,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "ok",
+          "temperature_c": 60.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "gpu:0",
+          "kind": "gpu",
+          "label": "GPU",
+          "status": "ok",
+          "temperature_c": 47.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_states": [
+        {
+          "component_id": "host:cpu_busy_pct",
+          "metric": "cpu_busy_pct",
+          "label": "CPU загрузка",
+          "value": 37.5,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:load1",
+          "metric": "load1",
+          "label": "load 1 мин",
+          "value": 0.25,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct:/",
+          "metric": "disk_pct",
+          "label": "диск заполнен /",
+          "value": 41.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct:/mnt/data",
+          "metric": "disk_pct",
+          "label": "диск заполнен /mnt/data",
+          "value": 77.25,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct:/mnt/my disk",
+          "metric": "disk_pct",
+          "label": "диск заполнен",
+          "value": 12.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:net_rx_bps:eth0",
+          "metric": "net_rx_bps",
+          "label": "сеть приём eth0",
+          "value": 123456.0,
+          "unit": "B/s",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:net_tx_bps:eth0",
+          "metric": "net_tx_bps",
+          "label": "сеть отдача eth0",
+          "value": 0.0,
+          "unit": "B/s",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:mem_available_bytes",
+          "metric": "mem_available_bytes",
+          "label": "RAM доступно",
+          "value": 2147483648.0,
+          "unit": "B",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:uptime_s",
+          "metric": "uptime_s",
+          "label": "аптайм",
+          "value": 1234567.0,
+          "unit": "s",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:oom_kills",
+          "metric": "oom_kills",
+          "label": "OOM-kill",
+          "value": 1.0,
+          "unit": "/мин",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:Bad-Metric",
+          "metric": "Bad-Metric",
+          "label": "bad",
+          "value": 1.0,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:9lives",
+          "metric": "9lives",
+          "label": "bad",
+          "value": 1.0,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:unknown_metric",
+          "metric": "unknown_metric",
+          "label": "unknown",
+          "value": 5.0,
+          "unit": "x",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:unknown_metric:inst",
+          "metric": "unknown_metric",
+          "label": "unknown inst",
+          "value": 6.0,
+          "unit": "x",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct",
+          "metric": "disk_pct",
+          "label": "диск без экземпляра",
+          "value": 5.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:load5",
+          "metric": "load5",
+          "label": "load 5 мин",
+          "value": 1e-07,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:procs",
+          "metric": "procs",
+          "label": "процессов",
+          "value": 1e+16,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "text": "# HELP sa_up служба monitor жива\n# TYPE sa_up gauge\nsa_up 1\n# HELP sa_host_cpu_busy_pct CPU загрузка, %\n# TYPE sa_host_cpu_busy_pct gauge\nsa_host_cpu_busy_pct 37.5\n# HELP sa_host_disk_pct диск заполнен, %\n# TYPE sa_host_disk_pct gauge\nsa_host_disk_pct{mount=\"/\"} 41\nsa_host_disk_pct{mount=\"/mnt/data\"} 77.25\nsa_host_disk_pct{mount=\"/mnt/my disk\"} 12\nsa_host_disk_pct 5\n# HELP sa_host_load1 load 1 мин\n# TYPE sa_host_load1 gauge\nsa_host_load1 0.25\n# HELP sa_host_load5 load 5 мин\n# TYPE sa_host_load5 gauge\nsa_host_load5 1e-07\n# HELP sa_host_mem_available_bytes RAM доступно, B\n# TYPE sa_host_mem_available_bytes gauge\nsa_host_mem_available_bytes 2.14748e+09\n# HELP sa_host_net_rx_bps сеть приём, B/s\n# TYPE sa_host_net_rx_bps gauge\nsa_host_net_rx_bps{iface=\"eth0\"} 123456\n# HELP sa_host_net_tx_bps сеть отдача, B/s\n# TYPE sa_host_net_tx_bps gauge\nsa_host_net_tx_bps{iface=\"eth0\"} 0\n# HELP sa_host_oom_kills OOM-kill, /мин\n# TYPE sa_host_oom_kills gauge\nsa_host_oom_kills 1\n# HELP sa_host_procs процессов\n# TYPE sa_host_procs gauge\nsa_host_procs 1e+16\n# HELP sa_host_steal_pct CPU steal, %\n# TYPE sa_host_steal_pct gauge\nsa_host_steal_pct 3\n# HELP sa_host_unknown_metric unknown_metric\n# TYPE sa_host_unknown_metric gauge\nsa_host_unknown_metric 5\nsa_host_unknown_metric 6\n# HELP sa_host_uptime_s аптайм, s\n# TYPE sa_host_uptime_s gauge\nsa_host_uptime_s 1.23457e+06\n# HELP sa_temperature_celsius температура компонента, °C\n# TYPE sa_temperature_celsius gauge\nsa_temperature_celsius{kind=\"cpu\",component=\"cpu:core0\"} 60\nsa_temperature_celsius{kind=\"cpu\",component=\"cpu:package\"} 55.5\nsa_temperature_celsius{kind=\"disk\",component=\"disk:/dev/sda\"} 38\nsa_temperature_celsius{kind=\"gpu\",component=\"gpu:0\"} 47\n"
+    },
+    "host_only": {
+      "health": [],
+      "host_states": [
+        {
+          "component_id": "host:cpu_busy_pct",
+          "metric": "cpu_busy_pct",
+          "label": "CPU загрузка",
+          "value": 37.5,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:load1",
+          "metric": "load1",
+          "label": "load 1 мин",
+          "value": 0.25,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct:/",
+          "metric": "disk_pct",
+          "label": "диск заполнен /",
+          "value": 41.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct:/mnt/data",
+          "metric": "disk_pct",
+          "label": "диск заполнен /mnt/data",
+          "value": 77.25,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct:/mnt/my disk",
+          "metric": "disk_pct",
+          "label": "диск заполнен",
+          "value": 12.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:net_rx_bps:eth0",
+          "metric": "net_rx_bps",
+          "label": "сеть приём eth0",
+          "value": 123456.0,
+          "unit": "B/s",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:net_tx_bps:eth0",
+          "metric": "net_tx_bps",
+          "label": "сеть отдача eth0",
+          "value": 0.0,
+          "unit": "B/s",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:mem_available_bytes",
+          "metric": "mem_available_bytes",
+          "label": "RAM доступно",
+          "value": 2147483648.0,
+          "unit": "B",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:uptime_s",
+          "metric": "uptime_s",
+          "label": "аптайм",
+          "value": 1234567.0,
+          "unit": "s",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:steal_pct",
+          "metric": "steal_pct",
+          "label": "CPU steal",
+          "value": 3.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:oom_kills",
+          "metric": "oom_kills",
+          "label": "OOM-kill",
+          "value": 1.0,
+          "unit": "/мин",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:Bad-Metric",
+          "metric": "Bad-Metric",
+          "label": "bad",
+          "value": 1.0,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:9lives",
+          "metric": "9lives",
+          "label": "bad",
+          "value": 1.0,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:unknown_metric",
+          "metric": "unknown_metric",
+          "label": "unknown",
+          "value": 5.0,
+          "unit": "x",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:unknown_metric:inst",
+          "metric": "unknown_metric",
+          "label": "unknown inst",
+          "value": 6.0,
+          "unit": "x",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:disk_pct",
+          "metric": "disk_pct",
+          "label": "диск без экземпляра",
+          "value": 5.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:load5",
+          "metric": "load5",
+          "label": "load 5 мин",
+          "value": 1e-07,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "host:procs",
+          "metric": "procs",
+          "label": "процессов",
+          "value": 1e+16,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "text": "# HELP sa_up служба monitor жива\n# TYPE sa_up gauge\nsa_up 1\n# HELP sa_host_cpu_busy_pct CPU загрузка, %\n# TYPE sa_host_cpu_busy_pct gauge\nsa_host_cpu_busy_pct 37.5\n# HELP sa_host_disk_pct диск заполнен, %\n# TYPE sa_host_disk_pct gauge\nsa_host_disk_pct{mount=\"/\"} 41\nsa_host_disk_pct{mount=\"/mnt/data\"} 77.25\nsa_host_disk_pct{mount=\"/mnt/my disk\"} 12\nsa_host_disk_pct 5\n# HELP sa_host_load1 load 1 мин\n# TYPE sa_host_load1 gauge\nsa_host_load1 0.25\n# HELP sa_host_load5 load 5 мин\n# TYPE sa_host_load5 gauge\nsa_host_load5 1e-07\n# HELP sa_host_mem_available_bytes RAM доступно, B\n# TYPE sa_host_mem_available_bytes gauge\nsa_host_mem_available_bytes 2.14748e+09\n# HELP sa_host_net_rx_bps сеть приём, B/s\n# TYPE sa_host_net_rx_bps gauge\nsa_host_net_rx_bps{iface=\"eth0\"} 123456\n# HELP sa_host_net_tx_bps сеть отдача, B/s\n# TYPE sa_host_net_tx_bps gauge\nsa_host_net_tx_bps{iface=\"eth0\"} 0\n# HELP sa_host_oom_kills OOM-kill, /мин\n# TYPE sa_host_oom_kills gauge\nsa_host_oom_kills 1\n# HELP sa_host_procs процессов\n# TYPE sa_host_procs gauge\nsa_host_procs 1e+16\n# HELP sa_host_steal_pct CPU steal, %\n# TYPE sa_host_steal_pct gauge\nsa_host_steal_pct 3\n# HELP sa_host_unknown_metric unknown_metric\n# TYPE sa_host_unknown_metric gauge\nsa_host_unknown_metric 5\nsa_host_unknown_metric 6\n# HELP sa_host_uptime_s аптайм, s\n# TYPE sa_host_uptime_s gauge\nsa_host_uptime_s 1.23457e+06\n"
+    },
+    "temperatures_only": {
+      "health": [
+        {
+          "component_id": "disk:/dev/sda",
+          "kind": "disk",
+          "label": "HDD1",
+          "status": "ok",
+          "temperature_c": 38.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "cpu:package",
+          "kind": "cpu",
+          "label": "CPU Package",
+          "status": "ok",
+          "temperature_c": 55.5,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "cpu:core0",
+          "kind": "cpu",
+          "label": "CPU Core 0",
+          "status": "ok",
+          "temperature_c": 60.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        },
+        {
+          "component_id": "gpu:0",
+          "kind": "gpu",
+          "label": "GPU",
+          "status": "ok",
+          "temperature_c": 47.0,
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "host_states": [],
+      "text": "# HELP sa_up служба monitor жива\n# TYPE sa_up gauge\nsa_up 1\n# HELP sa_temperature_celsius температура компонента, °C\n# TYPE sa_temperature_celsius gauge\nsa_temperature_celsius{kind=\"cpu\",component=\"cpu:core0\"} 60\nsa_temperature_celsius{kind=\"cpu\",component=\"cpu:package\"} 55.5\nsa_temperature_celsius{kind=\"disk\",component=\"disk:/dev/sda\"} 38\nsa_temperature_celsius{kind=\"gpu\",component=\"gpu:0\"} 47\n"
+    },
+    "empty": {
+      "health": [],
+      "host_states": [],
+      "text": "# HELP sa_up служба monitor жива\n# TYPE sa_up gauge\nsa_up 1\n"
+    },
+    "only_invalid_metric": {
+      "health": [],
+      "host_states": [
+        {
+          "component_id": "host:Bad-Metric",
+          "metric": "Bad-Metric",
+          "label": "bad",
+          "value": 1.0,
+          "unit": "",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "text": "# HELP sa_up служба monitor жива\n# TYPE sa_up gauge\nsa_up 1\n"
+    },
+    "one_gauge_one_instance": {
+      "health": [],
+      "host_states": [
+        {
+          "component_id": "host:disk_pct:/",
+          "metric": "disk_pct",
+          "label": "диск заполнен /",
+          "value": 41.0,
+          "unit": "%",
+          "status": "ok",
+          "consecutive_count": 0,
+          "alerting_since": null
+        }
+      ],
+      "text": "# HELP sa_up служба monitor жива\n# TYPE sa_up gauge\nsa_up 1\n# HELP sa_host_disk_pct диск заполнен, %\n# TYPE sa_host_disk_pct gauge\nsa_host_disk_pct{mount=\"/\"} 41\n"
+    }
+  },
+  "format_labels": {
+    "empty": {
+      "labels": {},
+      "text": ""
+    },
+    "single": {
+      "labels": {
+        "mount": "/mnt/data"
+      },
+      "text": "{mount=\"/mnt/data\"}"
+    },
+    "two": {
+      "labels": {
+        "kind": "cpu",
+        "component": "cpu:package"
+      },
+      "text": "{kind=\"cpu\",component=\"cpu:package\"}"
+    },
+    "quote": {
+      "labels": {
+        "iface": "a\"b"
+      },
+      "text": "{iface=\"a\\\"b\"}"
+    },
+    "backslash": {
+      "labels": {
+        "iface": "a\\b"
+      },
+      "text": "{iface=\"a\\\\b\"}"
+    },
+    "newline": {
+      "labels": {
+        "iface": "a\nb"
+      },
+      "text": "{iface=\"a\\nb\"}"
+    },
+    "all_three": {
+      "labels": {
+        "x": "q\"\\\n"
+      },
+      "text": "{x=\"q\\\"\\\\\\n\"}"
+    },
+    "backslash_before_quote": {
+      "labels": {
+        "x": "\\\""
+      },
+      "text": "{x=\"\\\\\\\"\"}"
+    },
+    "unicode": {
+      "labels": {
+        "mount": "/mnt/диск"
+      },
+      "text": "{mount=\"/mnt/диск\"}"
+    },
+    "empty_value": {
+      "labels": {
+        "x": ""
+      },
+      "text": "{x=\"\"}"
+    }
+  },
+  "sample": [
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 1,
+      "text": "sa_x 1"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 1.0,
+      "text": "sa_x 1"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 0,
+      "text": "sa_x 0"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 0.5,
+      "text": "sa_x 0.5"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 123456.0,
+      "text": "sa_x 123456"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 1234567.0,
+      "text": "sa_x 1.23457e+06"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 1e+16,
+      "text": "sa_x 1e+16"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 1e-07,
+      "text": "sa_x 1e-07"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": -3.25,
+      "text": "sa_x -3.25"
+    },
+    {
+      "name": "sa_x",
+      "labels": {
+        "k": "v"
+      },
+      "value": 77.25,
+      "text": "sa_x{k=\"v\"} 77.25"
+    },
+    {
+      "name": "sa_x",
+      "labels": {
+        "k": "a\"b",
+        "j": "c"
+      },
+      "value": 2147483648,
+      "text": "sa_x{k=\"a\\\"b\",j=\"c\"} 2.14748e+09"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": 0.30000000000000004,
+      "text": "sa_x 0.3"
+    },
+    {
+      "name": "sa_x",
+      "labels": {},
+      "value": true,
+      "text": "sa_x 1"
+    }
+  ],
+  "gauge_family": {
+    "no_samples": [
+      "# HELP sa_x title",
+      "# TYPE sa_x gauge"
+    ],
+    "two_samples": [
+      "# HELP sa_x заголовок, B",
+      "# TYPE sa_x gauge",
+      "sa_x{k=\"a\"} 1",
+      "sa_x{k=\"b\"} 2.5"
+    ]
+  },
+  "metric_name": [
+    {
+      "name": "a",
+      "matches": true
+    },
+    {
+      "name": "sa_x",
+      "matches": true
+    },
+    {
+      "name": "a1_b2",
+      "matches": true
+    },
+    {
+      "name": "A",
+      "matches": false
+    },
+    {
+      "name": "1a",
+      "matches": false
+    },
+    {
+      "name": "a-b",
+      "matches": false
+    },
+    {
+      "name": "",
+      "matches": false
+    },
+    {
+      "name": "a b",
+      "matches": false
+    },
+    {
+      "name": "_a",
+      "matches": false
+    },
+    {
+      "name": "sa_host_x",
+      "matches": true
+    },
+    {
+      "name": "a\n",
+      "matches": true
+    }
+  ],
+  "store_renderer_seeded": "# HELP sa_up служба monitor жива\n# TYPE sa_up gauge\nsa_up 1\n# HELP sa_host_load_per_core load/ядро\n# TYPE sa_host_load_per_core gauge\nsa_host_load_per_core 2.1\n# HELP sa_host_mem_available_pct RAM свободно, %\n# TYPE sa_host_mem_available_pct gauge\nsa_host_mem_available_pct 53\n# HELP sa_host_steal_pct CPU steal, %\n# TYPE sa_host_steal_pct gauge\nsa_host_steal_pct 3\n# HELP sa_temperature_celsius температура компонента, °C\n# TYPE sa_temperature_celsius gauge\nsa_temperature_celsius{kind=\"cpu\",component=\"cpu:core0\"} 89\nsa_temperature_celsius{kind=\"cpu\",component=\"cpu:package\"} 54\nsa_temperature_celsius{kind=\"disk\",component=\"disk:/dev/sda\"} 40\nsa_temperature_celsius{kind=\"disk\",component=\"disk:/dev/sdb\"} 33\n"
+}

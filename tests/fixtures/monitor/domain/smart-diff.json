@@ -1,0 +1,456 @@
+{
+  "monitored_attrs": {
+    "5": "Reallocated_Sector_Ct",
+    "197": "Current_Pending_Sector",
+    "198": "Offline_Uncorrectable",
+    "199": "UDMA_CRC_Error_Count"
+  },
+  "cases": [
+    {
+      "name": "no-previous",
+      "prev": null,
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": null
+    },
+    {
+      "name": "identical",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": null
+    },
+    {
+      "name": "realloc-grows",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 3,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "event_type": "smart_degraded",
+        "health_from": "ok",
+        "health_to": "ok",
+        "attr_changes": [
+          {
+            "attr_id": 5,
+            "name": "Reallocated_Sector_Ct",
+            "old": 0,
+            "new": 3
+          }
+        ],
+        "at": "2026-01-01T00:01:00+00:00"
+      }
+    },
+    {
+      "name": "pending-and-uncorrectable",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "warning",
+        "attrs": {
+          "5": 0,
+          "197": 28,
+          "198": 28,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "warning",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "event_type": "smart_recovered",
+        "health_from": "warning",
+        "health_to": "warning",
+        "attr_changes": [
+          {
+            "attr_id": 197,
+            "name": "Current_Pending_Sector",
+            "old": 28,
+            "new": 0
+          },
+          {
+            "attr_id": 198,
+            "name": "Offline_Uncorrectable",
+            "old": 28,
+            "new": 0
+          }
+        ],
+        "at": "2026-01-01T00:01:00+00:00"
+      }
+    },
+    {
+      "name": "mixed-change-worse-wins",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 10,
+          "197": 4,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 12,
+          "197": 1,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "event_type": "smart_degraded",
+        "health_from": "ok",
+        "health_to": "ok",
+        "attr_changes": [
+          {
+            "attr_id": 5,
+            "name": "Reallocated_Sector_Ct",
+            "old": 10,
+            "new": 12
+          },
+          {
+            "attr_id": 197,
+            "name": "Current_Pending_Sector",
+            "old": 4,
+            "new": 1
+          }
+        ],
+        "at": "2026-01-01T00:01:00+00:00"
+      }
+    },
+    {
+      "name": "health-worse-only",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "warning",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "event_type": "smart_degraded",
+        "health_from": "ok",
+        "health_to": "warning",
+        "attr_changes": [],
+        "at": "2026-01-01T00:01:00+00:00"
+      }
+    },
+    {
+      "name": "health-failed",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "warning",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "failed",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "event_type": "smart_degraded",
+        "health_from": "warning",
+        "health_to": "failed",
+        "attr_changes": [],
+        "at": "2026-01-01T00:01:00+00:00"
+      }
+    },
+    {
+      "name": "health-better-only",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "failed",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "event_type": "smart_recovered",
+        "health_from": "failed",
+        "health_to": "ok",
+        "attr_changes": [],
+        "at": "2026-01-01T00:01:00+00:00"
+      }
+    },
+    {
+      "name": "health-unknown-to-known",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": null,
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "warning",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": null
+    },
+    {
+      "name": "health-known-to-unknown",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": null,
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": null
+    },
+    {
+      "name": "attr-missing-skipped",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 1
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 1,
+          "197": 5
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": null
+    },
+    {
+      "name": "unmonitored-attr-ignored",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0,
+          "9": 100
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0,
+          "9": 500
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": null
+    },
+    {
+      "name": "attr-up-health-better",
+      "prev": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "warning",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-01T00:00:00+00:00"
+      },
+      "curr": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 1
+        },
+        "taken_at": "2026-01-01T00:01:00+00:00"
+      },
+      "change": {
+        "component_id": "disk-a",
+        "label": "Disk-A",
+        "event_type": "smart_degraded",
+        "health_from": "warning",
+        "health_to": "ok",
+        "attr_changes": [
+          {
+            "attr_id": 199,
+            "name": "UDMA_CRC_Error_Count",
+            "old": 0,
+            "new": 1
+          }
+        ],
+        "at": "2026-01-01T00:01:00+00:00"
+      }
+    }
+  ]
+}

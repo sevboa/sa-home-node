@@ -1,0 +1,390 @@
+{
+  "baseline_stats": {
+    "cpu:package": {
+      "count": 6,
+      "mean": 55.5,
+      "std": 0.9574271077562589
+    },
+    "cpu:core0": {
+      "count": 6,
+      "mean": 82.5,
+      "std": 10.144785195688817
+    },
+    "disk:/dev/sda": {
+      "count": 6,
+      "mean": 39.0,
+      "std": 0.8164965809277724
+    },
+    "disk:/dev/sdb": {
+      "count": 6,
+      "mean": 31.5,
+      "std": 0.9574271077563183
+    },
+    "window-2:cpu:package": {
+      "count": 2,
+      "mean": 54.5,
+      "std": 0.5
+    },
+    "missing": {
+      "count": 0,
+      "mean": 0.0,
+      "std": 0.0
+    }
+  },
+  "host_trend": {
+    "steal_pct": {
+      "1": [
+        {
+          "bucket": "2026-03-01T00:20",
+          "avg": 9.0,
+          "max": 15.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:30",
+          "avg": 3.0,
+          "max": 3.0,
+          "samples": 1
+        }
+      ],
+      "24": [
+        {
+          "bucket": "2026-03-01T00:00",
+          "avg": 7.0,
+          "max": 12.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:10",
+          "avg": 14.0,
+          "max": 14.0,
+          "samples": 1
+        },
+        {
+          "bucket": "2026-03-01T00:20",
+          "avg": 9.0,
+          "max": 15.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:30",
+          "avg": 3.0,
+          "max": 3.0,
+          "samples": 1
+        }
+      ]
+    },
+    "load_per_core": {
+      "1": [
+        {
+          "bucket": "2026-03-01T00:20",
+          "avg": 1.95,
+          "max": 2.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:30",
+          "avg": 2.1,
+          "max": 2.1,
+          "samples": 1
+        }
+      ],
+      "24": [
+        {
+          "bucket": "2026-03-01T00:00",
+          "avg": 0.55,
+          "max": 0.6,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:10",
+          "avg": 1.8,
+          "max": 1.8,
+          "samples": 1
+        },
+        {
+          "bucket": "2026-03-01T00:20",
+          "avg": 1.95,
+          "max": 2.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:30",
+          "avg": 2.1,
+          "max": 2.1,
+          "samples": 1
+        }
+      ]
+    },
+    "mem_available_pct": {
+      "1": [
+        {
+          "bucket": "2026-03-01T00:20",
+          "avg": 54.5,
+          "max": 55.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:30",
+          "avg": 53.0,
+          "max": 53.0,
+          "samples": 1
+        }
+      ],
+      "24": [
+        {
+          "bucket": "2026-03-01T00:00",
+          "avg": 59.0,
+          "max": 60.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:10",
+          "avg": 56.0,
+          "max": 56.0,
+          "samples": 1
+        },
+        {
+          "bucket": "2026-03-01T00:20",
+          "avg": 54.5,
+          "max": 55.0,
+          "samples": 2
+        },
+        {
+          "bucket": "2026-03-01T00:30",
+          "avg": 53.0,
+          "max": 53.0,
+          "samples": 1
+        }
+      ]
+    },
+    "oom_kills": {
+      "1": [],
+      "24": []
+    }
+  },
+  "pending_alerts": [],
+  "pending_clears": [],
+  "pending_host_alerts": [],
+  "pending_host_clears": [
+    {
+      "component_id": "host:steal_pct",
+      "metric": "steal_pct",
+      "label": "CPU steal",
+      "value": 3.0,
+      "unit": "%",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    }
+  ],
+  "get_smart_health_map": {
+    "/dev/sda": "ok",
+    "/dev/sdb": "warning"
+  },
+  "get_known_states": {
+    "cpu:package": {
+      "component_id": "cpu:package",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    },
+    "cpu:core0": {
+      "component_id": "cpu:core0",
+      "status": "alerting",
+      "consecutive_count": 0,
+      "alerting_since": "2026-03-01T00:14:01+00:00"
+    },
+    "disk:/dev/sda": {
+      "component_id": "disk:/dev/sda",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    },
+    "disk:/dev/sdb": {
+      "component_id": "disk:/dev/sdb",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    }
+  },
+  "get_known_host_states": {
+    "host:steal_pct": {
+      "component_id": "host:steal_pct",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    },
+    "host:load_per_core": {
+      "component_id": "host:load_per_core",
+      "status": "alerting",
+      "consecutive_count": 0,
+      "alerting_since": "2026-03-01T00:21:01+00:00"
+    },
+    "host:mem_available_pct": {
+      "component_id": "host:mem_available_pct",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    }
+  },
+  "get_all_states": [
+    {
+      "component_id": "cpu:core0",
+      "kind": "cpu",
+      "label": "CPU Core 0",
+      "status": "alerting",
+      "temperature_c": 89.0,
+      "consecutive_count": 0,
+      "alerting_since": "2026-03-01T00:14:01+00:00"
+    },
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU Package",
+      "status": "ok",
+      "temperature_c": 54.0,
+      "consecutive_count": 0,
+      "alerting_since": null
+    },
+    {
+      "component_id": "disk:/dev/sda",
+      "kind": "disk",
+      "label": "HDD1",
+      "status": "ok",
+      "temperature_c": 40.0,
+      "consecutive_count": 0,
+      "alerting_since": null
+    },
+    {
+      "component_id": "disk:/dev/sdb",
+      "kind": "disk",
+      "label": "SSD",
+      "status": "ok",
+      "temperature_c": 33.0,
+      "consecutive_count": 0,
+      "alerting_since": null
+    }
+  ],
+  "get_all_host_states": [
+    {
+      "component_id": "host:load_per_core",
+      "metric": "load_per_core",
+      "label": "load/ядро",
+      "value": 2.1,
+      "unit": "",
+      "status": "alerting",
+      "consecutive_count": 0,
+      "alerting_since": "2026-03-01T00:21:01+00:00"
+    },
+    {
+      "component_id": "host:mem_available_pct",
+      "metric": "mem_available_pct",
+      "label": "RAM свободно",
+      "value": 53.0,
+      "unit": "%",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    },
+    {
+      "component_id": "host:steal_pct",
+      "metric": "steal_pct",
+      "label": "CPU steal",
+      "value": 3.0,
+      "unit": "%",
+      "status": "ok",
+      "consecutive_count": 0,
+      "alerting_since": null
+    }
+  ],
+  "get_disk_summaries": [
+    {
+      "label": "HDD1",
+      "health": "ok",
+      "temperature_c": 38.0,
+      "free_bytes": 100000000000,
+      "total_bytes": 320000000000,
+      "model": "Disk-A",
+      "kind": "hdd"
+    },
+    {
+      "label": "SSD",
+      "health": "warning",
+      "temperature_c": 30.0,
+      "free_bytes": 200000000000,
+      "total_bytes": 256000000000,
+      "model": "Disk-B",
+      "kind": "ssd"
+    }
+  ],
+  "get_smart_snapshot": {
+    "disk:/dev/sda": {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk-A",
+      "health": "ok",
+      "attrs": {
+        "5": 31,
+        "197": 0,
+        "198": 0,
+        "199": 0
+      },
+      "taken_at": "2026-03-01T00:01:00+00:00"
+    },
+    "disk:/dev/sdb": {
+      "component_id": "disk:/dev/sdb",
+      "label": "Disk-B",
+      "health": "warning",
+      "attrs": {
+        "5": 0,
+        "197": 2,
+        "198": 0,
+        "199": 0
+      },
+      "taken_at": "2026-03-01T00:01:00+00:00"
+    },
+    "disk:/dev/none": null
+  },
+  "job_run_counts": {
+    "error": 1,
+    "ok": 7
+  },
+  "recent_job_runs": [
+    {
+      "id": 8,
+      "job_type": "sensor_scan",
+      "started_at": "2026-03-01T00:36:00+00:00",
+      "finished_at": "2026-03-01T00:36:01+00:00",
+      "status": "error",
+      "error": "сбой датчика",
+      "metrics_json": null
+    },
+    {
+      "id": 7,
+      "job_type": "sensor_scan",
+      "started_at": "2026-03-01T00:35:00+00:00",
+      "finished_at": "2026-03-01T00:35:02+00:00",
+      "status": "ok",
+      "error": null,
+      "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+    },
+    {
+      "id": 6,
+      "job_type": "sensor_scan",
+      "started_at": "2026-03-01T00:28:00+00:00",
+      "finished_at": "2026-03-01T00:28:02+00:00",
+      "status": "ok",
+      "error": null,
+      "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+    }
+  ],
+  "get_state": {
+    "host:kernel_scan_at": "2026-03-01T00:35:01+00:00",
+    "disk_summaries_cache": "[{\"label\": \"HDD1\", \"health\": \"ok\", \"temperature_c\": 38.0, \"free_bytes\": 100000000000, \"total_bytes\": 320000000000, \"model\": \"Disk-A\", \"kind\": \"hdd\"}, {\"label\": \"SSD\", \"health\": \"warning\", \"temperature_c\": 30.0, \"free_bytes\": 200000000000, \"total_bytes\": 256000000000, \"model\": \"Disk-B\", \"kind\": \"ssd\"}]",
+    "absent": null
+  },
+  "state_keys": [
+    "disk_summaries_cache",
+    "host:kernel_scan_at"
+  ]
+}

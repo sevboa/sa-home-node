@@ -1,0 +1,228 @@
+{
+  "now": "2026-01-15T12:00:00+00:00",
+  "parse": {
+    "psutil": [
+      {
+        "component_id": "cpu:coretemp:Package id 0",
+        "kind": "cpu",
+        "label": "Package id 0",
+        "temperature_c": 45.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:coretemp:Core 0",
+        "kind": "cpu",
+        "label": "Core 0",
+        "temperature_c": 43.5,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:coretemp:coretemp#2",
+        "kind": "cpu",
+        "label": "coretemp",
+        "temperature_c": 41.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:coretemp:coretemp#3",
+        "kind": "cpu",
+        "label": "coretemp",
+        "temperature_c": 40.25,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:acpitz:acpitz#0",
+        "kind": "cpu",
+        "label": "acpitz",
+        "temperature_c": 27.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:nvme:Composite",
+        "kind": "cpu",
+        "label": "Composite",
+        "temperature_c": 38.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "psutil_empty": [],
+    "lm_sensors": [
+      {
+        "component_id": "cpu:coretemp-isa-0000:Package id 0",
+        "kind": "cpu",
+        "label": "Package id 0",
+        "temperature_c": 46.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:coretemp-isa-0000:Core 0",
+        "kind": "cpu",
+        "label": "Core 0",
+        "temperature_c": 44.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:acpitz-acpi-0:temp1",
+        "kind": "cpu",
+        "label": "temp1",
+        "temperature_c": 27.8,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "cpu:acpitz-acpi-0:temp2",
+        "kind": "cpu",
+        "label": "temp2",
+        "temperature_c": 29.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "lm_sensors_empty": []
+  },
+  "read_cpu_sync": {
+    "psutil_ok": {
+      "readings": [
+        {
+          "component_id": "cpu:coretemp:Package id 0",
+          "kind": "cpu",
+          "label": "Package id 0",
+          "temperature_c": 45.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:coretemp:Core 0",
+          "kind": "cpu",
+          "label": "Core 0",
+          "temperature_c": 43.5,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:coretemp:coretemp#2",
+          "kind": "cpu",
+          "label": "coretemp",
+          "temperature_c": 41.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:coretemp:coretemp#3",
+          "kind": "cpu",
+          "label": "coretemp",
+          "temperature_c": 40.25,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:acpitz:acpitz#0",
+          "kind": "cpu",
+          "label": "acpitz",
+          "temperature_c": 27.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:nvme:Composite",
+          "kind": "cpu",
+          "label": "Composite",
+          "temperature_c": 38.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        }
+      ],
+      "calls": []
+    },
+    "psutil_empty_fallback_sensors": {
+      "readings": [
+        {
+          "component_id": "cpu:coretemp-isa-0000:Package id 0",
+          "kind": "cpu",
+          "label": "Package id 0",
+          "temperature_c": 46.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:coretemp-isa-0000:Core 0",
+          "kind": "cpu",
+          "label": "Core 0",
+          "temperature_c": 44.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:acpitz-acpi-0:temp1",
+          "kind": "cpu",
+          "label": "temp1",
+          "temperature_c": 27.8,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:acpitz-acpi-0:temp2",
+          "kind": "cpu",
+          "label": "temp2",
+          "temperature_c": 29.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        }
+      ],
+      "calls": [
+        [
+          "/usr/bin/sensors",
+          "-j"
+        ]
+      ]
+    },
+    "psutil_broken_fallback_sensors": {
+      "readings": [
+        {
+          "component_id": "cpu:coretemp-isa-0000:Package id 0",
+          "kind": "cpu",
+          "label": "Package id 0",
+          "temperature_c": 46.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:coretemp-isa-0000:Core 0",
+          "kind": "cpu",
+          "label": "Core 0",
+          "temperature_c": 44.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:acpitz-acpi-0:temp1",
+          "kind": "cpu",
+          "label": "temp1",
+          "temperature_c": 27.8,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "cpu:acpitz-acpi-0:temp2",
+          "kind": "cpu",
+          "label": "temp2",
+          "temperature_c": 29.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        }
+      ],
+      "calls": [
+        [
+          "/usr/bin/sensors",
+          "-j"
+        ]
+      ]
+    },
+    "psutil_empty_sensors_bad_json": {
+      "readings": [],
+      "calls": [
+        [
+          "/usr/bin/sensors",
+          "-j"
+        ]
+      ]
+    },
+    "psutil_empty_sensors_failed": {
+      "readings": [],
+      "calls": [
+        [
+          "/usr/bin/sensors",
+          "-j"
+        ]
+      ]
+    },
+    "psutil_empty_no_sensors": {
+      "readings": [],
+      "calls": []
+    }
+  }
+}

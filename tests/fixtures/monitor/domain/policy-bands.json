@@ -1,0 +1,711 @@
+{
+  "cases": [
+    {
+      "policy": "fixed",
+      "params": {
+        "warn_c": 80.0,
+        "crit_c": 90.0,
+        "hysteresis_delta_c": 5.0
+      },
+      "bands": [
+        {
+          "temp": 50.0,
+          "band": "under"
+        },
+        {
+          "temp": 74.9,
+          "band": "under"
+        },
+        {
+          "temp": 75.0,
+          "band": "under"
+        },
+        {
+          "temp": 75.1,
+          "band": "mid"
+        },
+        {
+          "temp": 79.9,
+          "band": "mid"
+        },
+        {
+          "temp": 80.0,
+          "band": "over"
+        },
+        {
+          "temp": 80.1,
+          "band": "over"
+        },
+        {
+          "temp": 90.0,
+          "band": "over"
+        },
+        {
+          "temp": 115.0,
+          "band": "over"
+        }
+      ]
+    },
+    {
+      "policy": "fixed",
+      "params": {
+        "warn_c": 55.0,
+        "crit_c": 65.0,
+        "hysteresis_delta_c": 5.0
+      },
+      "bands": [
+        {
+          "temp": 25.0,
+          "band": "under"
+        },
+        {
+          "temp": 49.9,
+          "band": "under"
+        },
+        {
+          "temp": 50.0,
+          "band": "under"
+        },
+        {
+          "temp": 50.1,
+          "band": "mid"
+        },
+        {
+          "temp": 54.9,
+          "band": "mid"
+        },
+        {
+          "temp": 55.0,
+          "band": "over"
+        },
+        {
+          "temp": 55.1,
+          "band": "over"
+        },
+        {
+          "temp": 65.0,
+          "band": "over"
+        },
+        {
+          "temp": 90.0,
+          "band": "over"
+        }
+      ]
+    },
+    {
+      "policy": "fixed",
+      "params": {
+        "warn_c": 60.0,
+        "crit_c": 70.0,
+        "hysteresis_delta_c": 0.0
+      },
+      "bands": [
+        {
+          "temp": 30.0,
+          "band": "under"
+        },
+        {
+          "temp": 59.9,
+          "band": "under"
+        },
+        {
+          "temp": 60.0,
+          "band": "over"
+        },
+        {
+          "temp": 60.1,
+          "band": "over"
+        },
+        {
+          "temp": 59.9,
+          "band": "under"
+        },
+        {
+          "temp": 60.0,
+          "band": "over"
+        },
+        {
+          "temp": 60.1,
+          "band": "over"
+        },
+        {
+          "temp": 70.0,
+          "band": "over"
+        },
+        {
+          "temp": 95.0,
+          "band": "over"
+        }
+      ]
+    },
+    {
+      "policy": "baseline",
+      "params": {
+        "warn_c": 80.0,
+        "crit_c": 90.0,
+        "hysteresis_delta_c": 5.0,
+        "min_samples": 30,
+        "k_sigma": 4.0,
+        "min_std_c": 3.0
+      },
+      "cases": [
+        {
+          "stats": {
+            "count": 0,
+            "mean": 0.0,
+            "std": 0.0
+          },
+          "effective_warn_c": 80.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 50.0,
+              "band": "under"
+            },
+            {
+              "temp": 55.0,
+              "band": "under"
+            },
+            {
+              "temp": 60.0,
+              "band": "under"
+            },
+            {
+              "temp": 70.0,
+              "band": "under"
+            },
+            {
+              "temp": 74.9,
+              "band": "under"
+            },
+            {
+              "temp": 75.0,
+              "band": "under"
+            },
+            {
+              "temp": 75.1,
+              "band": "mid"
+            },
+            {
+              "temp": 79.9,
+              "band": "mid"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 80.1,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        },
+        {
+          "stats": {
+            "count": 29,
+            "mean": 40.0,
+            "std": 1.0
+          },
+          "effective_warn_c": 80.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 50.0,
+              "band": "under"
+            },
+            {
+              "temp": 55.0,
+              "band": "under"
+            },
+            {
+              "temp": 60.0,
+              "band": "under"
+            },
+            {
+              "temp": 70.0,
+              "band": "under"
+            },
+            {
+              "temp": 74.9,
+              "band": "under"
+            },
+            {
+              "temp": 75.0,
+              "band": "under"
+            },
+            {
+              "temp": 75.1,
+              "band": "mid"
+            },
+            {
+              "temp": 79.9,
+              "band": "mid"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 80.1,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        },
+        {
+          "stats": {
+            "count": 30,
+            "mean": 40.0,
+            "std": 1.0
+          },
+          "effective_warn_c": 52.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 46.9,
+              "band": "under"
+            },
+            {
+              "temp": 47.0,
+              "band": "under"
+            },
+            {
+              "temp": 47.1,
+              "band": "mid"
+            },
+            {
+              "temp": 50.0,
+              "band": "mid"
+            },
+            {
+              "temp": 51.9,
+              "band": "mid"
+            },
+            {
+              "temp": 52.0,
+              "band": "over"
+            },
+            {
+              "temp": 52.1,
+              "band": "over"
+            },
+            {
+              "temp": 55.0,
+              "band": "over"
+            },
+            {
+              "temp": 60.0,
+              "band": "over"
+            },
+            {
+              "temp": 70.0,
+              "band": "over"
+            },
+            {
+              "temp": 75.0,
+              "band": "over"
+            },
+            {
+              "temp": 79.9,
+              "band": "over"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        },
+        {
+          "stats": {
+            "count": 30,
+            "mean": 40.0,
+            "std": 5.0
+          },
+          "effective_warn_c": 60.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 50.0,
+              "band": "under"
+            },
+            {
+              "temp": 54.9,
+              "band": "under"
+            },
+            {
+              "temp": 55.0,
+              "band": "under"
+            },
+            {
+              "temp": 55.1,
+              "band": "mid"
+            },
+            {
+              "temp": 59.9,
+              "band": "mid"
+            },
+            {
+              "temp": 60.0,
+              "band": "over"
+            },
+            {
+              "temp": 60.1,
+              "band": "over"
+            },
+            {
+              "temp": 70.0,
+              "band": "over"
+            },
+            {
+              "temp": 75.0,
+              "band": "over"
+            },
+            {
+              "temp": 79.9,
+              "band": "over"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        },
+        {
+          "stats": {
+            "count": 240,
+            "mean": 40.0,
+            "std": 0.5
+          },
+          "effective_warn_c": 52.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 46.9,
+              "band": "under"
+            },
+            {
+              "temp": 47.0,
+              "band": "under"
+            },
+            {
+              "temp": 47.1,
+              "band": "mid"
+            },
+            {
+              "temp": 50.0,
+              "band": "mid"
+            },
+            {
+              "temp": 51.9,
+              "band": "mid"
+            },
+            {
+              "temp": 52.0,
+              "band": "over"
+            },
+            {
+              "temp": 52.1,
+              "band": "over"
+            },
+            {
+              "temp": 55.0,
+              "band": "over"
+            },
+            {
+              "temp": 60.0,
+              "band": "over"
+            },
+            {
+              "temp": 70.0,
+              "band": "over"
+            },
+            {
+              "temp": 75.0,
+              "band": "over"
+            },
+            {
+              "temp": 79.9,
+              "band": "over"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        },
+        {
+          "stats": {
+            "count": 240,
+            "mean": 70.0,
+            "std": 2.0
+          },
+          "effective_warn_c": 80.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 50.0,
+              "band": "under"
+            },
+            {
+              "temp": 55.0,
+              "band": "under"
+            },
+            {
+              "temp": 60.0,
+              "band": "under"
+            },
+            {
+              "temp": 70.0,
+              "band": "under"
+            },
+            {
+              "temp": 74.9,
+              "band": "under"
+            },
+            {
+              "temp": 75.0,
+              "band": "under"
+            },
+            {
+              "temp": 75.1,
+              "band": "mid"
+            },
+            {
+              "temp": 79.9,
+              "band": "mid"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 80.1,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        },
+        {
+          "stats": {
+            "count": 240,
+            "mean": 70.0,
+            "std": 10.0
+          },
+          "effective_warn_c": 80.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 50.0,
+              "band": "under"
+            },
+            {
+              "temp": 55.0,
+              "band": "under"
+            },
+            {
+              "temp": 60.0,
+              "band": "under"
+            },
+            {
+              "temp": 70.0,
+              "band": "under"
+            },
+            {
+              "temp": 74.9,
+              "band": "under"
+            },
+            {
+              "temp": 75.0,
+              "band": "under"
+            },
+            {
+              "temp": 75.1,
+              "band": "mid"
+            },
+            {
+              "temp": 79.9,
+              "band": "mid"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 80.1,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        },
+        {
+          "stats": {
+            "count": 240,
+            "mean": 30.0,
+            "std": 20.0
+          },
+          "effective_warn_c": 80.0,
+          "bands": [
+            {
+              "temp": 20.0,
+              "band": "under"
+            },
+            {
+              "temp": 30.0,
+              "band": "under"
+            },
+            {
+              "temp": 45.0,
+              "band": "under"
+            },
+            {
+              "temp": 50.0,
+              "band": "under"
+            },
+            {
+              "temp": 55.0,
+              "band": "under"
+            },
+            {
+              "temp": 60.0,
+              "band": "under"
+            },
+            {
+              "temp": 70.0,
+              "band": "under"
+            },
+            {
+              "temp": 74.9,
+              "band": "under"
+            },
+            {
+              "temp": 75.0,
+              "band": "under"
+            },
+            {
+              "temp": 75.1,
+              "band": "mid"
+            },
+            {
+              "temp": 79.9,
+              "band": "mid"
+            },
+            {
+              "temp": 80.0,
+              "band": "over"
+            },
+            {
+              "temp": 80.1,
+              "band": "over"
+            },
+            {
+              "temp": 90.0,
+              "band": "over"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "blockdevices": [
+    {
+      "name": "sda",
+      "type": "disk",
+      "tran": "sata",
+      "model": "Disk-A",
+      "path": "/dev/sda",
+      "rota": true,
+      "size": 100,
+      "mountpoint": null
+    },
+    {
+      "name": "sdz",
+      "type": "disk",
+      "tran": "mmc",
+      "model": null,
+      "path": "/dev/sdz",
+      "rota": false,
+      "size": 100,
+      "mountpoint": null
+    },
+    {
+      "name": "sdy",
+      "type": "disk",
+      "tran": "sata",
+      "model": "Disk-D",
+      "path": "/dev/sdy",
+      "rota": "0",
+      "size": " ",
+      "mountpoint": null
+    },
+    {
+      "name": "sdw",
+      "type": "disk",
+      "model": "Disk-E",
+      "path": "/dev/sdw",
+      "size": null,
+      "mountpoint": null
+    },
+    {
+      "name": "nvme1n2",
+      "type": "disk",
+      "path": "/dev/nvme1n2",
+      "rota": false,
+      "size": 5,
+      "mountpoint": null
+    },
+    {
+      "type": "disk",
+      "name": "",
+      "size": 5
+    }
+  ]
+}

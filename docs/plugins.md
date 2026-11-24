@@ -120,8 +120,8 @@ PLUGIN = Plugin(name="svc", fixups=svc_fixups)
 
 - `available()` — точки входа группы `ENTRY_POINT_GROUP` через
   `importlib.metadata.entry_points(group=...)`; ключ — имя точки входа.
-- `load_plugins(names)` — порядок результата равен порядку `names`;
-  `available()` вызывается один раз.
+- `load_plugins(names)` — первым идёт встроенный плагин `monitor`, затем плагины в порядке `names`
+  (имя `monitor` в `names` — повтор, `PluginError`); `available()` вызывается один раз.
 
 Ошибки `PluginError` (наследник `RuntimeError`, текст на русском) при:
 

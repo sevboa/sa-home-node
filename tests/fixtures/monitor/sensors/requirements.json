@@ -1,0 +1,2318 @@
+{
+  "statuses": {
+    "OK": "ok",
+    "MISSING_PROGRAM": "missing_program",
+    "UNSUPPORTED_PLATFORM": "unsupported_platform",
+    "NEEDS_PRIVILEGE": "needs_privilege"
+  },
+  "sudo_markers": {
+    "password": "a password is required",
+    "prefix": "sudo:"
+  },
+  "matrix": {
+    "program_only": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      }
+    },
+    "program_note": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix` — зачем нужна"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix` — зачем нужна"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix` — зачем нужна"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна"
+        }
+      }
+    },
+    "linux_only": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix` — только linux"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — только linux"
+        }
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — только linux"
+        }
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — только linux"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — только linux"
+        }
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a') — только linux"
+        }
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux) — только linux"
+        }
+      }
+    },
+    "linux_darwin": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux / darwin)"
+        }
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "tool-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      }
+    },
+    "keyed": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "key-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "key-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "key-a",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "missing_program",
+        "available": false,
+        "status_for": "missing_program",
+        "problem_for": {
+          "id": "key-a",
+          "status": "missing_program",
+          "hint": "sudo apt install pkg-a (нужна команда 'tool-a')"
+        }
+      }
+    },
+    "no_program_note_id": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "заметка",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix` — заметка"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "заметка",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix` — заметка"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "заметка",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix` — заметка"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "заметка",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix` — заметка"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "заметка",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix` — заметка"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "заметка",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix` — заметка"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      }
+    },
+    "no_program": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "unsupported_platform",
+        "available": false,
+        "status_for": "unsupported_platform",
+        "problem_for": {
+          "id": "platform-only",
+          "status": "unsupported_platform",
+          "hint": "не поддерживается на этой ОС (пока есть только для linux)"
+        }
+      }
+    },
+    "no_id_at_all": {
+      "linux|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "linux|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "linux|program=no|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "linux|program=no|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "win32|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "win32|program=no|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "win32|program=no|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "darwin|program=yes|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=yes|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=none": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=ok": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=needs_privilege": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "needs_privilege",
+        "problem_for": {
+          "id": "",
+          "status": "needs_privilege",
+          "hint": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+        }
+      },
+      "darwin|program=no|reported=missing_program": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      },
+      "darwin|program=no|reported=unsupported_platform": {
+        "diagnose": "ok",
+        "available": true,
+        "status_for": "ok",
+        "problem_for": null
+      }
+    }
+  },
+  "install_hints": {
+    "apt": {
+      "program_only": "sudo apt install pkg-a (нужна команда 'tool-a')",
+      "program_note": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "sudo apt install pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "sudo apt install pkg-a (нужна команда 'tool-a')",
+      "keyed": "sudo apt install pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "sudo apt install pkg-a (нужна команда None) — заметка",
+      "no_program": "sudo apt install  (нужна команда None)",
+      "no_id_at_all": "sudo apt install pkg-a (нужна команда None)"
+    },
+    "pacman": {
+      "program_only": "sudo pacman -S pkg-a (нужна команда 'tool-a')",
+      "program_note": "sudo pacman -S pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "sudo pacman -S pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "sudo pacman -S pkg-a (нужна команда 'tool-a')",
+      "keyed": "sudo pacman -S pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "sudo pacman -S pkg-a (нужна команда None) — заметка",
+      "no_program": "sudo pacman -S  (нужна команда None)",
+      "no_id_at_all": "sudo pacman -S pkg-a (нужна команда None)"
+    },
+    "dnf": {
+      "program_only": "sudo dnf install pkg-a (нужна команда 'tool-a')",
+      "program_note": "sudo dnf install pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "sudo dnf install pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "sudo dnf install pkg-a (нужна команда 'tool-a')",
+      "keyed": "sudo dnf install pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "sudo dnf install pkg-a (нужна команда None) — заметка",
+      "no_program": "sudo dnf install  (нужна команда None)",
+      "no_id_at_all": "sudo dnf install pkg-a (нужна команда None)"
+    },
+    "zypper": {
+      "program_only": "sudo zypper install pkg-a (нужна команда 'tool-a')",
+      "program_note": "sudo zypper install pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "sudo zypper install pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "sudo zypper install pkg-a (нужна команда 'tool-a')",
+      "keyed": "sudo zypper install pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "sudo zypper install pkg-a (нужна команда None) — заметка",
+      "no_program": "sudo zypper install  (нужна команда None)",
+      "no_id_at_all": "sudo zypper install pkg-a (нужна команда None)"
+    },
+    "apk": {
+      "program_only": "sudo apk add pkg-a (нужна команда 'tool-a')",
+      "program_note": "sudo apk add pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "sudo apk add pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "sudo apk add pkg-a (нужна команда 'tool-a')",
+      "keyed": "sudo apk add pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "sudo apk add pkg-a (нужна команда None) — заметка",
+      "no_program": "sudo apk add  (нужна команда None)",
+      "no_id_at_all": "sudo apk add pkg-a (нужна команда None)"
+    },
+    "brew": {
+      "program_only": "brew install pkg-a (нужна команда 'tool-a')",
+      "program_note": "brew install pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "brew install pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "brew install pkg-a (нужна команда 'tool-a')",
+      "keyed": "brew install pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "brew install pkg-a (нужна команда None) — заметка",
+      "no_program": "brew install  (нужна команда None)",
+      "no_id_at_all": "brew install pkg-a (нужна команда None)"
+    },
+    "winget": {
+      "program_only": "winget install pkg-a (нужна команда 'tool-a')",
+      "program_note": "winget install pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "winget install pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "winget install pkg-a (нужна команда 'tool-a')",
+      "keyed": "winget install pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "winget install pkg-a (нужна команда None) — заметка",
+      "no_program": "winget install  (нужна команда None)",
+      "no_id_at_all": "winget install pkg-a (нужна команда None)"
+    },
+    "none": {
+      "program_only": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a')",
+      "program_note": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a')",
+      "keyed": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a')",
+      "no_program_note_id": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда None) — заметка",
+      "no_program": "установите пакет '' через пакетный менеджер системы (нужна команда None)",
+      "no_id_at_all": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда None)"
+    },
+    "apt_and_brew": {
+      "program_only": "sudo apt install pkg-a (нужна команда 'tool-a')",
+      "program_note": "sudo apt install pkg-a (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "sudo apt install pkg-a (нужна команда 'tool-a') — только linux",
+      "linux_darwin": "sudo apt install pkg-a (нужна команда 'tool-a')",
+      "keyed": "sudo apt install pkg-a (нужна команда 'tool-a')",
+      "no_program_note_id": "sudo apt install pkg-a (нужна команда None) — заметка",
+      "no_program": "sudo apt install  (нужна команда None)",
+      "no_id_at_all": "sudo apt install pkg-a (нужна команда None)"
+    },
+    "unsupported_platform": {
+      "program_only": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a')",
+      "program_note": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a') — зачем нужна",
+      "linux_only": "не поддерживается на этой ОС (пока есть только для linux) — только linux",
+      "linux_darwin": "не поддерживается на этой ОС (пока есть только для linux / darwin)",
+      "keyed": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда 'tool-a')",
+      "no_program_note_id": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда None) — заметка",
+      "no_program": "не поддерживается на этой ОС (пока есть только для linux)",
+      "no_id_at_all": "установите пакет 'pkg-a' через пакетный менеджер системы (нужна команда None)"
+    }
+  },
+  "privilege_hints": {
+    "program_only": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`",
+    "program_note": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix` — зачем нужна",
+    "linux_only": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix` — только linux",
+    "linux_darwin": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`",
+    "keyed": "не хватает прав на команду 'tool-a' — выполните на ноде `nodectl fix`",
+    "no_program_note_id": "не хватает прав на команду None — выполните на ноде `nodectl fix` — заметка",
+    "no_program": "не хватает прав на команду None — выполните на ноде `nodectl fix`",
+    "no_id_at_all": "не хватает прав на команду None — выполните на ноде `nodectl fix`"
+  },
+  "real_requirements": {
+    "smartctl": {
+      "requirement": {
+        "program": "smartctl",
+        "package": "smartmontools",
+        "platforms": null,
+        "note": "температура и здоровье дисков по SMART",
+        "key": null
+      },
+      "ok": null,
+      "missing": {
+        "id": "smartctl",
+        "status": "missing_program",
+        "hint": "sudo apt install smartmontools (нужна команда 'smartctl') — температура и здоровье дисков по SMART"
+      },
+      "needs_privilege": {
+        "id": "smartctl",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'smartctl' — выполните на ноде `nodectl fix` — температура и здоровье дисков по SMART"
+      },
+      "win32": null
+    },
+    "nvidia_smi": {
+      "requirement": {
+        "program": "nvidia-smi",
+        "package": "nvidia-utils",
+        "platforms": null,
+        "note": "температура GPU (nvidia-smi, проприетарный драйвер NVIDIA)",
+        "key": null
+      },
+      "ok": null,
+      "missing": {
+        "id": "nvidia-smi",
+        "status": "missing_program",
+        "hint": "sudo apt install nvidia-utils (нужна команда 'nvidia-smi') — температура GPU (nvidia-smi, проприетарный драйвер NVIDIA)"
+      },
+      "needs_privilege": {
+        "id": "nvidia-smi",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'nvidia-smi' — выполните на ноде `nodectl fix` — температура GPU (nvidia-smi, проприетарный драйвер NVIDIA)"
+      },
+      "win32": null
+    },
+    "journalctl_kernel": {
+      "requirement": {
+        "program": "journalctl",
+        "package": "systemd",
+        "platforms": [
+          "linux"
+        ],
+        "note": "счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)",
+        "key": "journalctl-kernel"
+      },
+      "ok": null,
+      "missing": {
+        "id": "journalctl-kernel",
+        "status": "missing_program",
+        "hint": "sudo apt install systemd (нужна команда 'journalctl') — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      },
+      "needs_privilege": {
+        "id": "journalctl-kernel",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'journalctl' — выполните на ноде `nodectl fix` — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      },
+      "win32": {
+        "id": "journalctl-kernel",
+        "status": "unsupported_platform",
+        "hint": "не поддерживается на этой ОС (пока есть только для linux) — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      }
+    },
+    "last": {
+      "requirement": {
+        "program": "last",
+        "package": "util-linux",
+        "platforms": [
+          "linux"
+        ],
+        "note": "история отключений машины",
+        "key": null
+      },
+      "ok": null,
+      "missing": {
+        "id": "last",
+        "status": "missing_program",
+        "hint": "sudo apt install util-linux (нужна команда 'last') — история отключений машины"
+      },
+      "needs_privilege": {
+        "id": "last",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'last' — выполните на ноде `nodectl fix` — история отключений машины"
+      },
+      "win32": {
+        "id": "last",
+        "status": "unsupported_platform",
+        "hint": "не поддерживается на этой ОС (пока есть только для linux) — история отключений машины"
+      }
+    },
+    "journalctl_power": {
+      "requirement": {
+        "program": "journalctl",
+        "package": "systemd",
+        "platforms": [
+          "linux"
+        ],
+        "note": "точное время внезапных отключений",
+        "key": null
+      },
+      "ok": null,
+      "missing": {
+        "id": "journalctl",
+        "status": "missing_program",
+        "hint": "sudo apt install systemd (нужна команда 'journalctl') — точное время внезапных отключений"
+      },
+      "needs_privilege": {
+        "id": "journalctl",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'journalctl' — выполните на ноде `nodectl fix` — точное время внезапных отключений"
+      },
+      "win32": {
+        "id": "journalctl",
+        "status": "unsupported_platform",
+        "hint": "не поддерживается на этой ОС (пока есть только для linux) — точное время внезапных отключений"
+      }
+    }
+  },
+  "stderr_markers": {
+    "''": {
+      "looks_like_permission_error": false,
+      "looks_like_sudo_denied": false,
+      "looks_like_sudo_message": false
+    },
+    "'Permission denied'": {
+      "looks_like_permission_error": true,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'permission DENIED while opening'": {
+      "looks_like_permission_error": true,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'Operation not permitted'": {
+      "looks_like_permission_error": true,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'you must be root'": {
+      "looks_like_permission_error": true,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'requires root privileges'": {
+      "looks_like_permission_error": true,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'EACCES: open'": {
+      "looks_like_permission_error": true,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'Access is denied.'": {
+      "looks_like_permission_error": true,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'sudo: a password is required'": {
+      "looks_like_permission_error": false,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    },
+    "'sudo: unknown user'": {
+      "looks_like_permission_error": false,
+      "looks_like_sudo_denied": false,
+      "looks_like_sudo_message": true
+    },
+    "'  sudo: no tty present'": {
+      "looks_like_permission_error": false,
+      "looks_like_sudo_denied": false,
+      "looks_like_sudo_message": true
+    },
+    "'all fine'": {
+      "looks_like_permission_error": false,
+      "looks_like_sudo_denied": false,
+      "looks_like_sudo_message": false
+    },
+    "'Sudo: A Password Is Required'": {
+      "looks_like_permission_error": false,
+      "looks_like_sudo_denied": true,
+      "looks_like_sudo_message": true
+    }
+  }
+}

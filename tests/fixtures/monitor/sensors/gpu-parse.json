@@ -1,0 +1,96 @@
+{
+  "now": "2026-01-15T12:00:00+00:00",
+  "query_fields": "index,name,temperature.gpu",
+  "parse": {
+    "mixed": [
+      {
+        "component_id": "gpu:0",
+        "kind": "gpu",
+        "label": "NVIDIA Tesla V100-SXM2-16GB",
+        "temperature_c": 38.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "gpu:2",
+        "kind": "gpu",
+        "label": "GPU2",
+        "temperature_c": 41.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "gpu:6",
+        "kind": "gpu",
+        "label": "GPU-G",
+        "temperature_c": 36.5,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "empty": []
+  },
+  "read_gpu_sync": {
+    "ok": {
+      "readings": [
+        {
+          "component_id": "gpu:0",
+          "kind": "gpu",
+          "label": "NVIDIA Tesla V100-SXM2-16GB",
+          "temperature_c": 38.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "gpu:2",
+          "kind": "gpu",
+          "label": "GPU2",
+          "temperature_c": 41.0,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        },
+        {
+          "component_id": "gpu:6",
+          "kind": "gpu",
+          "label": "GPU-G",
+          "temperature_c": 36.5,
+          "taken_at": "2026-01-15T12:00:00+00:00"
+        }
+      ],
+      "calls": [
+        [
+          "nvidia-smi",
+          "--query-gpu=index,name,temperature.gpu",
+          "--format=csv,noheader,nounits"
+        ]
+      ],
+      "problem": null
+    },
+    "no_program": {
+      "readings": [],
+      "calls": [],
+      "problem": {
+        "id": "nvidia-smi",
+        "status": "missing_program",
+        "hint": "установите пакет 'nvidia-utils' через пакетный менеджер системы (нужна команда 'nvidia-smi') — температура GPU (nvidia-smi, проприетарный драйвер NVIDIA)"
+      }
+    },
+    "failed": {
+      "readings": [],
+      "calls": [
+        [
+          "nvidia-smi",
+          "--query-gpu=index,name,temperature.gpu",
+          "--format=csv,noheader,nounits"
+        ]
+      ],
+      "problem": null
+    },
+    "timeout": {
+      "readings": [],
+      "calls": [
+        [
+          "nvidia-smi",
+          "--query-gpu=index,name,temperature.gpu",
+          "--format=csv,noheader,nounits"
+        ]
+      ],
+      "problem": null
+    }
+  }
+}

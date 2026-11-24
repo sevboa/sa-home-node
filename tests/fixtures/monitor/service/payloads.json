@@ -1,0 +1,150 @@
+{
+  "event_payload": [
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU Package",
+      "temperature_c": 86.5,
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "disk:/dev/sda",
+      "kind": "disk",
+      "label": "HDD1",
+      "temperature_c": 41.0,
+      "at": "2026-03-01T00:10:00+00:00"
+    }
+  ],
+  "host_event_payload": [
+    {
+      "component_id": "host:steal_pct",
+      "metric": "steal_pct",
+      "label": "CPU steal",
+      "value": 14.0,
+      "unit": "%",
+      "hint": "вероятна переподписка ноды провайдером",
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "host:load_per_core",
+      "metric": "load_per_core",
+      "label": "load/ядро",
+      "value": 0.5,
+      "unit": "",
+      "hint": "нода перегружена",
+      "at": "2026-03-01T00:10:00+00:00"
+    }
+  ],
+  "smart_change_payload": [
+    {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk-A",
+      "health_from": "ok",
+      "health_to": "warning",
+      "attr_changes": [
+        {
+          "attr_id": 5,
+          "name": "Reallocated_Sector_Ct",
+          "old": 31,
+          "new": 35
+        },
+        {
+          "attr_id": 197,
+          "name": "Current_Pending_Sector",
+          "old": 0,
+          "new": 2
+        }
+      ],
+      "at": "2026-03-01T00:10:00+00:00"
+    },
+    {
+      "component_id": "disk:/dev/sdb",
+      "label": "Disk-B",
+      "health_from": "failed",
+      "health_to": "ok",
+      "attr_changes": [],
+      "at": "2026-03-01T00:10:00+00:00"
+    }
+  ],
+  "health_dict": [
+    {
+      "component_id": "cpu:package",
+      "kind": "cpu",
+      "label": "CPU Package",
+      "status": "ok",
+      "temperature_c": 55.0,
+      "alerting_since": null
+    },
+    {
+      "component_id": "cpu:core0",
+      "kind": "cpu",
+      "label": "CPU Core 0",
+      "status": "alerting",
+      "temperature_c": 88.5,
+      "alerting_since": "2026-03-01T00:10:00+00:00"
+    }
+  ],
+  "host_state_dict": [
+    {
+      "component_id": "host:steal_pct",
+      "metric": "steal_pct",
+      "label": "CPU steal",
+      "unit": "%",
+      "status": "ok",
+      "value": 3.0,
+      "alerting_since": null
+    },
+    {
+      "component_id": "host:load_per_core",
+      "metric": "load_per_core",
+      "label": "load/ядро",
+      "unit": "",
+      "status": "alerting",
+      "value": 2.0,
+      "alerting_since": "2026-03-01T00:10:00+00:00"
+    }
+  ],
+  "outage_dict": [
+    null,
+    {
+      "kind": "unexpected",
+      "boot_at": "2026-02-28T23:00:00+00:00",
+      "down_at": "2026-02-28T22:53:00+00:00",
+      "up_at": "2026-02-28T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 420.0
+    },
+    {
+      "kind": "clean",
+      "boot_at": "2026-02-25T23:00:00+00:00",
+      "down_at": "2026-02-25T22:56:00+00:00",
+      "up_at": "2026-02-25T23:00:00+00:00",
+      "down_approx": false,
+      "downtime_s": 240.0
+    },
+    {
+      "kind": "clean",
+      "boot_at": "2026-02-22T23:00:00+00:00",
+      "down_at": null,
+      "up_at": "2026-02-22T23:00:00+00:00",
+      "down_approx": false,
+      "downtime_s": null
+    },
+    {
+      "kind": "clean",
+      "boot_at": "2026-02-19T23:00:00+00:00",
+      "down_at": "2026-02-19T22:54:00+00:00",
+      "up_at": "2026-02-19T23:00:00+00:00",
+      "down_approx": false,
+      "downtime_s": 360.0
+    },
+    {
+      "kind": "unexpected",
+      "boot_at": "2026-02-16T23:00:00+00:00",
+      "down_at": "2026-02-16T22:49:00+00:00",
+      "up_at": "2026-02-16T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 660.0
+    }
+  ]
+}

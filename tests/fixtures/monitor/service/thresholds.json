@@ -1,0 +1,1052 @@
+{
+  "ok": {
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "host_thresholds_direct": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    }
+  },
+  "missing-programs": {
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "host_thresholds_direct": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    }
+  },
+  "last-needs-privilege": {
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "host_thresholds_direct": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    }
+  },
+  "unsupported-platform": {
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "host_thresholds_direct": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    }
+  },
+  "vps-no-outage": {
+    "thresholds": {
+      "cpu": {
+        "warn_c": 70.0,
+        "crit_c": 85.0
+      },
+      "gpu": {
+        "warn_c": 75.0,
+        "crit_c": 88.0
+      },
+      "disk": {
+        "warn_c": 50.0,
+        "crit_c": 60.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 5.0,
+        "crit": 15.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 20.0,
+        "crit": 10.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "host_thresholds_direct": {
+      "steal_pct": {
+        "warn": 5.0,
+        "crit": 15.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 20.0,
+        "crit": 10.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    }
+  },
+  "host-disabled-with-seeded-states": {
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "host_thresholds_direct": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    }
+  },
+  "host-enabled-with-seeded-states": {
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "host_thresholds_direct": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    }
+  }
+}

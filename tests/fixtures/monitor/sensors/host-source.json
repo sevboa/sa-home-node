@@ -1,0 +1,67 @@
+{
+  "enabled_false_export_false": {
+    "readings": [],
+    "sync_calls": []
+  },
+  "enabled_false_export_true": {
+    "readings": [
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 0.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "sync_calls": [
+      {
+        "now": "2026-01-15T12:00:00+00:00",
+        "window": 5.0,
+        "kernel_since": "2026-01-15T11:55:00+00:00"
+      }
+    ]
+  },
+  "enabled_true_export_false": {
+    "readings": [
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 0.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "sync_calls": [
+      {
+        "now": "2026-01-15T12:00:00+00:00",
+        "window": 5.0,
+        "kernel_since": "2026-01-15T11:55:00+00:00"
+      }
+    ]
+  },
+  "enabled_true_export_true": {
+    "readings": [
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 0.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "sync_calls": [
+      {
+        "now": "2026-01-15T12:00:00+00:00",
+        "window": 5.0,
+        "kernel_since": "2026-01-15T11:55:00+00:00"
+      }
+    ]
+  },
+  "default_args_disabled": {
+    "readings": [],
+    "sync_calls": []
+  }
+}

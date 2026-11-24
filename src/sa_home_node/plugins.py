@@ -1,5 +1,7 @@
-from collections.abc import Awaitable, Callable, Iterable, Sequence
-from dataclasses import dataclass
+from __future__ import annotations
+
+from collections.abc import Awaitable, Callable, Iterable, Mapping, Sequence
+from dataclasses import dataclass, field
 from importlib.metadata import EntryPoint, entry_points
 from pathlib import Path
 
@@ -8,6 +10,7 @@ from pydantic import BaseModel
 from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
 from sa_home_node.fixups.core import Fixup, FixupContext
+from sa_home_node.monitor.providers import SensorProvider
 from sa_home_node.proto.actions import NodeAction
 from sa_home_node.proto.server import ServiceHandler
 from sa_home_node.services.instances import InstanceMeta
@@ -33,6 +36,11 @@ class ServiceContext:
     swarm: SwarmApi | None = None
     instance: str = ""
     package_path: Path | None = None
+    node_kind: str = ""
+    sections: Mapping[str, BaseModel] = field(default_factory=dict)
+    plugins: tuple[Plugin, ...] = ()
+    broadcast: Callable[[str, dict], Awaitable[int]] | None = None
+    handler: ServiceHandler | None = None
 
 
 @dataclass(frozen=True)
@@ -66,6 +74,8 @@ class Plugin:
     power_blockers: tuple[Callable[[], Awaitable[list[str]]], ...] = ()
     replication_hooks: ReplicationHooks | None = None
     fixups: Callable[[FixupContext], Sequence[Fixup]] | None = None
+    sections: tuple[tuple[str, type[BaseModel]], ...] = ()
+    sensor_providers: tuple[Callable[[ServiceContext], SensorProvider], ...] = ()
 
 
 def available() -> dict[str, EntryPoint]:
@@ -73,8 +83,10 @@ def available() -> dict[str, EntryPoint]:
 
 
 def load_plugins(names: Iterable[str]) -> list[Plugin]:
+    from sa_home_node.monitor.plugin import PLUGIN as MONITOR
+
     names = list(names)
-    seen: set[str] = set()
+    seen: set[str] = {MONITOR.name}
     for name in names:
         if name in seen:
             raise PluginError(f"Повтор имени плагина: {name}")
@@ -86,7 +98,7 @@ def load_plugins(names: Iterable[str]) -> list[Plugin]:
         raise PluginError(
             f"Плагины не установлены: {', '.join(unknown)}; установлены: {installed}"
         )
-    result = []
+    result = [MONITOR]
     for name in names:
         ep = eps[name]
         plugin = ep.load()
@@ -99,7 +111,11 @@ def load_plugins(names: Iterable[str]) -> list[Plugin]:
 
 
 def make_context(
-    plugin: Plugin, config: NodeConfig, content: ContentStore, swarm: SwarmApi | None = None
+    plugin: Plugin,
+    config: NodeConfig,
+    content: ContentStore,
+    swarm: SwarmApi | None = None,
+    plugins: Sequence[Plugin] = (),
 ) -> ServiceContext:
     section = None
     if plugin.config_model is not None:
@@ -111,4 +127,7 @@ def make_context(
         config=section,
         content=content,
         swarm=swarm,
+        node_kind=config.node.kind,
+        sections={name: config.section(name, model) for name, model in plugin.sections},
+        plugins=tuple(plugins),
     )

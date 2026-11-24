@@ -1,0 +1,28 @@
+from __future__ import annotations
+
+from sa_home_node.monitor.jobbase import JobContext, JobResult
+
+DEDUP_KEY = "housekeeping"
+JOB_TYPE = "housekeeping"
+KEEP_LAST_RUNS = 500
+KEEP_READINGS_PER_COMPONENT = 5000
+KEEP_HOST_READINGS_PER_METRIC = 15000
+
+
+class HousekeepingJob:
+    @property
+    def dedup_key(self) -> str:
+        return DEDUP_KEY
+
+    @property
+    def job_type(self) -> str:
+        return JOB_TYPE
+
+    async def run(self, ctx: JobContext) -> JobResult:
+        return JobResult(
+            extra={
+                "pruned_job_runs": await ctx.store.prune_job_runs(keep_last=KEEP_LAST_RUNS),
+                "pruned_readings": await ctx.store.prune_readings(KEEP_READINGS_PER_COMPONENT),
+                "pruned_host_readings": await ctx.store.prune_host_readings(KEEP_HOST_READINGS_PER_METRIC),
+            }
+        )

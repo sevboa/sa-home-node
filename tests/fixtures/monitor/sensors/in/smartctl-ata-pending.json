@@ -1,0 +1,54 @@
+{
+  "device": {
+    "name": "/dev/sdb",
+    "type": "scsi"
+  },
+  "model_name": "Disk-B",
+  "serial_number": "SN-B",
+  "smart_status": {
+    "passed": true
+  },
+  "ata_smart_attributes": {
+    "table": [
+      {
+        "id": 5,
+        "name": "Reallocated_Sector_Ct",
+        "raw": {
+          "value": 589855,
+          "string": "31 (0 9)"
+        }
+      },
+      {
+        "id": 194,
+        "name": "Temperature_Celsius",
+        "raw": {
+          "value": 37
+        }
+      },
+      {
+        "id": 197,
+        "name": "Current_Pending_Sector",
+        "raw": {
+          "value": 8,
+          "string": "8"
+        }
+      },
+      {
+        "id": 198,
+        "name": "Offline_Uncorrectable",
+        "raw": {
+          "value": 0,
+          "string": "0"
+        }
+      },
+      {
+        "id": 199,
+        "name": "UDMA_CRC_Error_Count",
+        "raw": {
+          "value": 3,
+          "string": "n/a"
+        }
+      }
+    ]
+  }
+}

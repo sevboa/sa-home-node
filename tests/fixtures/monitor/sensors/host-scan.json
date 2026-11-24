@@ -1,0 +1,1918 @@
+{
+  "now": "2026-01-15T12:00:00+00:00",
+  "full": {
+    "default_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 22.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 4.17,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 8.33,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 0.75,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "диск / заполнен",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/",
+        "metric": "disk_pct",
+        "label": "диск заполнен /",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/mnt/data",
+        "metric": "disk_pct",
+        "label": "диск заполнен /mnt/data",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:uptime_s",
+        "metric": "uptime_s",
+        "label": "аптайм",
+        "value": 12345.67,
+        "unit": "s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 4.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "PSI cpu",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "PSI mem",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "PSI io",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 18.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 42.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "conntrack",
+        "value": 3.12,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 3.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "explicit_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 0.75,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "диск / заполнен",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/",
+        "metric": "disk_pct",
+        "label": "диск заполнен /",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/mnt/data",
+        "metric": "disk_pct",
+        "label": "диск заполнен /mnt/data",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:uptime_s",
+        "metric": "uptime_s",
+        "label": "аптайм",
+        "value": 12345.67,
+        "unit": "s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 4.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "PSI cpu",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "PSI mem",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "PSI io",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "conntrack",
+        "value": 3.12,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 3.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "calls": [
+      10.0,
+      [
+        "2026-01-15T11:59:50+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ],
+      30.0,
+      [
+        "2026-01-15T11:55:00+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ]
+    ]
+  },
+  "full_overlay": {
+    "default_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 22.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 4.17,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 8.33,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 0.75,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "диск / заполнен",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/",
+        "metric": "disk_pct",
+        "label": "диск заполнен /",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/mnt/data",
+        "metric": "disk_pct",
+        "label": "диск заполнен /mnt/data",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:uptime_s",
+        "metric": "uptime_s",
+        "label": "аптайм",
+        "value": 12345.67,
+        "unit": "s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 4.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "PSI cpu",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "PSI mem",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "PSI io",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 18.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:vpn0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём vpn0",
+        "value": 200.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:vpn0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача vpn0",
+        "value": 150.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 42.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "conntrack",
+        "value": 3.12,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 3.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "explicit_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 0.75,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "диск / заполнен",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/",
+        "metric": "disk_pct",
+        "label": "диск заполнен /",
+        "value": 75.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/mnt/data",
+        "metric": "disk_pct",
+        "label": "диск заполнен /mnt/data",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:uptime_s",
+        "metric": "uptime_s",
+        "label": "аптайм",
+        "value": 12345.67,
+        "unit": "s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 4.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "PSI cpu",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "PSI mem",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "PSI io",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:vpn0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём vpn0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:vpn0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача vpn0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "conntrack",
+        "value": 3.12,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 3.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "calls": [
+      10.0,
+      [
+        "2026-01-15T11:59:50+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ],
+      30.0,
+      [
+        "2026-01-15T11:55:00+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ]
+    ]
+  },
+  "minimal_vps": {
+    "default_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 22.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 4.17,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 8.33,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 0.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 42.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "explicit_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 0.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "calls": [
+      10.0,
+      [
+        "2026-01-15T11:59:50+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ],
+      30.0,
+      [
+        "2026-01-15T11:55:00+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ]
+    ]
+  },
+  "no_meminfo_swap": {
+    "default_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 22.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 4.17,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 8.33,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 0.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 18.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 42.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 0.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "explicit_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 0.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 0.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "calls": [
+      10.0,
+      [
+        "2026-01-15T11:59:50+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ],
+      30.0,
+      [
+        "2026-01-15T11:55:00+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ]
+    ]
+  },
+  "mounts_without_uptime": {
+    "default_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 22.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 4.17,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 8.33,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 0.38,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "диск / заполнен",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/",
+        "metric": "disk_pct",
+        "label": "диск заполнен /",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/mnt/data",
+        "metric": "disk_pct",
+        "label": "диск заполнен /mnt/data",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 1.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "PSI cpu",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "PSI mem",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "PSI io",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 18.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 100.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 42.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "conntrack",
+        "value": 3.12,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 0.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "explicit_window": [
+      {
+        "component_id": "host:cpu_busy_pct",
+        "metric": "cpu_busy_pct",
+        "label": "CPU загрузка",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:iowait_pct",
+        "metric": "iowait_pct",
+        "label": "iowait",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "value": 0.38,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load1",
+        "metric": "load1",
+        "label": "load 1 мин",
+        "value": 1.5,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load5",
+        "metric": "load5",
+        "label": "load 5 мин",
+        "value": 1.2,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:load15",
+        "metric": "load15",
+        "label": "load 15 мин",
+        "value": 0.9,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "value": 38.78,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_used_pct",
+        "metric": "mem_used_pct",
+        "label": "RAM занято",
+        "value": 61.22,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:mem_available_bytes",
+        "metric": "mem_available_bytes",
+        "label": "RAM доступно",
+        "value": 1536000000.0,
+        "unit": "B",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:swap_used_pct",
+        "metric": "swap_used_pct",
+        "label": "swap занято",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_used_pct",
+        "metric": "disk_used_pct",
+        "label": "диск / заполнен",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/",
+        "metric": "disk_pct",
+        "label": "диск заполнен /",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:disk_pct:/mnt/data",
+        "metric": "disk_pct",
+        "label": "диск заполнен /mnt/data",
+        "value": 25.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:procs",
+        "metric": "procs",
+        "label": "процессов",
+        "value": 1.0,
+        "unit": "",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_cpu",
+        "metric": "psi_cpu",
+        "label": "PSI cpu",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_memory",
+        "metric": "psi_memory",
+        "label": "PSI mem",
+        "value": 0.0,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:psi_io",
+        "metric": "psi_io",
+        "label": "PSI io",
+        "value": 3.45,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:oom_kills",
+        "metric": "oom_kills",
+        "label": "OOM-kill",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth0",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth0",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth0",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_rx_bps:eth1",
+        "metric": "net_rx_bps",
+        "label": "сеть приём eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_tx_bps:eth1",
+        "metric": "net_tx_bps",
+        "label": "сеть отдача eth1",
+        "value": 0.0,
+        "unit": "B/s",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:net_err_rate",
+        "metric": "net_err_rate",
+        "label": "ошибки NIC",
+        "value": 0.0,
+        "unit": "/мин",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:conntrack_pct",
+        "metric": "conntrack_pct",
+        "label": "conntrack",
+        "value": 3.12,
+        "unit": "%",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "host:kernel_stall_events",
+        "metric": "kernel_stall_events",
+        "label": "стойла ядра",
+        "value": 0.0,
+        "unit": "/скан",
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "calls": [
+      10.0,
+      [
+        "2026-01-15T11:59:50+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ],
+      30.0,
+      [
+        "2026-01-15T11:55:00+00:00",
+        "2026-01-15T12:00:00+00:00"
+      ]
+    ]
+  },
+  "no_proc_stat": []
+}

@@ -1,0 +1,153 @@
+{
+  "constants": {
+    "DIR_ABOVE": "above",
+    "DIR_BELOW": "below",
+    "EVENT_HOST_DEGRADED": "host_degraded",
+    "EVENT_HOST_RECOVERED": "host_recovered"
+  },
+  "metrics": {
+    "steal_pct": {
+      "metric": "steal_pct",
+      "label": "CPU steal",
+      "unit": "%",
+      "direction": "above",
+      "warn": 10.0,
+      "crit": 25.0,
+      "hysteresis": 3.0,
+      "hint": "вероятна переподписка ноды провайдером",
+      "instance_label": null
+    },
+    "iowait_pct": {
+      "metric": "iowait_pct",
+      "label": "iowait",
+      "unit": "%",
+      "direction": "above",
+      "warn": 15.0,
+      "crit": 40.0,
+      "hysteresis": 4.0,
+      "hint": "хранилище ноды не успевает за нагрузкой",
+      "instance_label": null
+    },
+    "load_per_core": {
+      "metric": "load_per_core",
+      "label": "load/ядро",
+      "unit": "",
+      "direction": "above",
+      "warn": 1.5,
+      "crit": 4.0,
+      "hysteresis": 0.4,
+      "hint": "нода перегружена",
+      "instance_label": null
+    },
+    "mem_available_pct": {
+      "metric": "mem_available_pct",
+      "label": "RAM свободно",
+      "unit": "%",
+      "direction": "below",
+      "warn": 15.0,
+      "crit": 7.0,
+      "hysteresis": 4.0,
+      "hint": "мало свободной памяти",
+      "instance_label": null
+    },
+    "swap_used_pct": {
+      "metric": "swap_used_pct",
+      "label": "swap занято",
+      "unit": "%",
+      "direction": "above",
+      "warn": 25.0,
+      "crit": 60.0,
+      "hysteresis": 6.0,
+      "hint": "активный своппинг — памяти не хватает",
+      "instance_label": null
+    },
+    "disk_used_pct": {
+      "metric": "disk_used_pct",
+      "label": "диск / заполнен",
+      "unit": "%",
+      "direction": "above",
+      "warn": 80.0,
+      "crit": 92.0,
+      "hysteresis": 3.0,
+      "hint": "мало места на корневом разделе",
+      "instance_label": null
+    },
+    "psi_cpu": {
+      "metric": "psi_cpu",
+      "label": "PSI cpu",
+      "unit": "%",
+      "direction": "above",
+      "warn": 20.0,
+      "crit": 50.0,
+      "hysteresis": 5.0,
+      "hint": "давление по CPU — задачи ждут процессор",
+      "instance_label": null
+    },
+    "psi_memory": {
+      "metric": "psi_memory",
+      "label": "PSI mem",
+      "unit": "%",
+      "direction": "above",
+      "warn": 20.0,
+      "crit": 50.0,
+      "hysteresis": 5.0,
+      "hint": "давление по памяти",
+      "instance_label": null
+    },
+    "psi_io": {
+      "metric": "psi_io",
+      "label": "PSI io",
+      "unit": "%",
+      "direction": "above",
+      "warn": 20.0,
+      "crit": 50.0,
+      "hysteresis": 5.0,
+      "hint": "давление по I/O",
+      "instance_label": null
+    },
+    "oom_kills": {
+      "metric": "oom_kills",
+      "label": "OOM-kill",
+      "unit": "/мин",
+      "direction": "above",
+      "warn": 1.0,
+      "crit": 1.0,
+      "hysteresis": 1.0,
+      "hint": "ядро убивало процессы из-за нехватки памяти",
+      "instance_label": null
+    },
+    "conntrack_pct": {
+      "metric": "conntrack_pct",
+      "label": "conntrack",
+      "unit": "%",
+      "direction": "above",
+      "warn": 80.0,
+      "crit": 95.0,
+      "hysteresis": 3.0,
+      "hint": "таблица conntrack почти полна — новые соединения дропаются",
+      "instance_label": null
+    },
+    "net_err_rate": {
+      "metric": "net_err_rate",
+      "label": "ошибки NIC",
+      "unit": "/мин",
+      "direction": "above",
+      "warn": 1.0,
+      "crit": 10.0,
+      "hysteresis": 1.0,
+      "hint": "интерфейс теряет пакеты — `ip -s link`, проверь линк/драйвер virtio",
+      "instance_label": null
+    },
+    "kernel_stall_events": {
+      "metric": "kernel_stall_events",
+      "label": "стойла ядра",
+      "unit": "/скан",
+      "direction": "above",
+      "warn": 1.0,
+      "crit": 1.0,
+      "hysteresis": 1.0,
+      "hint": "ядро логировало стойла — вероятны фризы VM гипервизором",
+      "instance_label": null
+    }
+  }
+}

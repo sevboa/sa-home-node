@@ -1,0 +1,1748 @@
+{
+  "ok": {
+    "node": "node-a",
+    "service": "monitor",
+    "now": "2026-03-01T01:20:00+00:00",
+    "uptime_s": 273605.0,
+    "health": [
+      {
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 89.0,
+        "alerting_since": "2026-03-01T00:14:01+00:00"
+      },
+      {
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 54.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "SSD",
+        "status": "ok",
+        "temperature_c": 33.0,
+        "alerting_since": null
+      }
+    ],
+    "host_health": [],
+    "disks": [
+      {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      }
+    ],
+    "last_outage": {
+      "kind": "unexpected",
+      "boot_at": "2026-02-28T23:00:00+00:00",
+      "down_at": "2026-02-28T22:53:00+00:00",
+      "up_at": "2026-02-28T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 420.0
+    },
+    "job_counts": {
+      "error": 1,
+      "ok": 7
+    },
+    "recent_runs": [
+      {
+        "id": 8,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:36:00+00:00",
+        "finished_at": "2026-03-01T00:36:01+00:00",
+        "status": "error",
+        "error": "сбой датчика",
+        "metrics_json": null
+      },
+      {
+        "id": 7,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:35:00+00:00",
+        "finished_at": "2026-03-01T00:35:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+      },
+      {
+        "id": 6,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:28:00+00:00",
+        "finished_at": "2026-03-01T00:28:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 5,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:21:00+00:00",
+        "finished_at": "2026-03-01T00:21:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 1, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 4,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:14:00+00:00",
+        "finished_at": "2026-03-01T00:14:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 2, \"alerts_sent\": 2, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 3,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:07:00+00:00",
+        "finished_at": "2026-03-01T00:07:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 2,
+        "job_type": "smart_scan",
+        "started_at": "2026-03-01T00:01:00+00:00",
+        "finished_at": "2026-03-01T00:01:01+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 2, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 1,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:00:00+00:00",
+        "finished_at": "2026-03-01T00:00:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      }
+    ],
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "requirements": []
+  },
+  "missing-programs": {
+    "node": "node-a",
+    "service": "monitor",
+    "now": "2026-03-01T01:20:00+00:00",
+    "uptime_s": 273605.0,
+    "health": [
+      {
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 89.0,
+        "alerting_since": "2026-03-01T00:14:01+00:00"
+      },
+      {
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 54.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "SSD",
+        "status": "ok",
+        "temperature_c": 33.0,
+        "alerting_since": null
+      }
+    ],
+    "host_health": [
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "unit": "",
+        "status": "alerting",
+        "value": 2.1,
+        "alerting_since": "2026-03-01T00:21:01+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "unit": "%",
+        "status": "ok",
+        "value": 53.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "unit": "%",
+        "status": "ok",
+        "value": 3.0,
+        "alerting_since": null
+      }
+    ],
+    "disks": [
+      {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      }
+    ],
+    "last_outage": {
+      "kind": "unexpected",
+      "boot_at": "2026-02-28T23:00:00+00:00",
+      "down_at": "2026-02-28T22:53:00+00:00",
+      "up_at": "2026-02-28T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 420.0
+    },
+    "job_counts": {
+      "error": 1,
+      "ok": 7
+    },
+    "recent_runs": [
+      {
+        "id": 8,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:36:00+00:00",
+        "finished_at": "2026-03-01T00:36:01+00:00",
+        "status": "error",
+        "error": "сбой датчика",
+        "metrics_json": null
+      },
+      {
+        "id": 7,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:35:00+00:00",
+        "finished_at": "2026-03-01T00:35:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+      },
+      {
+        "id": 6,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:28:00+00:00",
+        "finished_at": "2026-03-01T00:28:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 5,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:21:00+00:00",
+        "finished_at": "2026-03-01T00:21:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 1, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 4,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:14:00+00:00",
+        "finished_at": "2026-03-01T00:14:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 2, \"alerts_sent\": 2, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 3,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:07:00+00:00",
+        "finished_at": "2026-03-01T00:07:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 2,
+        "job_type": "smart_scan",
+        "started_at": "2026-03-01T00:01:00+00:00",
+        "finished_at": "2026-03-01T00:01:01+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 2, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 1,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:00:00+00:00",
+        "finished_at": "2026-03-01T00:00:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      }
+    ],
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "requirements": [
+      {
+        "id": "smartctl",
+        "status": "missing_program",
+        "hint": "sudo apt install smartmontools (нужна команда 'smartctl') — температура и здоровье дисков по SMART"
+      },
+      {
+        "id": "nvidia-smi",
+        "status": "missing_program",
+        "hint": "sudo apt install nvidia-utils (нужна команда 'nvidia-smi') — температура GPU (nvidia-smi, проприетарный драйвер NVIDIA)"
+      },
+      {
+        "id": "journalctl-kernel",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'journalctl' — выполните на ноде `nodectl fix` — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      }
+    ]
+  },
+  "last-needs-privilege": {
+    "node": "node-a",
+    "service": "monitor",
+    "now": "2026-03-01T01:20:00+00:00",
+    "uptime_s": 273605.0,
+    "health": [
+      {
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 89.0,
+        "alerting_since": "2026-03-01T00:14:01+00:00"
+      },
+      {
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 54.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "SSD",
+        "status": "ok",
+        "temperature_c": 33.0,
+        "alerting_since": null
+      }
+    ],
+    "host_health": [],
+    "disks": [
+      {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      }
+    ],
+    "last_outage": {
+      "kind": "unexpected",
+      "boot_at": "2026-02-28T23:00:00+00:00",
+      "down_at": "2026-02-28T22:53:00+00:00",
+      "up_at": "2026-02-28T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 420.0
+    },
+    "job_counts": {
+      "error": 1,
+      "ok": 7
+    },
+    "recent_runs": [
+      {
+        "id": 8,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:36:00+00:00",
+        "finished_at": "2026-03-01T00:36:01+00:00",
+        "status": "error",
+        "error": "сбой датчика",
+        "metrics_json": null
+      },
+      {
+        "id": 7,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:35:00+00:00",
+        "finished_at": "2026-03-01T00:35:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+      },
+      {
+        "id": 6,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:28:00+00:00",
+        "finished_at": "2026-03-01T00:28:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 5,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:21:00+00:00",
+        "finished_at": "2026-03-01T00:21:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 1, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 4,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:14:00+00:00",
+        "finished_at": "2026-03-01T00:14:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 2, \"alerts_sent\": 2, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 3,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:07:00+00:00",
+        "finished_at": "2026-03-01T00:07:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 2,
+        "job_type": "smart_scan",
+        "started_at": "2026-03-01T00:01:00+00:00",
+        "finished_at": "2026-03-01T00:01:01+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 2, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 1,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:00:00+00:00",
+        "finished_at": "2026-03-01T00:00:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      }
+    ],
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "requirements": [
+      {
+        "id": "smartctl",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'smartctl' — выполните на ноде `nodectl fix` — температура и здоровье дисков по SMART"
+      },
+      {
+        "id": "last",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'last' — выполните на ноде `nodectl fix` — история отключений машины"
+      }
+    ]
+  },
+  "unsupported-platform": {
+    "node": "node-a",
+    "service": "monitor",
+    "now": "2026-03-01T01:20:00+00:00",
+    "uptime_s": 273605.0,
+    "health": [
+      {
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 89.0,
+        "alerting_since": "2026-03-01T00:14:01+00:00"
+      },
+      {
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 54.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "SSD",
+        "status": "ok",
+        "temperature_c": 33.0,
+        "alerting_since": null
+      }
+    ],
+    "host_health": [
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "unit": "",
+        "status": "alerting",
+        "value": 2.1,
+        "alerting_since": "2026-03-01T00:21:01+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "unit": "%",
+        "status": "ok",
+        "value": 53.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "unit": "%",
+        "status": "ok",
+        "value": 3.0,
+        "alerting_since": null
+      }
+    ],
+    "disks": [
+      {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      }
+    ],
+    "last_outage": {
+      "kind": "unexpected",
+      "boot_at": "2026-02-28T23:00:00+00:00",
+      "down_at": "2026-02-28T22:53:00+00:00",
+      "up_at": "2026-02-28T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 420.0
+    },
+    "job_counts": {
+      "error": 1,
+      "ok": 7
+    },
+    "recent_runs": [
+      {
+        "id": 8,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:36:00+00:00",
+        "finished_at": "2026-03-01T00:36:01+00:00",
+        "status": "error",
+        "error": "сбой датчика",
+        "metrics_json": null
+      },
+      {
+        "id": 7,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:35:00+00:00",
+        "finished_at": "2026-03-01T00:35:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+      },
+      {
+        "id": 6,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:28:00+00:00",
+        "finished_at": "2026-03-01T00:28:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 5,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:21:00+00:00",
+        "finished_at": "2026-03-01T00:21:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 1, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 4,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:14:00+00:00",
+        "finished_at": "2026-03-01T00:14:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 2, \"alerts_sent\": 2, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 3,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:07:00+00:00",
+        "finished_at": "2026-03-01T00:07:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 2,
+        "job_type": "smart_scan",
+        "started_at": "2026-03-01T00:01:00+00:00",
+        "finished_at": "2026-03-01T00:01:01+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 2, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 1,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:00:00+00:00",
+        "finished_at": "2026-03-01T00:00:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      }
+    ],
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "requirements": [
+      {
+        "id": "last",
+        "status": "unsupported_platform",
+        "hint": "не поддерживается на этой ОС (пока есть только для linux) — история отключений машины"
+      },
+      {
+        "id": "journalctl-kernel",
+        "status": "unsupported_platform",
+        "hint": "не поддерживается на этой ОС (пока есть только для linux) — счётчик стойл ядра/гипервизора (нужна группа systemd-journal; после nodectl fix нужен sudo systemctl restart user@<uid>.service)"
+      }
+    ]
+  },
+  "vps-no-outage": {
+    "node": "node-a",
+    "service": "monitor",
+    "now": "2026-03-01T01:20:00+00:00",
+    "uptime_s": null,
+    "health": [
+      {
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 89.0,
+        "alerting_since": "2026-03-01T00:14:01+00:00"
+      },
+      {
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 54.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "SSD",
+        "status": "ok",
+        "temperature_c": 33.0,
+        "alerting_since": null
+      }
+    ],
+    "host_health": [
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "unit": "",
+        "status": "alerting",
+        "value": 2.1,
+        "alerting_since": "2026-03-01T00:21:01+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "unit": "%",
+        "status": "ok",
+        "value": 53.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "unit": "%",
+        "status": "ok",
+        "value": 3.0,
+        "alerting_since": null
+      }
+    ],
+    "disks": [
+      {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      }
+    ],
+    "last_outage": null,
+    "job_counts": {
+      "error": 1,
+      "ok": 7
+    },
+    "recent_runs": [
+      {
+        "id": 8,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:36:00+00:00",
+        "finished_at": "2026-03-01T00:36:01+00:00",
+        "status": "error",
+        "error": "сбой датчика",
+        "metrics_json": null
+      },
+      {
+        "id": 7,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:35:00+00:00",
+        "finished_at": "2026-03-01T00:35:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+      },
+      {
+        "id": 6,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:28:00+00:00",
+        "finished_at": "2026-03-01T00:28:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 5,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:21:00+00:00",
+        "finished_at": "2026-03-01T00:21:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 1, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 4,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:14:00+00:00",
+        "finished_at": "2026-03-01T00:14:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 2, \"alerts_sent\": 2, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 3,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:07:00+00:00",
+        "finished_at": "2026-03-01T00:07:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 2,
+        "job_type": "smart_scan",
+        "started_at": "2026-03-01T00:01:00+00:00",
+        "finished_at": "2026-03-01T00:01:01+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 2, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 1,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:00:00+00:00",
+        "finished_at": "2026-03-01T00:00:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      }
+    ],
+    "thresholds": {
+      "cpu": {
+        "warn_c": 70.0,
+        "crit_c": 85.0
+      },
+      "gpu": {
+        "warn_c": 75.0,
+        "crit_c": 88.0
+      },
+      "disk": {
+        "warn_c": 50.0,
+        "crit_c": 60.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 5.0,
+        "crit": 15.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 20.0,
+        "crit": 10.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "requirements": []
+  },
+  "host-disabled-with-seeded-states": {
+    "node": "node-a",
+    "service": "monitor",
+    "now": "2026-03-01T01:20:00+00:00",
+    "uptime_s": 273605.0,
+    "health": [
+      {
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 89.0,
+        "alerting_since": "2026-03-01T00:14:01+00:00"
+      },
+      {
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 54.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "SSD",
+        "status": "ok",
+        "temperature_c": 33.0,
+        "alerting_since": null
+      }
+    ],
+    "host_health": [],
+    "disks": [
+      {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      }
+    ],
+    "last_outage": {
+      "kind": "unexpected",
+      "boot_at": "2026-02-28T23:00:00+00:00",
+      "down_at": "2026-02-28T22:53:00+00:00",
+      "up_at": "2026-02-28T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 420.0
+    },
+    "job_counts": {
+      "error": 1,
+      "ok": 7
+    },
+    "recent_runs": [
+      {
+        "id": 8,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:36:00+00:00",
+        "finished_at": "2026-03-01T00:36:01+00:00",
+        "status": "error",
+        "error": "сбой датчика",
+        "metrics_json": null
+      },
+      {
+        "id": 7,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:35:00+00:00",
+        "finished_at": "2026-03-01T00:35:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+      },
+      {
+        "id": 6,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:28:00+00:00",
+        "finished_at": "2026-03-01T00:28:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 5,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:21:00+00:00",
+        "finished_at": "2026-03-01T00:21:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 1, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 4,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:14:00+00:00",
+        "finished_at": "2026-03-01T00:14:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 2, \"alerts_sent\": 2, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 3,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:07:00+00:00",
+        "finished_at": "2026-03-01T00:07:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 2,
+        "job_type": "smart_scan",
+        "started_at": "2026-03-01T00:01:00+00:00",
+        "finished_at": "2026-03-01T00:01:01+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 2, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 1,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:00:00+00:00",
+        "finished_at": "2026-03-01T00:00:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      }
+    ],
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "requirements": []
+  },
+  "host-enabled-with-seeded-states": {
+    "node": "node-a",
+    "service": "monitor",
+    "now": "2026-03-01T01:20:00+00:00",
+    "uptime_s": 273605.0,
+    "health": [
+      {
+        "component_id": "cpu:core0",
+        "kind": "cpu",
+        "label": "CPU Core 0",
+        "status": "alerting",
+        "temperature_c": 89.0,
+        "alerting_since": "2026-03-01T00:14:01+00:00"
+      },
+      {
+        "component_id": "cpu:package",
+        "kind": "cpu",
+        "label": "CPU Package",
+        "status": "ok",
+        "temperature_c": 54.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "HDD1",
+        "status": "ok",
+        "temperature_c": 40.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "SSD",
+        "status": "ok",
+        "temperature_c": 33.0,
+        "alerting_since": null
+      }
+    ],
+    "host_health": [
+      {
+        "component_id": "host:load_per_core",
+        "metric": "load_per_core",
+        "label": "load/ядро",
+        "unit": "",
+        "status": "alerting",
+        "value": 2.1,
+        "alerting_since": "2026-03-01T00:21:01+00:00"
+      },
+      {
+        "component_id": "host:mem_available_pct",
+        "metric": "mem_available_pct",
+        "label": "RAM свободно",
+        "unit": "%",
+        "status": "ok",
+        "value": 53.0,
+        "alerting_since": null
+      },
+      {
+        "component_id": "host:steal_pct",
+        "metric": "steal_pct",
+        "label": "CPU steal",
+        "unit": "%",
+        "status": "ok",
+        "value": 3.0,
+        "alerting_since": null
+      }
+    ],
+    "disks": [
+      {
+        "label": "HDD1",
+        "health": "ok",
+        "temperature_c": 38.0,
+        "free_bytes": 100000000000,
+        "total_bytes": 320000000000,
+        "model": "Disk-A",
+        "kind": "hdd"
+      },
+      {
+        "label": "SSD",
+        "health": "warning",
+        "temperature_c": 30.0,
+        "free_bytes": 200000000000,
+        "total_bytes": 256000000000,
+        "model": "Disk-B",
+        "kind": "ssd"
+      }
+    ],
+    "last_outage": {
+      "kind": "unexpected",
+      "boot_at": "2026-02-28T23:00:00+00:00",
+      "down_at": "2026-02-28T22:53:00+00:00",
+      "up_at": "2026-02-28T23:00:00+00:00",
+      "down_approx": true,
+      "downtime_s": 420.0
+    },
+    "job_counts": {
+      "error": 1,
+      "ok": 7
+    },
+    "recent_runs": [
+      {
+        "id": 8,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:36:00+00:00",
+        "finished_at": "2026-03-01T00:36:01+00:00",
+        "status": "error",
+        "error": "сбой датчика",
+        "metrics_json": null
+      },
+      {
+        "id": 7,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:35:00+00:00",
+        "finished_at": "2026-03-01T00:35:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 0, \"clears_sent\": 1, \"extra\": {}}"
+      },
+      {
+        "id": 6,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:28:00+00:00",
+        "finished_at": "2026-03-01T00:28:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 5,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:21:00+00:00",
+        "finished_at": "2026-03-01T00:21:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 1, \"alerts_sent\": 1, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 4,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:14:00+00:00",
+        "finished_at": "2026-03-01T00:14:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 2, \"alerts_sent\": 2, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 3,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:07:00+00:00",
+        "finished_at": "2026-03-01T00:07:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 2,
+        "job_type": "smart_scan",
+        "started_at": "2026-03-01T00:01:00+00:00",
+        "finished_at": "2026-03-01T00:01:01+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 2, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      },
+      {
+        "id": 1,
+        "job_type": "sensor_scan",
+        "started_at": "2026-03-01T00:00:00+00:00",
+        "finished_at": "2026-03-01T00:00:02+00:00",
+        "status": "ok",
+        "error": null,
+        "metrics_json": "{\"components_scanned\": 7, \"transitions\": 0, \"alerts_sent\": 0, \"clears_sent\": 0, \"extra\": {}}"
+      }
+    ],
+    "thresholds": {
+      "cpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "gpu": {
+        "warn_c": 80.0,
+        "crit_c": 90.0
+      },
+      "disk": {
+        "warn_c": 55.0,
+        "crit_c": 65.0
+      }
+    },
+    "host_thresholds": {
+      "steal_pct": {
+        "warn": 10.0,
+        "crit": 25.0,
+        "direction": "above"
+      },
+      "iowait_pct": {
+        "warn": 15.0,
+        "crit": 40.0,
+        "direction": "above"
+      },
+      "load_per_core": {
+        "warn": 1.5,
+        "crit": 4.0,
+        "direction": "above"
+      },
+      "mem_available_pct": {
+        "warn": 15.0,
+        "crit": 7.0,
+        "direction": "below"
+      },
+      "swap_used_pct": {
+        "warn": 25.0,
+        "crit": 60.0,
+        "direction": "above"
+      },
+      "disk_used_pct": {
+        "warn": 80.0,
+        "crit": 92.0,
+        "direction": "above"
+      },
+      "psi_cpu": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_memory": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "psi_io": {
+        "warn": 20.0,
+        "crit": 50.0,
+        "direction": "above"
+      },
+      "oom_kills": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      },
+      "conntrack_pct": {
+        "warn": 80.0,
+        "crit": 95.0,
+        "direction": "above"
+      },
+      "net_err_rate": {
+        "warn": 1.0,
+        "crit": 10.0,
+        "direction": "above"
+      },
+      "kernel_stall_events": {
+        "warn": 1.0,
+        "crit": 1.0,
+        "direction": "above"
+      }
+    },
+    "requirements": []
+  }
+}

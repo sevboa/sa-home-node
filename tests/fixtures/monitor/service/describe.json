@@ -1,0 +1,54 @@
+{
+  "node": "node-a",
+  "service": "monitor",
+  "version": "0.0.0",
+  "node_kind": "",
+  "wake": null,
+  "endpoints": [],
+  "proto": 0,
+  "capabilities": [
+    "temperature",
+    "smart",
+    "power",
+    "host"
+  ],
+  "actions": [
+    {
+      "id": "scan_now",
+      "title": "🔄 Скан датчиков",
+      "params": []
+    },
+    {
+      "id": "downtime",
+      "title": "⏻ Отключения",
+      "params": [
+        {
+          "name": "offset",
+          "type": "int",
+          "required": false
+        },
+        {
+          "name": "limit",
+          "type": "int",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "host_trend",
+      "title": "📊 Тренд host-метрики",
+      "params": [
+        {
+          "name": "metric",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "hours",
+          "type": "int",
+          "required": false
+        }
+      ]
+    }
+  ]
+}

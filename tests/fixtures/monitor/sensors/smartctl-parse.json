@@ -1,0 +1,432 @@
+{
+  "now": "2026-01-15T12:00:00+00:00",
+  "parse_scan": [
+    {
+      "name": "/dev/sda",
+      "dev_type": "sat"
+    },
+    {
+      "name": "/dev/sdb",
+      "dev_type": null
+    },
+    {
+      "name": "/dev/nvme0",
+      "dev_type": "nvme"
+    },
+    {
+      "name": "/dev/mmcblk0",
+      "dev_type": "scsi"
+    },
+    {
+      "name": "/dev/loop0",
+      "dev_type": "scsi"
+    }
+  ],
+  "parse_scan_empty": [],
+  "is_smart_capable": {
+    "/dev/sda": true,
+    "/dev/nvme0": true,
+    "/dev/mmcblk0": false,
+    "/dev/mmcblk0boot0": false,
+    "/dev/loop0": false,
+    "/dev/sr0": false,
+    "/dev/md0": false,
+    "/dev/dm-0": false,
+    "/dev/zram0": false,
+    "/dev/ram0": false
+  },
+  "parse_device_spec": {
+    "''": null,
+    "'  '": null,
+    "'/dev/sda'": {
+      "name": "/dev/sda",
+      "dev_type": null
+    },
+    "'/dev/sda:sat'": {
+      "name": "/dev/sda",
+      "dev_type": "sat"
+    },
+    "'/dev/sdb:'": {
+      "name": "/dev/sdb",
+      "dev_type": null
+    },
+    "':sat'": null,
+    "'/dev/nvme0:nvme'": {
+      "name": "/dev/nvme0",
+      "dev_type": "nvme"
+    },
+    "'/dev/sda:sat,12'": {
+      "name": "/dev/sda",
+      "dev_type": "sat,12"
+    },
+    "'/dev/sdb: scsi '": {
+      "name": "/dev/sdb",
+      "dev_type": "scsi"
+    }
+  },
+  "read_args": {
+    "/dev/sda": [
+      "-d",
+      "sat",
+      "-j",
+      "-A",
+      "/dev/sda"
+    ],
+    "/dev/sdb": [
+      "-j",
+      "-A",
+      "/dev/sdb"
+    ],
+    "/dev/nvme0": [
+      "-d",
+      "nvme",
+      "-j",
+      "-A",
+      "/dev/nvme0"
+    ]
+  },
+  "health_args": {
+    "/dev/sda": [
+      "-d",
+      "sat",
+      "-j",
+      "-H",
+      "-A",
+      "/dev/sda"
+    ],
+    "/dev/sdb": [
+      "-j",
+      "-H",
+      "-A",
+      "/dev/sdb"
+    ],
+    "/dev/nvme0": [
+      "-d",
+      "nvme",
+      "-j",
+      "-H",
+      "-A",
+      "/dev/nvme0"
+    ]
+  },
+  "parse_device_temp": {
+    "smartctl-ata-ok.json": {
+      "component_id": "disk:/dev/sda",
+      "kind": "disk",
+      "label": "Disk-A",
+      "temperature_c": 34.0,
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-ata-attr194.json": {
+      "component_id": "disk:/dev/sdb",
+      "kind": "disk",
+      "label": "Disk-B",
+      "temperature_c": 36.0,
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-ata-pending.json": {
+      "component_id": "disk:/dev/sdb",
+      "kind": "disk",
+      "label": "Disk-B",
+      "temperature_c": 37.0,
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-ata-failed.json": {
+      "component_id": "disk:/dev/sdb",
+      "kind": "disk",
+      "label": "/dev/sdb",
+      "temperature_c": 52.0,
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-nvme.json": {
+      "component_id": "disk:/dev/nvme0",
+      "kind": "disk",
+      "label": "Disk-C",
+      "temperature_c": 41.0,
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-no-status.json": null
+  },
+  "parse_health": {
+    "smartctl-ata-ok.json": "ok",
+    "smartctl-ata-attr194.json": "ok",
+    "smartctl-ata-pending.json": "warning",
+    "smartctl-ata-failed.json": "failed",
+    "smartctl-nvme.json": "ok",
+    "smartctl-no-status.json": null
+  },
+  "parse_smart_snapshot": {
+    "smartctl-ata-ok.json": {
+      "component_id": "disk:/dev/sda",
+      "label": "Disk-A",
+      "health": "ok",
+      "attrs": {
+        "5": 0,
+        "197": 0,
+        "198": 0,
+        "199": 0
+      },
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-ata-attr194.json": {
+      "component_id": "disk:/dev/sdb",
+      "label": "Disk-B",
+      "health": "ok",
+      "attrs": {
+        "5": 0
+      },
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-ata-pending.json": {
+      "component_id": "disk:/dev/sdb",
+      "label": "Disk-B",
+      "health": "warning",
+      "attrs": {
+        "5": 31,
+        "197": 8,
+        "198": 0,
+        "199": 3
+      },
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-ata-failed.json": {
+      "component_id": "disk:/dev/sdb",
+      "label": "/dev/sdb",
+      "health": "failed",
+      "attrs": {},
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-nvme.json": {
+      "component_id": "disk:/dev/nvme0",
+      "label": "Disk-C",
+      "health": "ok",
+      "attrs": {},
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    },
+    "smartctl-no-status.json": {
+      "component_id": "disk:/dev/sdx",
+      "label": "/dev/sdx",
+      "health": null,
+      "attrs": {},
+      "taken_at": "2026-01-15T12:00:00+00:00"
+    }
+  },
+  "extract_temp": {
+    "smartctl-ata-ok.json": 34.0,
+    "smartctl-ata-attr194.json": 36.0,
+    "smartctl-ata-pending.json": 37.0,
+    "smartctl-ata-failed.json": 52.0,
+    "smartctl-nvme.json": 41.0,
+    "smartctl-no-status.json": null
+  },
+  "discover_devices": [
+    {
+      "name": "/dev/sda",
+      "dev_type": "sat"
+    },
+    {
+      "name": "/dev/sdb",
+      "dev_type": null
+    },
+    {
+      "name": "/dev/nvme0",
+      "dev_type": "nvme"
+    }
+  ],
+  "read_disks": {
+    "discover": [
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "Disk-A",
+        "temperature_c": 34.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "Disk-B",
+        "temperature_c": 37.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "disk:/dev/nvme0",
+        "kind": "disk",
+        "label": "Disk-C",
+        "temperature_c": 41.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "specs": [
+      {
+        "component_id": "disk:/dev/sda",
+        "kind": "disk",
+        "label": "Disk-A",
+        "temperature_c": 34.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "kind": "disk",
+        "label": "Disk-B",
+        "temperature_c": 37.0,
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ]
+  },
+  "read_smart_snapshots": {
+    "discover": [
+      {
+        "component_id": "disk:/dev/sda",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "disk:/dev/sdb",
+        "label": "Disk-B",
+        "health": "warning",
+        "attrs": {
+          "5": 31,
+          "197": 8,
+          "198": 0,
+          "199": 3
+        },
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "disk:/dev/nvme0",
+        "label": "Disk-C",
+        "health": "ok",
+        "attrs": {},
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ],
+    "duplicates": [
+      {
+        "component_id": "disk:/dev/sda",
+        "label": "Disk-A",
+        "health": "ok",
+        "attrs": {
+          "5": 0,
+          "197": 0,
+          "198": 0,
+          "199": 0
+        },
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      },
+      {
+        "component_id": "disk:/dev/nvme0",
+        "label": "Disk-C",
+        "health": "ok",
+        "attrs": {},
+        "taken_at": "2026-01-15T12:00:00+00:00"
+      }
+    ]
+  },
+  "run_smartctl": {
+    "ok": {
+      "data_is_none": false,
+      "calls": [
+        [
+          "smartctl",
+          "-d",
+          "sat",
+          "-j",
+          "-A",
+          "/dev/sda"
+        ]
+      ],
+      "problem": null
+    },
+    "no_program": {
+      "data_is_none": true,
+      "calls": [],
+      "problem": {
+        "id": "smartctl",
+        "status": "missing_program",
+        "hint": "установите пакет 'smartmontools' через пакетный менеджер системы (нужна команда 'smartctl') — температура и здоровье дисков по SMART"
+      }
+    },
+    "permission_denied": {
+      "data_is_none": true,
+      "calls": [
+        [
+          "smartctl",
+          "-d",
+          "sat",
+          "-j",
+          "-A",
+          "/dev/sda"
+        ]
+      ],
+      "problem": {
+        "id": "smartctl",
+        "status": "needs_privilege",
+        "hint": "не хватает прав на команду 'smartctl' — выполните на ноде `nodectl fix` — температура и здоровье дисков по SMART"
+      }
+    },
+    "empty_other_error": {
+      "data_is_none": true,
+      "calls": [
+        [
+          "smartctl",
+          "-d",
+          "sat",
+          "-j",
+          "-A",
+          "/dev/sda"
+        ]
+      ],
+      "problem": null
+    },
+    "bad_json": {
+      "data_is_none": true,
+      "calls": [
+        [
+          "smartctl",
+          "-d",
+          "sat",
+          "-j",
+          "-A",
+          "/dev/sda"
+        ]
+      ],
+      "problem": null
+    },
+    "timeout": {
+      "data_is_none": true,
+      "calls": [
+        [
+          "smartctl",
+          "-d",
+          "sat",
+          "-j",
+          "-A",
+          "/dev/sda"
+        ]
+      ],
+      "problem": null
+    },
+    "exit_nonzero_with_json": {
+      "data_is_none": false,
+      "calls": [
+        [
+          "smartctl",
+          "-d",
+          "sat",
+          "-j",
+          "-A",
+          "/dev/sda"
+        ]
+      ],
+      "problem": null
+    }
+  }
+}
