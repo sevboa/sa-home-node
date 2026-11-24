@@ -74,8 +74,7 @@
       ],
       "result": null,
       "raised": {
-        "type": "TelegramNetworkError",
-        "message": "HTTP Client says - net 3"
+        "type": "TelegramNetworkError"
       },
       "warnings": 2
     },
@@ -90,8 +89,7 @@
       "sleeps": [],
       "result": null,
       "raised": {
-        "type": "TelegramNetworkError",
-        "message": "HTTP Client says - net 1"
+        "type": "TelegramNetworkError"
       },
       "warnings": 0
     },
@@ -127,8 +125,7 @@
       ],
       "result": null,
       "raised": {
-        "type": "TelegramRetryAfter",
-        "message": "Telegram server says - Flood control exceeded on method 'GetMe'. Retry in 4 seconds.\nOriginal description: flood 3\n(background on this error at: https://core.telegram.org/bots/faq#my-bot-is-hitting-limits-how-do-i-avoid-this)"
+        "type": "TelegramRetryAfter"
       },
       "warnings": 2
     },
@@ -161,8 +158,7 @@
       "sleeps": [],
       "result": null,
       "raised": {
-        "type": "TelegramBadRequest",
-        "message": "Telegram server says - bad 1"
+        "type": "TelegramBadRequest"
       },
       "warnings": 0
     },
@@ -180,8 +176,7 @@
       ],
       "result": null,
       "raised": {
-        "type": "TelegramForbiddenError",
-        "message": "Telegram server says - forbidden 2"
+        "type": "TelegramForbiddenError"
       },
       "warnings": 1
     },
@@ -196,8 +191,7 @@
       "sleeps": [],
       "result": null,
       "raised": {
-        "type": "RuntimeError",
-        "message": "runtime 1"
+        "type": "RuntimeError"
       },
       "warnings": 0
     }
