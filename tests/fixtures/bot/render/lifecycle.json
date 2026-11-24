@@ -1,0 +1,1086 @@
+{
+  "cases": [
+    {
+      "name": "startup-clean",
+      "fn": "render_startup",
+      "clean": true,
+      "expected": "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения."
+    },
+    {
+      "name": "startup-clean-ignores-outage",
+      "fn": "render_startup",
+      "clean": true,
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения."
+    },
+    {
+      "name": "startup-crash-no-outage",
+      "fn": "render_startup",
+      "clean": false,
+      "expected": "🟠 <b>Сторож восстановился после сбоя.</b>\nПредыдущая сессия завершилась нештатно (краш или потеря питания)."
+    },
+    {
+      "name": "startup-crash-unexpected-outage",
+      "fn": "render_startup",
+      "clean": false,
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ 03/29 03:53 - 03/29 04:00 (7m)"
+    },
+    {
+      "name": "startup-crash-clean-outage",
+      "fn": "render_startup",
+      "clean": false,
+      "outage": {
+        "kind": "clean",
+        "boot_at": "2026-03-28T20:01:30+00:00",
+        "down_at": "2026-03-28T20:00:00+00:00",
+        "up_at": "2026-03-28T20:01:30+00:00"
+      },
+      "expected": "🟠 <b>Сторож восстановился после сбоя.</b>\nПредыдущая сессия завершилась нештатно (краш или потеря питания)."
+    },
+    {
+      "name": "startup-crash-outage-unknown-times",
+      "fn": "render_startup",
+      "clean": false,
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-01T01:00:00+00:00"
+      },
+      "expected": "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ ? - ?"
+    },
+    {
+      "name": "shutdown",
+      "fn": "render_shutdown",
+      "expected": "⚫️ <b>Сторож уходит в офлайн.</b>\nШтатное завершение — мониторинг приостановлен."
+    },
+    {
+      "name": "link-restored-zero",
+      "fn": "render_link_restored",
+      "seconds": 0,
+      "expected": "🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~0с."
+    },
+    {
+      "name": "link-restored-seconds",
+      "fn": "render_link_restored",
+      "seconds": 45.9,
+      "expected": "🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~45с."
+    },
+    {
+      "name": "link-restored-minute",
+      "fn": "render_link_restored",
+      "seconds": 60,
+      "expected": "🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~1м."
+    },
+    {
+      "name": "link-restored-minutes",
+      "fn": "render_link_restored",
+      "seconds": 185,
+      "expected": "🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~3м 5с."
+    },
+    {
+      "name": "link-restored-hour",
+      "fn": "render_link_restored",
+      "seconds": 3600,
+      "expected": "🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~1ч."
+    },
+    {
+      "name": "link-restored-day",
+      "fn": "render_link_restored",
+      "seconds": 90061,
+      "expected": "🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~1д 1ч 1м 1с."
+    },
+    {
+      "name": "link-restored-negative",
+      "fn": "render_link_restored",
+      "seconds": -4,
+      "expected": "🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~0с."
+    },
+    {
+      "name": "announce-startup-absent",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {},
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": {
+        "clean": true,
+        "sent": [
+          [
+            1001,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ],
+          [
+            1002,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-startup-clean",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "1"
+      },
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": {
+        "clean": true,
+        "sent": [
+          [
+            1001,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ],
+          [
+            1002,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-startup-dirty",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "0"
+      },
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": {
+        "clean": false,
+        "sent": [
+          [
+            1001,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ 03/29 03:53 - 03/29 04:00 (7m)",
+            {}
+          ],
+          [
+            1002,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ 03/29 03:53 - 03/29 04:00 (7m)",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 1
+      }
+    },
+    {
+      "name": "announce-startup-garbage",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "yes"
+      },
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": {
+        "clean": false,
+        "sent": [
+          [
+            1001,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ 03/29 03:53 - 03/29 04:00 (7m)",
+            {}
+          ],
+          [
+            1002,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ 03/29 03:53 - 03/29 04:00 (7m)",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 1
+      }
+    },
+    {
+      "name": "announce-startup-empty",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": ""
+      },
+      "outage": {
+        "kind": "unexpected",
+        "boot_at": "2026-03-28T23:00:00+00:00",
+        "down_at": "2026-03-28T22:53:00+00:00",
+        "up_at": "2026-03-28T23:00:00+00:00",
+        "down_approx": true
+      },
+      "expected": {
+        "clean": false,
+        "sent": [
+          [
+            1001,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ 03/29 03:53 - 03/29 04:00 (7m)",
+            {}
+          ],
+          [
+            1002,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПохоже, была потеря питания или зависание машины.\n\nПоследнее отключение:\n⚡ 03/29 03:53 - 03/29 04:00 (7m)",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 1
+      }
+    },
+    {
+      "name": "announce-startup-dirty-no-outage",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "0"
+      },
+      "outage": null,
+      "expected": {
+        "clean": false,
+        "sent": [
+          [
+            1001,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПредыдущая сессия завершилась нештатно (краш или потеря питания).",
+            {}
+          ],
+          [
+            1002,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПредыдущая сессия завершилась нештатно (краш или потеря питания).",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 1
+      }
+    },
+    {
+      "name": "announce-startup-dirty-clean-outage",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "0"
+      },
+      "outage": {
+        "kind": "clean",
+        "boot_at": "2026-03-28T20:01:30+00:00",
+        "down_at": "2026-03-28T20:00:00+00:00",
+        "up_at": "2026-03-28T20:01:30+00:00"
+      },
+      "expected": {
+        "clean": false,
+        "sent": [
+          [
+            1001,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПредыдущая сессия завершилась нештатно (краш или потеря питания).",
+            {}
+          ],
+          [
+            1002,
+            "🟠 <b>Сторож восстановился после сбоя.</b>\nПредыдущая сессия завершилась нештатно (краш или потеря питания).",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 1
+      }
+    },
+    {
+      "name": "announce-startup-delivery-failures",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "1"
+      },
+      "outage": null,
+      "fail": [
+        1001
+      ],
+      "expected": {
+        "clean": true,
+        "sent": [
+          [
+            1001,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ],
+          [
+            1002,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-startup-no-subscribers",
+      "fn": "announce_startup",
+      "subs": [],
+      "state": {},
+      "outage": null,
+      "expected": {
+        "clean": true,
+        "sent": [],
+        "state": {
+          "last_shutdown_clean": "0"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-startup-other-state-kept",
+      "fn": "announce_startup",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "1",
+        "other": "x"
+      },
+      "outage": null,
+      "expected": {
+        "clean": true,
+        "sent": [
+          [
+            1001,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ],
+          [
+            1002,
+            "🟢 <b>Сторож снова на посту.</b>\nЗапуск после штатного завершения.",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "0",
+          "other": "x"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "0"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-shutdown",
+      "fn": "announce_shutdown",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {
+        "last_shutdown_clean": "0"
+      },
+      "expected": {
+        "clean": null,
+        "sent": [
+          [
+            1001,
+            "⚫️ <b>Сторож уходит в офлайн.</b>\nШтатное завершение — мониторинг приостановлен.",
+            {}
+          ],
+          [
+            1002,
+            "⚫️ <b>Сторож уходит в офлайн.</b>\nШтатное завершение — мониторинг приостановлен.",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "1"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "1"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-shutdown-state-absent",
+      "fn": "announce_shutdown",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {},
+      "expected": {
+        "clean": null,
+        "sent": [
+          [
+            1001,
+            "⚫️ <b>Сторож уходит в офлайн.</b>\nШтатное завершение — мониторинг приостановлен.",
+            {}
+          ],
+          [
+            1002,
+            "⚫️ <b>Сторож уходит в офлайн.</b>\nШтатное завершение — мониторинг приостановлен.",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "1"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "1"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-shutdown-delivery-failures",
+      "fn": "announce_shutdown",
+      "subs": [
+        {
+          "name": "owner",
+          "chat_id": 1001,
+          "event_types": [
+            "*"
+          ],
+          "allowed_commands": [
+            "*"
+          ]
+        },
+        {
+          "name": "system",
+          "chat_id": 1002,
+          "event_types": [
+            "system"
+          ]
+        },
+        {
+          "name": "alerts",
+          "chat_id": 1003,
+          "event_types": [
+            "overheat_started"
+          ]
+        },
+        {
+          "name": "muted",
+          "chat_id": 1004,
+          "event_types": [
+            "*"
+          ],
+          "broken": true
+        },
+        {
+          "name": "wild-except",
+          "chat_id": 1005,
+          "event_types": [
+            "*"
+          ],
+          "except_event_types": [
+            "system"
+          ]
+        }
+      ],
+      "state": {},
+      "fail": [
+        1001,
+        1002
+      ],
+      "expected": {
+        "clean": null,
+        "sent": [
+          [
+            1001,
+            "⚫️ <b>Сторож уходит в офлайн.</b>\nШтатное завершение — мониторинг приостановлен.",
+            {}
+          ],
+          [
+            1002,
+            "⚫️ <b>Сторож уходит в офлайн.</b>\nШтатное завершение — мониторинг приостановлен.",
+            {}
+          ]
+        ],
+        "state": {
+          "last_shutdown_clean": "1"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "1"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    },
+    {
+      "name": "announce-shutdown-no-subscribers",
+      "fn": "announce_shutdown",
+      "subs": [],
+      "state": {},
+      "expected": {
+        "clean": null,
+        "sent": [],
+        "state": {
+          "last_shutdown_clean": "1"
+        },
+        "writes": [
+          [
+            "last_shutdown_clean",
+            "1"
+          ]
+        ],
+        "outage_reads": 0
+      }
+    }
+  ]
+}
