@@ -201,7 +201,7 @@ def _actions_of(description: ServiceDescription | None) -> tuple[ActionSpec, ...
     return description.actions if description is not None else ()
 
 
-async def _node_actions(node_link: ServiceLink, node_id: str | None) -> Sequence[ActionSpec]:
+async def fetch_node_actions(node_link: ServiceLink, node_id: str | None) -> Sequence[ActionSpec]:
     if node_id:
         return _actions_of(await node_link.describe(dst=node_address(node_id)))
     return await node_link.actions()
@@ -217,7 +217,7 @@ async def build_node_card_view(
         _node_state(node_link, dst=node_address(node_id)),
         statusview.build_summary_text(node_link, dst=monitor_dst),
         node_link.describe(dst=monitor_dst),
-        _node_actions(node_link, node_id),
+        fetch_node_actions(node_link, node_id),
     )
     if state is None:
         return node_unavailable_text(node_id), None
@@ -287,7 +287,7 @@ async def build_services_page_view(
     offset = clamp_offset(offset, SERVICES_PAGE_SIZE, len(state.get("services", [])))
     node_actions: Sequence[ActionSpec] = ()
     if subscription is not None:
-        node_actions = await _node_actions(node_link, node_id)
+        node_actions = await fetch_node_actions(node_link, node_id)
     return build_services_list_view(state, node_id, offset, subscription, node_actions)
 
 
@@ -337,7 +337,7 @@ async def build_service_card_view(
     svc = next((s for s in state.get("services", []) if s.get("name") == service_name), None)
     if svc is None:
         return f"Служба «{service_name}» не найдена на ноде.", None
-    node_actions = await _node_actions(node_link, node_id)
+    node_actions = await fetch_node_actions(node_link, node_id)
     keyboard = build_service_card_keyboard(subscription, node_actions, service_name, node_id)
     return render_service_card(state.get("node", "?"), svc), keyboard
 
