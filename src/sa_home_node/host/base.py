@@ -22,6 +22,8 @@ class NodeUnit:
     format: str
     path: Path
     reload_argv: list[str] | None
+    enable_argv: list[str] | None = None
+    linger_argv: list[str] | None = None
 
 
 def check_power_action(action: str) -> None:

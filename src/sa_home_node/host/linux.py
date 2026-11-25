@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import asyncio
 import contextlib
+import getpass
 import os
 import shutil
 import signal
@@ -98,4 +99,6 @@ class LinuxHost:
             "systemd-user",
             Path.home() / ".config" / "systemd" / "user" / NODE_UNIT_NAME,
             ["systemctl", "--user", "daemon-reload"],
+            ["systemctl", "--user", "enable", "--now", NODE_UNIT_NAME],
+            ["loginctl", "enable-linger", getpass.getuser()],
         )
