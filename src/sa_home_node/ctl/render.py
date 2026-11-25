@@ -2,6 +2,10 @@ from __future__ import annotations
 
 from datetime import datetime
 
+from sa_home_node.proto.wire import Envelope
+from sa_home_node.swarm.peerpath import format_peer_path
+from sa_home_node.textfmt import format_duration
+
 _STATUS_ICON = {"running": "🟢", "restarting": "🟠", "stopped": "🔴"}
 
 
@@ -45,6 +49,41 @@ def render_check_update(result: dict) -> str:
     else:
         lines.append("Доступно обновление — nodectl update.")
     return "\n".join(lines)
+
+
+def _render_peer(peer: dict) -> str:
+    icon = "🟢" if peer.get("alive") else "🔴"
+    line = f"  {icon} {peer.get('id', '?')} ({peer.get('endpoint', '?')})"
+    path = format_peer_path(peer)
+    return f"{line} · {path}" if path else line
+
+
+def render_status(state: dict) -> str:
+    header = f"Нода {state.get('node', '?')} (v{state.get('version', '?')})"
+    uptime_bits = []
+    if state.get("system_uptime_s") is not None:
+        uptime_bits.append(f"система {format_duration(state['system_uptime_s'])}")
+    if state.get("uptime_s") is not None:
+        uptime_bits.append(f"нода {format_duration(state['uptime_s'])}")
+    if uptime_bits:
+        header += "\nАптайм: " + " · ".join(uptime_bits)
+    out = header + "\n" + render_services(state.get("services", []))
+    peers = state.get("peers") or []
+    if peers:
+        lines = [_render_peer(p) for p in peers]
+        out += "\nПиры:\n" + "\n".join(lines)
+    update = state.get("update")
+    if update and update.get("restart_required"):
+        out += f"\n⚠️ Обновлено до v{update.get('installed')} — требуется nodectl restart_node"
+    return out
+
+
+def render_event(env: Envelope, now: datetime) -> str:
+    name = env.payload.get("event", "?")
+    data = env.payload.get("data", {})
+    details = " ".join(f"{k}={v}" for k, v in data.items())
+    stamp = now.strftime("%H:%M:%S")
+    return f"{stamp} {name} {details}".rstrip()
 
 
 def render_update_result(result: dict) -> str:
