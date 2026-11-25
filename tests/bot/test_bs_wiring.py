@@ -8,7 +8,7 @@ from typing import Any
 import pytest
 from aiogram.types import Update
 from botfix import load
-from drivers_w2a import message_dict, user_dict
+from drivers_w2a import local_zone, message_dict, user_dict
 from drivers_w3d import W3Bot
 from fakelink import FakeLink
 from stub_plugin import HELLO_RIGHT, stub_plugin
@@ -150,11 +150,12 @@ def guest_file_rights(path: Path) -> list[str]:
 
 
 async def test_scenario(rig):
-    for step in SCENARIO["steps"]:
-        saves = rig.guest_store.saves
-        await rig.play(step)
-        got = rig.observed()
-        got["saves"] = rig.guest_store.saves - saves
-        got["file_rights"] = guest_file_rights(rig.guests_path)
-        assert got == step["expect"], step["name"]
-    assert HELLO_RIGHT in rig.ctx.catalog.grantable()
+    with local_zone():
+        for step in SCENARIO["steps"]:
+            saves = rig.guest_store.saves
+            await rig.play(step)
+            got = rig.observed()
+            got["saves"] = rig.guest_store.saves - saves
+            got["file_rights"] = guest_file_rights(rig.guests_path)
+            assert got == step["expect"], step["name"]
+        assert HELLO_RIGHT in rig.ctx.catalog.grantable()
