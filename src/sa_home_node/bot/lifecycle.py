@@ -8,8 +8,8 @@ from sa_home_node.bot.broadcast import broadcast_system
 from sa_home_node.bot.db import AppState
 from sa_home_node.bot.notifier import Notifier
 from sa_home_node.bot.render_alerts import render_outage_line
-from sa_home_node.bot.ui import format_duration
 from sa_home_node.monitor.models import POWER_UNEXPECTED, PowerEvent
+from sa_home_node.textfmt import format_duration
 
 log = logging.getLogger(__name__)
 

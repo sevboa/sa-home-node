@@ -1,0 +1,479 @@
+{
+ "cases": [
+  {
+   "what": "kind",
+   "flags": {
+    "kind": "server"
+   },
+   "interactive": false,
+   "pre": [],
+   "answers": [],
+   "value": "server",
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "kind",
+   "flags": {
+    "kind": null
+   },
+   "interactive": false,
+   "pre": [],
+   "answers": [],
+   "value": "workstation",
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "kind",
+   "flags": {
+    "kind": null
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [
+    "vps"
+   ],
+   "value": "vps",
+   "prompts": [
+    "Тип машины (server/workstation/vps) [workstation]: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "kind",
+   "flags": {
+    "kind": null
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [
+    ""
+   ],
+   "value": "workstation",
+   "prompts": [
+    "Тип машины (server/workstation/vps) [workstation]: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "kind",
+   "flags": {
+    "kind": null
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [
+    "laptop"
+   ],
+   "value": "workstation",
+   "prompts": [
+    "Тип машины (server/workstation/vps) [workstation]: "
+   ],
+   "stderr": "Неизвестный тип 'laptop', беру workstation\n"
+  },
+  {
+   "what": "assignments",
+   "flags": {
+    "assignments": " monitor, ,apps "
+   },
+   "interactive": false,
+   "pre": [],
+   "answers": [],
+   "value": [
+    "monitor",
+    "apps"
+   ],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "assignments",
+   "flags": {
+    "assignments": ""
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [],
+   "value": [],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "assignments",
+   "flags": {
+    "assignments": null
+   },
+   "interactive": false,
+   "pre": [],
+   "answers": [],
+   "value": [],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "assignments",
+   "flags": {
+    "assignments": null
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [
+    "a,b"
+   ],
+   "value": [
+    "a",
+    "b"
+   ],
+   "prompts": [
+    "Что нода поднимает (через запятую, пусто — просто вступить в рой): "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "listen",
+   "flags": {
+    "listen": "tcp://x:1, tcp://y:2"
+   },
+   "interactive": false,
+   "pre": [
+    "server"
+   ],
+   "answers": [],
+   "value": [
+    "tcp://x:1",
+    "tcp://y:2"
+   ],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "listen",
+   "flags": {
+    "listen": null
+   },
+   "interactive": false,
+   "pre": [
+    "server"
+   ],
+   "answers": [],
+   "value": [
+    "tcp://0.0.0.0:8710"
+   ],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "listen",
+   "flags": {
+    "listen": null
+   },
+   "interactive": true,
+   "pre": [
+    "workstation"
+   ],
+   "answers": [],
+   "value": [
+    "tcp://0.0.0.0:8710"
+   ],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "listen",
+   "flags": {
+    "listen": null
+   },
+   "interactive": false,
+   "pre": [
+    "vps"
+   ],
+   "answers": [],
+   "value": [],
+   "prompts": [],
+   "stderr": "listen пуст (kind=vps) — нода не сможет вступить в рой, пока не задашь --listen явно\n"
+  },
+  {
+   "what": "listen",
+   "flags": {
+    "listen": null
+   },
+   "interactive": true,
+   "pre": [
+    "vps"
+   ],
+   "answers": [
+    "tcp://p:8710"
+   ],
+   "value": [
+    "tcp://p:8710"
+   ],
+   "prompts": [
+    "Публичная машина (vps) — адрес(а) для входящих соединений от пиров, НЕ 0.0.0.0: явный приватный адрес, иначе рой торчит в интернет: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "listen",
+   "flags": {
+    "listen": null
+   },
+   "interactive": true,
+   "pre": [
+    "vps"
+   ],
+   "answers": [
+    "",
+    "n",
+    "tcp://q:1"
+   ],
+   "value": [
+    "tcp://q:1"
+   ],
+   "prompts": [
+    "Публичная машина (vps) — адрес(а) для входящих соединений от пиров, НЕ 0.0.0.0: явный приватный адрес, иначе рой торчит в интернет: ",
+    "Пусто — нода не сможет вступить в рой вовсе (swarm_join требует наш адрес). Точно оставить пустым? [y/N]: ",
+    "Адрес(а) для входящих соединений от пиров: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "listen",
+   "flags": {
+    "listen": null
+   },
+   "interactive": true,
+   "pre": [
+    "vps"
+   ],
+   "answers": [
+    "",
+    "y"
+   ],
+   "value": [],
+   "prompts": [
+    "Публичная машина (vps) — адрес(а) для входящих соединений от пиров, НЕ 0.0.0.0: явный приватный адрес, иначе рой торчит в интернет: ",
+    "Пусто — нода не сможет вступить в рой вовсе (swarm_join требует наш адрес). Точно оставить пустым? [y/N]: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "join",
+   "flags": {
+    "join": "tcp://j:1"
+   },
+   "interactive": false,
+   "pre": [],
+   "answers": [],
+   "value": [
+    "tcp://j:1",
+    false
+   ],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "join",
+   "flags": {
+    "join": null
+   },
+   "interactive": false,
+   "pre": [],
+   "answers": [],
+   "value": [
+    "",
+    false
+   ],
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "join",
+   "flags": {
+    "join": null
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [
+    "n"
+   ],
+   "value": [
+    "",
+    true
+   ],
+   "prompts": [
+    "В этой локальной сети уже есть рой (другие ноды sa-home)? [Y/n]: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "join",
+   "flags": {
+    "join": null
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [
+    "",
+    "tcp://k:2"
+   ],
+   "value": [
+    "tcp://k:2",
+    false
+   ],
+   "prompts": [
+    "В этой локальной сети уже есть рой (другие ноды sa-home)? [Y/n]: ",
+    "IP:порт соседа, если знаешь (пусто — понадеемся на LAN-маячок: он сам найдёт и присоединится по общему токену): "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "join",
+   "flags": {
+    "join": null
+   },
+   "interactive": true,
+   "pre": [],
+   "answers": [
+    "y",
+    ""
+   ],
+   "value": [
+    "",
+    false
+   ],
+   "prompts": [
+    "В этой локальной сети уже есть рой (другие ноды sa-home)? [Y/n]: ",
+    "IP:порт соседа, если знаешь (пусто — понадеемся на LAN-маячок: он сам найдёт и присоединится по общему токену): "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "token",
+   "flags": {
+    "token": "T"
+   },
+   "interactive": false,
+   "pre": [
+    "",
+    false
+   ],
+   "answers": [],
+   "value": "T",
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "token",
+   "flags": {
+    "token": null
+   },
+   "interactive": false,
+   "pre": [
+    "",
+    false
+   ],
+   "answers": [],
+   "value": "GENERATED-TOKEN-0123456789",
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "token",
+   "flags": {
+    "token": null
+   },
+   "interactive": false,
+   "pre": [
+    "tcp://j:1",
+    false
+   ],
+   "answers": [],
+   "value": null,
+   "prompts": [],
+   "stderr": ""
+  },
+  {
+   "what": "token",
+   "flags": {
+    "token": null
+   },
+   "interactive": true,
+   "pre": [
+    "",
+    true
+   ],
+   "answers": [
+    ""
+   ],
+   "value": "GENERATED-TOKEN-0123456789",
+   "prompts": [
+    "Это первая нода — сгенерировать новый токен роя (GENERATE…)? [Y/n]: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "token",
+   "flags": {
+    "token": null
+   },
+   "interactive": true,
+   "pre": [
+    "",
+    true
+   ],
+   "answers": [
+    "n",
+    "MINE"
+   ],
+   "value": "MINE",
+   "prompts": [
+    "Это первая нода — сгенерировать новый токен роя (GENERATE…)? [Y/n]: ",
+    "Вставь токен: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "token",
+   "flags": {
+    "token": null
+   },
+   "interactive": true,
+   "pre": [
+    "",
+    false
+   ],
+   "answers": [
+    "",
+    "",
+    "PASTED"
+   ],
+   "value": "PASTED",
+   "prompts": [
+    "Токен роя (тот же, что в config.toml существующей ноды — см. `grep -A3 '^\\[swarm\\]' ~/.config/sa-home-bot/config.toml` на ней): ",
+    "Токен обязателен, повтори: ",
+    "Токен обязателен, повтори: "
+   ],
+   "stderr": ""
+  },
+  {
+   "what": "token",
+   "flags": {
+    "token": null
+   },
+   "interactive": true,
+   "pre": [
+    "tcp://j:1",
+    false
+   ],
+   "answers": [
+    "PASTED"
+   ],
+   "value": "PASTED",
+   "prompts": [
+    "Токен роя (тот же, что в config.toml существующей ноды — см. `grep -A3 '^\\[swarm\\]' ~/.config/sa-home-bot/config.toml` на ней): "
+   ],
+   "stderr": ""
+  }
+ ]
+}

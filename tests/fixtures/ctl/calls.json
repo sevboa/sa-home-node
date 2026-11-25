@@ -1,0 +1,121 @@
+{
+ "call_args": [
+  {
+   "pairs": [],
+   "args": {}
+  },
+  {
+   "pairs": [
+    "a=1"
+   ],
+   "args": {
+    "a": 1
+   }
+  },
+  {
+   "pairs": [
+    "a=1.5",
+    "b=true",
+    "c=FALSE",
+    "d=text",
+    "e="
+   ],
+   "args": {
+    "a": 1.5,
+    "b": true,
+    "c": false,
+    "d": "text",
+    "e": ""
+   }
+  },
+  {
+   "pairs": [
+    "k=v=w",
+    "n=-3",
+    "f=1e3",
+    "x=0x10",
+    "t=True"
+   ],
+   "args": {
+    "k": "v=w",
+    "n": -3,
+    "f": 1000.0,
+    "x": "0x10",
+    "t": true
+   }
+  },
+  {
+   "pairs": [
+    "bad"
+   ],
+   "error": "аргумент без «=»: 'bad'"
+  },
+  {
+   "pairs": [
+    "a=1",
+    "noeq"
+   ],
+   "error": "аргумент без «=»: 'noeq'"
+  }
+ ],
+ "describe": [
+  {
+   "payload": {
+    "node": "n1",
+    "service": "monitor",
+    "version": "1.0",
+    "actions": []
+   },
+   "text": "Служба monitor на n1 (v1.0)"
+  },
+  {
+   "payload": {
+    "node": "n1",
+    "service": "node",
+    "version": "2.0",
+    "actions": [
+     {
+      "id": "status",
+      "title": "Статус"
+     },
+     {
+      "id": "start",
+      "title": "Запустить",
+      "params": [
+       {
+        "name": "name",
+        "type": "str",
+        "required": true
+       }
+      ]
+     },
+     {
+      "id": "poweroff",
+      "title": "Выключить",
+      "params": [
+       {
+        "name": "if_idle",
+        "type": "bool",
+        "required": false
+       },
+       {
+        "name": "mode",
+        "type": "str",
+        "required": true,
+        "choices": [
+         "soft",
+         "hard"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "a-very-long-action-id",
+      "title": "Длинное"
+     }
+    ]
+   },
+   "text": "Служба node на n1 (v2.0)\n  status           Статус\n  start            Запустить  (name:str)\n  poweroff         Выключить  (if_idle?:bool, mode:str [soft|hard])\n  a-very-long-action-id Длинное"
+  }
+ ]
+}

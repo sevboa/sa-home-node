@@ -1,0 +1,262 @@
+{
+ "zone": "Etc/GMT-5",
+ "services": [
+  {
+   "services": [],
+   "text": "Службы не назначены."
+  },
+  {
+   "services": [
+    {
+     "name": "monitor",
+     "status": "running",
+     "pid": 4242,
+     "restarts": 0,
+     "started_at": "2026-03-01T10:00:00+00:00"
+    }
+   ],
+   "text": "СЛУЖБА   СОСТОЯНИЕ  PID   РЕСТАРТЫ  ЗАПУЩЕНА\nmonitor  🟢 running  4242  0         2026-03-01 15:00:00"
+  },
+  {
+   "services": [
+    {
+     "name": "telegram-bot",
+     "status": "running",
+     "pid": 77,
+     "restarts": 3,
+     "started_at": "2026-03-01T10:00:00+00:00"
+    },
+    {
+     "name": "apps",
+     "status": "stopped"
+    },
+    {
+     "name": "vpn",
+     "status": "failed",
+     "restarts": 12,
+     "external": true
+    },
+    {
+     "name": "x",
+     "status": "starting",
+     "pid": null
+    },
+    {
+     "name": "long-service-name-here",
+     "status": "weird",
+     "pid": 1,
+     "restarts": 1,
+     "started_at": "2026-12-31T23:59:59+05:00"
+    },
+    {}
+   ],
+   "text": "СЛУЖБА                  СОСТОЯНИЕ   PID  РЕСТАРТЫ  ЗАПУЩЕНА\ntelegram-bot            🟢 running   77   3         2026-03-01 15:00:00\napps                    🔴 stopped   —    0         —\nvpn (внешняя)           ⚪ failed    —    12        —\nx                       ⚪ starting  —    0         —\nlong-service-name-here  ⚪ weird     1    1         2026-12-31 23:59:59\n?                       ⚪ ?         —    0         —"
+  }
+ ],
+ "status": [
+  {
+   "state": {},
+   "text": "Нода ? (v?)\nСлужбы не назначены."
+  },
+  {
+   "state": {
+    "node": "n1",
+    "version": "1.2.3",
+    "services": []
+   },
+   "text": "Нода n1 (v1.2.3)\nСлужбы не назначены."
+  },
+  {
+   "state": {
+    "node": "n1",
+    "version": "1.2.3",
+    "system_uptime_s": 93784,
+    "uptime_s": 59,
+    "services": [
+     {
+      "name": "monitor",
+      "status": "running",
+      "pid": 4242,
+      "restarts": 0,
+      "started_at": "2026-03-01T10:00:00+00:00"
+     }
+    ]
+   },
+   "text": "Нода n1 (v1.2.3)\nАптайм: система 1д 2ч 3м 4с · нода 59с\nСЛУЖБА   СОСТОЯНИЕ  PID   РЕСТАРТЫ  ЗАПУЩЕНА\nmonitor  🟢 running  4242  0         2026-03-01 15:00:00"
+  },
+  {
+   "state": {
+    "node": "n2",
+    "version": "0.9",
+    "uptime_s": 3600,
+    "services": [
+     {
+      "name": "telegram-bot",
+      "status": "running",
+      "pid": 77,
+      "restarts": 3,
+      "started_at": "2026-03-01T10:00:00+00:00"
+     },
+     {
+      "name": "apps",
+      "status": "stopped"
+     },
+     {
+      "name": "vpn",
+      "status": "failed",
+      "restarts": 12,
+      "external": true
+     },
+     {
+      "name": "x",
+      "status": "starting",
+      "pid": null
+     },
+     {
+      "name": "long-service-name-here",
+      "status": "weird",
+      "pid": 1,
+      "restarts": 1,
+      "started_at": "2026-12-31T23:59:59+05:00"
+     },
+     {}
+    ],
+    "peers": [
+     {
+      "id": "a",
+      "endpoint": "tcp://h:1",
+      "alive": true
+     },
+     {
+      "id": "b",
+      "endpoint": "tcp://h:2",
+      "alive": false,
+      "rtt_ms": 12.4
+     },
+     {
+      "id": "c",
+      "endpoint": "tcp://h:3",
+      "alive": true,
+      "rtt_ms": 80.6,
+      "loss": 0.25
+     },
+     {
+      "id": "d",
+      "endpoint": "tcp://h:4",
+      "alive": true,
+      "rtt_ms": 5,
+      "loss": 0
+     }
+    ]
+   },
+   "text": "Нода n2 (v0.9)\nАптайм: нода 1ч\nСЛУЖБА                  СОСТОЯНИЕ   PID  РЕСТАРТЫ  ЗАПУЩЕНА\ntelegram-bot            🟢 running   77   3         2026-03-01 15:00:00\napps                    🔴 stopped   —    0         —\nvpn (внешняя)           ⚪ failed    —    12        —\nx                       ⚪ starting  —    0         —\nlong-service-name-here  ⚪ weird     1    1         2026-12-31 23:59:59\n?                       ⚪ ?         —    0         —\nПиры:\n  🟢 a (tcp://h:1)\n  🔴 b (tcp://h:2) · 12 мс\n  🟢 c (tcp://h:3) · 81 мс, потери 25%\n  🟢 d (tcp://h:4) · 5 мс"
+  },
+  {
+   "state": {
+    "node": "n3",
+    "version": "2",
+    "system_uptime_s": 0,
+    "services": [],
+    "peers": [
+     {
+      "id": "e",
+      "endpoint": "tcp://h:5",
+      "alive": true,
+      "via": "relay1"
+     },
+     {
+      "id": "f",
+      "endpoint": "tcp://h:6",
+      "alive": true,
+      "rtt_ms": 140.5,
+      "loss": 0.019,
+      "via": "relay2",
+      "via_rtt_ms": 33.3
+     },
+     {
+      "id": "g",
+      "alive": true,
+      "via": "relay3",
+      "via_rtt_ms": 0.4
+     },
+     {}
+    ],
+    "update": {
+     "restart_required": true,
+     "installed": "2.1"
+    }
+   },
+   "text": "Нода n3 (v2)\nАптайм: система 0с\nСлужбы не назначены.\nПиры:\n  🟢 e (tcp://h:5) · через relay1\n  🟢 f (tcp://h:6) · 140 мс, потери 2% · через relay2 ~33 мс\n  🟢 g (?) · через relay3 ~0 мс\n  🔴 ? (?)\n⚠️ Обновлено до v2.1 — требуется nodectl restart_node"
+  },
+  {
+   "state": {
+    "node": "n3",
+    "version": "2",
+    "services": [],
+    "update": {
+     "restart_required": false,
+     "installed": "2.1"
+    }
+   },
+   "text": "Нода n3 (v2)\nСлужбы не назначены."
+  }
+ ],
+ "check_update": [
+  {
+   "result": {
+    "repo": "r/x",
+    "running": "1.0",
+    "installed": "1.0",
+    "latest": "1.0"
+   },
+   "text": "Репозиторий: r/x\nРаботает: v1.0\nНа диске: v1.0\nВ репозитории: v1.0\nУстановлена последняя версия."
+  },
+  {
+   "result": {
+    "repo": "r/x",
+    "running": "1.0",
+    "installed": "1.0",
+    "latest": "1.1"
+   },
+   "text": "Репозиторий: r/x\nРаботает: v1.0\nНа диске: v1.0\nВ репозитории: v1.1\nДоступно обновление — nodectl update."
+  },
+  {
+   "result": {
+    "running": "1.0",
+    "installed": null,
+    "latest": "1.1"
+   },
+   "text": "Репозиторий: ?\nРаботает: v1.0\nНа диске: v?\nВ репозитории: v1.1\nДоступно обновление — nodectl update."
+  },
+  {
+   "result": {},
+   "text": "Репозиторий: ?\nРаботает: v?\nНа диске: v?\nВ репозитории: v?\nУстановлена последняя версия."
+  }
+ ],
+ "update": [
+  {
+   "result": {
+    "up_to_date": true,
+    "version": "1.1"
+   },
+   "text": "Уже последняя версия v1.1."
+  },
+  {
+   "result": {
+    "up_to_date": false,
+    "target_version": "1.2"
+   },
+   "text": "Запущено обновление до v1.2 в фоне (файлы на диске, процесс не тронут). После завершения — nodectl restart_node."
+  },
+  {
+   "result": {
+    "up_to_date": true
+   },
+   "text": "Уже последняя версия v?."
+  },
+  {
+   "result": {},
+   "text": "Запущено обновление до v? в фоне (файлы на диске, процесс не тронут). После завершения — nodectl restart_node."
+  }
+ ]
+}
