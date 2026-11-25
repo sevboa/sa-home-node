@@ -10,7 +10,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from sa_home_node.bot import actions, commands, nodelinks, statusview
 from sa_home_node.bot.servicelink import ServiceLink
 from sa_home_node.bot.subs import Subscription
-from sa_home_node.bot.ui import back_row, button, clamp_offset, nav_row, refresh_row
+from sa_home_node.bot.ui import back_row, button, clamp_offset, format_duration, nav_row, refresh_row
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription
 from sa_home_node.proto.wire import (
     NODE_SERVICE,
@@ -69,17 +69,6 @@ def node_unavailable_text(node_id: str | None) -> str:
     if node_id:
         return f"⚠️ Нода «{node_id}» недоступна (нет связи или она спит)."
     return NODE_DOWN_TEXT
-
-
-def format_duration(seconds: float) -> str:
-    total = int(max(0, seconds))
-    days, rest = divmod(total, SECONDS_PER_DAY)
-    hours, rest = divmod(rest, SECONDS_PER_HOUR)
-    minutes, secs = divmod(rest, SECONDS_PER_MINUTE)
-    parts = [f"{value}{unit}" for value, unit in ((days, "д"), (hours, "ч"), (minutes, "м")) if value]
-    if secs or not parts:
-        parts.append(f"{secs}с")
-    return " ".join(parts)
 
 
 def _since_suffix(iso: str | None) -> str:

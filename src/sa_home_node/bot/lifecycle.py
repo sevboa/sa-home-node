@@ -8,24 +8,12 @@ from sa_home_node.bot.broadcast import broadcast_system
 from sa_home_node.bot.db import AppState
 from sa_home_node.bot.notifier import Notifier
 from sa_home_node.bot.render_alerts import render_outage_line
+from sa_home_node.bot.ui import format_duration
 from sa_home_node.monitor.models import POWER_UNEXPECTED, PowerEvent
 
 log = logging.getLogger(__name__)
 
 ReadLastOutage = Callable[[], Awaitable[PowerEvent | None]]
-
-
-def _format_duration(seconds: float) -> str:
-    total = max(int(seconds), 0)
-    parts: list[str] = []
-    for name, value in (("д", 86400), ("ч", 3600), ("м", 60)):
-        unit = total // value
-        if unit:
-            parts.append(f"{unit}{name}")
-        total %= value
-    if total or not parts:
-        parts.append(f"{total}с")
-    return " ".join(parts)
 
 
 def render_startup(clean: bool, last_outage: PowerEvent | None = None) -> str:
@@ -48,7 +36,7 @@ def render_shutdown() -> str:
 
 
 def render_link_restored(seconds: float) -> str:
-    return f"🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~{_format_duration(seconds)}."
+    return f"🔌 <b>Связь с Telegram восстановлена.</b>\nБыли офлайн ~{format_duration(seconds)}."
 
 
 async def announce_startup(
