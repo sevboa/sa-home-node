@@ -271,3 +271,5 @@ async def hello(ctx: ServiceContext) -> None:
 
 Плагин `metrics` (встроен) объявляет `Plugin.scrape_jobs` и `Plugin.dashboards` для расширения скрейпа VictoriaMetrics
 и набора дашбордов Grafana; формат `ScrapeJobSpec` и `DashboardSpec`, хелперы панелей — см. [metrics](metrics.md).
+
+Плагин `bot` (встроен) — оболочка Telegram-бота; плагины расширяют её через `Plugin.bot` (`BotSpec`: команды, роутеры, права гостей, маршруты событий), см. [bot](bot.md).
