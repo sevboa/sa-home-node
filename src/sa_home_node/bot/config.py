@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 
-KNOWN_SECTIONS = ("telegram", "invites", "subscriptions", "guest_subscriptions", "about_name")
+KNOWN_SECTIONS = ("telegram", "invites", "wake", "subscriptions", "guest_subscriptions", "about_name")
 
 
 class TelegramConfig(BaseModel):
@@ -41,9 +41,18 @@ class InvitesConfig(BaseModel):
     max_attempts_per_hour: int = Field(default=5, gt=0)
 
 
+class WakeConfig(BaseModel):
+    mac: str = ""
+    ip: str = ""
+    broadcast: str = "255.255.255.255"
+    port: int = Field(default=9, ge=1, le=65535)
+    wait_timeout_s: float = Field(default=120.0, gt=0)
+
+
 class BotConfig(BaseModel):
     telegram: TelegramConfig = Field(default_factory=TelegramConfig)
     invites: InvitesConfig = Field(default_factory=InvitesConfig)
+    wake: WakeConfig = Field(default_factory=WakeConfig)
     subscriptions: list[SubscriptionConfig] = []
     guest_subscriptions: list[GuestSubscriptionConfig] = []
     about_name: str = "sa-home-node"

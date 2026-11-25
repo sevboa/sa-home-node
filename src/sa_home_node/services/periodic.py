@@ -6,11 +6,18 @@ import logging
 from collections.abc import Awaitable, Callable
 from typing import Any
 
-from sa_home_node.proto.wire import NODE_SERVICE, Address, Envelope, ProtoError, make_request
+from sa_home_node.proto.wire import (
+    NODE_SERVICE,
+    Address,
+    Envelope,
+    ProtoError,
+    ServiceUnavailableError,
+    make_request,
+)
 
 log = logging.getLogger(__name__)
 
-PEER_ERRORS = (ProtoError, TimeoutError, ConnectionError, OSError)
+PEER_ERRORS = (ProtoError, ServiceUnavailableError, TimeoutError, ConnectionError, OSError)
 
 
 async def request_peer(

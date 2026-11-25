@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import json
 import logging
 from collections.abc import Sequence
 from datetime import UTC, datetime
@@ -14,15 +13,13 @@ from sa_home_node.bot.db import AppState
 from sa_home_node.bot.servicelink import ServiceLink
 from sa_home_node.bot.subs import Subscription
 from sa_home_node.bot.ui import button, format_duration
+from sa_home_node.bot.wakestate import StateWakeCache
 from sa_home_node.monitor.models import KIND_CPU, KIND_GPU, POWER_UNEXPECTED, PowerEvent
-from sa_home_node.proto.wire import ServiceUnavailableError
 from sa_home_node.services.periodic import PEER_ERRORS
 from sa_home_node.swarm.kind import traits_for
 from sa_home_node.wake.peers import NodeReport, collect_reports
 
 log = logging.getLogger(__name__)
-
-WAKE_KEY_PREFIX = "wake_info:"
 
 SWARM_HEADER = "🕸 <b>Рой</b>"
 
@@ -34,7 +31,7 @@ LAMP_GREEN = "🟢"
 LAMP_RED = "🔴"
 LAMP_GRAY = "⚪"
 
-SERVICE_CALL_ERRORS = (ServiceUnavailableError, *PEER_ERRORS)
+SERVICE_CALL_ERRORS = PEER_ERRORS
 
 
 def wake_node_text(node_id: str) -> str:
@@ -195,17 +192,6 @@ def wake_rows(subscription: Subscription, wake: object | None) -> list[InlineKey
     return [button(WAKE_BUTTON_TEXT, wake_callback())]
 
 
-async def _cached_wake_info(state: AppState, node_id: str) -> dict[str, Any] | None:
-    raw = await state.get(f"{WAKE_KEY_PREFIX}{node_id}")
-    if not raw:
-        return None
-    try:
-        data = json.loads(raw)
-    except (ValueError, TypeError):
-        return None
-    return data if isinstance(data, dict) and data.get("mac") else None
-
-
 async def offline_wakeable_ids(
     subscription: Subscription, state: AppState, reports: Sequence[NodeReport]
 ) -> list[str]:
@@ -217,7 +203,7 @@ async def offline_wakeable_ids(
             continue
         if r.kind and not traits_for(r.kind).wakeable:
             continue
-        if await _cached_wake_info(state, r.node_id) is None:
+        if await StateWakeCache(state).get(r.node_id) is None:
             continue
         ids.append(r.node_id)
     return ids
@@ -231,11 +217,10 @@ async def offline_wake_rows(
 
 
 async def remember_wake_info(state: AppState, reports: Sequence[NodeReport]) -> None:
+    cache = StateWakeCache(state)
     for r in reports:
         if r.state is not None:
-            wake = r.state.get("wake")
-            if wake and wake.get("mac"):
-                await state.set(f"{WAKE_KEY_PREFIX}{r.node_id}", json.dumps(wake))
+            await cache.put(r.node_id, r.state.get("wake"))
 
 
 async def build_swarm_keyboard(
