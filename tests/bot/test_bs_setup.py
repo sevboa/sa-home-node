@@ -10,15 +10,6 @@ from botfix import FIX
 from drivers_w3d import State, W3Bot, build_callback
 from fakelink import FakeLink
 
-from sa_home_node.bot import (
-    handlers_basic,
-    handlers_invites,
-    handlers_node,
-    handlers_status,
-    handlers_wake,
-    nodelinks,
-    swarmpanel,
-)
 from sa_home_node.bot.book import SubscriptionBook
 from sa_home_node.bot.commands import Registry
 from sa_home_node.bot.config import BotConfig
@@ -28,25 +19,9 @@ from sa_home_node.bot.spec import BotSpec, RouterSpec
 from sa_home_node.bot.subs import Subscription
 from sa_home_node.plugins import Plugin
 
-CORE = (
-    handlers_invites,
-    handlers_wake,
-    swarmpanel,
-    handlers_status,
-    nodelinks,
-    handlers_node,
-    handlers_basic,
-)
 OWNER = Subscription(name="owner", chat_id=12345, allowed_commands=frozenset({"*"}))
 
-
-@pytest.fixture(autouse=True)
-def detach_routers():
-    for module in CORE:
-        module.router._parent_router = None
-    yield
-    for module in CORE:
-        module.router._parent_router = None
+pytestmark = pytest.mark.usefixtures("detached_routers")
 
 
 def sample_plugin() -> Plugin:

@@ -50,7 +50,7 @@ class WakeConfig(BaseModel):
 
 
 class BotServiceConfig(BaseModel):
-    config_path: Path
+    config_path: Path = Path("./data/bot.toml")
     guests_path: Path | None = None
     db_path: Path = Path("./data/bot.sqlite")
     monitor_socket: str = "./data/monitor.sock"

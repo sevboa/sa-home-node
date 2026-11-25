@@ -12,7 +12,7 @@ from sa_home_node.plugins import Plugin, load_plugins, make_context
 
 
 def test_builtin_tasks_first():
-    assert [p.name for p in load_plugins([])] == ["monitor", "tasks", "metrics"]
+    assert [p.name for p in load_plugins([])] == ["monitor", "tasks", "metrics", "bot"]
 
 
 def test_plugin_defaults():

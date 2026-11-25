@@ -57,13 +57,13 @@ def test_monitor_reads_metrics_section_from_metrics_config():
 
 
 def test_loaded_always_after_monitor_and_tasks():
-    assert [plugin.name for plugin in load_plugins([])] == ["monitor", "tasks", "metrics"]
+    assert [plugin.name for plugin in load_plugins([])] == ["monitor", "tasks", "metrics", "bot"]
 
 
 def test_other_plugins_follow(monkeypatch):
     other = Plugin(name="other")
     monkeypatch.setattr(plugins, "available", lambda: {"other": FakeEP(other)})
-    assert [plugin.name for plugin in load_plugins(["other"])] == ["monitor", "tasks", "metrics", "other"]
+    assert [plugin.name for plugin in load_plugins(["other"])] == ["monitor", "tasks", "metrics", "bot", "other"]
 
 
 def test_name_is_reserved(monkeypatch):
