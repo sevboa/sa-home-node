@@ -228,7 +228,7 @@ async def drive_node(case: dict[str, Any], kit: Any) -> dict[str, Any]:
         "no_message": case.get("no_message", False),
     }
     callback = build_callback(spec, bot)
-    data = kit.data(case, bot=bot, state=state, node_link=link, apps_link=apps, subscription=sub)
+    data = kit.data(case, bot=bot, app_state=state, node_link=link, apps_link=apps, subscription=sub)
     with local_tz(), patched(view_items(kit, case.get("status_kb"))), kit.setup():
         handled = await feed([kit.router], "callback_query", callback, data)
     return {
@@ -270,7 +270,7 @@ async def drive_wake(case: dict[str, Any], kit: Any) -> dict[str, Any]:
                 "callback_query",
                 build_callback({"data": case["data"], "no_message": case.get("no_message", False)}, bot),
             )
-        data = kit.data(case, bot=bot, state=state, node_link=link, wake_config=wake, wake_guard=guard)
+        data = kit.data(case, bot=bot, app_state=state, node_link=link, wake_config=wake, wake_guard=guard)
         handled = await feed([kit.router], event_kind, event, data)
     return {
         "handled": handled,
@@ -597,7 +597,7 @@ async def drive_panel(case: dict[str, Any], kit: Any) -> dict[str, Any]:
         spec = {"data": case["data"], "no_message": case.get("no_message", False)}
         event_kind, event = "callback_query", build_callback(spec, bot)
     data = kit.data(
-        case, bot=bot, state=state, node_link=link, apps_link=apps, subscription=sub, wake_config=wake
+        case, bot=bot, app_state=state, node_link=link, apps_link=apps, subscription=sub, wake_config=wake
     )
     with local_tz(), patched(view_items(kit, case.get("status_kb"))), kit.setup():
         handled = await feed([kit.router], event_kind, event, data)

@@ -49,6 +49,15 @@ class WakeConfig(BaseModel):
     wait_timeout_s: float = Field(default=120.0, gt=0)
 
 
+class BotServiceConfig(BaseModel):
+    config_path: Path
+    guests_path: Path | None = None
+    db_path: Path = Path("./data/bot.sqlite")
+    monitor_socket: str = "./data/monitor.sock"
+    apps_socket: str = "./data/apps.sock"
+    egress_state_path: Path = Path("./data/egress.json")
+
+
 class BotConfig(BaseModel):
     telegram: TelegramConfig = Field(default_factory=TelegramConfig)
     invites: InvitesConfig = Field(default_factory=InvitesConfig)

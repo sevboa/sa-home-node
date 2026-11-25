@@ -49,16 +49,16 @@ def _is_self_shutdown(action_id: str, value: str | None, node_id: str | None) ->
 async def _handle_self_shutdown(
     callback: CallbackQuery,
     message: Message,
-    state: AppState,
+    app_state: AppState,
     node_link: ServiceLink,
     action_id: str,
     value: str | None,
 ) -> None:
-    if await state.get(SELF_RESTART_CB_KEY) == callback.id:
+    if await app_state.get(SELF_RESTART_CB_KEY) == callback.id:
         log.warning("Повторный callback само-рестарта %s — игнорирую", callback.id)
         await callback.answer()
         return
-    await state.set(SELF_RESTART_CB_KEY, callback.id)
+    await app_state.set(SELF_RESTART_CB_KEY, callback.id)
 
     await callback.answer()
     await message.answer(SELF_STOP_TEXT if action_id == "stop" else SELF_RESTART_TEXT)
@@ -153,7 +153,7 @@ async def _handle_apps_action(
 @router.callback_query(F.data.startswith(f"{commands.ACTION_CALLBACK_PREFIX}:"))
 async def on_dynamic_action(
     callback: CallbackQuery,
-    state: AppState,
+    app_state: AppState,
     node_link: ServiceLink,
     apps_link: ServiceLink,
     subscription: Subscription | None = None,
@@ -166,7 +166,7 @@ async def on_dynamic_action(
     service, action_id, value, node_id = parsed
 
     if service == NODE_SERVICE and _is_self_shutdown(action_id, value, node_id):
-        await _handle_self_shutdown(callback, message, state, node_link, action_id, value)
+        await _handle_self_shutdown(callback, message, app_state, node_link, action_id, value)
     elif service == NODE_SERVICE:
         await _handle_node_action(callback, message, node_link, subscription, action_id, value, node_id)
     elif service == actions.APPS_SERVICE:

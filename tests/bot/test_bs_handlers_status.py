@@ -46,7 +46,7 @@ def data(ctx):
         "node_link": ctx.link,
         "subscription": ctx.sub,
         "registry": REGISTRY,
-        "wake": ctx.wake,
+        "wake_config": ctx.wake,
         "app_state": ctx.state,
     }
 

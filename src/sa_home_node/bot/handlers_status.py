@@ -85,7 +85,7 @@ async def on_status_action(
     callback: CallbackQuery,
     node_link: ServiceLink,
     registry: Registry,
-    wake: object | None = None,
+    wake_config: object | None = None,
     app_state: AppState | None = None,
     subscription: Subscription | None = None,
 ) -> None:
@@ -97,7 +97,7 @@ async def on_status_action(
     code = parts[1]
 
     if code == commands.NODES_CODE:
-        text, keyboard = await swarmview.build_swarm_view(node_link, subscription, wake, app_state)
+        text, keyboard = await swarmview.build_swarm_view(node_link, subscription, wake_config, app_state)
         await callback.message.answer(text, reply_markup=keyboard)
     elif code == commands.NODE_CARD_CODE:
         text, keyboard = await nodeview.build_node_card_view(node_link, subscription, _node_arg(parts, 2))

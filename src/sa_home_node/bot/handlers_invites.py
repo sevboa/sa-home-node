@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
 from datetime import UTC, datetime
 from html import escape
 from typing import Any
@@ -11,6 +10,7 @@ from aiogram.types import CallbackQuery, Message
 
 from sa_home_node.bot import commands, gateguests, guestsview
 from sa_home_node.bot.book import SubscriptionBook
+from sa_home_node.bot.context import GuestUsage, OnAdmitted
 from sa_home_node.bot.gate import Admission, Gatekeeper, format_code
 from sa_home_node.bot.guestfile import GuestStore
 from sa_home_node.bot.menu import refresh_chat_menu
@@ -35,9 +35,6 @@ BAD_INVITE_HOURS_TEXT = (
     "(пример: <code>/invite 3</code>)"
 )
 GUEST_GONE_TEXT = "Такого гостя уже нет"
-
-GuestUsage = Callable[[int], Awaitable[str]]
-OnAdmitted = Callable[..., Awaitable[None]]
 
 
 class JustAdmitted(Filter):

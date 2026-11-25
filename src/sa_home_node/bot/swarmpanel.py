@@ -201,52 +201,56 @@ async def check_updates_summary(node_link: ServiceLink) -> str:
     return " ".join(parts)
 
 
-async def _collect_reports(node_link: ServiceLink, state: AppState) -> tuple[dict | None, list[NodeReport]]:
+async def _collect_reports(
+    node_link: ServiceLink, app_state: AppState
+) -> tuple[dict | None, list[NodeReport]]:
     try:
         own_state = await node_link.get_state()
     except PEER_ERRORS:
         return None, []
     reports = await collect_reports(node_link, own_state, with_monitor=True)
-    await swarmview.remember_wake_info(state, reports)
+    await swarmview.remember_wake_info(app_state, reports)
     return own_state, reports
 
 
 async def _wake_buttons(
     subscription: Subscription | None,
-    state: AppState,
+    app_state: AppState,
     wake_config: WakeConfig | None,
     reports: list[NodeReport],
 ) -> list[InlineKeyboardButton]:
     if subscription is None:
         return []
     return swarmview.wake_rows(subscription, wake_config) + await swarmview.offline_wake_rows(
-        subscription, state, reports
+        subscription, app_state, reports
     )
 
 
 async def _panel_view(
     node_link: ServiceLink,
     apps_link: ServiceLink,
-    state: AppState,
+    app_state: AppState,
     wake_config: WakeConfig | None,
     subscription: Subscription | None,
 ) -> ScreenView:
-    own_state, reports = await _collect_reports(node_link, state)
+    own_state, reports = await _collect_reports(node_link, app_state)
     if own_state is None:
         return nodeview.NODE_DOWN_TEXT, None
     app_actions = await apps_link.actions()
-    wake_buttons = await _wake_buttons(subscription, state, wake_config, reports)
+    wake_buttons = await _wake_buttons(subscription, app_state, wake_config, reports)
     return build_panel_view(reports, app_actions, datetime.now(UTC), wake_buttons)
 
 
 async def _nodes_view(
-    node_link: ServiceLink, state: AppState, subscription: Subscription | None, offset: int
+    node_link: ServiceLink, app_state: AppState, subscription: Subscription | None, offset: int
 ) -> ScreenView:
-    own_state, reports = await _collect_reports(node_link, state)
+    own_state, reports = await _collect_reports(node_link, app_state)
     if own_state is None:
         return nodeview.NODE_DOWN_TEXT, None
     wakeable_ids = (
-        await swarmview.offline_wakeable_ids(subscription, state, reports) if subscription is not None else []
+        await swarmview.offline_wakeable_ids(subscription, app_state, reports)
+        if subscription is not None
+        else []
     )
     return build_nodes_list_view(reports, offset, wakeable_ids, own_state.get("node"))
 
@@ -256,12 +260,12 @@ async def _render_screen(
     parts: list[str],
     node_link: ServiceLink,
     apps_link: ServiceLink,
-    state: AppState,
+    app_state: AppState,
     wake_config: WakeConfig | None,
     subscription: Subscription | None,
 ) -> ScreenView | None:
     if code == commands.SWARM_PANEL_CODE:
-        return await _panel_view(node_link, apps_link, state, wake_config, subscription)
+        return await _panel_view(node_link, apps_link, app_state, wake_config, subscription)
     if code == commands.SWARM_SKILLS_CODE:
         if subscription is None:
             return None
@@ -271,7 +275,7 @@ async def _render_screen(
         skill_text, skill_keyboard = await run_app_skill(apps_link, subscription, part(parts, 2) or "")
         return build_skill_card_view(skill_text, skill_keyboard)
     if code == commands.SWARM_NODES_CODE:
-        return await _nodes_view(node_link, state, subscription, int_or(part(parts, 2), 0))
+        return await _nodes_view(node_link, app_state, subscription, int_or(part(parts, 2), 0))
     node_id = nodeview.node_from_segment(part(parts, 2))
     if code == commands.SWARM_NODE_CODE:
         return await nodeview.build_node_card_view(node_link, subscription, node_id)
@@ -289,11 +293,11 @@ async def cmd_swarm(
     message: Message,
     node_link: ServiceLink,
     apps_link: ServiceLink,
-    state: AppState,
+    app_state: AppState,
     wake_config: WakeConfig | None = None,
     subscription: Subscription | None = None,
 ) -> None:
-    text, keyboard = await _panel_view(node_link, apps_link, state, wake_config, subscription)
+    text, keyboard = await _panel_view(node_link, apps_link, app_state, wake_config, subscription)
     await message.answer(text, reply_markup=keyboard)
 
 
@@ -302,7 +306,7 @@ async def on_swarm_screen(
     callback: CallbackQuery,
     node_link: ServiceLink,
     apps_link: ServiceLink,
-    state: AppState,
+    app_state: AppState,
     wake_config: WakeConfig | None = None,
     subscription: Subscription | None = None,
 ) -> None:
@@ -322,7 +326,7 @@ async def on_swarm_screen(
         await callback.answer("⛔️ Недоступно", show_alert=True)
         return
 
-    view = await _render_screen(code, parts, node_link, apps_link, state, wake_config, subscription)
+    view = await _render_screen(code, parts, node_link, apps_link, app_state, wake_config, subscription)
     if view is not None:
         await redraw(callback, *view)
     await callback.answer()

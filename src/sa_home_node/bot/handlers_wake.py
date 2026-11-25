@@ -59,11 +59,11 @@ async def _wake_manual(message: Message, wake: WakeConfig) -> None:
 async def _wake_swarm_node(
     message: Message,
     node_link: ServiceLink,
-    state: AppState,
+    app_state: AppState,
     node_id: str,
     guard: WakeGuard | None,
 ) -> None:
-    outcome = await wake_swarm_node_core(node_link, StateWakeCache(state), node_id, guard=guard)
+    outcome = await wake_swarm_node_core(node_link, StateWakeCache(app_state), node_id, guard=guard)
     await message.answer(outcome.detail)
 
 
@@ -77,7 +77,7 @@ async def on_wake_button(
     callback: CallbackQuery,
     wake_config: WakeConfig,
     node_link: ServiceLink,
-    state: AppState,
+    app_state: AppState,
     wake_guard: WakeGuard | None = None,
 ) -> None:
     if callback.message is None:
@@ -88,4 +88,4 @@ async def on_wake_button(
     if node_id is None:
         await _wake_manual(callback.message, wake_config)
     else:
-        await _wake_swarm_node(callback.message, node_link, state, node_id, wake_guard)
+        await _wake_swarm_node(callback.message, node_link, app_state, node_id, wake_guard)
