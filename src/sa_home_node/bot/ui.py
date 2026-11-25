@@ -99,8 +99,8 @@ def clamp_offset(offset: int, size: int, total: int) -> int:
 def nav_row(offset: int, size: int, total: int, callback: Callable[[int], str]) -> list[InlineKeyboardButton]:
     buttons: list[InlineKeyboardButton] = []
     if offset > 0:
-        buttons.append(button("⬅️", callback(max(0, offset - size) if total > size else 0)))
-    if total > size and offset + size < total:
+        buttons.append(button("⬅️", callback(max(0, offset - size))))
+    if offset + size < total:
         buttons.append(button("➡️", callback(offset + size)))
     return buttons
 

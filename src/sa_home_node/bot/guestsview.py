@@ -40,8 +40,6 @@ def _with_nav(
         return commands.panel_callback(code, *args, o)
 
     nav = nav_row(offset, size, total, target)
-    if offset > 0 and total <= size:
-        nav[0] = button("⬅️", target(max(0, offset - size)))
     if nav:
         buttons.append(nav)
 
