@@ -25,8 +25,6 @@ def set_guest_rights(
     sub = book.for_chat(chat_id)
     if sub is None or not sub.is_guest:
         return None
-    if sub.allowed_commands == allowed_commands:
-        return sub
     updated = sub.with_allowed_commands(allowed_commands)
     book.add(updated)
     guest_store.save(book.guests())

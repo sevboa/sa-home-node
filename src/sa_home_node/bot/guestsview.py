@@ -10,7 +10,7 @@ from sa_home_node.bot import commands
 from sa_home_node.bot.gate import format_code
 from sa_home_node.bot.rights import RightsCatalog
 from sa_home_node.bot.subs import Subscription
-from sa_home_node.bot.ui import back_row, button, markup, nav_row
+from sa_home_node.bot.ui import back_row, button, markup, nav_row, pack
 
 GUEST_PAGE_SIZE = 10
 CODE_PAGE_SIZE = 5
@@ -167,7 +167,7 @@ def build_perms_view(sub: Subscription, offset: int, catalog: RightsCatalog) -> 
         [
             button(
                 f"➖ {text}"[:_MAX_NAME_LEN],
-                commands.panel_callback(code, sub.chat_id, offset, arg),
+                pack(commands.CALLBACK_PREFIX, code, sub.chat_id, offset, arg),
             )
         ]
         for text, code, arg in page
@@ -205,7 +205,7 @@ def build_perm_add_view(sub: Subscription, offset: int, catalog: RightsCatalog) 
         [
             button(
                 f"➕ {text}"[:_MAX_NAME_LEN],
-                commands.panel_callback(code, sub.chat_id, offset, arg),
+                pack(commands.CALLBACK_PREFIX, code, sub.chat_id, offset, arg),
             )
         ]
         for text, code, arg in page
