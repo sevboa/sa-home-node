@@ -15,8 +15,6 @@ from sa_home_node.proto.describe import ActionSpec, ServiceDescription
 from sa_home_node.proto.wire import (
     NODE_SERVICE,
     Address,
-    ProtoError,
-    ServiceUnavailableError,
     node_address,
 )
 
@@ -28,7 +26,6 @@ NODES_RIGHT = "nodes"
 SECONDS_PER_MINUTE = 60
 SECONDS_PER_HOUR = 3600
 SECONDS_PER_DAY = 86400
-SERVICE_CALL_ERRORS = (ServiceUnavailableError, ProtoError)
 
 NODE_DOWN_TEXT = (
     "⚠️ Нода недоступна — не могу получить состояние служб. Проверьте: systemctl --user status sa-home-node"
@@ -359,5 +356,5 @@ async def build_service_card_view(
 async def _node_state(node_link: ServiceLink, dst: Address | None = None) -> dict | None:
     try:
         return await node_link.get_state(dst=dst)
-    except SERVICE_CALL_ERRORS:
+    except statusview.SERVICE_CALL_ERRORS:
         return None
