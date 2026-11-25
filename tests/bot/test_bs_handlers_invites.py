@@ -4,6 +4,7 @@ from types import SimpleNamespace
 
 import pytest
 from botfix import load_shared
+from drivers_w2a import local_zone
 from drivers_w3c import drive_invites, patched, sub_factory
 
 from sa_home_node.bot import handlers_invites, menu
@@ -87,5 +88,6 @@ KIT = SimpleNamespace(
 
 @pytest.mark.parametrize("case", DATA["cases"], ids=lambda c: c["name"])
 async def test_invite_handlers_match_prototype(case, tmp_path):
-    got = await drive_invites(case, KIT, tmp_path)
+    with local_zone():
+        got = await drive_invites(case, KIT, tmp_path)
     assert got == {key: case[key] for key in got}
