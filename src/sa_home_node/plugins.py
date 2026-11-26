@@ -52,6 +52,7 @@ class ServiceContext:
     swarm_token: str = ""
     state_file: Path | None = None
     assigned_services: frozenset[str] = frozenset()
+    plugin_sections: Mapping[str, BaseModel] = field(default_factory=dict)
 
     def assigned(self, *names: str) -> bool:
         return any(name in self.assigned_services for name in names)
@@ -165,4 +166,5 @@ def make_context(
         swarm_token=swarm_section(config).token,
         state_file=config.state_file,
         assigned_services=assigned,
+        plugin_sections={name: config.section(name, model) for p in plugins for name, model in p.sections},
     )

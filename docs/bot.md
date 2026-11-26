@@ -195,7 +195,8 @@
 | `wake_guard` | вето на пробуждение ноды: возвращает текст отказа или `None` |
 
 `BotContext` (`context.py`) даёт плагину бот, подписки, `notifier`, хранилища, три ссылки на службы,
-реестр, каталог прав, гейт, конфиг и `content` — `ContentStore` ноды (тексты плагинов по их `content_keys`). Минимальный плагин (`tests/bot/stub_plugin.py`):
+реестр, каталог прав, гейт, конфиг, `content` — `ContentStore` ноды (тексты плагинов по их `content_keys`) и `sections` — секции конфига ноды,
+объявленные плагинами в `Plugin.sections` (например, настройки отчёта плагина читаются на ноде с ботом). Минимальный плагин (`tests/bot/stub_plugin.py`):
 
 ```python
 def _build_router(ctx: BotContext) -> Router:

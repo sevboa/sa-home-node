@@ -104,6 +104,7 @@ def test_context_with_model(tmp_path: Path) -> None:
     assert ctx.config.key == "v"
     assert ctx.content is content
     assert ctx.state_file == config.state_file
+    assert ctx.plugin_sections == {}
 
 
 def test_context_without_model(tmp_path: Path) -> None:
@@ -207,3 +208,15 @@ def test_load_plugins_validates_service_section(monkeypatch: pytest.MonkeyPatch)
     load_plugins(["good"])
     with pytest.raises(PluginError, match="необъявленную секцию"):
         load_plugins(["bad"])
+
+
+def test_context_sees_sections_of_all_plugins(tmp_path: Path) -> None:
+    class ReportConfig(BaseModel):
+        hour: int = 9
+
+    config = write_config(tmp_path, '[node]\nid = "n5"\n\n[report]\nhour = 21\n')
+    host = Plugin(name="host")
+    other = Plugin(name="other", sections=(("report", ReportConfig),))
+    ctx = make_context(host, config, write_content(tmp_path, ""), plugins=(host, other))
+    assert ctx.sections == {}
+    assert ctx.plugin_sections["report"].hour == 21

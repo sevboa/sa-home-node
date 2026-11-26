@@ -113,7 +113,9 @@
 - `state_file` — файл состояния ноды (`config.state_file`), для бэкапа службы через `backup.snapsync.build_backup`;
 - `assigned_services` — `frozenset[str]`: службы, назначенные на ноду на момент старта (конфиг `[node].assignments` и
   `state.json`, та же `services.assignments.effective_assignments`, что у `FixupContext`); `ctx.assigned("vpn")` —
-  есть ли хоть одна из названных.
+  есть ли хоть одна из названных;
+- `plugin_sections` — секции всех загруженных плагинов (`Plugin.sections`), разобранные их моделями: так служба
+  видит настройки, которые объявил другой плагин (оболочка бота отдаёт их плагинам как `BotContext.sections`).
 
 ### Вытеснение: `ServiceFenced`
 

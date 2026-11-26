@@ -1,9 +1,10 @@
 from __future__ import annotations
 
-from collections.abc import Awaitable, Callable
-from dataclasses import dataclass
+from collections.abc import Awaitable, Callable, Mapping
+from dataclasses import dataclass, field
 
 from aiogram import Bot
+from pydantic import BaseModel
 
 from sa_home_node.bot.book import SubscriptionBook
 from sa_home_node.bot.commands import Registry
@@ -49,3 +50,4 @@ class BotContext:
     on_admitted: OnAdmitted | None = None
     wake_guard: WakeGuard | None = None
     content: ContentStore | None = None
+    sections: Mapping[str, BaseModel] = field(default_factory=dict)
