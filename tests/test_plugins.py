@@ -103,6 +103,7 @@ def test_context_with_model(tmp_path: Path) -> None:
     assert ctx.data_dir == config.data_dir / "plug"
     assert ctx.config.key == "v"
     assert ctx.content is content
+    assert ctx.state_file == config.state_file
 
 
 def test_context_without_model(tmp_path: Path) -> None:

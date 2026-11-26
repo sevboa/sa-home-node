@@ -109,7 +109,8 @@
 - `handler` — `ServiceHandler | None`: обработчик протокола службы, если есть `ServiceSpec.handler`;
 - `node_socket` — путь сокета службы `node` этой ноды (`config.socket_path`): через него процессная служба говорит с
   роем;
-- `swarm_token` — токен роя из секции `[swarm]`, для клиентов протокола.
+- `swarm_token` — токен роя из секции `[swarm]`, для клиентов протокола;
+- `state_file` — файл состояния ноды (`config.state_file`), для бэкапа службы через `backup.snapsync.build_backup`.
 
 ### Вытеснение: `ServiceFenced`
 

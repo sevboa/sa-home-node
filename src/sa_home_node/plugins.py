@@ -48,6 +48,7 @@ class ServiceContext:
     handler: ServiceHandler | None = None
     node_socket: str = ""
     swarm_token: str = ""
+    state_file: Path | None = None
 
 
 @dataclass(frozen=True)
@@ -154,4 +155,5 @@ def make_context(
         plugins=tuple(plugins),
         node_socket=str(config.socket_path),
         swarm_token=swarm_section(config).token,
+        state_file=config.state_file,
     )
