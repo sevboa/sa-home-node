@@ -63,6 +63,7 @@ class ServiceSpec:
     instanced: bool = False
     satellites: tuple[str, ...] = ()
     auto: Callable[[NodeConfig], bool] | None = None
+    section: str = ""
 
 
 @dataclass(frozen=True)
@@ -120,6 +121,13 @@ def load_plugins(names: Iterable[str]) -> list[Plugin]:
             raise PluginError(f"Точка входа '{name}' не вернула Plugin: {plugin!r}")
         if plugin.name != name:
             raise PluginError(f"Имя плагина не совпадает с точкой входа: {plugin.name!r} != {name!r}")
+        section_names = {name for name, _ in plugin.sections}
+        for spec in plugin.services:
+            if spec.section and spec.section not in section_names:
+                raise PluginError(
+                    f"Плагин {name}: служба {spec.name} ссылается на необъявленную секцию "
+                    f"{spec.section!r}; объявлены: {', '.join(sorted(section_names)) or 'нет'}"
+                )
         result.append(plugin)
     return result
 

@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 from pydantic import BaseModel
+from support import spec
 
 from sa_home_node import plugins
 from sa_home_node.config import ConfigError, NodeConfig, load_config
@@ -128,3 +129,22 @@ def test_load_plugins_does_not_import_aiogram() -> None:
     code = "import sys; from sa_home_node.plugins import load_plugins; load_plugins([]); print('aiogram' in sys.modules)"
     out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)
     assert out.stdout.strip() == "False"
+
+
+def test_load_plugins_validates_service_section(monkeypatch: pytest.MonkeyPatch) -> None:
+    class CheckConfig(BaseModel):
+        socket: str = "./check.sock"
+
+    good_plugin = Plugin(
+        name="good",
+        sections=(("vpn_check", CheckConfig),),
+        services=(spec("svc", endpoint=lambda c: c.socket, section="vpn_check"),),
+    )
+    bad_plugin = Plugin(
+        name="bad",
+        services=(spec("svc", endpoint=lambda c: c.socket, section="missing"),),
+    )
+    patch_eps(monkeypatch, {"good": FakeEP("good", good_plugin), "bad": FakeEP("bad", bad_plugin)})
+    load_plugins(["good"])
+    with pytest.raises(PluginError, match="необъявленную секцию"):
+        load_plugins(["bad"])

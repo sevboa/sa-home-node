@@ -43,7 +43,9 @@ class ServiceTable:
                 continue
             plugin = self._owners[name]
             section = None
-            if plugin.config_model is not None:
+            if spec.section:
+                section = config.section(spec.section, dict(plugin.sections)[spec.section])
+            elif plugin.config_model is not None:
                 section = config.section(plugin.name, plugin.config_model)
             result[name] = spec.endpoint(section)
         return result

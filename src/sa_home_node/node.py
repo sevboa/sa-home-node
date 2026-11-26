@@ -255,7 +255,8 @@ async def run_service(
             return await servers[0].broadcast_event(event_type, data) if servers else 0
 
         handler = spec.handler(dataclasses.replace(ctx, broadcast=broadcast))
-        server = ProtoServer(spec.endpoint(ctx.config), handler, token=swarm_section(cfg).token)
+        endpoint_config = ctx.sections[spec.section] if spec.section else ctx.config
+        server = ProtoServer(spec.endpoint(endpoint_config), handler, token=swarm_section(cfg).token)
         servers.append(server)
         ctx = dataclasses.replace(ctx, handler=handler, broadcast=broadcast)
     pending: list[asyncio.Task] = []
