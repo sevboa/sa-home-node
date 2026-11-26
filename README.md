@@ -18,8 +18,10 @@
 - Отложенные задачи (плагин `tasks`) — очередь команд с таймерами и ожиданием событий — [docs/tasks.md](docs/tasks.md).
 
 ## Зависимости
-- Основные: `aiosqlite`, `psutil`, `pydantic-settings`.
-- Опциональные: `cryptography` (для бэкапа, extras `backup`).
+- Python 3.11+. Основные: `aiogram`, `aiohttp-socks`, `aiosqlite`, `certifi`, `cryptography`, `psutil`,
+  `pydantic-settings`. `cryptography` обязателен: команду `backup` грузит общий CLI.
+- На Python 3.11 `aiogram` закреплён на 3.32: с 3.33 он не импортируется (`TypeError: unhashable type:
+  'FailFast'` в `aiogram.types`), проверено 2026-11-26.
 
 ## Лицензия
 [PolyForm Noncommercial 1.0.0](LICENSE): пользоваться, изменять и распространять можно в некоммерческих

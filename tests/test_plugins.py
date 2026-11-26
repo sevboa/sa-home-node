@@ -1,3 +1,5 @@
+import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -93,7 +95,7 @@ def write_content(tmp_path: Path, text: str) -> ContentStore:
 
 def test_context_with_model(tmp_path: Path) -> None:
     config = write_config(tmp_path, '[node]\nid = "n1"\n\n[plug]\nkey = "v"\n')
-    content = write_content(tmp_path, 'a = 1\n')
+    content = write_content(tmp_path, "a = 1\n")
     plugin = Plugin(name="plug", config_model=PlugModel, content_keys=("plug.a",))
     ctx = make_context(plugin, config, content)
     assert ctx.node_id == "n1"
@@ -119,4 +121,10 @@ def test_context_missing_content(tmp_path: Path) -> None:
     config = write_config(tmp_path, '[node]\nid = "n4"\n')
     plugin = Plugin(name="plug", content_keys=("plug.a",))
     with pytest.raises(ContentError, match="plug.a"):
-        make_context(plugin, config, write_content(tmp_path, 'b = 1\n'))
+        make_context(plugin, config, write_content(tmp_path, "b = 1\n"))
+
+
+def test_load_plugins_does_not_import_aiogram() -> None:
+    code = "import sys; from sa_home_node.plugins import load_plugins; load_plugins([]); print('aiogram' in sys.modules)"
+    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)
+    assert out.stdout.strip() == "False"

@@ -128,7 +128,9 @@ def run_init(
                     sudo_cmd = host.elevate_argv(unit.linger_argv)
                     print(f"\nНе в интерактивном режиме — выполни сам для linger:\n  {' '.join(sudo_cmd)}")
     else:
-        print(f"\nЗапуск вручную: {executable} run --config {config_path}")
+        print(
+            f"\nЗапуск вручную (из каталога данных): cd {data_dir} && {executable} run --config {config_path}"
+        )
 
     if interactive:
         fix(config_path)
