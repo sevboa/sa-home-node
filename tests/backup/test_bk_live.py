@@ -24,7 +24,7 @@ from sa_home_node.backup.spec import BackupSpec
 from sa_home_node.backup.store import BackupStore, backups_dir
 from sa_home_node.cli import main
 from sa_home_node.config import load_config
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 from sa_home_node.plugins import Plugin, ServiceContext, ServiceSpec
 from sa_home_node.proto.client import ProtoClient
 from sa_home_node.proto.describe import ServiceDescription, ServiceInfo

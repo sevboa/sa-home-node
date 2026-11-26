@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from typing import Any
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 from sa_home_node.monitor.hostmodels import HostHealthDiff, HostMetricState
 from sa_home_node.monitor.models import ALERTING, OK, HealthDiff, HealthState, KnownState
 

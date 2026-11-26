@@ -5,7 +5,7 @@ from collections.abc import Sequence
 from datetime import datetime
 from typing import Any
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 
 log = logging.getLogger(__name__)
 

@@ -4,7 +4,8 @@ import sqlite3
 
 import pytest
 
-from sa_home_node.monitor.db import Database, apply_schema
+from sa_home_node.db import Database
+from sa_home_node.monitor.db import apply_schema
 
 TABLES = {
     "job_runs": [

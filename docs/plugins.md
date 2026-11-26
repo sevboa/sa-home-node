@@ -184,6 +184,12 @@ PLUGIN = Plugin(name="svc", fixups=svc_fixups)
 Привилегированные действия донастройки — только через примитивы `fixups/privileged.py`; `sudo` из кода службы
 и ноды напрямую не вызывают.
 
+### Своя БД плагина (`sa_home_node.db`)
+
+- `Database(path)` — SQLite через aiosqlite: `open()` (WAL, внешние ключи, `busy_timeout` 5 с), `close()`,
+  `conn`, `transaction()`, `fetch_one`, `fetch_all`. Схему плагин применяет сам (`conn.executescript`).
+- `add_column_if_missing(db, table, column, decl)` — миграция «добавить столбец», `True`, если добавлен.
+
 ### Внешние команды из службы (`sa_home_node.process`)
 
 - `run(argv, *, timeout, input, stdout, stderr, env, cwd)` → `ProcResult(returncode, stdout, stderr)`

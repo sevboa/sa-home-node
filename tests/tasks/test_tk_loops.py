@@ -10,7 +10,7 @@ from typing import Any
 
 import pytest
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 from sa_home_node.proto.wire import ERR_INTERNAL, ERR_UNAVAILABLE, Address, ProtoError
 from sa_home_node.tasks import loops, service
 from sa_home_node.tasks.config import TasksConfig

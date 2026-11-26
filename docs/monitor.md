@@ -33,7 +33,7 @@ CPU/GPU/дисков, SMART-снимки, host-метрики ноды и ист
 | `health.py`, `policy.py` | `compute_health_diff`, `reconcile_band`; `FixedThresholdPolicy`, `BaselinePolicy` |
 | `metrics.py`, `hostmodels.py` | `METRICS` (пороговые), `GAUGES` (графиковые), `compute_host_diff`, модели host-метрик |
 | `models.py`, `payloads.py` | модели состояний и событий; `BroadcastDispatcher`, словари для провода |
-| `db.py`, `store.py`, `store_states.py`, `store_data.py` | `Database`, `SCHEMA`, `MonitorStore` |
+| `db.py`, `store.py`, `store_states.py`, `store_data.py` | `SCHEMA`, `apply_schema`, `MonitorStore` (`Database` — общий, `sa_home_node.db`) |
 | `exposition.py` | `render_metrics`, `store_renderer` — текст `/metrics` из БД |
 | `sensors/` | `source.py` (`SensorSource`), `cpu.py`, `gpu.py`, `disks.py`, `smartctl.py`, `blockdev.py`, `hostscan.py`, `procfs.py`, `power.py` |
 | `../promexport.py` | формат Prometheus и `MetricsEndpoint` (общий слой, не только монитор) |

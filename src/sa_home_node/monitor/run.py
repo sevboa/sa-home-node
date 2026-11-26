@@ -4,9 +4,10 @@ import asyncio
 import logging
 
 from sa_home_node import __version__
+from sa_home_node.db import Database
 from sa_home_node.monitor.config import apply_node_kind
 from sa_home_node.monitor.cron import CronScheduler
-from sa_home_node.monitor.db import Database, apply_schema
+from sa_home_node.monitor.db import apply_schema
 from sa_home_node.monitor.exposition import store_renderer
 from sa_home_node.monitor.housekeeping import HousekeepingJob
 from sa_home_node.monitor.jobbase import DedupQueue, JobContext, JobWorker

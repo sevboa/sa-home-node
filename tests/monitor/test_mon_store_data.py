@@ -5,7 +5,8 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from sa_home_node.monitor.db import Database, apply_schema
+from sa_home_node.db import Database
+from sa_home_node.monitor.db import apply_schema
 from sa_home_node.monitor.hostmodels import HostMetricReading
 from sa_home_node.monitor.models import DiskSummary, SensorReading, SmartSnapshot
 from sa_home_node.monitor.store_data import DISK_SUMMARIES_KEY, DataStore

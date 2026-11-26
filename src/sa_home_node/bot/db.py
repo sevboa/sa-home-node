@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from pathlib import Path
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 
 SCHEMA = Path(__file__).with_name("schema.sql").read_text(encoding="utf-8")
 

@@ -9,8 +9,8 @@ from pathlib import Path
 import pytest
 
 from sa_home_node import promexport
+from sa_home_node.db import Database
 from sa_home_node.metrics.config import MetricsConfig
-from sa_home_node.monitor.db import Database
 from sa_home_node.monitor.exposition import render_metrics, store_renderer
 from sa_home_node.monitor.hostmodels import HostMetricState
 from sa_home_node.monitor.models import HealthState

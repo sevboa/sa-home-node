@@ -2,7 +2,7 @@ import asyncio
 import logging
 from typing import Any
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 from sa_home_node.plugins import ServiceContext
 from sa_home_node.tasks.config import TasksConfig
 from sa_home_node.tasks.kinds import TIMER

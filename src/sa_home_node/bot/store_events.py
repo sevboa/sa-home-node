@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from datetime import datetime
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 
 NOTIF_ALERT = "alert"
 NOTIF_CLEARED = "cleared"

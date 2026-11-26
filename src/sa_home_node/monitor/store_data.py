@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from math import sqrt
 from typing import Any
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 from sa_home_node.monitor.hostmodels import HostMetricReading
 from sa_home_node.monitor.models import (
     BaselineStats,

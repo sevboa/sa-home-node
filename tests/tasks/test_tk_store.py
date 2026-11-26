@@ -4,7 +4,7 @@ from datetime import UTC, datetime, timedelta
 
 import pytest
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 from sa_home_node.tasks.store import TaskStore, apply_schema
 
 NOW = datetime(2026, 1, 1, 12, 0, tzinfo=UTC)

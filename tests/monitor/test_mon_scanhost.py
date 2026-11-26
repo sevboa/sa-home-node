@@ -7,9 +7,10 @@ from pathlib import Path
 
 import pytest
 
+from sa_home_node.db import Database
 from sa_home_node.metrics.config import MetricsConfig
 from sa_home_node.monitor.config import SensorsConfig
-from sa_home_node.monitor.db import Database, apply_schema
+from sa_home_node.monitor.db import apply_schema
 from sa_home_node.monitor.hostmodels import HostMetricReading
 from sa_home_node.monitor.jobbase import JobContext
 from sa_home_node.monitor.models import DispatchResult

@@ -15,7 +15,7 @@ from sa_home_node.bot.notifier import Notifier
 from sa_home_node.bot.rights import RightsCatalog
 from sa_home_node.bot.servicelink import ServiceLink
 from sa_home_node.bot.store_events import EventStore
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 from sa_home_node.wake.ready import WakeGuard
 
 GuestUsage = Callable[[int], Awaitable[str]]

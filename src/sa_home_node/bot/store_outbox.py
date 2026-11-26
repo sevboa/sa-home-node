@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from datetime import UTC, datetime, timedelta
 
-from sa_home_node.monitor.db import Database
+from sa_home_node.db import Database
 
 OUTBOX_KIND_ALERT = "alert"
 OUTBOX_KIND_TASK = "task"

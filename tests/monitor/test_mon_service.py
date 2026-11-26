@@ -9,9 +9,9 @@ from types import SimpleNamespace
 import pytest
 
 from sa_home_node import requirements
+from sa_home_node.db import Database
 from sa_home_node.monitor import service as service_module
 from sa_home_node.monitor.config import SensorsConfig
-from sa_home_node.monitor.db import Database
 from sa_home_node.monitor.jobbase import DedupQueue
 from sa_home_node.monitor.models import PowerEvent
 from sa_home_node.monitor.service import MonitorService
