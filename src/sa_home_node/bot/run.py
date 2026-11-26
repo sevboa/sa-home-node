@@ -226,6 +226,7 @@ async def run_bot(ctx: ServiceContext) -> bool:
             help_lines=tuple(line for spec in specs for line in spec.help_lines),
             on_admitted=_chained_admitted(specs),
             wake_guard=_combined_guard(specs),
+            content=ctx.content,
         )
         node_events.handle = build_node_event_handler(
             bot_ctx, tuple(route for spec in specs for route in spec.event_routes), config.about_name

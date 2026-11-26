@@ -15,6 +15,7 @@ from sa_home_node.bot.notifier import Notifier
 from sa_home_node.bot.rights import RightsCatalog
 from sa_home_node.bot.servicelink import ServiceLink
 from sa_home_node.bot.store_events import EventStore
+from sa_home_node.content import ContentStore
 from sa_home_node.db import Database
 from sa_home_node.wake.ready import WakeGuard
 
@@ -47,3 +48,4 @@ class BotContext:
     guest_usage: GuestUsage = no_guest_usage
     on_admitted: OnAdmitted | None = None
     wake_guard: WakeGuard | None = None
+    content: ContentStore | None = None
