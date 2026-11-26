@@ -83,6 +83,9 @@ class WindowsHost:
     def elevate_argv(self, argv: list[str]) -> list[str] | None:
         return None
 
+    def elevate_noninteractive_argv(self, argv: list[str]) -> list[str] | None:
+        return None
+
     def package_install_argv(self, package: str) -> list[str] | None:
         return None
 

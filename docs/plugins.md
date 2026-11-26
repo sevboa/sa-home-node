@@ -181,8 +181,20 @@ def svc_fixups(ctx: FixupContext) -> list[Fixup]:
 PLUGIN = Plugin(name="svc", fixups=svc_fixups)
 ```
 
-Привилегированные действия — только через примитивы `fixups/privileged.py`; `sudo` из кода службы и ноды не
-вызывают.
+Привилегированные действия донастройки — только через примитивы `fixups/privileged.py`; `sudo` из кода службы
+и ноды напрямую не вызывают.
+
+### Внешние команды из службы (`sa_home_node.process`)
+
+- `run(argv, *, timeout, input, stdout, stderr, env, cwd)` → `ProcResult(returncode, stdout, stderr)`
+  (`stdout_text`, `stderr_text` — текст, второй без пробелов по краям). Тайм-аут, отмена и любое исключение
+  убивают процесс и пробрасываются дальше.
+- `run_privileged(argv, *, needs_privilege_text, timeout)` → stdout: программа ищется в `PATH`, команда идёт
+  через `host.current().elevate_noninteractive_argv` (`sudo -n`). Повышение не поддержано или sudo просит
+  пароль / отказал в правах (`requirements.looks_like_sudo_denied`) — `ProtoError(ERR_NEEDS_PRIVILEGE,
+  needs_privilege_text)`, в тексте подсказка, какой фиксап выдаёт право; иной ненулевой код —
+  `ProtoError(ERR_INTERNAL, "<программа> <аргументы> завершился ошибкой: <stderr>")`.
+- Право на команду выдаёт фиксап плагина (sudoers-фрагмент); служба только пользуется им.
 
 ## Загрузка
 

@@ -26,10 +26,16 @@ _PERMISSION_MARKERS = (
     "access is denied",
 )
 
+SUDO_PASSWORD_MARKER = "a password is required"
+
 
 def looks_like_permission_error(stderr: str) -> bool:
     low = stderr.lower()
     return any(marker in low for marker in _PERMISSION_MARKERS)
+
+
+def looks_like_sudo_denied(stderr: str) -> bool:
+    return looks_like_permission_error(stderr) or SUDO_PASSWORD_MARKER in stderr.lower()
 
 
 class RequirementStatus(StrEnum):
@@ -87,12 +93,7 @@ class RequirementRegistry:
 
     @staticmethod
     def _key(requirement: Requirement) -> str:
-        return (
-            requirement.key
-            or requirement.program
-            or requirement.note
-            or repr(requirement)
-        )
+        return requirement.key or requirement.program or requirement.note or repr(requirement)
 
     def report(self, requirement: Requirement, status: RequirementStatus) -> None:
         with self._lock:

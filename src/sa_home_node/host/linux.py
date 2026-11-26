@@ -42,9 +42,7 @@ class LinuxHost:
         user_timeout_opt = getattr(socket, "TCP_USER_TIMEOUT", None)
         if user_timeout_opt is not None:
             with contextlib.suppress(OSError):
-                sock.setsockopt(
-                    socket.IPPROTO_TCP, user_timeout_opt, TCP_USER_TIMEOUT_S * 1000
-                )
+                sock.setsockopt(socket.IPPROTO_TCP, user_timeout_opt, TCP_USER_TIMEOUT_S * 1000)
         for opt_name, value in (
             ("TCP_KEEPIDLE", TCP_KEEPALIVE_IDLE_S),
             ("TCP_KEEPINTVL", TCP_KEEPALIVE_INTERVAL_S),
@@ -84,6 +82,9 @@ class LinuxHost:
 
     def elevate_argv(self, argv: list[str]) -> list[str] | None:
         return ["sudo", *argv]
+
+    def elevate_noninteractive_argv(self, argv: list[str]) -> list[str] | None:
+        return ["sudo", "-n", *argv]
 
     def package_install_argv(self, package: str) -> list[str] | None:
         for manager, argv in PACKAGE_INSTALL_ARGV:
