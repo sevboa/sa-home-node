@@ -110,7 +110,10 @@
 - `node_socket` — путь сокета службы `node` этой ноды (`config.socket_path`): через него процессная служба говорит с
   роем;
 - `swarm_token` — токен роя из секции `[swarm]`, для клиентов протокола;
-- `state_file` — файл состояния ноды (`config.state_file`), для бэкапа службы через `backup.snapsync.build_backup`.
+- `state_file` — файл состояния ноды (`config.state_file`), для бэкапа службы через `backup.snapsync.build_backup`;
+- `assigned_services` — `frozenset[str]`: службы, назначенные на ноду на момент старта (конфиг `[node].assignments` и
+  `state.json`, та же `services.assignments.effective_assignments`, что у `FixupContext`); `ctx.assigned("vpn")` —
+  есть ли хоть одна из названных.
 
 ### Вытеснение: `ServiceFenced`
 

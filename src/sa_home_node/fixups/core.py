@@ -5,7 +5,7 @@ from dataclasses import dataclass, field, replace
 from typing import TYPE_CHECKING
 
 from sa_home_node.config import NodeConfig, T
-from sa_home_node.services.assignments import Assignment, effective, parse_valid
+from sa_home_node.services.assignments import Assignment, effective_assignments
 from sa_home_node.swarm.kind import NodeTraits, traits_for
 from sa_home_node.swarm.state import NodeState
 
@@ -29,7 +29,7 @@ class FixupContext:
     @classmethod
     def build(cls, config: NodeConfig, host: Host, plugins: Iterable[Plugin] = ()) -> FixupContext:
         state = NodeState.load(config.state_file)
-        assignments = tuple(parse_valid(effective(config.node.assignments, state.assignments)))
+        assignments = effective_assignments(config.node.assignments, state.assignments)
         traits = traits_for(config.node.kind)
         if config.node.power_controllable is not None:
             traits = replace(traits, always_on=not config.node.power_controllable)

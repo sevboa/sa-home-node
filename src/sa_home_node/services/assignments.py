@@ -106,3 +106,7 @@ def key_or_raw(text: str) -> str:
 
 def effective(config: list[str], state: list[str]) -> list[str]:
     return sorted(set(config) | set(state))
+
+
+def effective_assignments(config: list[str], state: list[str]) -> tuple[Assignment, ...]:
+    return tuple(parse_valid(effective(config, state)))

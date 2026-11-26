@@ -16,9 +16,11 @@ from sa_home_node.metrics.spec import DashboardSpec, ScrapeJobSpec
 from sa_home_node.monitor.providers import SensorProvider
 from sa_home_node.proto.actions import NodeAction
 from sa_home_node.proto.server import ServiceHandler
+from sa_home_node.services.assignments import effective_assignments
 from sa_home_node.services.instances import InstanceMeta
 from sa_home_node.swarm.config import swarm_section
 from sa_home_node.swarm.node import SwarmApi
+from sa_home_node.swarm.state import NodeState
 from sa_home_node.tasks.kinds import TaskKind
 
 ENTRY_POINT_GROUP = "sa_home_node.plugins"
@@ -49,6 +51,10 @@ class ServiceContext:
     node_socket: str = ""
     swarm_token: str = ""
     state_file: Path | None = None
+    assigned_services: frozenset[str] = frozenset()
+
+    def assigned(self, *names: str) -> bool:
+        return any(name in self.assigned_services for name in names)
 
 
 @dataclass(frozen=True)
@@ -144,6 +150,8 @@ def make_context(
     if plugin.config_model is not None:
         section = config.section(plugin.name, plugin.config_model)
     content.require(plugin.content_keys)
+    state = NodeState.load(config.state_file)
+    assigned = frozenset(a.service for a in effective_assignments(config.node.assignments, state.assignments))
     return ServiceContext(
         node_id=config.node.id,
         data_dir=config.data_dir / plugin.name,
@@ -156,4 +164,5 @@ def make_context(
         node_socket=str(config.socket_path),
         swarm_token=swarm_section(config).token,
         state_file=config.state_file,
+        assigned_services=assigned,
     )

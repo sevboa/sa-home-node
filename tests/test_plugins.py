@@ -126,6 +126,64 @@ def test_context_missing_content(tmp_path: Path) -> None:
         make_context(plugin, config, write_content(tmp_path, "b = 1\n"))
 
 
+def test_context_assigned_services_from_config(tmp_path: Path) -> None:
+    config = write_config(tmp_path, '[node]\nid = "n5"\nassignments = ["vpn", "monitor@main"]\n')
+    plugin = Plugin(name="plug")
+    ctx = make_context(plugin, config, write_content(tmp_path, ""))
+    assert ctx.assigned_services == frozenset({"vpn", "monitor"})
+    assert ctx.assigned("vpn")
+    assert ctx.assigned("monitor")
+    assert not ctx.assigned("unknown")
+    assert ctx.assigned("vpn", "unknown")
+    assert ctx.assigned("unknown", "monitor")
+
+
+def test_context_assigned_services_from_state(tmp_path: Path) -> None:
+    state_path = tmp_path / "state.json"
+    config = write_config(
+        tmp_path,
+        f'[node]\nid = "n6"\nstate_path = "{state_path}"\n',
+    )
+    from sa_home_node.swarm.state import NodeState
+
+    NodeState(assignments=["vpn@backup:standby", "backup"]).save(state_path)
+    plugin = Plugin(name="plug")
+    ctx = make_context(plugin, config, write_content(tmp_path, ""))
+    assert ctx.assigned_services == frozenset({"vpn", "backup"})
+    assert ctx.assigned("vpn")
+    assert ctx.assigned("backup")
+    assert not ctx.assigned("monitor")
+
+
+def test_context_assigned_services_combined(tmp_path: Path) -> None:
+    state_path = tmp_path / "state.json"
+    config = write_config(
+        tmp_path,
+        f'[node]\nid = "n7"\nassignments = ["vpn"]\nstate_path = "{state_path}"\n',
+    )
+    from sa_home_node.swarm.state import NodeState
+
+    NodeState(assignments=["monitor", "backup@main"]).save(state_path)
+    plugin = Plugin(name="plug")
+    ctx = make_context(plugin, config, write_content(tmp_path, ""))
+    assert ctx.assigned_services == frozenset({"vpn", "monitor", "backup"})
+    assert ctx.assigned("vpn", "monitor", "backup")
+
+
+def test_context_assigned_services_dedup(tmp_path: Path) -> None:
+    state_path = tmp_path / "state.json"
+    config = write_config(
+        tmp_path,
+        f'[node]\nid = "n8"\nassignments = ["vpn"]\nstate_path = "{state_path}"\n',
+    )
+    from sa_home_node.swarm.state import NodeState
+
+    NodeState(assignments=["vpn@other"]).save(state_path)
+    plugin = Plugin(name="plug")
+    ctx = make_context(plugin, config, write_content(tmp_path, ""))
+    assert ctx.assigned_services == frozenset({"vpn"})
+
+
 def test_load_plugins_does_not_import_aiogram() -> None:
     code = "import sys; from sa_home_node.plugins import load_plugins; load_plugins([]); print('aiogram' in sys.modules)"
     out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, check=True)
