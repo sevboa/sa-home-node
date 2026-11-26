@@ -10,13 +10,14 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from sa_home_node.bot import actions, commands, nodelinks, statusview
 from sa_home_node.bot.servicelink import ServiceLink
 from sa_home_node.bot.subs import Subscription
-from sa_home_node.bot.ui import back_row, button, clamp_offset, format_duration, nav_row, refresh_row
+from sa_home_node.bot.ui import back_row, button, clamp_offset, nav_row, refresh_row
 from sa_home_node.proto.describe import ActionSpec, ServiceDescription
 from sa_home_node.proto.wire import (
     NODE_SERVICE,
     Address,
     node_address,
 )
+from sa_home_node.textfmt import format_duration
 
 MAX_NAME_LEN = 40
 SERVICES_PAGE_SIZE = 6

@@ -1,0 +1,75 @@
+{
+ "cases": [
+  {
+   "peer": {
+    "id": "a",
+    "endpoint": "tcp://h:1",
+    "alive": true
+   },
+   "text": ""
+  },
+  {
+   "peer": {
+    "id": "b",
+    "endpoint": "tcp://h:2",
+    "alive": false,
+    "rtt_ms": 12.4
+   },
+   "text": "12 мс"
+  },
+  {
+   "peer": {
+    "id": "c",
+    "endpoint": "tcp://h:3",
+    "alive": true,
+    "rtt_ms": 80.6,
+    "loss": 0.25
+   },
+   "text": "81 мс, потери 25%"
+  },
+  {
+   "peer": {
+    "id": "d",
+    "endpoint": "tcp://h:4",
+    "alive": true,
+    "rtt_ms": 5,
+    "loss": 0
+   },
+   "text": "5 мс"
+  },
+  {
+   "peer": {
+    "id": "e",
+    "endpoint": "tcp://h:5",
+    "alive": true,
+    "via": "relay1"
+   },
+   "text": "через relay1"
+  },
+  {
+   "peer": {
+    "id": "f",
+    "endpoint": "tcp://h:6",
+    "alive": true,
+    "rtt_ms": 140.5,
+    "loss": 0.019,
+    "via": "relay2",
+    "via_rtt_ms": 33.3
+   },
+   "text": "140 мс, потери 2% · через relay2 ~33 мс"
+  },
+  {
+   "peer": {
+    "id": "g",
+    "alive": true,
+    "via": "relay3",
+    "via_rtt_ms": 0.4
+   },
+   "text": "через relay3 ~0 мс"
+  },
+  {
+   "peer": {},
+   "text": ""
+  }
+ ]
+}

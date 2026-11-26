@@ -12,11 +12,12 @@ from sa_home_node.bot.commands import wake_callback
 from sa_home_node.bot.db import AppState
 from sa_home_node.bot.servicelink import ServiceLink
 from sa_home_node.bot.subs import Subscription
-from sa_home_node.bot.ui import button, format_duration
+from sa_home_node.bot.ui import button
 from sa_home_node.bot.wakestate import StateWakeCache
 from sa_home_node.monitor.models import KIND_CPU, KIND_GPU, POWER_UNEXPECTED, PowerEvent
 from sa_home_node.services.periodic import PEER_ERRORS
 from sa_home_node.swarm.kind import traits_for
+from sa_home_node.textfmt import format_duration
 from sa_home_node.wake.peers import NodeReport, collect_reports
 
 log = logging.getLogger(__name__)

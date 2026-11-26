@@ -271,6 +271,8 @@ def test_elevate_argv():
                 "systemd-user",
                 Path("/home/user-a/.config/systemd/user/sa-home-node.service"),
                 ["systemctl", "--user", "daemon-reload"],
+                ["systemctl", "--user", "enable", "--now", "sa-home-node.service"],
+                ["loginctl", "enable-linger", "user-a"],
             ),
         ),
         ("win32", NodeUnit("winsw", Path("/cfg/service/sa-home-node.xml"), None)),
@@ -278,4 +280,5 @@ def test_elevate_argv():
 )
 def test_node_unit(platform, expected, monkeypatch):
     monkeypatch.setattr(Path, "home", classmethod(lambda cls: Path("/home/user-a")))
+    monkeypatch.setattr("getpass.getuser", lambda: "user-a")
     assert select(platform).node_unit(Path("/cfg/config.toml")) == expected
