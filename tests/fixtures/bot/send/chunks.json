@@ -1,0 +1,288 @@
+{
+  "cases": [
+    {
+      "name": "exact-limit",
+      "parts": [
+        [
+          "a",
+          4096
+        ]
+      ],
+      "chunks": [
+        [
+          4096,
+          "c93eee2d0db02f10acc7460d9576e122dcf8cd53c4bf8dfcae1b3e74ebcfff5a"
+        ]
+      ]
+    },
+    {
+      "name": "one-over-no-newline",
+      "parts": [
+        [
+          "a",
+          4097
+        ]
+      ],
+      "chunks": [
+        [
+          4096,
+          "c93eee2d0db02f10acc7460d9576e122dcf8cd53c4bf8dfcae1b3e74ebcfff5a"
+        ],
+        [
+          1,
+          "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb"
+        ]
+      ]
+    },
+    {
+      "name": "newline-in-middle",
+      "parts": [
+        [
+          "a",
+          3000
+        ],
+        [
+          "\n",
+          1
+        ],
+        [
+          "b",
+          3000
+        ]
+      ],
+      "chunks": [
+        [
+          3000,
+          "556ac82f23f64d2f41b3fb3b9a171791364021aa95c0af6df9e2b5e1d88c8038"
+        ],
+        [
+          3000,
+          "eb8b4d8da039a9fda06ddfdf6958259b8bc021341de313f54d81501b711a7726"
+        ]
+      ]
+    },
+    {
+      "name": "newline-at-limit-1",
+      "parts": [
+        [
+          "a",
+          4095
+        ],
+        [
+          "\n",
+          1
+        ],
+        [
+          "b",
+          10
+        ]
+      ],
+      "chunks": [
+        [
+          4095,
+          "e2e8bab8dad4a3879ffed30a624fee2310f39141d454c57f89e908e527dfd8cd"
+        ],
+        [
+          10,
+          "6d2fe32dc4249ef7e7359c6d874fffbbf335e832e49a2681236e1b686af78794"
+        ]
+      ]
+    },
+    {
+      "name": "newline-at-limit",
+      "parts": [
+        [
+          "a",
+          4096
+        ],
+        [
+          "\n",
+          1
+        ],
+        [
+          "b",
+          10
+        ]
+      ],
+      "chunks": [
+        [
+          4096,
+          "c93eee2d0db02f10acc7460d9576e122dcf8cd53c4bf8dfcae1b3e74ebcfff5a"
+        ],
+        [
+          10,
+          "6d2fe32dc4249ef7e7359c6d874fffbbf335e832e49a2681236e1b686af78794"
+        ]
+      ]
+    },
+    {
+      "name": "newline-at-zero",
+      "parts": [
+        [
+          "\n",
+          1
+        ],
+        [
+          "a",
+          4100
+        ]
+      ],
+      "chunks": [
+        [
+          4096,
+          "89b2d9355a791d44bda704a23bd99f0a8fd42d5a413cfe3bb2df87fbdc0fa054"
+        ],
+        [
+          5,
+          "ed968e840d10d2d313a870bc131a4e2c311d7ad09bdf32b3418147221f51a6e2"
+        ]
+      ]
+    },
+    {
+      "name": "many-newlines-after-cut",
+      "parts": [
+        [
+          "a",
+          4000
+        ],
+        [
+          "\n",
+          5
+        ],
+        [
+          "b",
+          200
+        ]
+      ],
+      "chunks": [
+        [
+          4004,
+          "f40d17b451411ad37974391d3b7caea5de7ad661c215d5c433d6b359822dc5b7"
+        ],
+        [
+          200,
+          "aaebc35c4c4e2cc7ac7c65812a7fa476d807b9f3fc60d478dfe098ceeb122321"
+        ]
+      ]
+    },
+    {
+      "name": "three-chunks",
+      "parts": [
+        [
+          "a",
+          3000
+        ],
+        [
+          "\n",
+          1
+        ],
+        [
+          "b",
+          3000
+        ],
+        [
+          "\n",
+          1
+        ],
+        [
+          "c",
+          3000
+        ]
+      ],
+      "chunks": [
+        [
+          3000,
+          "556ac82f23f64d2f41b3fb3b9a171791364021aa95c0af6df9e2b5e1d88c8038"
+        ],
+        [
+          3000,
+          "eb8b4d8da039a9fda06ddfdf6958259b8bc021341de313f54d81501b711a7726"
+        ],
+        [
+          3000,
+          "0828357fc4d85de76348492ed9a7df93e9d01a2e561c5f280c68a8c357fd6e65"
+        ]
+      ]
+    },
+    {
+      "name": "cyrillic",
+      "parts": [
+        [
+          "ж",
+          5000
+        ]
+      ],
+      "chunks": [
+        [
+          4096,
+          "80faa3b34705805cacd3612c6e95a5e63d938981217c19a7771c1de236dc5419"
+        ],
+        [
+          904,
+          "b91c79e09ca3300051f28809eccc918dc39545d566fd8f239db0d51d5422a39a"
+        ]
+      ]
+    },
+    {
+      "name": "empty",
+      "parts": [],
+      "chunks": [
+        [
+          0,
+          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        ]
+      ]
+    }
+  ],
+  "small": [
+    {
+      "text": "abcdefghij",
+      "limit": 4,
+      "chunks": [
+        "abcd",
+        "efgh",
+        "ij"
+      ]
+    },
+    {
+      "text": "ab\ncd\nef",
+      "limit": 4,
+      "chunks": [
+        "ab",
+        "cd",
+        "ef"
+      ]
+    },
+    {
+      "text": "ab\n\n\ncd",
+      "limit": 3,
+      "chunks": [
+        "ab",
+        "cd"
+      ]
+    },
+    {
+      "text": "",
+      "limit": 5,
+      "chunks": [
+        ""
+      ]
+    },
+    {
+      "text": "abc",
+      "limit": 3,
+      "chunks": [
+        "abc"
+      ]
+    },
+    {
+      "text": "a\nbcdefg",
+      "limit": 4,
+      "chunks": [
+        "a",
+        "bcde",
+        "fg"
+      ]
+    }
+  ]
+}

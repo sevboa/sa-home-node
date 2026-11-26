@@ -1,0 +1,21 @@
+{
+  "app_state": [
+    [
+      "last_shutdown_clean",
+      "1"
+    ],
+    [
+      "wake_info:n1",
+      "{\"mac\": \"02:00:00:00:00:01\"}"
+    ]
+  ],
+  "outbox": 1,
+  "invites": 2,
+  "swarm_events": 1,
+  "health_notifications": 1,
+  "foreign_tables": [
+    "ai_turns",
+    "vpn_peers",
+    "health_states"
+  ]
+}

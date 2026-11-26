@@ -1,0 +1,36 @@
+# Гостевые подписки бота — ФАЙЛ ВЕДЁТ САМ БОТ.
+#
+# Записи появляются здесь, когда кто-то гасит инвайт-код (/invite), и
+# исчезают при отзыве (/guests). Файл перезаписывается целиком, поэтому
+# ручные правки и комментарии в нём не сохранятся — владельческие подписки
+# правьте в основном пакете instances/telegram-bot.<инстанс>.toml.
+#
+# Реплицируется по рою наравне с основным пакетом (сателлит), так что гости
+# переживают переезд бота на резервную ноду.
+
+[[guest_subscriptions]]
+name = "guest-c"
+chat_id = -100500
+event_types = []
+allowed_commands = ["*"]
+invited_by_chat_id = 1001
+invited_at = "2026-01-03T00:00:00+00:00"
+invited_user = "user-c"
+
+[[guest_subscriptions]]
+name = "guest \"quoted\" \\ ёж"
+chat_id = 2001
+event_types = ["*"]
+allowed_commands = []
+invited_by_chat_id = 0
+invited_at = ""
+invited_user = ""
+
+[[guest_subscriptions]]
+name = "guest-b"
+chat_id = 2002
+event_types = ["a", "b"]
+allowed_commands = ["a@plug", "z@plug"]
+invited_by_chat_id = 1001
+invited_at = "2026-01-02T00:00:00+00:00"
+invited_user = "user-b"

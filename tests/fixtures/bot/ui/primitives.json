@@ -1,0 +1,409 @@
+{
+  "constants": {
+    "BACK_TEXT": "⬅️ Назад",
+    "REFRESH_TEXT": "🔄 Обновить"
+  },
+  "pack": [
+    {
+      "args": [
+        "p"
+      ],
+      "out": "p"
+    },
+    {
+      "args": [
+        "p",
+        "a"
+      ],
+      "out": "p:a"
+    },
+    {
+      "args": [
+        "p",
+        "a",
+        1,
+        "b"
+      ],
+      "out": "p:a:1:b"
+    },
+    {
+      "args": [
+        "st",
+        "nodes",
+        0
+      ],
+      "out": "st:nodes:0"
+    },
+    {
+      "args": [
+        "x",
+        "",
+        "y"
+      ],
+      "out": "x::y"
+    },
+    {
+      "args": [
+        "x",
+        null,
+        2.5
+      ],
+      "out": "x:None:2.5"
+    }
+  ],
+  "unpack": [
+    {
+      "data": "p:a:b",
+      "prefix": "p",
+      "parts": 2,
+      "out": [
+        "a",
+        "b"
+      ]
+    },
+    {
+      "data": "p:a:b",
+      "prefix": "p",
+      "parts": 1,
+      "out": null
+    },
+    {
+      "data": "p:a:b",
+      "prefix": "q",
+      "parts": 2,
+      "out": null
+    },
+    {
+      "data": "p",
+      "prefix": "p",
+      "parts": 0,
+      "out": []
+    },
+    {
+      "data": "p:",
+      "prefix": "p",
+      "parts": 1,
+      "out": [
+        ""
+      ]
+    },
+    {
+      "data": "",
+      "prefix": "p",
+      "parts": 0,
+      "out": null
+    },
+    {
+      "data": null,
+      "prefix": "p",
+      "parts": 0,
+      "out": null
+    },
+    {
+      "data": "p:a:b:c",
+      "prefix": "p",
+      "parts": 3,
+      "out": [
+        "a",
+        "b",
+        "c"
+      ]
+    }
+  ],
+  "id_and_button": [
+    {
+      "data": "it:12:ok",
+      "prefix": "it",
+      "out": [
+        12,
+        "ok"
+      ]
+    },
+    {
+      "data": "it:x:ok",
+      "prefix": "it",
+      "out": null
+    },
+    {
+      "data": "it:12",
+      "prefix": "it",
+      "out": null
+    },
+    {
+      "data": "it:12:ok",
+      "prefix": "zz",
+      "out": null
+    },
+    {
+      "data": null,
+      "prefix": "it",
+      "out": null
+    },
+    {
+      "data": "it:-3:ok",
+      "prefix": "it",
+      "out": null
+    }
+  ],
+  "int_or": [
+    {
+      "raw": "5",
+      "default": 0,
+      "out": 5
+    },
+    {
+      "raw": "x",
+      "default": 7,
+      "out": 7
+    },
+    {
+      "raw": null,
+      "default": 9,
+      "out": 9
+    },
+    {
+      "raw": "",
+      "default": 3,
+      "out": 3
+    },
+    {
+      "raw": "-2",
+      "default": 0,
+      "out": -2
+    },
+    {
+      "raw": " 4",
+      "default": 0,
+      "out": 4
+    }
+  ],
+  "part": [
+    {
+      "parts": [
+        "a",
+        "b"
+      ],
+      "index": 0,
+      "out": "a"
+    },
+    {
+      "parts": [
+        "a",
+        "b"
+      ],
+      "index": 1,
+      "out": "b"
+    },
+    {
+      "parts": [
+        "a"
+      ],
+      "index": 1,
+      "out": null
+    },
+    {
+      "parts": [],
+      "index": 0,
+      "out": null
+    }
+  ],
+  "button": {
+    "text": "Текст",
+    "callback_data": "cb:1"
+  },
+  "markup": {
+    "inline_keyboard": [
+      [
+        {
+          "text": "a",
+          "callback_data": "1"
+        },
+        {
+          "text": "b",
+          "callback_data": "2"
+        }
+      ],
+      [
+        {
+          "text": "c",
+          "callback_data": "3"
+        }
+      ]
+    ]
+  },
+  "markup_empty": {
+    "inline_keyboard": []
+  },
+  "single_button": {
+    "inline_keyboard": [
+      [
+        {
+          "text": "s",
+          "callback_data": "d"
+        }
+      ]
+    ]
+  },
+  "back_row": [
+    {
+      "text": "⬅️ Назад",
+      "callback_data": "back:1"
+    }
+  ],
+  "back_row_custom": [
+    {
+      "text": "Домой",
+      "callback_data": "back:2"
+    }
+  ],
+  "refresh_row": [
+    {
+      "text": "🔄 Обновить",
+      "callback_data": "ref:1"
+    }
+  ],
+  "nav": [
+    {
+      "offset": 0,
+      "size": 5,
+      "total": 3,
+      "out": []
+    },
+    {
+      "offset": 0,
+      "size": 5,
+      "total": 12,
+      "out": [
+        {
+          "text": "➡️",
+          "callback_data": "pg:5"
+        }
+      ]
+    },
+    {
+      "offset": 5,
+      "size": 5,
+      "total": 12,
+      "out": [
+        {
+          "text": "⬅️",
+          "callback_data": "pg:0"
+        },
+        {
+          "text": "➡️",
+          "callback_data": "pg:10"
+        }
+      ]
+    },
+    {
+      "offset": 10,
+      "size": 5,
+      "total": 12,
+      "out": [
+        {
+          "text": "⬅️",
+          "callback_data": "pg:5"
+        }
+      ]
+    },
+    {
+      "offset": 3,
+      "size": 5,
+      "total": 12,
+      "out": [
+        {
+          "text": "⬅️",
+          "callback_data": "pg:0"
+        },
+        {
+          "text": "➡️",
+          "callback_data": "pg:8"
+        }
+      ]
+    },
+    {
+      "offset": 0,
+      "size": 5,
+      "total": 5,
+      "out": []
+    },
+    {
+      "offset": 5,
+      "size": 5,
+      "total": 5,
+      "out": [
+        {
+          "text": "⬅️",
+          "callback_data": "pg:0"
+        }
+      ]
+    },
+    {
+      "offset": 2,
+      "size": 5,
+      "total": 0,
+      "out": [
+        {
+          "text": "⬅️",
+          "callback_data": "pg:0"
+        }
+      ]
+    }
+  ],
+  "clamp": [
+    {
+      "offset": 0,
+      "size": 5,
+      "total": 0,
+      "out": 0
+    },
+    {
+      "offset": 7,
+      "size": 5,
+      "total": 0,
+      "out": 0
+    },
+    {
+      "offset": 0,
+      "size": 5,
+      "total": 12,
+      "out": 0
+    },
+    {
+      "offset": 5,
+      "size": 5,
+      "total": 12,
+      "out": 5
+    },
+    {
+      "offset": 50,
+      "size": 5,
+      "total": 12,
+      "out": 10
+    },
+    {
+      "offset": -3,
+      "size": 5,
+      "total": 12,
+      "out": 0
+    },
+    {
+      "offset": 10,
+      "size": 5,
+      "total": 10,
+      "out": 5
+    },
+    {
+      "offset": 4,
+      "size": 5,
+      "total": 5,
+      "out": 0
+    },
+    {
+      "offset": 5,
+      "size": 5,
+      "total": 6,
+      "out": 5
+    }
+  ]
+}

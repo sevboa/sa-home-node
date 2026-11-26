@@ -1,0 +1,1671 @@
+{
+  "cases": [
+    {
+      "name": "plain",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет"
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "empty-text",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": ""
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": ""
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "reply-markup-thread",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет",
+          "reply_to_message_id": 10,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "message_thread_id": 5
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "message_thread_id": 5
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "two-chunks",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": {
+            "parts": [
+              [
+                "a",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "b",
+                3000
+              ]
+            ]
+          },
+          "reply_to_message_id": 10,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "message_thread_id": 5
+        }
+      },
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "message_thread_id": 5
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:eb8b4d8da039>",
+            "message_thread_id": 5
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "transient-default-kind",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет",
+          "reply_to_message_id": 10,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "script": {
+        "send_message": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": [
+        {
+          "chat_id": 1001,
+          "kind": "interactive",
+          "payload": {
+            "text": "привет",
+            "reply_to_message_id": 10,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "dedup_key": null,
+          "thread": null
+        }
+      ]
+    },
+    {
+      "name": "transient-alert-dedup",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет",
+          "reply_to_message_id": 10,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "message_thread_id": 5,
+          "outbox_kind": "alert",
+          "dedup_key": "k"
+        }
+      },
+      "script": {
+        "send_message": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "message_thread_id": 5
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "message_thread_id": 5
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "message_thread_id": 5
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": [
+        {
+          "chat_id": 1001,
+          "kind": "alert",
+          "payload": {
+            "text": "привет",
+            "reply_to_message_id": 10,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "dedup_key": "k",
+          "thread": 5
+        }
+      ]
+    },
+    {
+      "name": "transient-without-outbox",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет"
+        }
+      },
+      "script": {
+        "send_message": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": false,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": null
+    },
+    {
+      "name": "third-chunk-lost",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": {
+            "parts": [
+              [
+                "a",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "b",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "c",
+                3000
+              ]
+            ]
+          },
+          "reply_to_message_id": 10,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "outbox_kind": "task",
+          "dedup_key": "k"
+        }
+      },
+      "script": {
+        "send_message": [
+          "ok",
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": true,
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:eb8b4d8da039>"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:eb8b4d8da039>"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:eb8b4d8da039>"
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": [
+        {
+          "chat_id": 1001,
+          "kind": "task",
+          "payload": {
+            "text": "<3000:eb8b4d8da039>"
+          },
+          "dedup_key": "k#1",
+          "thread": null
+        },
+        {
+          "chat_id": 1001,
+          "kind": "task",
+          "payload": {
+            "text": "<3000:0828357fc4d8>"
+          },
+          "dedup_key": "k#2",
+          "thread": null
+        }
+      ]
+    },
+    {
+      "name": "first-chunk-lost-dedup",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": {
+            "parts": [
+              [
+                "a",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "b",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "c",
+                3000
+              ]
+            ]
+          },
+          "reply_to_message_id": 10,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "outbox_kind": "task",
+          "dedup_key": "k"
+        }
+      },
+      "script": {
+        "send_message": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "reply_parameters": {
+              "message_id": 10,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": [
+        {
+          "chat_id": 1001,
+          "kind": "task",
+          "payload": {
+            "text": "<3000:556ac82f23f6>",
+            "reply_to_message_id": 10,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "dedup_key": "k#0",
+          "thread": null
+        },
+        {
+          "chat_id": 1001,
+          "kind": "task",
+          "payload": {
+            "text": "<3000:eb8b4d8da039>"
+          },
+          "dedup_key": "k#1",
+          "thread": null
+        },
+        {
+          "chat_id": 1001,
+          "kind": "task",
+          "payload": {
+            "text": "<3000:0828357fc4d8>"
+          },
+          "dedup_key": "k#2",
+          "thread": null
+        }
+      ]
+    },
+    {
+      "name": "first-chunk-lost-plain",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": {
+            "parts": [
+              [
+                "a",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "b",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "c",
+                3000
+              ]
+            ]
+          },
+          "outbox_kind": "deliver_message",
+          "message_thread_id": 9
+        }
+      },
+      "script": {
+        "send_message": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "message_thread_id": 9
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "message_thread_id": 9
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>",
+            "message_thread_id": 9
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": [
+        {
+          "chat_id": 1001,
+          "kind": "deliver_message",
+          "payload": {
+            "text": "<3000:556ac82f23f6>"
+          },
+          "dedup_key": null,
+          "thread": 9
+        },
+        {
+          "chat_id": 1001,
+          "kind": "deliver_message",
+          "payload": {
+            "text": "<3000:eb8b4d8da039>"
+          },
+          "dedup_key": null,
+          "thread": 9
+        },
+        {
+          "chat_id": 1001,
+          "kind": "deliver_message",
+          "payload": {
+            "text": "<3000:0828357fc4d8>"
+          },
+          "dedup_key": null,
+          "thread": 9
+        }
+      ]
+    },
+    {
+      "name": "second-chunk-lost-no-dedup",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": {
+            "parts": [
+              [
+                "a",
+                3000
+              ],
+              [
+                "\n",
+                1
+              ],
+              [
+                "b",
+                3000
+              ]
+            ]
+          },
+          "outbox_kind": "alert"
+        }
+      },
+      "script": {
+        "send_message": [
+          "ok",
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": true,
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:556ac82f23f6>"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:eb8b4d8da039>"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:eb8b4d8da039>"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<3000:eb8b4d8da039>"
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": [
+        {
+          "chat_id": 1001,
+          "kind": "alert",
+          "payload": {
+            "text": "<3000:eb8b4d8da039>"
+          },
+          "dedup_key": null,
+          "thread": null
+        }
+      ]
+    },
+    {
+      "name": "net-then-ok",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет"
+        }
+      },
+      "script": {
+        "send_message": [
+          "net",
+          "ok"
+        ]
+      },
+      "with_outbox": true,
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0
+      ],
+      "outbox": []
+    },
+    {
+      "name": "flood-then-ok",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет"
+        }
+      },
+      "script": {
+        "send_message": [
+          "ra:2",
+          "ok"
+        ]
+      },
+      "with_outbox": true,
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ]
+      ],
+      "sleeps": [
+        3.0
+      ],
+      "outbox": []
+    },
+    {
+      "name": "parse-error-fallback",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "<b>x",
+          "reply_to_message_id": 3,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "script": {
+        "send_message": [
+          "bad_parse",
+          "ok"
+        ]
+      },
+      "with_outbox": true,
+      "result": 1,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x",
+            "reply_parameters": {
+              "message_id": 3,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x",
+            "reply_parameters": {
+              "message_id": 3,
+              "allow_sending_without_reply": true
+            },
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            },
+            "parse_mode": null
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "parse-error-twice",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "<b>x"
+        }
+      },
+      "script": {
+        "send_message": [
+          "bad_parse",
+          "bad_parse"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x",
+            "parse_mode": null
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "parse-error-then-net",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "<b>x"
+        }
+      },
+      "script": {
+        "send_message": [
+          "bad_parse",
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x"
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x",
+            "parse_mode": null
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x",
+            "parse_mode": null
+          }
+        ],
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "<b>x",
+            "parse_mode": null
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": [
+        {
+          "chat_id": 1001,
+          "kind": "interactive",
+          "payload": {
+            "text": "<b>x"
+          },
+          "dedup_key": null,
+          "thread": null
+        }
+      ]
+    },
+    {
+      "name": "forbidden",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет"
+        }
+      },
+      "script": {
+        "send_message": [
+          "forbidden"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "bad-request",
+      "call": {
+        "method": "send_direct",
+        "args": {
+          "chat_id": 1001,
+          "text": "привет"
+        }
+      },
+      "script": {
+        "send_message": [
+          "bad"
+        ]
+      },
+      "with_outbox": true,
+      "result": null,
+      "calls": [
+        [
+          "send_message",
+          {
+            "chat_id": 1001,
+            "text": "привет"
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-text",
+      "call": {
+        "method": "edit_text",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "text": "новый",
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "result": true,
+      "calls": [
+        [
+          "edit_message_text",
+          {
+            "text": "новый",
+            "chat_id": 1001,
+            "message_id": 7,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-text-plain",
+      "call": {
+        "method": "edit_text",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "text": "новый"
+        }
+      },
+      "result": true,
+      "calls": [
+        [
+          "edit_message_text",
+          {
+            "text": "новый",
+            "chat_id": 1001,
+            "message_id": 7
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-text-net",
+      "call": {
+        "method": "edit_text",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "text": "новый"
+        }
+      },
+      "script": {
+        "edit_message_text": [
+          "net",
+          "net",
+          "net"
+        ]
+      },
+      "result": false,
+      "calls": [
+        [
+          "edit_message_text",
+          {
+            "text": "новый",
+            "chat_id": 1001,
+            "message_id": 7
+          }
+        ],
+        [
+          "edit_message_text",
+          {
+            "text": "новый",
+            "chat_id": 1001,
+            "message_id": 7
+          }
+        ],
+        [
+          "edit_message_text",
+          {
+            "text": "новый",
+            "chat_id": 1001,
+            "message_id": 7
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": []
+    },
+    {
+      "name": "edit-text-same",
+      "call": {
+        "method": "edit_text",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "text": "новый"
+        }
+      },
+      "script": {
+        "edit_message_text": [
+          "bad"
+        ]
+      },
+      "result": false,
+      "calls": [
+        [
+          "edit_message_text",
+          {
+            "text": "новый",
+            "chat_id": 1001,
+            "message_id": 7
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-markup",
+      "call": {
+        "method": "edit_markup",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "result": true,
+      "calls": [
+        [
+          "edit_message_reply_markup",
+          {
+            "chat_id": 1001,
+            "message_id": 7,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-markup-clear",
+      "call": {
+        "method": "edit_markup",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "reply_markup": null
+        }
+      },
+      "result": true,
+      "calls": [
+        [
+          "edit_message_reply_markup",
+          {
+            "chat_id": 1001,
+            "message_id": 7
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-markup-forbidden",
+      "call": {
+        "method": "edit_markup",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "script": {
+        "edit_message_reply_markup": [
+          "forbidden"
+        ]
+      },
+      "result": false,
+      "calls": [
+        [
+          "edit_message_reply_markup",
+          {
+            "chat_id": 1001,
+            "message_id": 7,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-caption",
+      "call": {
+        "method": "edit_caption",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "caption": "подпись",
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        }
+      },
+      "result": true,
+      "calls": [
+        [
+          "edit_message_caption",
+          {
+            "chat_id": 1001,
+            "message_id": 7,
+            "caption": "подпись",
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-caption-as-text",
+      "call": {
+        "method": "edit_caption",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "caption": "подпись",
+          "reply_markup": {
+            "markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          },
+          "photo": false
+        }
+      },
+      "result": true,
+      "calls": [
+        [
+          "edit_message_text",
+          {
+            "text": "подпись",
+            "chat_id": 1001,
+            "message_id": 7,
+            "reply_markup": {
+              "inline_keyboard": [
+                [
+                  {
+                    "text": "Кнопка",
+                    "callback_data": "st:nodes"
+                  }
+                ]
+              ]
+            }
+          }
+        ]
+      ],
+      "sleeps": [],
+      "outbox": []
+    },
+    {
+      "name": "edit-caption-fail",
+      "call": {
+        "method": "edit_caption",
+        "args": {
+          "chat_id": 1001,
+          "message_id": 7,
+          "caption": "подпись"
+        }
+      },
+      "script": {
+        "edit_message_caption": [
+          "net",
+          "ra:1",
+          "net"
+        ]
+      },
+      "result": false,
+      "calls": [
+        [
+          "edit_message_caption",
+          {
+            "chat_id": 1001,
+            "message_id": 7,
+            "caption": "подпись"
+          }
+        ],
+        [
+          "edit_message_caption",
+          {
+            "chat_id": 1001,
+            "message_id": 7,
+            "caption": "подпись"
+          }
+        ],
+        [
+          "edit_message_caption",
+          {
+            "chat_id": 1001,
+            "message_id": 7,
+            "caption": "подпись"
+          }
+        ]
+      ],
+      "sleeps": [
+        0.0,
+        2.0
+      ],
+      "outbox": []
+    }
+  ]
+}

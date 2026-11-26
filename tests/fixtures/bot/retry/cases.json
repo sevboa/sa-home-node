@@ -1,0 +1,199 @@
+{
+  "REQUEST_TIMEOUT_S": 10.0,
+  "defaults": {
+    "attempts": 3,
+    "delay_s": 5.0,
+    "calls": 3,
+    "sleeps": [
+      5.0,
+      5.0
+    ],
+    "result": "result"
+  },
+  "cases": [
+    {
+      "name": "first-ok",
+      "script": [
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": "result",
+      "raised": null,
+      "warnings": 0
+    },
+    {
+      "name": "net-net-ok",
+      "script": [
+        "net",
+        "net",
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 3,
+      "sleeps": [
+        5.0,
+        5.0
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 2
+    },
+    {
+      "name": "net-ok-delay",
+      "script": [
+        "net",
+        "ok"
+      ],
+      "attempts": 2,
+      "delay_s": 3.0,
+      "calls": 2,
+      "sleeps": [
+        3.0
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 1
+    },
+    {
+      "name": "net-x3",
+      "script": [
+        "net",
+        "net",
+        "net"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 3,
+      "sleeps": [
+        5.0,
+        5.0
+      ],
+      "result": null,
+      "raised": {
+        "type": "TelegramNetworkError"
+      },
+      "warnings": 2
+    },
+    {
+      "name": "net-x1-attempts1",
+      "script": [
+        "net"
+      ],
+      "attempts": 1,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "raised": {
+        "type": "TelegramNetworkError"
+      },
+      "warnings": 0
+    },
+    {
+      "name": "ra-ok",
+      "script": [
+        "ra:2",
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 2,
+      "sleeps": [
+        3.0
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 1
+    },
+    {
+      "name": "ra-x3",
+      "script": [
+        "ra:4",
+        "ra:4",
+        "ra:4"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 3,
+      "sleeps": [
+        5.0,
+        5.0
+      ],
+      "result": null,
+      "raised": {
+        "type": "TelegramRetryAfter"
+      },
+      "warnings": 2
+    },
+    {
+      "name": "ra-net-ok",
+      "script": [
+        "ra:1",
+        "net",
+        "ok"
+      ],
+      "attempts": 3,
+      "delay_s": 1.5,
+      "calls": 3,
+      "sleeps": [
+        2.0,
+        1.5
+      ],
+      "result": "result",
+      "raised": null,
+      "warnings": 2
+    },
+    {
+      "name": "bad-immediate",
+      "script": [
+        "bad"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "raised": {
+        "type": "TelegramBadRequest"
+      },
+      "warnings": 0
+    },
+    {
+      "name": "forbidden-immediate",
+      "script": [
+        "net",
+        "forbidden"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 2,
+      "sleeps": [
+        5.0
+      ],
+      "result": null,
+      "raised": {
+        "type": "TelegramForbiddenError"
+      },
+      "warnings": 1
+    },
+    {
+      "name": "runtime-immediate",
+      "script": [
+        "runtime"
+      ],
+      "attempts": 3,
+      "delay_s": 5.0,
+      "calls": 1,
+      "sleeps": [],
+      "result": null,
+      "raised": {
+        "type": "RuntimeError"
+      },
+      "warnings": 0
+    }
+  ]
+}

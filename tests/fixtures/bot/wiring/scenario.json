@@ -1,0 +1,339 @@
+{
+ "config": {
+  "invites": {
+   "grant_commands": [
+    "hello@stub"
+   ],
+   "grant_events": []
+  },
+  "subscriptions": [
+   {
+    "name": "owner",
+    "chat_id": 100,
+    "allowed_commands": [
+     "*"
+    ]
+   },
+   {
+    "name": "watcher",
+    "chat_id": 150,
+    "event_types": [
+     "overheat_started"
+    ]
+   }
+  ]
+ },
+ "steps": [
+  {
+   "name": "stranger-silent",
+   "do": "message",
+   "chat": 300,
+   "text": "/hello",
+   "expect": {
+    "sent": [],
+    "admitted": [],
+    "saves": 0,
+    "file_rights": []
+   }
+  },
+  {
+   "name": "stranger-wrong-code",
+   "do": "message",
+   "chat": 300,
+   "text": "ABCD-EFGH",
+   "expect": {
+    "sent": [],
+    "admitted": [],
+    "saves": 0,
+    "file_rights": []
+   }
+  },
+  {
+   "name": "issue",
+   "do": "issue",
+   "chat": 100,
+   "expect": {
+    "sent": [],
+    "admitted": [],
+    "saves": 0,
+    "file_rights": []
+   }
+  },
+  {
+   "name": "stranger-redeems",
+   "do": "message",
+   "chat": 300,
+   "text": "/start {code}",
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      100,
+      "✅ Приглашение использовано: Тест (<code>300</code>)."
+     ],
+     [
+      "send_message",
+      300,
+      "Добро пожаловать в заглушку"
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 1,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  },
+  {
+   "name": "guest-hello",
+   "do": "message",
+   "chat": 300,
+   "text": "/hello",
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      300,
+      "Привет из заглушки"
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 0,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  },
+  {
+   "name": "guest-owner-command-denied",
+   "do": "message",
+   "chat": 300,
+   "text": "/guests",
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      300,
+      "⛔️ Команда недоступна в этом чате."
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 0,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  },
+  {
+   "name": "owner-guests-list",
+   "do": "message",
+   "chat": 100,
+   "text": "/guests",
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      100,
+      "<b>Приглашённые</b> (1)\n\n• Тест — <code>300</code>, вход <время>"
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 0,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  },
+  {
+   "name": "owner-group-off",
+   "do": "callback",
+   "chat": 100,
+   "data": "st:g_goff:300:0:stub",
+   "expect": {
+    "sent": [
+     [
+      "answer_callback_query",
+      null,
+      "Заглушка: снято"
+     ],
+     [
+      "edit_message_text",
+      100,
+      "🔐 <b>Права гостя Тест</b> (0)\n\nПрав нет."
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 1,
+    "file_rights": []
+   }
+  },
+  {
+   "name": "guest-hello-denied",
+   "do": "message",
+   "chat": 300,
+   "text": "/hello",
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      300,
+      "⛔️ Команда недоступна в этом чате."
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 0,
+    "file_rights": []
+   }
+  },
+  {
+   "name": "owner-group-on",
+   "do": "callback",
+   "chat": 100,
+   "data": "st:g_gon:300:0:stub",
+   "expect": {
+    "sent": [
+     [
+      "answer_callback_query",
+      null,
+      "Заглушка: выдано"
+     ],
+     [
+      "edit_message_text",
+      100,
+      "🔐 <b>Права гостя Тест</b> (1)\n\n• Заглушка"
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 1,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  },
+  {
+   "name": "guest-hello-again",
+   "do": "message",
+   "chat": 300,
+   "text": "/hello",
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      300,
+      "Привет из заглушки"
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 0,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  },
+  {
+   "name": "overheat",
+   "do": "monitor",
+   "chat": 0,
+   "event": "overheat_started",
+   "data": {
+    "component_id": "cpu:x",
+    "kind": "cpu",
+    "label": "CPU Package",
+    "temperature_c": 91.5,
+    "at": "2026-03-01T10:05:09+00:00"
+   },
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      100,
+      "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 15:05:09"
+     ],
+     [
+      "send_message",
+      150,
+      "🔥 <b>Перегрев</b> — CPU «CPU Package»\nТемпература: <b>91.5°C</b>\nВремя: 15:05:09"
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 0,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  },
+  {
+   "name": "plugin-event",
+   "do": "node",
+   "chat": 0,
+   "event": "stub_ping",
+   "data": {
+    "text": "раз"
+   },
+   "expect": {
+    "sent": [
+     [
+      "send_message",
+      100,
+      "stub: раз"
+     ]
+    ],
+    "admitted": [
+     [
+      300,
+      100
+     ]
+    ],
+    "saves": 0,
+    "file_rights": [
+     "hello@stub"
+    ]
+   }
+  }
+ ]
+}

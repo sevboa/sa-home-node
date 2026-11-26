@@ -1,0 +1,18 @@
+[invites]
+enabled = true
+ttl_s = 1800
+grant_commands = ["cmd-a@plug", "cmd-b@plug"]
+grant_events = ["ev-a"]
+max_attempts_per_hour = 7
+
+[[subscriptions]]
+name = "owner-a"
+chat_id = 1001
+allowed_commands = ["*"]
+
+[[subscriptions]]
+name = "group-a"
+chat_id = -100500
+event_types = ["alert", "recovered"]
+except_event_types = ["noise"]
+allowed_commands = ["nodes", "status"]

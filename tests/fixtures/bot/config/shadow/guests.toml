@@ -1,0 +1,4 @@
+[[guest_subscriptions]]
+name = "guest-a"
+chat_id = 2001
+allowed_commands = ["cmd-a@plug"]

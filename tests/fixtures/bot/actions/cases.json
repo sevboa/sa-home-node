@@ -1,0 +1,5301 @@
+{
+  "cases": [
+    {
+      "name": "unavailable-text",
+      "fn": "unavailable_text",
+      "link": {},
+      "expected": "⚠️ Служба «демо» недоступна — попробуйте позже."
+    },
+    {
+      "name": "unavailable-text-disconnected",
+      "fn": "unavailable_text",
+      "link": {
+        "connected": false
+      },
+      "expected": "⚠️ Служба «демо» недоступна — попробуйте позже."
+    },
+    {
+      "name": "find-own",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "node_id": null,
+      "expected": {
+        "id": "toggle",
+        "title": "Переключить",
+        "params": []
+      }
+    },
+    {
+      "name": "find-second",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "set",
+      "node_id": null,
+      "expected": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "type": "string",
+            "required": true,
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra",
+            "type": "string",
+            "required": true
+          }
+        ]
+      }
+    },
+    {
+      "name": "find-missing",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "missing",
+      "node_id": null,
+      "expected": null
+    },
+    {
+      "name": "find-node",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "node_id": "n2",
+      "expected": {
+        "id": "toggle",
+        "title": "Переключить",
+        "params": []
+      }
+    },
+    {
+      "name": "find-node-missing",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "set",
+      "node_id": "n2",
+      "expected": null
+    },
+    {
+      "name": "find-no-service",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        }
+      },
+      "service": "other",
+      "action_id": "toggle",
+      "node_id": null,
+      "expected": null
+    },
+    {
+      "name": "find-disconnected",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "connected": false
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "node_id": null,
+      "expected": null
+    },
+    {
+      "name": "find-describe-error",
+      "fn": "find_action",
+      "link": {
+        "describe": {
+          "-/svc": "unavailable"
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "node_id": null,
+      "expected": null
+    },
+    {
+      "name": "build-args-with-params-none",
+      "fn": "build_args",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "value": null,
+      "expected": {}
+    },
+    {
+      "name": "build-args-no-params-none",
+      "fn": "build_args",
+      "action": {
+        "id": "toggle",
+        "title": "Переключить",
+        "params": []
+      },
+      "value": null,
+      "expected": {}
+    },
+    {
+      "name": "build-args-with-params-value",
+      "fn": "build_args",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "value": "b",
+      "expected": {
+        "mode": "b"
+      }
+    },
+    {
+      "name": "build-args-no-params-value",
+      "fn": "build_args",
+      "action": {
+        "id": "toggle",
+        "title": "Переключить",
+        "params": []
+      },
+      "value": "b",
+      "expected": {}
+    },
+    {
+      "name": "build-args-with-params-empty-string",
+      "fn": "build_args",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "value": "",
+      "expected": {
+        "mode": ""
+      }
+    },
+    {
+      "name": "build-args-no-params-empty-string",
+      "fn": "build_args",
+      "action": {
+        "id": "toggle",
+        "title": "Переключить",
+        "params": []
+      },
+      "value": "",
+      "expected": {}
+    },
+    {
+      "name": "render-result-empty",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {},
+      "expected": "✅ Принято: Задать"
+    },
+    {
+      "name": "render-result-no-flags",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {
+        "id": "x",
+        "n": 3
+      },
+      "expected": "✅ Принято: Задать"
+    },
+    {
+      "name": "render-result-flag-true",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {
+        "queued": true
+      },
+      "expected": "✅ Принято: Задать"
+    },
+    {
+      "name": "render-result-flag-false",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {
+        "queued": false
+      },
+      "expected": "⏳ Уже в очереди — дождитесь результата."
+    },
+    {
+      "name": "render-result-all-false",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {
+        "a": false,
+        "b": false
+      },
+      "expected": "⏳ Уже в очереди — дождитесь результата."
+    },
+    {
+      "name": "render-result-mixed",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {
+        "a": false,
+        "b": true
+      },
+      "expected": "✅ Принято: Задать"
+    },
+    {
+      "name": "render-result-int-zero-not-flag",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {
+        "count": 0
+      },
+      "expected": "✅ Принято: Задать"
+    },
+    {
+      "name": "render-result-flag-and-data",
+      "fn": "render_result",
+      "action": {
+        "id": "set",
+        "title": "Задать",
+        "params": [
+          {
+            "name": "mode",
+            "choices": [
+              "a",
+              "b",
+              "c"
+            ]
+          },
+          {
+            "name": "extra"
+          }
+        ]
+      },
+      "result": {
+        "queued": false,
+        "id": "1"
+      },
+      "expected": "⏳ Уже в очереди — дождитесь результата."
+    },
+    {
+      "name": "render-result-escape-title",
+      "fn": "render_result",
+      "action": {
+        "id": "t",
+        "title": "A <b> & «B»",
+        "params": []
+      },
+      "result": {},
+      "expected": "✅ Принято: A <b> & «B»"
+    },
+    {
+      "name": "run-ok",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": {
+            "queued": true
+          },
+          "-/svc:set": {
+            "queued": false
+          },
+          "n2/svc:toggle": {},
+          "-/svc:free": {
+            "ok": true
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "expected": {
+        "text": "✅ Принято: Переключить",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-ok-node",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": {
+            "queued": true
+          },
+          "-/svc:set": {
+            "queued": false
+          },
+          "n2/svc:toggle": {},
+          "-/svc:free": {
+            "ok": true
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "node_id": "n2",
+      "expected": {
+        "text": "✅ Принято: Переключить",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "n2/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-ok-value",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:set": {
+            "queued": true
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "set",
+      "value": "b",
+      "expected": {
+        "text": "✅ Принято: Задать",
+        "calls": [
+          [
+            "command",
+            "set",
+            {
+              "mode": "b"
+            },
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-already-queued",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": {
+            "queued": true
+          },
+          "-/svc:set": {
+            "queued": false
+          },
+          "n2/svc:toggle": {},
+          "-/svc:free": {
+            "ok": true
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "set",
+      "value": "a",
+      "expected": {
+        "text": "⏳ Уже в очереди — дождитесь результата.",
+        "calls": [
+          [
+            "command",
+            "set",
+            {
+              "mode": "a"
+            },
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-value-ignored-without-params",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": {
+            "queued": true
+          },
+          "-/svc:set": {
+            "queued": false
+          },
+          "n2/svc:toggle": {},
+          "-/svc:free": {
+            "ok": true
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "value": "zzz",
+      "expected": {
+        "text": "✅ Принято: Переключить",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-free-value",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": {
+            "queued": true
+          },
+          "-/svc:set": {
+            "queued": false
+          },
+          "n2/svc:toggle": {},
+          "-/svc:free": {
+            "ok": true
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "free",
+      "value": "привет <мир>",
+      "expected": {
+        "text": "✅ Принято: Свободно",
+        "calls": [
+          [
+            "command",
+            "free",
+            {
+              "text": "привет <мир>"
+            },
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-unknown-action",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": {
+            "queued": true
+          },
+          "-/svc:set": {
+            "queued": false
+          },
+          "n2/svc:toggle": {},
+          "-/svc:free": {
+            "ok": true
+          }
+        }
+      },
+      "service": "svc",
+      "action_id": "nope",
+      "expected": {
+        "text": "Действие недоступно.",
+        "calls": []
+      }
+    },
+    {
+      "name": "run-unknown-action-disconnected",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": {
+            "queued": true
+          },
+          "-/svc:set": {
+            "queued": false
+          },
+          "n2/svc:toggle": {},
+          "-/svc:free": {
+            "ok": true
+          }
+        },
+        "connected": false
+      },
+      "service": "svc",
+      "action_id": "nope",
+      "expected": {
+        "text": "⚠️ Служба «демо» недоступна — попробуйте позже.",
+        "calls": []
+      }
+    },
+    {
+      "name": "run-unavailable",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": "unavailable"
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "expected": {
+        "text": "⚠️ Служба «демо» недоступна — попробуйте позже.",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-proto-error",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": "proto:bad_request:Не хватает <поля>"
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "expected": {
+        "text": "⚠️ Ошибка: Не хватает <поля>",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-needs-privilege",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": "proto:needs_privilege:нужен nodectl fix: sudoers"
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "expected": {
+        "text": "⚠️ Ошибка: нужен nodectl fix: sudoers",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-timeout",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": "timeout"
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "expected": {
+        "text": "⚠️ Служба «демо» не ответила вовремя — попробуйте позже.",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-oserror",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {
+          "-/svc:toggle": "oserror"
+        }
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "expected": {
+        "text": "⚠️ Служба «демо» не ответила вовремя — попробуйте позже.",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "run-no-command-reply",
+      "fn": "run_action",
+      "link": {
+        "describe": {
+          "-/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              },
+              {
+                "id": "set",
+                "title": "Задать",
+                "params": [
+                  {
+                    "name": "mode",
+                    "choices": [
+                      "a",
+                      "b",
+                      "c"
+                    ]
+                  },
+                  {
+                    "name": "extra"
+                  }
+                ]
+              },
+              {
+                "id": "free",
+                "title": "Свободно",
+                "params": [
+                  {
+                    "name": "text"
+                  }
+                ]
+              },
+              {
+                "id": "pick",
+                "title": "Выбор",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x",
+                      "y"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "pick2",
+                "title": "Выбор 2",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "y",
+                      "z"
+                    ]
+                  }
+                ]
+              },
+              {
+                "id": "unaccounted",
+                "title": "Закрытое",
+                "params": [
+                  {
+                    "name": "item",
+                    "choices": [
+                      "x"
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          "n2/svc": {
+            "actions": [
+              {
+                "id": "toggle",
+                "title": "Переключить",
+                "params": []
+              }
+            ]
+          }
+        },
+        "commands": {}
+      },
+      "service": "svc",
+      "action_id": "toggle",
+      "expected": {
+        "text": "⚠️ Служба «демо» недоступна — попробуйте позже.",
+        "calls": [
+          [
+            "command",
+            "toggle",
+            {},
+            "-/svc"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "rows-0",
+      "fn": "rows",
+      "buttons": [],
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "rows-1",
+      "fn": "rows",
+      "buttons": [
+        [
+          "A",
+          "a"
+        ]
+      ],
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "A",
+                "callback_data": "a"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "rows-2",
+      "fn": "rows",
+      "buttons": [
+        [
+          "A",
+          "a"
+        ],
+        [
+          "B",
+          "b"
+        ]
+      ],
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "A",
+                "callback_data": "a"
+              },
+              {
+                "text": "B",
+                "callback_data": "b"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "rows-3",
+      "fn": "rows",
+      "buttons": [
+        [
+          "A",
+          "a"
+        ],
+        [
+          "B",
+          "b"
+        ],
+        [
+          "C",
+          "c"
+        ]
+      ],
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "A",
+                "callback_data": "a"
+              },
+              {
+                "text": "B",
+                "callback_data": "b"
+              }
+            ],
+            [
+              {
+                "text": "C",
+                "callback_data": "c"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "rows-4",
+      "fn": "rows",
+      "buttons": [
+        [
+          "A",
+          "a"
+        ],
+        [
+          "B",
+          "b"
+        ],
+        [
+          "C",
+          "c"
+        ],
+        [
+          "D",
+          "d"
+        ]
+      ],
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "A",
+                "callback_data": "a"
+              },
+              {
+                "text": "B",
+                "callback_data": "b"
+              }
+            ],
+            [
+              {
+                "text": "C",
+                "callback_data": "c"
+              },
+              {
+                "text": "D",
+                "callback_data": "d"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "rows-5",
+      "fn": "rows",
+      "buttons": [
+        [
+          "A",
+          "a"
+        ],
+        [
+          "B",
+          "b"
+        ],
+        [
+          "C",
+          "c"
+        ],
+        [
+          "D",
+          "d"
+        ],
+        [
+          "E",
+          "e"
+        ]
+      ],
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "A",
+                "callback_data": "a"
+              },
+              {
+                "text": "B",
+                "callback_data": "b"
+              }
+            ],
+            [
+              {
+                "text": "C",
+                "callback_data": "c"
+              },
+              {
+                "text": "D",
+                "callback_data": "d"
+              }
+            ],
+            [
+              {
+                "text": "E",
+                "callback_data": "e"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "choice-kb-owner",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "owner",
+        "chat_id": 12345,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "Выбор",
+                "callback_data": "act:svc:pick:y"
+              },
+              {
+                "text": "Выбор 2",
+                "callback_data": "act:svc:pick2:y"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "choice-kb-none",
+      "fn": "build_choice_keyboard",
+      "sub": null,
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "choice-kb-viewer",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "viewer",
+        "chat_id": 22,
+        "allowed_commands": [
+          "status",
+          "status_full",
+          "stats"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "choice-kb-operator",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "operator",
+        "chat_id": 26,
+        "allowed_commands": [
+          "nodes",
+          "restart@node",
+          "restart_service@node",
+          "stop_service@node",
+          "scan_now@monitor",
+          "update@node",
+          "assign@node"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "choice-kb-broken",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "owner",
+        "chat_id": 12345,
+        "allowed_commands": [
+          "*"
+        ],
+        "broken": true
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "choice-kb-node-wild",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "nodewild",
+        "chat_id": 27,
+        "allowed_commands": [
+          "status",
+          "*@node",
+          "*@monitor"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "choice-kb-specific-rights",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "g",
+        "chat_id": 9,
+        "allowed_commands": [
+          "pick@svc",
+          "pick2@svc"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "Выбор",
+                "callback_data": "act:svc:pick:y"
+              },
+              {
+                "text": "Выбор 2",
+                "callback_data": "act:svc:pick2:y"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "choice-kb-specific-rights-node",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "g",
+        "chat_id": 9,
+        "allowed_commands": [
+          "pick@svc",
+          "pick2@svc"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "y",
+      "node_id": "n2",
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "Выбор",
+                "callback_data": "act:svc:pick:y:n2"
+              },
+              {
+                "text": "Выбор 2",
+                "callback_data": "act:svc:pick2:y:n2"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "choice-kb-other-service",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "g",
+        "chat_id": 9,
+        "allowed_commands": [
+          "pick@svc",
+          "pick2@svc"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "other",
+      "value": "y",
+      "node_id": null,
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "choice-kb-no-match",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "owner",
+        "chat_id": 12345,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "nothing",
+      "node_id": null,
+      "expected": {
+        "markup": null
+      }
+    },
+    {
+      "name": "choice-kb-three-buttons",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "owner",
+        "chat_id": 12345,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "actions": [
+        {
+          "id": "a0",
+          "title": "T0",
+          "params": [
+            {
+              "name": "v",
+              "choices": [
+                "q"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a1",
+          "title": "T1",
+          "params": [
+            {
+              "name": "v",
+              "choices": [
+                "q"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "a2",
+          "title": "T2",
+          "params": [
+            {
+              "name": "v",
+              "choices": [
+                "q"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "q",
+      "node_id": null,
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "T0",
+                "callback_data": "act:svc:a0:q"
+              },
+              {
+                "text": "T1",
+                "callback_data": "act:svc:a1:q"
+              }
+            ],
+            [
+              {
+                "text": "T2",
+                "callback_data": "act:svc:a2:q"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "choice-kb-escape-callback",
+      "fn": "build_choice_keyboard",
+      "sub": {
+        "name": "owner",
+        "chat_id": 12345,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "actions": [
+        {
+          "id": "toggle",
+          "title": "Переключить",
+          "params": []
+        },
+        {
+          "id": "set",
+          "title": "Задать",
+          "params": [
+            {
+              "name": "mode",
+              "choices": [
+                "a",
+                "b",
+                "c"
+              ]
+            },
+            {
+              "name": "extra"
+            }
+          ]
+        },
+        {
+          "id": "free",
+          "title": "Свободно",
+          "params": [
+            {
+              "name": "text"
+            }
+          ]
+        },
+        {
+          "id": "pick",
+          "title": "Выбор",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x",
+                "y"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "pick2",
+          "title": "Выбор 2",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "y",
+                "z"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "unaccounted",
+          "title": "Закрытое",
+          "params": [
+            {
+              "name": "item",
+              "choices": [
+                "x"
+              ]
+            }
+          ]
+        }
+      ],
+      "service": "svc",
+      "value": "x",
+      "node_id": null,
+      "expected": {
+        "markup": {
+          "inline_keyboard": [
+            [
+              {
+                "text": "Выбор",
+                "callback_data": "act:svc:pick:x"
+              },
+              {
+                "text": "Закрытое",
+                "callback_data": "act:svc:unaccounted:x"
+              }
+            ]
+          ]
+        }
+      }
+    },
+    {
+      "name": "visible-owner",
+      "fn": "visible_skill_actions",
+      "sub": {
+        "name": "owner",
+        "chat_id": 12345,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "actions": [
+        {
+          "id": "start",
+          "title": "Старт",
+          "params": []
+        },
+        {
+          "id": "stop",
+          "title": "Стоп",
+          "params": []
+        },
+        {
+          "id": "install",
+          "title": "Установить",
+          "params": [
+            {
+              "name": "app"
+            }
+          ]
+        },
+        {
+          "id": "pick_app",
+          "title": "Выбрать",
+          "params": [
+            {
+              "name": "app",
+              "choices": [
+                "web",
+                "db"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": [
+        "start",
+        "stop"
+      ]
+    },
+    {
+      "name": "visible-none",
+      "fn": "visible_skill_actions",
+      "sub": null,
+      "actions": [
+        {
+          "id": "start",
+          "title": "Старт",
+          "params": []
+        },
+        {
+          "id": "stop",
+          "title": "Стоп",
+          "params": []
+        },
+        {
+          "id": "install",
+          "title": "Установить",
+          "params": [
+            {
+              "name": "app"
+            }
+          ]
+        },
+        {
+          "id": "pick_app",
+          "title": "Выбрать",
+          "params": [
+            {
+              "name": "app",
+              "choices": [
+                "web",
+                "db"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": []
+    },
+    {
+      "name": "visible-apps",
+      "fn": "visible_skill_actions",
+      "sub": {
+        "name": "a",
+        "chat_id": 5,
+        "allowed_commands": [
+          "start@apps"
+        ]
+      },
+      "actions": [
+        {
+          "id": "start",
+          "title": "Старт",
+          "params": []
+        },
+        {
+          "id": "stop",
+          "title": "Стоп",
+          "params": []
+        },
+        {
+          "id": "install",
+          "title": "Установить",
+          "params": [
+            {
+              "name": "app"
+            }
+          ]
+        },
+        {
+          "id": "pick_app",
+          "title": "Выбрать",
+          "params": [
+            {
+              "name": "app",
+              "choices": [
+                "web",
+                "db"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": [
+        "start"
+      ]
+    },
+    {
+      "name": "visible-wild",
+      "fn": "visible_skill_actions",
+      "sub": {
+        "name": "w",
+        "chat_id": 6,
+        "allowed_commands": [
+          "*@apps"
+        ]
+      },
+      "actions": [
+        {
+          "id": "start",
+          "title": "Старт",
+          "params": []
+        },
+        {
+          "id": "stop",
+          "title": "Стоп",
+          "params": []
+        },
+        {
+          "id": "install",
+          "title": "Установить",
+          "params": [
+            {
+              "name": "app"
+            }
+          ]
+        },
+        {
+          "id": "pick_app",
+          "title": "Выбрать",
+          "params": [
+            {
+              "name": "app",
+              "choices": [
+                "web",
+                "db"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": [
+        "start",
+        "stop"
+      ]
+    },
+    {
+      "name": "visible-empty",
+      "fn": "visible_skill_actions",
+      "sub": {
+        "name": "empty",
+        "chat_id": 28,
+        "allowed_commands": []
+      },
+      "actions": [
+        {
+          "id": "start",
+          "title": "Старт",
+          "params": []
+        },
+        {
+          "id": "stop",
+          "title": "Стоп",
+          "params": []
+        },
+        {
+          "id": "install",
+          "title": "Установить",
+          "params": [
+            {
+              "name": "app"
+            }
+          ]
+        },
+        {
+          "id": "pick_app",
+          "title": "Выбрать",
+          "params": [
+            {
+              "name": "app",
+              "choices": [
+                "web",
+                "db"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": []
+    },
+    {
+      "name": "visible-other-service",
+      "fn": "visible_skill_actions",
+      "sub": {
+        "name": "o",
+        "chat_id": 7,
+        "allowed_commands": [
+          "start@other"
+        ]
+      },
+      "actions": [
+        {
+          "id": "start",
+          "title": "Старт",
+          "params": []
+        },
+        {
+          "id": "stop",
+          "title": "Стоп",
+          "params": []
+        },
+        {
+          "id": "install",
+          "title": "Установить",
+          "params": [
+            {
+              "name": "app"
+            }
+          ]
+        },
+        {
+          "id": "pick_app",
+          "title": "Выбрать",
+          "params": [
+            {
+              "name": "app",
+              "choices": [
+                "web",
+                "db"
+              ]
+            }
+          ]
+        }
+      ],
+      "expected": []
+    },
+    {
+      "name": "visible-empty-list",
+      "fn": "visible_skill_actions",
+      "sub": {
+        "name": "owner",
+        "chat_id": 12345,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "actions": [],
+      "expected": []
+    },
+    {
+      "name": "card-active-one-url",
+      "fn": "render_app_card",
+      "app": {
+        "id": "web",
+        "title": "Веб",
+        "unit": "web.service",
+        "status": "active",
+        "urls": [
+          "http://localhost:8080"
+        ]
+      },
+      "expected": "Веб — ✅ работает\nЮнит: <code>web.service</code>\nВеб-морда: http://localhost:8080"
+    },
+    {
+      "name": "card-inactive-two-urls",
+      "fn": "render_app_card",
+      "app": {
+        "id": "web",
+        "title": "Веб",
+        "unit": "web.service",
+        "status": "inactive",
+        "urls": [
+          "http://a",
+          "http://b"
+        ]
+      },
+      "expected": "Веб — ⏹ остановлен\nЮнит: <code>web.service</code>\nВеб-морда:\nhttp://a\nhttp://b"
+    },
+    {
+      "name": "card-failed-no-urls",
+      "fn": "render_app_card",
+      "app": {
+        "id": "web",
+        "title": "Веб",
+        "unit": "web.service",
+        "status": "failed",
+        "urls": []
+      },
+      "expected": "Веб — ❌ упал\nЮнит: <code>web.service</code>"
+    },
+    {
+      "name": "card-unknown-status",
+      "fn": "render_app_card",
+      "app": {
+        "id": "web",
+        "title": "Веб",
+        "unit": "web.service",
+        "status": "reloading",
+        "urls": [
+          "http://localhost:8080"
+        ]
+      },
+      "expected": "Веб — ❔ reloading\nЮнит: <code>web.service</code>\nВеб-морда: http://localhost:8080"
+    },
+    {
+      "name": "card-minimal",
+      "fn": "render_app_card",
+      "app": {},
+      "expected": "? — ❔ ?\nЮнит: <code>?</code>"
+    },
+    {
+      "name": "card-no-title-uses-id",
+      "fn": "render_app_card",
+      "app": {
+        "id": "x",
+        "unit": "x.service",
+        "status": "active"
+      },
+      "expected": "x — ✅ работает\nЮнит: <code>x.service</code>"
+    },
+    {
+      "name": "card-null-urls",
+      "fn": "render_app_card",
+      "app": {
+        "id": "web",
+        "title": "Веб",
+        "unit": "web.service",
+        "status": "active",
+        "urls": null
+      },
+      "expected": "Веб — ✅ работает\nЮнит: <code>web.service</code>"
+    },
+    {
+      "name": "card-status-missing",
+      "fn": "render_app_card",
+      "app": {
+        "id": "x",
+        "title": "X",
+        "unit": "u"
+      },
+      "expected": "X — ❔ ?\nЮнит: <code>u</code>"
+    },
+    {
+      "name": "skill-start",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "start",
+      "expected": {
+        "view": {
+          "text": "Веб — ✅ работает\nЮнит: <code>web.service</code>\nВеб-морда: http://h",
+          "markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "Выбрать",
+                  "callback_data": "act:apps:pick_app:web"
+                }
+              ]
+            ]
+          }
+        },
+        "calls": [
+          [
+            "command",
+            "start",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-stop-no-id",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "stop",
+      "expected": {
+        "view": {
+          "text": "Без id — ⏹ остановлен\nЮнит: <code>u</code>",
+          "markup": null
+        },
+        "calls": [
+          [
+            "command",
+            "stop",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-stop-no-id-with-value",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "stop",
+      "value": "web",
+      "expected": {
+        "view": {
+          "text": "Без id — ⏹ остановлен\nЮнит: <code>u</code>",
+          "markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "Выбрать",
+                  "callback_data": "act:apps:pick_app:web"
+                }
+              ]
+            ]
+          }
+        },
+        "calls": [
+          [
+            "command",
+            "stop",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-install-value",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "install",
+      "value": "db",
+      "expected": {
+        "view": {
+          "text": "БД — ✅ работает\nЮнит: <code>db.service</code>",
+          "markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "Выбрать",
+                  "callback_data": "act:apps:pick_app:db"
+                }
+              ]
+            ]
+          }
+        },
+        "calls": [
+          [
+            "command",
+            "install",
+            {
+              "app": "db"
+            },
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-pick-keyboard",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "pick_app",
+      "value": "web",
+      "expected": {
+        "view": {
+          "text": "БД — ✅ работает\nЮнит: <code>db.service</code>",
+          "markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "Выбрать",
+                  "callback_data": "act:apps:pick_app:db"
+                }
+              ]
+            ]
+          }
+        },
+        "calls": [
+          [
+            "command",
+            "pick_app",
+            {
+              "app": "web"
+            },
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-no-subscription",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": null,
+      "action_id": "start",
+      "expected": {
+        "view": {
+          "text": "Веб — ✅ работает\nЮнит: <code>web.service</code>\nВеб-морда: http://h",
+          "markup": null
+        },
+        "calls": [
+          [
+            "command",
+            "start",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-limited-rights",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": {
+        "name": "l",
+        "chat_id": 2,
+        "allowed_commands": [
+          "pick_app@apps"
+        ]
+      },
+      "action_id": "start",
+      "expected": {
+        "view": {
+          "text": "Веб — ✅ работает\nЮнит: <code>web.service</code>\nВеб-морда: http://h",
+          "markup": {
+            "inline_keyboard": [
+              [
+                {
+                  "text": "Выбрать",
+                  "callback_data": "act:apps:pick_app:web"
+                }
+              ]
+            ]
+          }
+        },
+        "calls": [
+          [
+            "command",
+            "start",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-unknown",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "nope",
+      "expected": {
+        "view": {
+          "text": "Умение недоступно.",
+          "markup": null
+        },
+        "calls": []
+      }
+    },
+    {
+      "name": "skill-unknown-disconnected",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": {
+            "id": "web",
+            "title": "Веб",
+            "unit": "web.service",
+            "status": "active",
+            "urls": [
+              "http://h"
+            ]
+          },
+          "-/-:stop": {
+            "title": "Без id",
+            "unit": "u",
+            "status": "inactive"
+          },
+          "-/-:install": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          },
+          "-/-:pick_app": {
+            "id": "db",
+            "title": "БД",
+            "unit": "db.service",
+            "status": "active"
+          }
+        },
+        "connected": false
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "start",
+      "expected": {
+        "view": {
+          "text": "⚠️ Служба «демо» недоступна — попробуйте позже.",
+          "markup": null
+        },
+        "calls": []
+      }
+    },
+    {
+      "name": "skill-unavailable",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": "unavailable"
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "start",
+      "expected": {
+        "view": {
+          "text": "⚠️ Служба «демо» недоступна — попробуйте позже.",
+          "markup": null
+        },
+        "calls": [
+          [
+            "command",
+            "start",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-proto-error",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": "proto:failed:Юнит <x> упал"
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "start",
+      "expected": {
+        "view": {
+          "text": "⚠️ Ошибка: Юнит <x> упал",
+          "markup": null
+        },
+        "calls": [
+          [
+            "command",
+            "start",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    },
+    {
+      "name": "skill-needs-privilege",
+      "fn": "run_app_skill",
+      "link": {
+        "actions": [
+          {
+            "id": "start",
+            "title": "Старт",
+            "params": []
+          },
+          {
+            "id": "stop",
+            "title": "Стоп",
+            "params": []
+          },
+          {
+            "id": "install",
+            "title": "Установить",
+            "params": [
+              {
+                "name": "app"
+              }
+            ]
+          },
+          {
+            "id": "pick_app",
+            "title": "Выбрать",
+            "params": [
+              {
+                "name": "app",
+                "choices": [
+                  "web",
+                  "db"
+                ]
+              }
+            ]
+          }
+        ],
+        "commands": {
+          "-/-:start": "proto:needs_privilege:нужен nodectl fix"
+        }
+      },
+      "sub": {
+        "name": "o",
+        "chat_id": 1,
+        "allowed_commands": [
+          "*"
+        ]
+      },
+      "action_id": "start",
+      "expected": {
+        "view": {
+          "text": "⚠️ нужен nodectl fix",
+          "markup": null
+        },
+        "calls": [
+          [
+            "command",
+            "start",
+            {},
+            "-/-"
+          ]
+        ]
+      }
+    }
+  ]
+}

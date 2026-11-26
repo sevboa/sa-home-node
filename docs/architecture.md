@@ -32,6 +32,7 @@
   `ensure_service_ready`, фиксап `wol-enable`.
 - [tasks](tasks.md) — встроенная служба отложенных задач: очередь с `due_at`, прогрев цели заранее, исполнение
   по действию или `timer`, события `task_prewake`/`task_result`.
+- [bot](bot.md) — встроенный плагин `bot`: оболочка Telegram-бота (служба `telegram-bot`), расширяется через `BotSpec`.
 - [cli](cli.md) — команда `sa-home-node`.
 
 ## Порядок старта и останова (`run_node`)

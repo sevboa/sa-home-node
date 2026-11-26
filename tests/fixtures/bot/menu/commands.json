@@ -1,0 +1,786 @@
+{
+  "commands": [
+    {
+      "name": "alpha",
+      "description": "первая",
+      "universal": false,
+      "menu": true,
+      "right": "r@x"
+    },
+    {
+      "name": "beta",
+      "description": "вторая",
+      "universal": false,
+      "menu": true,
+      "right": null
+    },
+    {
+      "name": "hidden",
+      "description": "скрытая",
+      "universal": false,
+      "menu": false,
+      "right": null
+    },
+    {
+      "name": "gamma",
+      "description": "общая",
+      "universal": true,
+      "menu": true,
+      "right": null
+    },
+    {
+      "name": "quiet",
+      "description": "общая тихая",
+      "universal": true,
+      "menu": false,
+      "right": null
+    },
+    {
+      "name": "delta",
+      "description": "общая вторая",
+      "universal": true,
+      "menu": true,
+      "right": null
+    }
+  ],
+  "subs": {
+    "owner": {
+      "chat_id": 1001,
+      "allowed_commands": [
+        "*"
+      ],
+      "broken": false
+    },
+    "plain": {
+      "chat_id": 1002,
+      "allowed_commands": [
+        "r@x"
+      ],
+      "broken": false
+    },
+    "apps": {
+      "chat_id": 1003,
+      "allowed_commands": [
+        "app-a@apps",
+        "app-c@apps"
+      ],
+      "broken": false
+    },
+    "apps-wild": {
+      "chat_id": 1004,
+      "allowed_commands": [
+        "*@apps",
+        "beta"
+      ],
+      "broken": false
+    },
+    "bare": {
+      "chat_id": 1005,
+      "allowed_commands": [
+        "app-a"
+      ],
+      "broken": false
+    },
+    "nothing": {
+      "chat_id": 1006,
+      "allowed_commands": [],
+      "broken": false
+    },
+    "broken-owner": {
+      "chat_id": 1007,
+      "allowed_commands": [
+        "*"
+      ],
+      "broken": true
+    }
+  },
+  "actions": [
+    {
+      "id": "app-a",
+      "title": "Первое",
+      "params": false
+    },
+    {
+      "id": "app-b",
+      "title": "Второе",
+      "params": true
+    },
+    {
+      "id": "app-c",
+      "title": "Третье",
+      "params": false
+    }
+  ],
+  "cases": [
+    {
+      "name": "build-owner",
+      "call": {
+        "fn": "build",
+        "sub": "owner"
+      },
+      "commands": [
+        [
+          "app-a",
+          "Первое: состояние и веб-морда"
+        ],
+        [
+          "app-c",
+          "Третье: состояние и веб-морда"
+        ],
+        [
+          "alpha",
+          "первая"
+        ],
+        [
+          "beta",
+          "вторая"
+        ],
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-plain",
+      "call": {
+        "fn": "build",
+        "sub": "plain"
+      },
+      "commands": [
+        [
+          "alpha",
+          "первая"
+        ],
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-apps",
+      "call": {
+        "fn": "build",
+        "sub": "apps"
+      },
+      "commands": [
+        [
+          "app-a",
+          "Первое: состояние и веб-морда"
+        ],
+        [
+          "app-c",
+          "Третье: состояние и веб-морда"
+        ],
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-apps-wild",
+      "call": {
+        "fn": "build",
+        "sub": "apps-wild"
+      },
+      "commands": [
+        [
+          "app-a",
+          "Первое: состояние и веб-морда"
+        ],
+        [
+          "app-c",
+          "Третье: состояние и веб-морда"
+        ],
+        [
+          "beta",
+          "вторая"
+        ],
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-bare",
+      "call": {
+        "fn": "build",
+        "sub": "bare"
+      },
+      "commands": [
+        [
+          "app-a",
+          "Первое: состояние и веб-морда"
+        ],
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-nothing",
+      "call": {
+        "fn": "build",
+        "sub": "nothing"
+      },
+      "commands": [
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-broken-owner",
+      "call": {
+        "fn": "build",
+        "sub": "broken-owner"
+      },
+      "commands": [
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-owner-no-actions",
+      "call": {
+        "fn": "build",
+        "sub": "owner"
+      },
+      "actions": false,
+      "commands": [
+        [
+          "alpha",
+          "первая"
+        ],
+        [
+          "beta",
+          "вторая"
+        ],
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-apps-no-actions",
+      "call": {
+        "fn": "build",
+        "sub": "apps"
+      },
+      "actions": false,
+      "commands": [
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "build-no-subscription",
+      "call": {
+        "fn": "build",
+        "sub": null
+      },
+      "commands": [
+        [
+          "gamma",
+          "общая"
+        ],
+        [
+          "delta",
+          "общая вторая"
+        ]
+      ],
+      "calls": [],
+      "warnings": 0
+    },
+    {
+      "name": "refresh-set",
+      "call": {
+        "fn": "refresh",
+        "chat": 1001,
+        "sub": "apps"
+      },
+      "commands": null,
+      "calls": [
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "app-a",
+                "description": "Первое: состояние и веб-морда"
+              },
+              {
+                "command": "app-c",
+                "description": "Третье: состояние и веб-морда"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1001
+            }
+          }
+        ]
+      ],
+      "warnings": 0
+    },
+    {
+      "name": "refresh-delete",
+      "call": {
+        "fn": "refresh",
+        "chat": 1001,
+        "sub": null
+      },
+      "commands": null,
+      "calls": [
+        [
+          "delete_my_commands",
+          {
+            "scope": {
+              "type": "chat",
+              "chat_id": 1001
+            }
+          }
+        ]
+      ],
+      "warnings": 0
+    },
+    {
+      "name": "refresh-set-fails",
+      "call": {
+        "fn": "refresh",
+        "chat": 1001,
+        "sub": "owner"
+      },
+      "script": {
+        "set_my_commands": [
+          "net"
+        ]
+      },
+      "commands": null,
+      "calls": [
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "app-a",
+                "description": "Первое: состояние и веб-морда"
+              },
+              {
+                "command": "app-c",
+                "description": "Третье: состояние и веб-морда"
+              },
+              {
+                "command": "alpha",
+                "description": "первая"
+              },
+              {
+                "command": "beta",
+                "description": "вторая"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1001
+            }
+          }
+        ]
+      ],
+      "warnings": 1
+    },
+    {
+      "name": "refresh-delete-fails",
+      "call": {
+        "fn": "refresh",
+        "chat": 1001,
+        "sub": null
+      },
+      "script": {
+        "delete_my_commands": [
+          "forbidden"
+        ]
+      },
+      "commands": null,
+      "calls": [
+        [
+          "delete_my_commands",
+          {
+            "scope": {
+              "type": "chat",
+              "chat_id": 1001
+            }
+          }
+        ]
+      ],
+      "warnings": 1
+    },
+    {
+      "name": "set-all",
+      "call": {
+        "fn": "set_all",
+        "book": [
+          "owner",
+          "plain",
+          "broken-owner",
+          "apps",
+          "nothing"
+        ]
+      },
+      "commands": null,
+      "calls": [
+        [
+          "delete_my_commands",
+          {
+            "scope": {
+              "type": "default"
+            }
+          }
+        ],
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "app-a",
+                "description": "Первое: состояние и веб-морда"
+              },
+              {
+                "command": "app-c",
+                "description": "Третье: состояние и веб-морда"
+              },
+              {
+                "command": "alpha",
+                "description": "первая"
+              },
+              {
+                "command": "beta",
+                "description": "вторая"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1001
+            }
+          }
+        ],
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "alpha",
+                "description": "первая"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1002
+            }
+          }
+        ],
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "app-a",
+                "description": "Первое: состояние и веб-морда"
+              },
+              {
+                "command": "app-c",
+                "description": "Третье: состояние и веб-морда"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1003
+            }
+          }
+        ],
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1006
+            }
+          }
+        ]
+      ],
+      "warnings": 0
+    },
+    {
+      "name": "set-all-failures",
+      "call": {
+        "fn": "set_all",
+        "book": [
+          "owner",
+          "plain",
+          "broken-owner",
+          "apps"
+        ]
+      },
+      "script": {
+        "delete_my_commands": [
+          "net"
+        ],
+        "set_my_commands": [
+          "ok",
+          "bad",
+          "ok"
+        ]
+      },
+      "commands": null,
+      "calls": [
+        [
+          "delete_my_commands",
+          {
+            "scope": {
+              "type": "default"
+            }
+          }
+        ],
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "app-a",
+                "description": "Первое: состояние и веб-морда"
+              },
+              {
+                "command": "app-c",
+                "description": "Третье: состояние и веб-морда"
+              },
+              {
+                "command": "alpha",
+                "description": "первая"
+              },
+              {
+                "command": "beta",
+                "description": "вторая"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1001
+            }
+          }
+        ],
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "alpha",
+                "description": "первая"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1002
+            }
+          }
+        ],
+        [
+          "set_my_commands",
+          {
+            "commands": [
+              {
+                "command": "app-a",
+                "description": "Первое: состояние и веб-морда"
+              },
+              {
+                "command": "app-c",
+                "description": "Третье: состояние и веб-морда"
+              },
+              {
+                "command": "gamma",
+                "description": "общая"
+              },
+              {
+                "command": "delta",
+                "description": "общая вторая"
+              }
+            ],
+            "scope": {
+              "type": "chat",
+              "chat_id": 1003
+            }
+          }
+        ]
+      ],
+      "warnings": 2
+    },
+    {
+      "name": "set-all-empty",
+      "call": {
+        "fn": "set_all",
+        "book": []
+      },
+      "commands": null,
+      "calls": [
+        [
+          "delete_my_commands",
+          {
+            "scope": {
+              "type": "default"
+            }
+          }
+        ]
+      ],
+      "warnings": 0
+    },
+    {
+      "name": "set-all-only-broken",
+      "call": {
+        "fn": "set_all",
+        "book": [
+          "broken-owner"
+        ]
+      },
+      "commands": null,
+      "calls": [
+        [
+          "delete_my_commands",
+          {
+            "scope": {
+              "type": "default"
+            }
+          }
+        ]
+      ],
+      "warnings": 0
+    }
+  ]
+}

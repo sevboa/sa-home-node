@@ -8,6 +8,7 @@ from pathlib import Path
 from pydantic import BaseModel
 
 from sa_home_node.backup.spec import BackupSpec
+from sa_home_node.bot.spec import BotSpec
 from sa_home_node.config import NodeConfig
 from sa_home_node.content import ContentStore
 from sa_home_node.fixups.core import Fixup, FixupContext
@@ -87,6 +88,7 @@ class Plugin:
     task_kinds: tuple[TaskKind, ...] = ()
     scrape_jobs: tuple[ScrapeJobSpec, ...] = ()
     dashboards: tuple[DashboardSpec, ...] = ()
+    bot: BotSpec | None = None
 
 
 def available() -> dict[str, EntryPoint]:
@@ -94,12 +96,13 @@ def available() -> dict[str, EntryPoint]:
 
 
 def load_plugins(names: Iterable[str]) -> list[Plugin]:
+    from sa_home_node.bot.plugin import PLUGIN as BOT
     from sa_home_node.metrics.plugin import PLUGIN as METRICS
     from sa_home_node.monitor.plugin import PLUGIN as MONITOR
     from sa_home_node.tasks.plugin import PLUGIN as TASKS
 
     names = list(names)
-    seen: set[str] = {MONITOR.name, TASKS.name, METRICS.name}
+    seen: set[str] = {MONITOR.name, TASKS.name, METRICS.name, BOT.name}
     for name in names:
         if name in seen:
             raise PluginError(f"Повтор имени плагина: {name}")
@@ -109,7 +112,7 @@ def load_plugins(names: Iterable[str]) -> list[Plugin]:
     if unknown:
         installed = ", ".join(sorted(eps)) or "нет"
         raise PluginError(f"Плагины не установлены: {', '.join(unknown)}; установлены: {installed}")
-    result = [MONITOR, TASKS, METRICS]
+    result = [MONITOR, TASKS, METRICS, BOT]
     for name in names:
         ep = eps[name]
         plugin = ep.load()

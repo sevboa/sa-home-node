@@ -1,0 +1,17 @@
+[telegram]
+token = "BASE-TOKEN"
+proxy = "socks5://10.0.0.5:1080"
+
+[invites]
+enabled = false
+ttl_s = 100
+grant_commands = ["cmd-a@plug"]
+
+[[subscriptions]]
+name = "owner-b"
+chat_id = 1002
+allowed_commands = ["*"]
+
+[[guest_subscriptions]]
+name = "guest-base"
+chat_id = 2003

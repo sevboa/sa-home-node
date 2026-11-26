@@ -1,0 +1,256 @@
+{
+  "owners": [
+    {
+      "name": "owner-a",
+      "chat_id": 1001,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ]
+    },
+    {
+      "name": "group-a",
+      "chat_id": -100500,
+      "event_types": [
+        "a",
+        "b"
+      ],
+      "except_event_types": [
+        "b"
+      ],
+      "allowed_commands": [
+        "nodes"
+      ]
+    }
+  ],
+  "guests": [
+    {
+      "name": "guest-a",
+      "chat_id": 2001,
+      "event_types": [
+        "a"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "chat@x",
+        "tell_guests@llm"
+      ],
+      "invited_by_chat_id": 1001,
+      "invited_at": "2026-01-01T10:00:00+00:00",
+      "invited_user": "user-a"
+    },
+    {
+      "name": "guest-dup",
+      "chat_id": 1001,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ],
+      "invited_by_chat_id": 1001,
+      "invited_at": "2026-01-01T10:00:00+00:00",
+      "invited_user": "user-a"
+    },
+    {
+      "name": "guest-b",
+      "chat_id": 2002,
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [],
+      "invited_by_chat_id": 0,
+      "invited_at": "",
+      "invited_user": ""
+    }
+  ],
+  "after_load": [
+    {
+      "name": "owner-a",
+      "chat_id": 1001,
+      "source": "config",
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "*"
+      ],
+      "broken": false,
+      "invited_by_chat_id": 0,
+      "invited_at": "",
+      "invited_user": ""
+    },
+    {
+      "name": "group-a",
+      "chat_id": -100500,
+      "source": "config",
+      "event_types": [
+        "a",
+        "b"
+      ],
+      "except_event_types": [
+        "b"
+      ],
+      "allowed_commands": [
+        "nodes"
+      ],
+      "broken": false,
+      "invited_by_chat_id": 0,
+      "invited_at": "",
+      "invited_user": ""
+    },
+    {
+      "name": "guest-a",
+      "chat_id": 2001,
+      "source": "guest",
+      "event_types": [
+        "a"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [
+        "chat@x"
+      ],
+      "broken": false,
+      "invited_by_chat_id": 1001,
+      "invited_at": "2026-01-01T10:00:00+00:00",
+      "invited_user": "user-a"
+    },
+    {
+      "name": "guest-b",
+      "chat_id": 2002,
+      "source": "guest",
+      "event_types": [
+        "*"
+      ],
+      "except_event_types": [],
+      "allowed_commands": [],
+      "broken": false,
+      "invited_by_chat_id": 0,
+      "invited_at": "",
+      "invited_user": ""
+    }
+  ],
+  "accepting": {
+    "a": [
+      "owner-a",
+      "group-a",
+      "guest-a",
+      "guest-b"
+    ],
+    "b": [
+      "owner-a",
+      "guest-b"
+    ],
+    "c": [
+      "owner-a",
+      "guest-b"
+    ]
+  },
+  "for_chat": {
+    "1001": "owner-a",
+    "2001": "guest-a",
+    "9": null
+  },
+  "guests_names": [
+    "guest-a",
+    "guest-b"
+  ],
+  "replacement": {
+    "name": "guest-a2",
+    "chat_id": 2001,
+    "event_types": [
+      "b"
+    ],
+    "allowed_commands": [
+      "x"
+    ]
+  },
+  "after_replace": [
+    "owner-a",
+    "group-a",
+    "guest-b",
+    "guest-a2"
+  ],
+  "after_add": [
+    "owner-a",
+    "group-a",
+    "guest-b",
+    "guest-a2",
+    "guest-c"
+  ],
+  "removed": {
+    "1001": true,
+    "9999": false
+  },
+  "after_remove": [
+    "group-a",
+    "guest-b",
+    "guest-a2",
+    "guest-c"
+  ],
+  "validate": {
+    "scripts": {
+      "1001": [],
+      "-100500": [
+        "forbidden"
+      ],
+      "2001": [
+        "net",
+        "ok"
+      ],
+      "2002": [
+        "ra:2",
+        "ok"
+      ]
+    },
+    "issues": [
+      {
+        "chat_id": -100500,
+        "name": "group-a",
+        "reason": "Telegram server says - forbidden -100500"
+      }
+    ],
+    "calls": [
+      [
+        1001,
+        10.0
+      ],
+      [
+        -100500,
+        10.0
+      ],
+      [
+        2001,
+        10.0
+      ],
+      [
+        2001,
+        10.0
+      ],
+      [
+        2002,
+        10.0
+      ],
+      [
+        2002,
+        10.0
+      ]
+    ],
+    "sleeps": [
+      3.0,
+      3.0
+    ],
+    "broken": {
+      "owner-a": false,
+      "group-a": true,
+      "guest-a": false,
+      "guest-b": false
+    }
+  }
+}

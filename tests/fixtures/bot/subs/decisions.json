@@ -1,0 +1,458 @@
+{
+  "commands": [
+    "nodes",
+    "status",
+    "*",
+    "invite"
+  ],
+  "actions": [
+    [
+      "act1",
+      "svc"
+    ],
+    [
+      "act1",
+      "other"
+    ],
+    [
+      "act2",
+      "svc"
+    ],
+    [
+      "zzz",
+      "svc"
+    ],
+    [
+      "list",
+      "svc"
+    ]
+  ],
+  "events": [
+    "a",
+    "b",
+    "c",
+    "*"
+  ],
+  "rows": [
+    {
+      "def": {
+        "chat_id": 1001,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [
+          "*"
+        ],
+        "name": "owner"
+      },
+      "is_guest": false,
+      "is_owner": true,
+      "commands": {
+        "nodes": true,
+        "status": true,
+        "*": true,
+        "invite": true
+      },
+      "actions": {
+        "act1@svc": true,
+        "act1@other": true,
+        "act2@svc": true,
+        "zzz@svc": true,
+        "list@svc": true
+      },
+      "events": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "*": true
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1002,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [
+          "nodes",
+          "status"
+        ],
+        "name": "plain"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": true,
+        "status": true,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": false,
+        "act1@other": false,
+        "act2@svc": false,
+        "zzz@svc": false,
+        "list@svc": false
+      },
+      "events": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "*": true
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1003,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [
+          "act1@svc",
+          "list@svc"
+        ],
+        "name": "svc-bound"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": false,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": true,
+        "act1@other": false,
+        "act2@svc": false,
+        "zzz@svc": false,
+        "list@svc": true
+      },
+      "events": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "*": true
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1004,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [
+          "*@svc"
+        ],
+        "name": "svc-wild"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": false,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": true,
+        "act1@other": false,
+        "act2@svc": true,
+        "zzz@svc": true,
+        "list@svc": true
+      },
+      "events": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "*": true
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1005,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [
+          "act2"
+        ],
+        "name": "bare-action"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": false,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": false,
+        "act1@other": false,
+        "act2@svc": true,
+        "zzz@svc": false,
+        "list@svc": false
+      },
+      "events": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "*": true
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1006,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [],
+        "name": "nothing"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": false,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": false,
+        "act1@other": false,
+        "act2@svc": false,
+        "zzz@svc": false,
+        "list@svc": false
+      },
+      "events": {
+        "a": true,
+        "b": true,
+        "c": true,
+        "*": true
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1007,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "a",
+          "b"
+        ],
+        "except_event_types": [
+          "b"
+        ],
+        "allowed_commands": [
+          "nodes"
+        ],
+        "name": "evlist"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": true,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": false,
+        "act1@other": false,
+        "act2@svc": false,
+        "zzz@svc": false,
+        "list@svc": false
+      },
+      "events": {
+        "a": true,
+        "b": false,
+        "c": false,
+        "*": false
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1008,
+        "broken": false,
+        "source": "config",
+        "event_types": [],
+        "except_event_types": [],
+        "allowed_commands": [],
+        "name": "noevents"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": false,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": false,
+        "act1@other": false,
+        "act2@svc": false,
+        "zzz@svc": false,
+        "list@svc": false
+      },
+      "events": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "*": false
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1009,
+        "broken": false,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [
+          "c"
+        ],
+        "allowed_commands": [
+          "*"
+        ],
+        "name": "wild-except"
+      },
+      "is_guest": false,
+      "is_owner": true,
+      "commands": {
+        "nodes": true,
+        "status": true,
+        "*": true,
+        "invite": true
+      },
+      "actions": {
+        "act1@svc": true,
+        "act1@other": true,
+        "act2@svc": true,
+        "zzz@svc": true,
+        "list@svc": true
+      },
+      "events": {
+        "a": true,
+        "b": true,
+        "c": false,
+        "*": true
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    },
+    {
+      "def": {
+        "chat_id": 1010,
+        "broken": true,
+        "source": "config",
+        "event_types": [
+          "*"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [
+          "*"
+        ],
+        "name": "broken-owner"
+      },
+      "is_guest": false,
+      "is_owner": false,
+      "commands": {
+        "nodes": false,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": false,
+        "act1@other": false,
+        "act2@svc": false,
+        "zzz@svc": false,
+        "list@svc": false
+      },
+      "events": {
+        "a": false,
+        "b": false,
+        "c": false,
+        "*": false
+      },
+      "with_broken_owner": false,
+      "with_all_owner": false
+    },
+    {
+      "def": {
+        "chat_id": 1011,
+        "broken": false,
+        "source": "guest",
+        "event_types": [
+          "a"
+        ],
+        "except_event_types": [],
+        "allowed_commands": [
+          "nodes",
+          "act1@svc"
+        ],
+        "name": "guest"
+      },
+      "is_guest": true,
+      "is_owner": false,
+      "commands": {
+        "nodes": true,
+        "status": false,
+        "*": false,
+        "invite": false
+      },
+      "actions": {
+        "act1@svc": true,
+        "act1@other": false,
+        "act2@svc": false,
+        "zzz@svc": false,
+        "list@svc": false
+      },
+      "events": {
+        "a": true,
+        "b": false,
+        "c": false,
+        "*": false
+      },
+      "with_broken_owner": false,
+      "with_all_owner": true
+    }
+  ]
+}
