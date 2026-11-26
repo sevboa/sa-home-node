@@ -10,10 +10,12 @@ readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "PolyForm-Noncommercial-1.0.0" }
 dependencies = [
-    "aiogram>=3.32,<4",
+    "aiogram>=3.32,<3.33; python_version < '3.12'",
+    "aiogram>=3.32,<4; python_version >= '3.12'",
     "aiohttp-socks>=0.9,<1",
     "aiosqlite>=0.19",
     "certifi",
+    "cryptography>=42",
     "psutil>=5.9",
     "pydantic-settings>=2.2",
 ]
@@ -25,11 +27,7 @@ sa-home-node = "sa_home_node.cli:main"
 example = "sa_home_node.example:PLUGIN"
 
 [project.optional-dependencies]
-backup = [
-    "cryptography>=42",
-]
 dev = [
-    "cryptography>=42",
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
     "pytest-xdist>=3.5",
